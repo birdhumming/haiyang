@@ -1,0 +1,13 @@
+*.aux
+*.bak
+*.log
+*.ind
+*.bbl
+*.sav
+*.blg
+*.idx
+*.out
+*.ilg
+*.exe
+*.class
+*.stackdump
