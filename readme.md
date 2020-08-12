@@ -1,3 +1,6 @@
+ wget -k --no-parent \\n       --recursive \\n       --page-requisites \\nhttps://sites.google.com/site/mathcounts2020
+
+
 - google site security prevented wget to download files, must make it public first! (very hard to figure out)
 - wget needs options to add .html to filename:
 
