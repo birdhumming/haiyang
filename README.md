@@ -1,3 +1,72 @@
+```
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define fir(i,a,b) for(ll i=a;i<=b;i++)
+
+const int N = 1e5+10;
+
+ll n,m,t,a[N],b[N],s[N],x,y;
+ll calc(ll a[], ll n){
+fir(i,1,n){
+    a[i]-=(a[0]/n);
+    s[i]=s[i-1]+a[i];
+}
+sort(s+1,s+n+1);
+ll mid=(n+1)>>1,ans=0;
+fir(i,1,n) ans+=abs(s[mid]-s[i]);
+return ans;
+}
+
+int main(){
+    cin>>n>>m>>t;
+    fir(i,1,t){scanf("%d%d",&x,&y); a[x]++;b[y]++;}
+    fir(i,1,n) a[0]+=a[i];
+    fir(i,1,m) b[0]+=b[i];
+
+    ll as=a[0]%n,bs=b[0]%m;
+    if(!as && !bs) cout<<"both "<<calc(a,n)+calc(b,m);
+    else if(!as) cout<<"row "<<calc(a,n);
+    else if(!bs)cout<<"column "<<calc(b,m);
+    else cout<<"impossible";
+
+    return 0;
+}
+```
+
+```
+'''
+简单快速幂运算
+所有可能的排列数减去不发生冲突的排列数就是
+答案
+
+'''
+
+MOD = 100003
+def pow_mod(a, k, p):
+    t = []
+    pow_val = 1             # 2的次幂数, 初始是2^0 = 1
+    a_pow = a % p           # a^(2 ^ i)的数值, 初始是a^(2^0) = a
+    while pow_val <= k:
+        t.append(a_pow)
+        a_pow = (a_pow*a_pow) % p
+        pow_val <<= 1
+
+    ans = 1
+    for i in range(len(t)):
+        if k & 1:
+            ans = (ans * t[i]) % p
+        k >>= 1
+    return ans
+
+
+m, n = map(int, input().split())
+print( ((m % MOD) * (pow_mod(m, n-1, MOD) - pow_mod(m-1, n-1, MOD))) % MOD )
+
+
+```
+
+
 # C++ and Data Structures & Algorithms Cheat Sheet
 
 These are two cheat sheets describing both basic [C++ syntax](C++%20Syntax.md) (mostly C++11) and many common [data structures and algorithms](Data%20Structures%20and%20Algorithms.md) in C++.
