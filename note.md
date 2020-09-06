@@ -1,14 +1,9 @@
 william lin tracking - codes save his past contests
-
 lower_bound, upper_bound() must be on sorted vector
 https://www.geeksforgeeks.org/upper_bound-and-lower_bound-for-non-increasing-vector-in-c/
 https://www.geeksforgeeks.org/upper_bound-and-lower_bound-for-vector-in-cpp-stl/
-
 reverse()
 https://www.geeksforgeeks.org/stdreverse-in-c/
-
-
-
 summary and take notes - so no need to study again!
 
 quick sort and merge sort are only two sorts he talked about: both
@@ -278,3 +273,6 @@ LeetCode 337. House Robber III
 没有自己的东西
 如果没见过，一般做不出来
 没有见过，，所以不知道
+
+trie tree, union find set, heap, 
+jichuke - wk3 xitike
