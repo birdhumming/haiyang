@@ -1,0 +1,109 @@
+AcWing 148. 合并果子    原题链接    简单
+作者：    Shadow ,  2019-10-31 18:24:56 ,  阅读 193
+
+1
+
+
+1
+Huffman树de板子题
+//来自算法基础课
+
+Huffman树
+给定N个权值作为N个叶子结点，构造一棵二叉树，若该树的带权路径长度达到最小，称这样的二叉树为最优二叉树，也称为哈夫曼树(Huffman Tree)。
+哈夫曼树是带权路径长度最短的树，权值较大的结点离根较近。
+————来自百度百科
+
+然而这不重要
+
+重要的是
+
+这道题中，我们每搬动一次果子，最终答案里这堆果子的重量就会加一遍
+
+我们要把n堆果子合成一堆需要合并n-1次，
+
+第一次合并的两堆会被搬动n-1次，代价是(x1+y1)*(n-1)
+
+第二次合并的两堆会被搬动n-2次，代价是(x2+y2)*(n-2)
+
+第三次……
+
+所以我们很容易发现合并的时候我们要尽量先合并重量小的
+
+所以我们用堆自动排序的性质就ok了
+
+（这里Huffman树就窥斑见豹了）
+
+请叫我天下第一懒
+我不光懒得手写小根堆
+甚至连stl里面那个很长的声明方式都不想用
+我只用金坷垃
+
+h.push(-a);
+CODE
+#include<bits/stdc++.h>
+using namespace std;
+int n,tot,a;
+priority_queue<int> h;
+int main() {
+    scanf("%d",&n);
+    for(register int i=1; i<=n; i++) scanf("%d",&a), h.push(-a);
+
+    for(register int i=1; i<=n-1; i++) {//n堆果子，合并n-1次 
+        int x=h.top(); h.pop();
+        int y=h.top(); h.pop();
+        tot += -x-y;
+        h.push(x+y);
+    }
+    printf("%d\n",tot);
+    return 0;
+}
+
+作者：Shadow
+链接：https://www.acwing.com/solution/content/5743/
+
+
+AcWing 148. 合并果子    原题链接    简单
+作者：    电光耗子王 ,  2020-07-08 17:02:28 ,  阅读 97
+
+2
+
+
+题目描述
+见原题
+
+样例
+输入
+3
+1 2 9
+输出
+15
+算法1
+(贪心)
+注：此处需要运用STL中一些关于堆操作的函数：make_heap,pop_heap,push_heap
+方法:每次挑选最小数目的两堆合并成新的一堆(具体证明参考哈弗曼编码算法)
+大致思路：1.使用两次pop_heap函数选出两个最小数
+2.用push_heap把和加入堆，重复n-1次
+每次选最小值，枚举法O(n*n)可能超时，
+优化方法:1.增加一个类sort比较函数
+2.把所有数进行取反处理
+
+参考文献 CCF中学生计算机程序设计
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+int n,ans,a[10001];
+bool cmp(int x,int y){return x>y;}
+int main(){
+    cin>>n; for(int i=0;i<n;i++) cin>>a[i];
+    make_heap(a,a+n,cmp);
+    for(int i=n;i>1;i--){
+        pop_heap(a,a+i,cmp); pop_heap(a,a+i-1,cmp);
+        a[i-2]+=a[i-1]; ans+=a[i-2];
+        push_heap(a,a+i-1,cmp);
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：电光耗子王
+链接：https://www.acwing.com/solution/content/15745/
