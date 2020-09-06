@@ -1,4 +1,4 @@
-data structure 3 is all about hash 
+data structure 3 is all about hash; discretization is a very special case of hash, could have just used hash; no need for discretization; no need to have special item in basic knowledge
 
 william lin tracking - codes save his past contests
 lower_bound, upper_bound() must be on sorted vector
