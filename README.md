@@ -2233,7 +2233,7 @@ p.pop();
 -------------------------------------------------------
 ### 3.3 Knapsack Problem
 
-[Implementation](NP-complete/knapsack/)
+[Implementation](knapsack01-simple/)
 
 -------------------------------------------------------
 
