@@ -1,0 +1,231 @@
+0
+
+AcWing 148. 合并果子 Python3 heap    原题链接    简单
+作者：    Gyp ,  2020-04-23 21:45:40 ,  阅读 128
+
+0
+
+
+import heapq
+n = int(input())
+a = list(map(int, input().split()))
+heapq.heapify(a)
+ans = 0
+while len(a) > 1:
+    x = heapq.heappop(a)
+    y = heapq.heappop(a)
+    heapq.heappush(a,x+y)
+    ans += x+y
+print(ans)
+
+作者：Gyp
+链接：https://www.acwing.com/solution/content/12027/
+。
+
+1
+
+AcWing 148. 合并果子-python    原题链接    简单
+作者：    在找工作の肖山 ,  2020-01-06 04:45:40 ,  阅读 267
+
+0
+
+
+升序优先序列，优先pop出最小值
+代码
+from queue import PriorityQueue
+n = int(input())
+a = list(map(int,input().split()))
+
+q = PriorityQueue()
+
+for i in range(n):
+    q.put(a[i])
+
+sum = 0
+
+while q.qsize()>1:
+    a = q.get()
+    b = q.get()
+    q.put(a+b)
+    sum += a+b
+
+print(sum)
+
+作者：在找工作の肖山
+链接：https://www.acwing.com/solution/content/7397/
+
+
+
+
+AcWing 148. 合并果子 python3优先队列法和单调栈法    原题链接    简单
+作者：    夏天的梦是什么颜色的呢 ,  2020-04-09 16:52:25 ,  阅读 177
+
+2
+
+
+算法1
+优先队列
+from queue import PriorityQueue
+from typing import List
+class Solution:
+    def apple(self, apples: List[int]):
+        q = PriorityQueue()
+        res = 0
+        for i in apples:
+            q.put(i)
+
+        while q.qsize() > 1:
+            a = q.get()
+            b = q.get()
+            sum = a+b
+            res += sum
+            q.put(sum)
+
+        return res
+
+if __name__ == '__main__':
+    num = int(input())
+    apples = list(map(int, input().split()))
+    solution = Solution()
+    res = solution.apple(apples)
+    print(res)
+
+算法2
+单调栈
+# 方法二：单调栈
+class Solution:
+    def apple(self, apples: List[int]):
+        stack = []
+        res = 0
+        apples.sort(reverse=True)
+        for i in apples:
+            stack.append(i)
+
+        while len(stack)>1:
+            a = stack.pop()
+            b = stack.pop()
+            sum = a+b
+            res += sum
+
+            # 接着再把sum推进去
+            tmp = []
+            while stack and sum>stack[-1]:
+                a = stack.pop()
+                tmp.append(a)
+
+            # 推进去
+            stack.append(sum)
+            # tmp中的元素也推进去
+            for i in range(len(tmp)-1, -1, -1):
+                stack.append(tmp[i])
+        return res
+
+if __name__ == '__main__':
+    num = int(input())
+    apples = list(map(int, input().split()))
+    solution = Solution()
+    res = solution.apple(apples)
+    print(res)
+
+
+2
+
+作者：夏天的梦是什么颜色的呢
+链接：https://www.acwing.com/solution/content/8515/
+
+
+
+
+3
+
+AcWing 148. 合并果子    原题链接    简单
+作者：    皓首不倦 ,  2020-09-05 22:26:09 ,  阅读 12
+
+0
+
+
+
+'''
+利用Huffman树求解最小的路径长度和及节点权值乘积和
+'''
+
+
+class HuffmanTreeNode:
+    def __init__(self, val, left = None, right = None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __cmp__(self, other):
+        return self.val - other.val
+
+    def __lt__(self, other):
+        return self.val < other.val
+
+from queue import PriorityQueue
+class HuffmanTree:
+    def __init__(self):
+        self.root = None
+
+    # 贪心算法构建Huffman树
+    def build(self, val_list):
+        if self.root is not None:
+            return
+
+        if len(val_list) == 0:
+            return
+
+        min_heap = PriorityQueue()
+        for val in val_list:
+            min_heap.put(HuffmanTreeNode(val))
+
+        while min_heap.qsize() > 1:
+            node1 = min_heap.get()
+            node2 = min_heap.get()
+            min_heap.put(HuffmanTreeNode(node1.val + node2.val, node1, node2))
+
+        self.root = min_heap.get()
+
+    # 获取带权路径和
+    def getMinWeightedSum(self):
+        def dfs(root, level):
+            if root is None:
+                return 0
+
+            if root.left is None and root.right is None:
+                return root.val * level
+
+            return dfs(root.left, level+1) + dfs(root.right, level+1)
+        return dfs(self.root, 0)
+
+    # 获取每一个数值的编码
+    def getCodes(self):
+        m = {}
+        def dfs(root, path, flag):
+            if root is None:
+                return
+
+            path.append('' if flag is None else flag)
+
+            if root.left is None and root.right is None:
+                m[root.val] = ''.join(path)
+                path.pop(-1)
+                return
+
+            dfs(root.left, path, '0')
+            dfs(root.right, path, '1')
+
+        dfs(self.root, [], None)
+        return m
+
+
+n = int(input())
+arr = list(map(int, input().split()))
+tree = HuffmanTree()
+tree.build(arr)
+
+print(tree.getMinWeightedSum())
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/20117/

@@ -4085,3 +4085,4 @@ SG函数
 	有向图游戏的某个局面必败，当且仅当该局面对应节点的SG函数值等于0。
 
 ```
+Huffman tree - full binary tree
