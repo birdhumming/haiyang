@@ -93,7 +93,7 @@ int main()
 
     return 0;
 }
-
+//negative mod in C++ is different from math definition; need to %N +N %N again
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/45308/
 ```
