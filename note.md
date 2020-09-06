@@ -22,7 +22,7 @@ int find(int x)
 
 int main()
 {
-    memset(h, 0x3f, sizeof h);
+    memset(h, 0x3f, sizeof h); //memset can't handle vector
 
     int n;
     scanf("%d", &n);
@@ -98,7 +98,8 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/45308/
 ```
 
-data structure 3 is all about hash; discretization is a very special case of hash, could have just used hash; no need for discretization; no need to have special item in basic knowledge
+data structure 3 first hour is about hash; second hour 1:13:00 later is STL
+discretization is a very special case of hash, could have just used hash; no need for discretization; no need to have special item in basic knowledge
 
 william lin tracking - codes save his past contests
 lower_bound, upper_bound() must be on sorted vector
