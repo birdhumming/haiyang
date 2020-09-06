@@ -1,3 +1,5 @@
+data structure 3 is all about hash 
+
 william lin tracking - codes save his past contests
 lower_bound, upper_bound() must be on sorted vector
 https://www.geeksforgeeks.org/upper_bound-and-lower_bound-for-non-increasing-vector-in-c/
