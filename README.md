@@ -67,10 +67,6 @@ print( ((m % MOD) * (pow_mod(m, n-1, MOD) - pow_mod(m-1, n-1, MOD))) % MOD )
 ```
 
 
-# C++ and Data Structures & Algorithms Cheat Sheet
-
-These are two cheat sheets describing both basic [C++ syntax](C++%20Syntax.md) (mostly C++11) and many common [data structures and algorithms](Data%20Structures%20and%20Algorithms.md) in C++.
-
 
 # C++ QUICK REFERENCE / C++ CHEATSHEET
 Based on <a href="http://www.pa.msu.edu/~duxbury/courses/phy480/Cpp_refcard.pdf">Phillip M. Duxbury's C++ Cheatsheet</a> and edited by Morten Nobel-Jørgensen.
