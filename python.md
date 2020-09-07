@@ -1,6 +1,7 @@
 
 lamda is anonymous function
 
+```
 from time import sleep
 
 with open("large", "r") as file:
@@ -12,12 +13,10 @@ with open("large", "r") as file:
 		sleep(.1)
 
 rstrip()
+```
 
 
-
-indentation is import, indicating scope
-
-no semicolon is needed
+indentation is important, indicating scope; no semicolon is needed
 
 f-string=format string print(f"hello, {name}") where name is a variable
 
@@ -48,7 +47,7 @@ for c in s:
 command-line arguments
 
 
-
+```
 from sys import argv, exit
 
 for arg in argv:
@@ -72,13 +71,13 @@ if "emma" in names:
 print("not found")
 
 exit(1)
-
+```
 
 
 hashtable = dict in python = key-value pair = associative array
 
 
-
+```
 if str1 == str2:
 
 	print("same")
@@ -94,9 +93,10 @@ print (f"x is {x}, y is {y}")
 x,y=y,x
 
 print (f"x is {x}, y is {y}")
+```
 
 file I/O
-
+```
 import csv
 
 file=open("phonebook.csv", "a")
@@ -112,15 +112,16 @@ write = csv.writer(file)
 writer.writerow((name,number))
 
 //file.close()
-
+```
 
 
 python has regular expression; C doesn't
 
+```
 import re
 
 if re.search("yes|y", s, re.IGNORECASE):  // "^y(es)?$" or s.lower()
-
+```
 
 
 https://www.geeksforgeeks.org/speech-recognition-in-python-using-google-speech-api/
@@ -137,6 +138,7 @@ there is no char in python, only string as str
 
 python map(function, iterable) applies the function to each item of a given iterable and return the results:
 
+```
 # Return double of n
 
 def addition(n):
@@ -150,7 +152,7 @@ numbers = (1, 2, 3, 4)
 result = map(addition, numbers)
 
 print(list(result))
-
+```
 
 
 
@@ -158,7 +160,7 @@ print(list(result))
 It can be done with lamda expressions also: lamda is anonymous function
 
 
-
+```
 # Double all numbers using map and lambda
 
 numbers = (1, 2, 3, 4)
@@ -194,7 +196,7 @@ test = list(map(list, l))
 print(test)
 
 map() can listify the list of strings individually as shown above
-
+```
 
 
 A lambda function is a small anonymous function.
@@ -240,7 +242,7 @@ Use that function definition to make a function that always doubles the number y
 
 
 
-
+```
 def myfunc(n):
 
   return lambda a : a * n
@@ -248,7 +250,7 @@ def myfunc(n):
 mydoubler = myfunc(2)
 
 print(mydoubler(11))
-
+```
 
 
 Or, use the same function definition to make a function that always triples the number you send in:
@@ -256,7 +258,7 @@ Or, use the same function definition to make a function that always triples the 
 
 
 
-
+```
 def myfunc(n):
 
   return lambda a : a * n
@@ -264,13 +266,13 @@ def myfunc(n):
 mytripler = myfunc(3)
 
 print(mytripler(11))
-
+```
 Or, use the same function definition to make both functions, in the same program:
 
 
 
 
-
+```
 def myfunc(n):
 
   return lambda a : a * n
@@ -286,7 +288,7 @@ mytripler = myfunc(3)
 print(mydoubler(11))
 
 print(mytripler(11))
-
+```
 
 
 
