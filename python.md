@@ -1,3 +1,25 @@
+```
+# examples of python input/output:
+
+n = int(input())
+a = list(map(int, input().split()))
+
+m, n = map(int, input().split())
+print( ((m % MOD) * (pow_mod(m, n-1, MOD) - pow_mod(m-1, n-1, MOD))) % MOD )
+
+import heapq
+n = int(input())
+a = list(map(int, input().split()))
+heapq.heapify(a)
+ans = 0
+while len(a) > 1:
+    x = heapq.heappop(a)
+    y = heapq.heappop(a)
+    heapq.heappush(a,x+y)
+    ans += x+y
+print(ans)
+```
+
 
 lamda is anonymous function
 
