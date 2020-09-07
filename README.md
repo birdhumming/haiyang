@@ -1,3 +1,12 @@
+算法竞赛进阶指南_含目录.pdf
+https://drive.google.com/file/d/1rH6Jodk-XSzm6Kdq8Lyzzpx-yOhecbU4/view?usp=sharing
+信息学奥赛一本通（C++）第五版.pdf
+https://drive.google.com/file/d/14KsgMAQMax9ZHcfIeK9o5Rbwas-mhkhs/view?usp=sharing
+剑指OFFER 名企面试官精讲典型编程题 第2版.pdf
+https://drive.google.com/file/d/1bLZjeTzLe31xpZxNSXU93bVLTlXI0KNk/view?usp=sharing
+C++与数据结构
+https://drive.google.com/file/d/1DVbjLIktdJcXvj3-Qn7F0yJQrHvL7zE3/view?usp=sharing
+
 ```
 #include <bits/stdc++.h>
 using namespace std;
