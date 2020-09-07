@@ -266,7 +266,7 @@ sizeof x                    // Number of bytes used to represent object x
 sizeof(T)                   // Number of bytes to represent type T
 ++x                         // Add 1 to x, evaluates to new value (prefix)
 --x                         // Subtract 1 from x, evaluates to new value
-~x                          // Bitwise complement of x
+~x                          // Bitwise one's complement of x (just flip bits) aka 'compl'
 !x                          // true if x is 0, else false (1 or 0 in C)
 -x                          // Unary minus
 +x                          // Unary plus (default)
@@ -4109,3 +4109,115 @@ DP - penultimate step is the key!
 algo advanced class - 1 is number triangle; linear DP type of problems
 boundary conditions are always tricky to consider - 
 yxc videos should be viewed with 1.25x! too slow for 1x
+
+
+原码true code (sign and magnitude) 补码two's complemental code 反码ones-complement code
+Excess 3 code 余3BCD码; True form 原码; Negative number (one’s complement) 反码; Complement number (two’s complement)补码; 
+https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/computercode.html
+https://www.geeksforgeeks.org/1s-2s-complement-binary-number/
+https://en.cppreference.com/w/cpp/language/operator_alternative
+https://www.programiz.com/c-programming/bitwise-operators#complement
+
+原码true code 补码complemental code 反码ones-complement code 
+移码 offset binary/frame shift  excess/biased notion
+https://github.com/daa233/learning-notes/issues/22
+阶 符exponent character 阶码exponent-marker 尾数mantissa
+https://www.cprogramming.com/tutorial/floating_point/understanding_floating_point_representation.html
+https://zh.wikipedia.org/wiki/%E7%A7%BB%E7%A0%81
+https://www.coursera.org/lecture/jisuanji-xitong/w2-2-1-yuan-ma-he-yi-ma-biao-shi-KgJxS
+
+基础操作
+与运算:&
+
+或运算:|
+
+非运算:~x(按位取反)
+
+异或运算:^ 1.a^a=0 2. 0^a=a
+
+移位运算: 负数移位运算的时候高位会补1
+1<<n=2n
+n>>x=n2x
+补码:
+负数:按位取反+1
+−x= x+1(x的负数)
+
+正数:本身是自己的补码
+
+初始化整个数组为正无穷memset(f,0x3f,sizeof f)
+
+常用操作
+异或操作符合交换律和结合律,因此如果数字重复出现偶数次最后可异或成0,此时如果有一个数只出现1次,那么所有数异或最后会等于只出现一次的数 Acwing73.数组中只出现一次的两个数字
+n&-n从低位开始删除第一个1 AcWing26.二进制中1的个数  
+某个变量a如果只有1,0两个值那么如果a^=1就可以做到 1变0,0变1 Acwing73.费解的开关
+如果要对多个数进行0变1，1变0的操作那么可以对多个数的二进制进行求和然后异或 AcWing 116. 飞行员兄弟
+a&1可以用来判断a的奇偶性
+(x & (x-1)) == 0 用于判断x是否位2的整数次幂(因为x如果是偶数那么有且仅有最高位为1,那么x-1会使除最高位外全为1,进行与运算那么就全为0)
+倍增
+思想:所有的数都可以拆成二进制表示
+
+快速幂
+[AcWing 89. a^b](https://www.acwing.com/problem/content/91/
+ab=a1b1a2b2a4b3……a(2k)bn
+bi=0或者1
+64位乘法
+AcWing 90. 64位整数乘法
+a∗b=b个a相加
+a∗1=a
+a∗2=2a
+a∗4=4a
+a∗8=8a
+b=拆成二进制表示
+因此
+
+a∗b=a1b1+a2b2+a4b3+……+a(2k)bn
+
+bi=0或者1
+
+前缀和、差分数组都是从i=1开始,注意考虑边界问题
+
+前缀和
+一维前缀和
+一般都是插在题目里面使用
+sum[i]+=sum[i-1];
+
+二维前缀和
+计算方法
+sum[i][j]+=sum[i-1][j]+sum[i]j-1[]-sum[i-1][j-1]
+计算方法算出来的前缀和是(1，1)到(x，y)的前缀和 所以一般还需要进行枚举对角端点(x1,y1)(x2,y2)(总是会不枚举直接用前缀和了,这样是不对的不能包含所有矩阵)
+但是如果确定了length那么就可以直接扫描过符合条件的点,通过前缀和来进行容斥计算
+枚举对角端点也可以简化成确定左边界,枚举上下边界和又边界的问题
+Acwing 99. 激光炸弹
+AcWing 126. 最大的和
+
+离散化
+离散化思想:不在乎数字原本大小多少,只在乎数字间的相对大小关系(第一大,第二大....),从而把离散的点聚集起来变成连续的点
+适用情况:数字大小常常比数据个数多很多
+
+//离散化方法:
+//譬如覆盖一个1-10000中的100个值不离散化可能需要开g[10000],但是离散只需要g[100]和num[100]
+for(int i=0;i<n;i++)
+{
+    cin>>g[i];
+    num.push(g[i]);
+
+}
+sort(num.begin(),num,end())
+num.earse(num.begin(),num,end(),num.end())
+for()
+{
+    int pos=lower_bound(num.begin(),num,end(),g[i])-num.begin();
+    num[postion]=g[i];//因题目而定
+
+}
+Acwing 99. 赶牛入圈[https://www.acwing.com/activity/content/problem/content/355/1/]
+
+差分
+目前遇到的题目较前缀和较少,主要适用于对区间内数字进行统一修改 如:[l,r]区间数字统一+1)
+
+注意一开始差分数组的初始化(依据题目而定)
+普通的差分数组第1项为原来值,后面每项D[i]=a[i]-a[i-1] AcWing 100. IncDec序列
+根据题目要求一开始全为统一数字那么差分数组每一项应该都是0 AcWing 101.最高的牛
+求某项元素操作——>前缀和问题
+D[n]——>A[n]——>S[n]
+
