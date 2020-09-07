@@ -391,6 +391,7 @@ print(a,b)
 
 Mixing operators between numbers and strings is not supported:
 
+```
 # This will not work!
 
 one = 1
@@ -400,7 +401,7 @@ two = 2
 hello = "hello"
 
 print(one + two + hello)
-
+```
 with errors:
 
 Traceback (most recent call last):
@@ -412,7 +413,7 @@ Traceback (most recent call last):
 TypeError: unsupported operand type(s) for +: 'int' and 'str'
 
 code sample:
-
+```
 # example code with if and ==
 
 mystring = "hello"
@@ -436,7 +437,7 @@ if isinstance(myfloat, float) and myfloat == 10.0:
 if isinstance(myint, int) and myint == 20:
 
     print("Integer: %d" % myint)
-
+```
 
 
 Lists [ ]
