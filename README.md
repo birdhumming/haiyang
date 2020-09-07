@@ -4094,6 +4094,8 @@ SG函数
 	有向图游戏的某个局面必败，当且仅当该局面对应节点的SG函数值等于0。
 
 ```
+greedy algorithm has no templates - based on intuition and guess; no templates
+
 Huffman tree - full binary tree
 Huffman树
 
@@ -4102,3 +4104,8 @@ Huffman树
 ————来自百度百科
 https://www.geeksforgeeks.org/huffman-coding-using-priority-queue/
 https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
+
+DP - penultimate step is the key!
+algo advanced class - 1 is number triangle; linear DP type of problems
+boundary conditions are always tricky to consider - 
+yxc videos should be viewed with 1.25x! too slow for 1x
