@@ -1,4 +1,4 @@
-```
+
 lamda is anonymous function
 
 from time import sleep
@@ -3641,5 +3641,3 @@ for i in range(int(input())):
 python classes and objects
 
 https://drive.google.com/file/d/1j4sgqYVkCQifkyXk3lvvTGTyz1KTTNYN/view?usp=sharing
-
-```
