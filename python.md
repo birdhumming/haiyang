@@ -20,6 +20,7 @@ while len(a) > 1:
 print(ans)
 ```
 
+Numpy arrays are great alternatives to Python Lists. Some of the key advantages of Numpy arrays are that they are fast, easy to work with, and give users the opportunity to perform calculations across entire arrays.
 
 lamda is anonymous function
 
@@ -701,7 +702,7 @@ print(format_string % data)
 
 
 
-Basic String Operations
+# Basic String Operations
 
 
 Strings are bits of text. They can be defined as anything between quotes.
@@ -868,7 +869,7 @@ if s.endswith("ome!"):
 
 print("Split the words of the string: %s" % s.split(" "))
 
-Conditions
+# Conditions
 
 
 Python uses boolean variables to evaluate conditions. The boolean values True and False are returned when an expression is compared or evaluated. 
@@ -1005,7 +1006,7 @@ if not second_number:
 
 
 
-Loops
+# Loops
 
 
 There are two types of loops in Python, for and while.
@@ -1188,10 +1189,8 @@ for number in numbers:
 
 
 
-Functions
+# Functions
 
-
-What are Functions?
 Functions are a convenient way to divide your code into useful blocks, allowing us to order our code, make it more readable, reuse it and save some time. Also functions are a key way to define interfaces so programmers can share their code.
 
 How do you write functions in Python?
@@ -1319,13 +1318,7 @@ def name_the_benefits_of_functions():
 
 name_the_benefits_of_functions()
 
-
-
-
-
-
-
-Classes and Objects
+# Classes and Objects
 
 
 Objects are an encapsulation of variables and functions into a single entity. Objects get their variables and functions from classes. Classes are essentially a template to create your objects.
@@ -1536,7 +1529,7 @@ print(car1.description())
 
 print(car2.description())
 
-Dictionaries
+# Dictionaries
 
 
 A dictionary is a data type similar to arrays, but works with keys and values instead of indexes. Each value stored in a dictionary can be accessed using a key, which is any type of object (a string, a number, a list, etc.) instead of using its index to address it.
@@ -1657,7 +1650,7 @@ if "Jill" not in phonebook:
 
     print("Jill is not listed in the phonebook.")
 
-Modules and Packages
+# Modules and Packages
 
 
 In programming, a module is a piece of software that has a specific functionality. For example, when building a ping pong game, one module would be responsible for the game logic, and
@@ -2024,10 +2017,8 @@ for member in dir(re):
 
 print(sorted(find_members))
 
-Numpy Arrays
+# Numpy Arrays
 
-
-Getting started
 Numpy arrays are great alternatives to Python Lists. Some of the key advantages of Numpy arrays are that they are fast, easy to work with, and give users the opportunity to perform calculations across entire arrays.
 
 In the following example, you will first create two Python lists. Then, you will import the numpy package and create numpy arrays out of the newly created lists.
@@ -2110,7 +2101,7 @@ np_weight_lbs = np_weight_kg * 2.2
 
 print(np_weight_lbs)
 
-Pandas Basics
+# Pandas Basics
 
 
 Pandas DataFrames
@@ -2245,11 +2236,10 @@ print(cars.iloc[2])
 
 print(cars.loc[['AUS', 'EG']])
 
-Generators
+# Generators
 
 
 Generators are very easy to implement, but a bit difficult to understand.
-
 Generators are used to create iterators, but with a different approach. Generators are simple functions which return an iterable set of items, one at a time, in a special way.
 
 When an iteration over a set of item starts using the for statement, the generator is run. Once the generator's function code reaches a "yield" statement, the generator yields its execution back to the for loop, returning a new value from the set. The generator function can generate as many values (possibly infinite) as it wants, yielding each one in its turn.
@@ -2337,7 +2327,7 @@ if type(fib()) == types.GeneratorType:
 
             break
 
-List Comprehensions
+# List Comprehensions
 
 
 List Comprehensions is a very powerful tool, which creates a new list based on another list, in a single, readable line.
@@ -2385,7 +2375,7 @@ newlist = [int(x) for x in numbers if x > 0]
 
 print(newlist)
 
-Multiple Function Arguments
+# Multiple Function Arguments
 
 
 Every function in Python receives a predefined number of arguments, if declared normally, like this:
@@ -2489,7 +2479,7 @@ if bar(1,2,3,magicnumber = 7) == True:
 
     print("Awesome!")
 
-Regular Expressions
+# Regular Expressions
 
 
 Regular Expressions (sometimes shortened to regexp, regex, or re) are a tool for matching patterns in text. In Python, we have the re module. The applications for regular expressions are wide-spread, but they are fairly complex, so when contemplating using a regex for a certain task, think about alternatives, and come to regexes as a last resort.
@@ -2580,7 +2570,7 @@ pattern = r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?"
 
 test_email(pattern)
 
-Exception Handling
+# Exception Handling
 
 
 When programming, errors happen. It's just a fact of life. Perhaps the user gave bad input. Maybe a network resource was unavailable. Maybe the program ran out of memory. Or the programmer may have even made a mistake!
@@ -2658,8 +2648,7 @@ print("All exceptions caught! Good job!")
 
 print("The actor's last name is %s" % get_last_name())
 
-Sets
-
+# Sets
 
 Sets are lists with no duplicate entries. Let's say you want to collect a list of words used in a paragraph:
 
@@ -2757,7 +2746,7 @@ print(A.difference(B))
 
 
 
-Serialization
+# Serialization
 
 
 Python provides built-in JSON libraries to encode and decode JSON.
@@ -2839,10 +2828,7 @@ print(decoded_salaries["Jane"])
 print(decoded_salaries["Me"])
 
 
-
-
-
-Partial functions
+# Partial functions
 
 
 You can create partial functions in python by using the partial function from the functools library.
@@ -2892,7 +2878,7 @@ print(p(8))
 
 
 
-Code Introspection
+# Code Introspection
 
 
 Code introspection is the ability to examine classes, functions and keywords to know what they are, what they do and what they know.
@@ -2994,7 +2980,7 @@ print(dir(Vehicle))
 
 
 
-Closures
+# Closures
 
 
 A Closure is a function object that remembers values in enclosing scopes even if they are not present in memory. Let us get to it step by step
@@ -3114,33 +3100,34 @@ multiplywith5 = multiplier_of(5)
 
 print(multiplywith5(9))
 
-Decorators
+# Decorators
 
 
 Decorators allow you to make simple modifications to callable objects like functions, methods, or classes. We shall deal with functions for this tutorial. The syntax
-
+```
 @decorator
 
 def functions(arg):
 
     return "value"
+```
 
 Is equivalent to:
 
 
-
+```
 def function(arg):
 
     return "value"
 
 function = decorator(function) #this passes the function to the decorator, and reassigns it to the functions
-
+```
 
 
 As you may have seen, a decorator is just another function which takes a functions and returns one. For example you could do this:
 
 
-
+```
 def repeater(old_function):
 
     def new_function(*args, **kwds): #See learnpython.org/en/Multiple%20Function%20Arguments for how *args and **kwds works
@@ -3150,7 +3137,7 @@ def repeater(old_function):
         old_function(*args, **kwds) #we do it twice
 
     return new_function #we have to return the new_function, or it wouldn't reassign it to the value
-
+```
 
 
 This would make a function repeat twice.
@@ -3284,7 +3271,7 @@ first_letter(['Not', 'A', 'String'])
 
 
 
-Map, Filter, Reduce
+# Map, Filter, Reduce
 
 
 Map, Filter, and Reduce are paradigms of functional programming. They allow the programmer (you) to write simpler, shorter code, without neccessarily needing to bother about intricacies like loops and branching.
