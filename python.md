@@ -139,13 +139,13 @@ there is no char in python, only string as str
 python map(function, iterable) applies the function to each item of a given iterable and return the results:
 
 ```
-# Return double of n
+#Return double of n
 
 def addition(n):
 
     return n + n 
 
-# We double all numbers using map()
+#We double all numbers using map()
 
 numbers = (1, 2, 3, 4)
 
@@ -161,7 +161,7 @@ It can be done with lamda expressions also: lamda is anonymous function
 
 
 ```
-# Double all numbers using map and lambda
+#Double all numbers using map and lambda
 
 numbers = (1, 2, 3, 4)
 
@@ -169,7 +169,7 @@ result = map(lambda x: x + x, numbers)
 
 print(list(result))
 
-# Add two lists using map and lambda
+#Add two lists using map and lambda
 
 numbers1 = [1, 2, 3]
 
@@ -183,13 +183,13 @@ print(list(result))
 
 
 
-# List of strings
+#List of strings
 
 l = ['sat', 'bat', 'cat', 'mat']
 
   
 
-# map() can listify the list of strings individually
+#map() can listify the list of strings individually
 
 test = list(map(list, l))
 
@@ -318,7 +318,7 @@ x = 1
 
 if x == 1:
 
-    # indented four spaces
+    #indented four spaces
 
     print("x is 1.")
 
@@ -392,7 +392,7 @@ print(a,b)
 Mixing operators between numbers and strings is not supported:
 
 ```
-# This will not work!
+#This will not work!
 
 one = 1
 
@@ -414,7 +414,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
 
 code sample:
 ```
-# example code with if and ==
+#example code with if and ==
 
 mystring = "hello"
 
@@ -424,7 +424,7 @@ myint = 20
 
 
 
-# testing code
+#testing code
 
 if mystring == "hello":
 
@@ -454,15 +454,15 @@ mylist.append(2)
 
 mylist.append(3)
 
-print(mylist[0]) # prints 1
+print(mylist[0]) #prints 1
 
-print(mylist[1]) # prints 2
+print(mylist[1]) #prints 2
 
-print(mylist[2]) # prints 3
+print(mylist[2]) #prints 3
 
 
 
-# prints out 1,2,3
+#prints out 1,2,3
 
 for x in mylist:
 
@@ -475,7 +475,7 @@ mylist = [1,2,3]
 
 print(mylist[10]) 
 
-# gives error below
+#gives error below
 
 Traceback (most recent call last):
 
@@ -498,7 +498,7 @@ names = ["John", "Eric", "Jessica"]
 
 
 
-# write your code here
+#write your code here
 
 numbers.append(1)
 
@@ -518,7 +518,7 @@ second_name = names[1]
 
 
 
-# this code should write out the filled arrays and the second name in the # names list (Eric).
+#this code should write out the filled arrays and the second name in the #names list (Eric).
 
 print(numbers)
 
@@ -536,9 +536,9 @@ The main difference between a list and an array is the functions that you can pe
 
 It does take an extra step to use arrays because they have to be declared while lists don't because they are part of Python's syntax, so lists are generally used more often between the two, which works fine most of the time. However, if you're going to perform arithmetic functions to your lists, you should really be using arrays instead. Additionally, arrays will store your data more compactly and efficiently, so if you're storing a large amount of data, you may consider using arrays as well.
 
-#Basic Operators
+# Basic Operators
 
-#Arithmetic Operators
+# Arithmetic Operators
 
 Just as any other programming languages, the addition, subtraction, multiplication, and division operators can be used with numbers. They follow PEMDAS order.  Another operator available is the modulo (%) operator, which returns the integer remainder of the division. dividend % divisor = remainder.
 ```
@@ -560,7 +560,7 @@ print(squared)
 
 print(cubed)
 ```
-#Using Operators with Strings
+# Using Operators with Strings
 
 Python supports concatenating strings using the addition operator. Python also supports multiplying strings to form a string with a repeating sequence:
 ```
@@ -572,7 +572,7 @@ lotsofhellos = "hello" * 10
 
 print(lotsofhellos)
 ```
-#Using Operators with Lists
+# Using Operators with Lists
 
 Lists can be joined with the addition operators. Just as in strings, Python supports forming new lists with a repeating sequence using the multiplication operator:
 ```
@@ -626,7 +626,7 @@ if big_list.count(x) == 10 and big_list.count(y) == 10:
 
     print("Great!")
 ```
-#String Formatting
+# String Formatting
 
 
 Python uses C-style string formatting to create new, formatted strings. The "%" operator is used to format a set of variables enclosed in a "tuple" (a fixed size list), together with a format string, which contains normal text together with "argument specifiers", special symbols like "%s" and "%d".
@@ -634,21 +634,21 @@ Python uses C-style string formatting to create new, formatted strings. The "%" 
 Let's say you have a variable called "name" with your user name in it, and you would then like to print(out a greeting to that user.)
 
 To use two or more argument specifiers, use a tuple (parentheses):
-
-# This prints out "Hello, John!"
+```
+#This prints out "Hello, John!"
 
 name = "John"
 
 print("Hello, %s!" % name)
 
-# This prints out "John is 23 years old."
+#This prints out "John is 23 years old."
 
 name = "John"
 
 age = 23
 
 print("%s is %d years old." % (name, age))
-
+```
 Any object which is not a string can be formatted using the %s operator as well. The string which returns from the "repr" method of that object is formatted as the string. For example:
 
 # This prints out: A list: [1, 2, 3]
@@ -776,29 +776,29 @@ afewwords = astring.split(" ")
 
 
 
-## exercise below
+##exercise below
 
 s = "Strings are awesome!"
 
-# Length should be 20
+#Length should be 20
 
 print("Length of s = %d" % len(s))
 
 
 
-# First occurrence of "a" should be at index 8
+#First occurrence of "a" should be at index 8
 
 print("The first occurrence of the letter a = %d" % s.index("a"))
 
 
 
-# Number of a's should be 2
+#Number of a's should be 2
 
 print("a occurs %d times" % s.count("a"))
 
 
 
-# Slicing the string into bits
+#Slicing the string into bits
 
 print("The first five characters are '%s'" % s[:5]) # Start to 5
 
@@ -812,19 +812,19 @@ print("The last five characters are '%s'" % s[-5:]) # 5th-from-last to end
 
 
 
-# Convert everything to uppercase
+#Convert everything to uppercase
 
 print("String in uppercase: %s" % s.upper())
 
 
 
-# Convert everything to lowercase
+#Convert everything to lowercase
 
 print("String in lowercase: %s" % s.lower())
 
 
 
-# Check how a string starts
+#Check how a string starts
 
 if s.startswith("Str"):
 
@@ -832,7 +832,7 @@ if s.startswith("Str"):
 
 
 
-# Check how a string ends
+#Check how a string ends
 
 if s.endswith("ome!"):
 
@@ -840,9 +840,9 @@ if s.endswith("ome!"):
 
 
 
-# Split the string into three separate strings,
+#Split the string into three separate strings,
 
-# each containing only a word
+#each containing only a word
 
 print("Split the words of the string: %s" % s.split(" "))
 
@@ -947,7 +947,7 @@ print((not False) == (False)) # Prints out False
 
 
 
-# Exercise, prints 1 2 3 4 5 6
+#Exercise, prints 1 2 3 4 5 6
 
 number = 16
 
@@ -1001,7 +1001,7 @@ break is used to exit a for loop or a while loop, whereas continue is used to sk
 
 unlike languages like C,CPP.. we can use else for loops. When the loop condition of "for" or "while" statement fails then code part in "else" is executed. If break statement is executed inside for loop then the "else" part is skipped. Note that "else" part is executed even if there is a continue statement
 
-# Prints out 0,1,2,3,4 and then it prints "count value reached 5"
+#Prints out 0,1,2,3,4 and then it prints "count value reached 5"
 
 
 
@@ -1019,7 +1019,7 @@ else:
 
 
 
-# Prints out 1,2,3,4
+#Prints out 1,2,3,4
 
 for i in range(1, 10):
 
@@ -1034,9 +1034,6 @@ else:
     print("this is not printed because for loop is terminated because of break but not due to fail in condition")
 
 
-
-###
-
 primes = [2, 3, 5, 7]
 
 for prime in primes:
@@ -1045,7 +1042,7 @@ for prime in primes:
 
 
 
-# Prints out the numbers 0,1,2,3,4
+#Prints out the numbers 0,1,2,3,4
 
 for x in range(5):
 
@@ -1053,7 +1050,7 @@ for x in range(5):
 
 
 
-# Prints out 3,4,5
+#Prints out 3,4,5
 
 for x in range(3, 6):
 
@@ -1061,7 +1058,7 @@ for x in range(3, 6):
 
 
 
-# Prints out 3,5,7
+#Prints out 3,5,7
 
 for x in range(3, 8, 2):
 
@@ -1071,7 +1068,7 @@ for x in range(3, 8, 2):
 
 
 
-# Prints out 0,1,2,3,4
+#Prints out 0,1,2,3,4
 
 
 
@@ -1087,7 +1084,7 @@ while count < 5:
 
 
 
-# Prints out 0,1,2,3,4
+#Prints out 0,1,2,3,4
 
 
 
@@ -1105,7 +1102,7 @@ while True:
 
 
 
-# Prints out only odd numbers - 1,3,5,7,9
+#Prints out only odd numbers - 1,3,5,7,9
 
 for x in range(10):
 
@@ -1145,7 +1142,7 @@ numbers = [
 
 
 
-# your code goes here
+#your code goes here
 
 for number in numbers:
 
@@ -1191,7 +1188,7 @@ Functions may return a value to the caller, using the keyword- 'return' . For ex
 How do you call functions in Python?
 Simply write the function's name followed by (), placing any required arguments within the brackets. For example, lets call the functions written above (in the previous example):
 
-# Define our 3 functions
+#Define our 3 functions
 
 def my_function():
 
@@ -1211,7 +1208,7 @@ def sum_two_numbers(a, b):
 
 
 
-# print(a simple greeting)
+#print(a simple greeting)
 
 my_function()
 
@@ -1223,15 +1220,9 @@ my_function_with_args("John Doe", "a great year!")
 
 
 
-# after this line x will hold the value 3!
+#after this line x will hold the value 3!
 
 x = sum_two_numbers(1,2)
-
-
-
-
-
-####
 
 block_head:
 
@@ -1242,26 +1233,21 @@ block_head:
     ...
 
 
-
-###
-
 def my_function():
 
     print("Hello From My Function!")
 
-###
+
 
 def my_function_with_args(username, greeting):
 
     print("Hello, %s , From My Function!, I wish you %s"%(username, greeting))
 
-####
 
 def sum_two_numbers(a, b):
 
     return a + b
 
-###
 
 
 
@@ -1281,7 +1267,7 @@ Run and see all the functions work together!
 
 
 
-# Modify this function to return a list of strings as defined above
+#Modify this function to return a list of strings as defined above
 
 def list_benefits():
 
@@ -1289,7 +1275,7 @@ def list_benefits():
 
 
 
-# Modify this function to concatenate to each benefit - " is a benefit of functions!"
+#Modify this function to concatenate to each benefit - " is a benefit of functions!"
 
 def build_sentence(benefit):
 
@@ -1356,7 +1342,7 @@ class MyClass:
 
 
 
-###
+
 
 class MyClass:
 
@@ -1372,9 +1358,6 @@ class MyClass:
 
 myobjectx = MyClass()
 
-
-
-####
 
 
 
@@ -1398,7 +1381,7 @@ myobjectx.variable
 
 
 
-####
+
 
 class MyClass:
 
@@ -1420,7 +1403,6 @@ print(myobjectx.variable)
 
 
 
-####
 
 class MyClass:
 
@@ -1444,7 +1426,7 @@ myobjecty.variable = "yackity"
 
 
 
-# Then print out both values
+#Then print out both values
 
 print(myobjectx.variable)
 
@@ -1452,7 +1434,7 @@ print(myobjecty.variable)
 
 
 
-####
+
 
 class MyClass:
 
@@ -1480,7 +1462,7 @@ We have a class defined for vehicles. Create two new vehicles called car1 and ca
 
 """
 
-# define the Vehicle class
+#define the Vehicle class
 
 class Vehicle:
 
@@ -1500,7 +1482,7 @@ class Vehicle:
 
 
 
-# your code goes here
+#your code goes here
 
 car1 = Vehicle()
 
@@ -1526,7 +1508,7 @@ car2.value = 10000.00
 
 
 
-# test code
+#test code
 
 print(car1.description())
 
@@ -1635,7 +1617,7 @@ phonebook = {
 
 
 
-# write your code here
+#write your code here
 
 phonebook["Jake"] = 938273443
 
@@ -1643,7 +1625,7 @@ del phonebook["Jill"]
 
 
 
-# testing code
+#testing code
 
 if "Jake" in phonebook:
 
@@ -1752,9 +1734,9 @@ mygame/draw.py
 
 
 
-# game.py
+#game.py
 
-# import the draw module
+#import the draw module
 
 import draw
 
@@ -1774,9 +1756,9 @@ def main():
 
 
 
-# this means that if this script is executed, then 
+#this means that if this script is executed, then 
 
-# main() will be executed
+#main() will be executed
 
 if __name__ == '__main__':
 
@@ -1786,7 +1768,7 @@ if __name__ == '__main__':
 
 
 
-# draw.py
+#draw.py
 
 
 
@@ -1802,9 +1784,9 @@ def clear_screen(screen):
 
 
 
-# game.py
+#game.py
 
-# import the draw module
+#import the draw module
 
 from draw import draw_game
 
@@ -1820,9 +1802,9 @@ def main():
 
 
 
-# game.py
+#game.py
 
-# import the draw module
+#import the draw module
 
 from draw import *
 
@@ -1840,19 +1822,19 @@ def main():
 
 
 
-# game.py
+#game.py
 
-# import the draw module
+#import the draw module
 
 if visual_mode:
 
-    # in visual mode, we draw using graphics
+    #in visual mode, we draw using graphics
 
     import draw_visual as draw
 
 else:
 
-    # in textual mode, we print out text
+    #in textual mode, we print out text
 
     import draw_textual as draw
 
@@ -1862,7 +1844,7 @@ def main():
 
     result = play_game()
 
-    # this can either be visual or textual depending on visual_mode
+    #this can either be visual or textual depending on visual_mode
 
     draw.draw_game(result)
 
@@ -1874,13 +1856,13 @@ def main():
 
 
 
-# draw.py
+#draw.py
 
 
 
 def draw_game():
 
-    # when clearing the screen we can use the main screen object initialized in this module
+    #when clearing the screen we can use the main screen object initialized in this module
 
     clear_screen(main_screen)
 
@@ -1900,7 +1882,7 @@ class Screen():
 
 
 
-# initialize main_screen as a singleton
+#initialize main_screen as a singleton
 
 main_screen = Screen()
 
@@ -1926,13 +1908,13 @@ sys.path.append("/foo")
 
 
 
-# import the library
+#import the library
 
 import urllib
 
 
 
-# use it
+#use it
 
 urllib.urlopen(...)
 
@@ -2006,7 +1988,7 @@ import re
 
 
 
-# Your code goes here
+#Your code goes here
 
 find_members = []
 
@@ -2028,7 +2010,7 @@ Numpy arrays are great alternatives to Python Lists. Some of the key advantages 
 
 In the following example, you will first create two Python lists. Then, you will import the numpy package and create numpy arrays out of the newly created lists.
 
-# Create 2 new lists height and weight
+#Create 2 new lists height and weight
 
 height = [1.87,  1.87, 1.82, 1.91, 1.90, 1.85]
 
@@ -2036,13 +2018,13 @@ weight = [81.65, 97.52, 95.25, 92.98, 86.18, 88.45]
 
 
 
-# Import the numpy package as np
+#Import the numpy package as np
 
 import numpy as np
 
 
 
-# Create 2 numpy arrays from height and weight
+#Create 2 numpy arrays from height and weight
 
 np_height = np.array(height)
 
@@ -2056,26 +2038,26 @@ print(type(np_height))
 Element-wise calculations
 Now we can perform element-wise calculations on height and weight. For example, you could take all 6 of the height and weight observations above, and calculate the BMI for each observation with a single equation. These operations are very fast and computationally efficient. They are particularly helpful when you have 1000s of observations in your data.
 
-# Calculate bmi
+#Calculate bmi
 
 bmi = np_weight / np_height ** 2
 
 
 
-# Print the result
+#Print the result
 
 print(bmi)
 
 Subsetting
 Another great feature of Numpy arrays is the ability to subset. For instance, if you wanted to know which observations in our BMI array are above 23, we could quickly subset it to find out.
 
-# For a boolean response
+#For a boolean response
 
 bmi > 23
 
 
 
-# Print only those observations above 23
+#Print only those observations above 23
 
 bmi[bmi > 23]
 
@@ -2090,19 +2072,19 @@ import numpy as np
 
 
 
-# Create a numpy array np_weight_kg from weight_kg
+#Create a numpy array np_weight_kg from weight_kg
 
 np_weight_kg = np.array(weight_kg)
 
 
 
-# Create np_weight_lbs from np_weight_kg
+#Create np_weight_lbs from np_weight_kg
 
 np_weight_lbs = np_weight_kg * 2.2
 
 
 
-# Print out np_weight_lbs
+#Print out np_weight_lbs
 
 print(np_weight_lbs)
 
@@ -2134,13 +2116,13 @@ print(brics)
 
 As you can see with the new brics DataFrame, Pandas has assigned a key for each country as the numerical values 0 through 4. If you would like to have different index values, say, the two letter country code, you can do that easily as well.
 
-# Set the index for brics
+#Set the index for brics
 
 brics.index = ["BR", "RU", "IN", "CH", "SA"]
 
 
 
-# Print out brics with new index values
+#Print out brics with new index values
 
 print(brics)
 
@@ -2148,19 +2130,19 @@ Another way to create a DataFrame is by importing a csv file using Pandas. Now, 
 
 
 
-# Import pandas as pd
+#Import pandas as pd
 
 import pandas as pd
 
 
 
-# Import the cars.csv data: cars
+#Import the cars.csv data: cars
 
 cars = pd.read_csv('cars.csv')
 
 
 
-# Print out cars
+#Print out cars
 
 print(cars)
 
@@ -2169,7 +2151,7 @@ There are several ways to index a Pandas DataFrame. One of the easiest ways to d
 
 In the example below, you can use square brackets to select one column of the cars DataFrame. You can either use a single bracket or a double bracket. The single bracket with output a Pandas Series, while a double bracket will output a Pandas DataFrame.
 
-# Import pandas and cars.csv
+#Import pandas and cars.csv
 
 import pandas as pd
 
@@ -2177,19 +2159,19 @@ cars = pd.read_csv('cars.csv', index_col = 0)
 
 
 
-# Print out country column as Pandas Series
+#Print out country column as Pandas Series
 
 print(cars['cars_per_cap'])
 
 
 
-# Print out country column as Pandas DataFrame
+#Print out country column as Pandas DataFrame
 
 print(cars[['cars_per_cap']])
 
 
 
-# Print out DataFrame with country and drives_right columns
+#Print out DataFrame with country and drives_right columns
 
 print(cars[['cars_per_cap', 'country']])
 
@@ -2199,7 +2181,7 @@ Square brackets can also be used to access observations (rows) from a DataFrame.
 
 
 
-# Import cars data
+#Import cars data
 
 import pandas as pd
 
@@ -2207,13 +2189,13 @@ cars = pd.read_csv('cars.csv', index_col = 0)
 
 
 
-# Print out first 4 observations
+#Print out first 4 observations
 
 print(cars[0:4])
 
 
 
-# Print out fifth and sixth observation
+#Print out fifth and sixth observation
 
 print(cars[4:6])
 
@@ -2223,7 +2205,7 @@ You can also use loc and iloc to perform just about any data selection operation
 
 
 
-# Import cars data
+#Import cars data
 
 import pandas as pd
 
@@ -2231,13 +2213,13 @@ cars = pd.read_csv('cars.csv', index_col = 0)
 
 
 
-# Print out observation for Japan
+#Print out observation for Japan
 
 print(cars.iloc[2])
 
 
 
-# Print out observations for Australia and Egypt
+#Print out observations for Australia and Egypt
 
 print(cars.loc[['AUS', 'EG']])
 
@@ -2258,7 +2240,7 @@ import random
 
 def lottery():
 
-    # returns 6 numbers between 1 and 40
+    #returns 6 numbers between 1 and 40
 
     for i in range(6):
 
@@ -2266,7 +2248,7 @@ def lottery():
 
 
 
-    # returns a 7th number between 1 and 15
+    #returns a 7th number between 1 and 15
 
     yield random.randint(1,15)
 
@@ -2297,7 +2279,7 @@ print(a,b)
 
 will simultaneously switch the values of a and b.
 
-# fill in this function
+#fill in this function
 
 def fib():
 
@@ -2311,7 +2293,7 @@ def fib():
 
 
 
-# testing code
+#testing code
 
 import types
 
@@ -2388,7 +2370,7 @@ Every function in Python receives a predefined number of arguments, if declared 
 
 def myfunction(first, second, third):
 
-    # do something with the 3 variables
+    #do something with the 3 variables
 
 It is possible to declare functions which receive a variable number of arguments, using the following syntax:
 
@@ -2451,7 +2433,7 @@ Fill in the foo and bar functions so they can receive a variable amount of argum
 
 
 
-# edit the functions prototype and implementation
+#edit the functions prototype and implementation
 
 def foo(a, b, c, *args):
 
@@ -2467,7 +2449,7 @@ def bar(a, b, c, **kwargs):
 
 
 
-# test code
+#test code
 
 if foo(1,2,3,4) == 1:
 
@@ -2498,25 +2480,25 @@ A complete reference for the re syntax is available at the python docs.
 
 As an example of a "proper" email-matching regex (like the one in the exercise), see this
 
-# Example: 
+#Example: 
 
 import re
 
-pattern = re.compile(r"\[(on|off)\]") # Slight optimization
+pattern = re.compile(r"\[(on|off)\]") #Slight optimization
 
 print(re.search(pattern, "Mono: Playback 65 [75%] [-16.50dB] [on]"))
 
-# Returns a Match object!
+#Returns a Match object!
 
 print(re.search(pattern, "Nada...:-("))
 
-# Doesn't return anything.
+#Doesn't return anything.
 
-# End Example
+#End Example
 
 
 
-# Exercise: make a regular expression that will match an email
+#Exercise: make a regular expression that will match an email
 
 def test_email(your_pattern):
 
@@ -2538,15 +2520,15 @@ def test_email(your_pattern):
 
             print("Pass")
 
-pattern = r"" # Your pattern here!
+pattern = r"" #Your pattern here!
 
 test_email(pattern)
 
 
 
-##### solution
+#####solution
 
-# Exercise: make a regular expression that will match an email
+#Exercise: make a regular expression that will match an email
 
 import re
 
@@ -2570,7 +2552,7 @@ def test_email(your_pattern):
 
             print("Pass")
 
-# Your pattern here!
+#Your pattern here!
 
 pattern = r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?"
 
@@ -2623,7 +2605,7 @@ def catch_this():
 
             do_stuff_with_number(the_list[i])
 
-        except IndexError: # Raised when accessing a non-existing index of a list
+        except IndexError: #Raised when accessing a non-existing index of a list
 
             do_stuff_with_number(0)
 
@@ -2804,9 +2786,9 @@ import json
 
 
 
-# fix this function, so it adds the given name
+#fix this function, so it adds the given name
 
-# and salary pair to salaries_json, and return it
+#and salary pair to salaries_json, and return it
 
 def add_employee(salaries_json, name, salary):
 
@@ -2820,7 +2802,7 @@ def add_employee(salaries_json, name, salary):
 
 
 
-# test code
+#test code
 
 salaries = '{"Alfred" : 300, "Jane" : 400 }'
 
@@ -2863,7 +2845,7 @@ def multiply(x,y):
 
 
 
-# create a new function that multiplies by 2
+#create a new function that multiplies by 2
 
 dbl = partial(multiply,2)
 
@@ -2922,9 +2904,9 @@ Often the most important one is the help function, since you can use it to find 
 Exercise
 Print a list of all attributes of the given Vehicle object.
 
-# Use the help function to see what each function does.
+#Use the help function to see what each function does.
 
-# Delete this when you are done.
+#Delete this when you are done.
 
 help(dir)
 
@@ -2934,7 +2916,7 @@ help(id)
 
 
 
-# Define the Vehicle class.
+#Define the Vehicle class.
 
 class Vehicle:
 
@@ -2954,15 +2936,15 @@ class Vehicle:
 
 
 
-# Print a list of all attributes of the Vehicle class.
+#Print a list of all attributes of the Vehicle class.
 
-# Your code goes here
+#Your code goes here
 
 
 
-### solution
+###solution
 
-# Define the Vehicle class
+#Define the Vehicle class
 
 class Vehicle:
 
@@ -2982,7 +2964,7 @@ class Vehicle:
 
 
 
-# Print a list of all attributes of the Vehicle class.
+#Print a list of all attributes of the Vehicle class.
 
 print(dir(Vehicle))
 
@@ -3129,7 +3111,7 @@ def function(arg):
 
     return "value"
 
-function = decorator(function) # this passes the function to the decorator, and reassigns it to the functions
+function = decorator(function) #this passes the function to the decorator, and reassigns it to the functions
 
 
 
@@ -3139,13 +3121,13 @@ As you may have seen, a decorator is just another function which takes a functio
 
 def repeater(old_function):
 
-    def new_function(*args, **kwds): # See learnpython.org/en/Multiple%20Function%20Arguments for how *args and **kwds works
+    def new_function(*args, **kwds): #See learnpython.org/en/Multiple%20Function%20Arguments for how *args and **kwds works
 
-        old_function(*args, **kwds) # we run the old function
+        old_function(*args, **kwds) #we run the old function
 
-        old_function(*args, **kwds) # we do it twice
+        old_function(*args, **kwds) #we do it twice
 
-    return new_function # we have to return the new_function, or it wouldn't reassign it to the value
+    return new_function #we have to return the new_function, or it wouldn't reassign it to the value
 
 
 
@@ -3175,7 +3157,7 @@ def double_out(old_function):
 
     def new_function(*args, **kwds):
 
-        return 2 * old_function(*args, **kwds) # modify the return value
+        return 2 * old_function(*args, **kwds) #modify the return value
 
     return new_function
 
@@ -3187,9 +3169,9 @@ change input
 
 def double_Ii(old_function):
 
-    def new_function(arg): # only works if the old function has one argument
+    def new_function(arg): #only works if the old function has one argument
 
-        return old_function(arg * 2) # modify the argument passed
+        return old_function(arg * 2) #modify the argument passed
 
     return new_function
 
@@ -3201,7 +3183,7 @@ def check(old_function):
 
     def new_function(arg):
 
-        if arg < 0: raise (ValueError, "Negative Argument") # This causes an error, which is better than it doing the wrong thing
+        if arg < 0: raise (ValueError, "Negative Argument") #This causes an error, which is better than it doing the wrong thing
 
         old_function(arg)
 
@@ -3221,13 +3203,13 @@ Let's say you want to multiply the output by a variable amount. You could define
 
         return new_function
 
-    return multiply_generator # it returns the new generator
+    return multiply_generator #it returns the new generator
 
 
 
-# Usage
+#Usage
 
-@multiply(3) # multiply is not a generator, but multiply(3) is
+@multiply(3) #multiply is not a generator, but multiply(3) is
 
 def return_num(num):
 
@@ -3235,9 +3217,9 @@ def return_num(num):
 
 
 
-# Now return_num is decorated and reassigned into itself
+#Now return_num is decorated and reassigned into itself
 
-return_num(5) # should return 15
+return_num(5) #should return 15
 
 
 
@@ -3325,7 +3307,7 @@ Which would then output ['ALFRED', 'TABITHA', 'WILLIAM', 'ARLA']
 
 With map() functions, it's not only easier, but it's also much more flexible. I simply do this:
 
-# Python 3
+#Python 3
 
 my_pets = ['alfred', 'tabitha', 'william', 'arla']
 
@@ -3345,7 +3327,7 @@ Say I have a list of circle areas that I calculated somewhere, all in five decim
 
 Python already blesses us with the round() built-in function that takes two arguments -- the number to round up and the number of decimal places to round the number up to. So, since the function requires two arguments, we need to pass in two iterables.
 
-# Python 3
+#Python 3
 
 
 
@@ -3371,7 +3353,7 @@ Go ahead, try it.
 
 
 
-# Python 3
+#Python 3
 
 
 
@@ -3389,7 +3371,7 @@ The same thing happens if circle_areas is less than the length of the second ite
 
 To consolidate our knowledge of the map() function, we are going to use it to implement our own custom zip() function. The zip() function is a function that takes a number of iterables and then creates a tuple containing each of the elements in the iterables. Like map(), in Python 3, it returns a generator object, which can be easily converted to a list by calling the built-in list function on it. Use the below interpreter session to get a grip of zip() before we create ours with map()
 
-# Python 3
+#Python 3
 
 
 
@@ -3409,7 +3391,7 @@ As a bonus, can you guess what would happen in the above session if my_strings a
 
 Onto our own custom zip() function!
 
-# Python 3
+#Python 3
 
 
 
@@ -3453,7 +3435,7 @@ The following is a list (iterable) of the scores of 10 students in a Chemistry e
 
 
 
-# Python 3
+#Python 3
 
 scores = [66, 90, 68, 59, 76, 60, 88, 74, 81, 65]
 
@@ -3477,7 +3459,7 @@ The next example will be a palindrome detector. A "palindrome" is a word, phrase
 
 
 
-# Python 3
+#Python 3
 
 dromes = ("demigod", "rewire", "madam", "freer", "anutforajaroftuna", "kiosk")
 
@@ -3505,7 +3487,7 @@ As usual, let's see some examples.
 
 Let's create our own version of Python's built-in sum() function. The sum() function returns the sum of all the items in the iterable passed to it.
 
-# Python 3
+#Python 3
 
 from functools import reduce
 
@@ -3533,7 +3515,7 @@ As usual, it's all about iterations: reduce takes the first and second elements 
 
 Let's see what happens when I use the optional initial value.
 
-# Python 3
+#Python 3
 
 from functools import reduce
 
@@ -3564,29 +3546,29 @@ from functools import reduce
 
 
 
-# Use map to print the square of each numbers rounded
+#Use map to print the square of each numbers rounded
 
-# to two decimal places
+#to two decimal places
 
 my_floats = [4.35, 6.09, 3.25, 9.77, 2.16, 8.88, 4.59]
 
 
 
-# Use filter to print only the names that are less than 
+#Use filter to print only the names that are less than 
 
-# or equal to seven letters
+#or equal to seven letters
 
 my_names = ["olumide", "akinremi", "josiah", "temidayo", "omoseun"]
 
 
 
-# Use reduce to print the product of these numbers
+#Use reduce to print the product of these numbers
 
 my_numbers = [4, 6, 9, 23, 5]
 
 
 
-# Fix all three respectively.
+#Fix all three respectively.
 
 map_result = list(map(lambda x: x, my_floats))
 
@@ -3606,7 +3588,7 @@ print(reduce_result)
 
 #solution
 
-#### Map
+####Map
 
 from functools import reduce 
 
@@ -3636,7 +3618,7 @@ print(reduce_result)
 
 
 
-# code clip - parity check
+#code clip - parity check
 
 for i in range(int(input())):
 
