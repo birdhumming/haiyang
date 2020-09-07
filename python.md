@@ -445,6 +445,7 @@ Lists [ ]
 
 Lists can contain any type of variable, and they can contain as many variables as you wish. Lists can also be iterated over in a very simple manner. Here is an example of how to build a list.
 
+```
 mylist = []
 
 mylist.append(1)
@@ -466,9 +467,10 @@ print(mylist[2]) # prints 3
 for x in mylist:
 
     print(x)
+```
 
 Accessing an index which does not exist generates an exception (an error).
-
+```
 mylist = [1,2,3]
 
 print(mylist[10]) 
@@ -482,11 +484,12 @@ Traceback (most recent call last):
     print(mylist[10])
 
 IndexError: list index out of range
+```
 
 sample code
 
 
-
+```
 numbers = []
 
 strings = []
@@ -525,7 +528,7 @@ print("The second name on the names list is %s" % (second_name,))
 
 print("The second name on the names list is %s %s" % (second_name, strings[1]))
 
-
+```
 
 
 
@@ -533,10 +536,12 @@ The main difference between a list and an array is the functions that you can pe
 
 It does take an extra step to use arrays because they have to be declared while lists don't because they are part of Python's syntax, so lists are generally used more often between the two, which works fine most of the time. However, if you're going to perform arithmetic functions to your lists, you should really be using arrays instead. Additionally, arrays will store your data more compactly and efficiently, so if you're storing a large amount of data, you may consider using arrays as well.
 
-Basic Operators
-Arithmetic Operators
-Just as any other programming languages, the addition, subtraction, multiplication, and division operators can be used with numbers. They follow PEMDAS order.  Another operator available is the modulo (%) operator, which returns the integer remainder of the division. dividend % divisor = remainder.
+#Basic Operators
 
+#Arithmetic Operators
+
+Just as any other programming languages, the addition, subtraction, multiplication, and division operators can be used with numbers. They follow PEMDAS order.  Another operator available is the modulo (%) operator, which returns the integer remainder of the division. dividend % divisor = remainder.
+```
 number = 1 + 2 * 3 / 4.0
 
 print(number)
@@ -544,9 +549,9 @@ print(number)
 remainder = 11 % 3
 
 print(remainder)
-
+```
 Using two multiplication symbols makes a power relationship.
-
+```
 squared = 7 ** 2
 
 cubed = 2 ** 3
@@ -554,10 +559,11 @@ cubed = 2 ** 3
 print(squared)
 
 print(cubed)
+```
+#Using Operators with Strings
 
-Using Operators with Strings
 Python supports concatenating strings using the addition operator. Python also supports multiplying strings to form a string with a repeating sequence:
-
+```
 helloworld = "hello" + " " + "world"
 
 print(helloworld)
@@ -565,10 +571,11 @@ print(helloworld)
 lotsofhellos = "hello" * 10
 
 print(lotsofhellos)
+```
+#Using Operators with Lists
 
-Using Operators with Lists
 Lists can be joined with the addition operators. Just as in strings, Python supports forming new lists with a repeating sequence using the multiplication operator:
-
+```
 even_numbers = [2,4,6,8]
 
 odd_numbers = [1,3,5,7]
@@ -618,8 +625,8 @@ if x_list.count(x) == 10 and y_list.count(y) == 10:
 if big_list.count(x) == 10 and big_list.count(y) == 10:
 
     print("Great!")
-
-String Formatting
+```
+#String Formatting
 
 
 Python uses C-style string formatting to create new, formatted strings. The "%" operator is used to format a set of variables enclosed in a "tuple" (a fixed size list), together with a format string, which contains normal text together with "argument specifiers", special symbols like "%s" and "%d".
