@@ -1,0 +1,60 @@
+C. Chocolate Bunny
+time limit per test1 second
+memory limit per test256 megabytes
+inputstandard input
+outputstandard output
+This is an interactive problem.
+
+We hid from you a permutation 𝑝 of length 𝑛, consisting of the elements from 1 to 𝑛. You want to guess it. To do that, you can give us 2 different indices 𝑖 and 𝑗, and we will reply with 𝑝𝑖mod𝑝𝑗 (remainder of division 𝑝𝑖 by 𝑝𝑗).
+
+We have enough patience to answer at most 2⋅𝑛 queries, so you should fit in this constraint. Can you do it?
+
+As a reminder, a permutation of length 𝑛 is an array consisting of 𝑛 distinct integers from 1 to 𝑛 in arbitrary order. For example, [2,3,1,5,4] is a permutation, but [1,2,2] is not a permutation (2 appears twice in the array) and [1,3,4] is also not a permutation (𝑛=3 but there is 4 in the array).
+
+Input
+The only line of the input contains a single integer 𝑛 (1≤𝑛≤104) — length of the permutation.
+
+Interaction
+The interaction starts with reading 𝑛.
+
+Then you are allowed to make at most 2⋅𝑛 queries in the following way:
+
+"? x y" (1≤𝑥,𝑦≤𝑛,𝑥≠𝑦).
+After each one, you should read an integer 𝑘, that equals 𝑝𝑥mod𝑝𝑦.
+
+When you have guessed the permutation, print a single line "! " (without quotes), followed by array 𝑝 and quit.
+
+After printing a query do not forget to output end of line and flush the output. Otherwise, you will get Idleness limit exceeded. To do this, use:
+
+fflush(stdout) or cout.flush() in C++;
+System.out.flush() in Java;
+flush(output) in Pascal;
+stdout.flush() in Python;
+see documentation for other languages.
+Exit immediately after receiving "-1" and you will see Wrong answer verdict. Otherwise you can get an arbitrary verdict because your solution will continue to read from a closed stream.
+
+Hack format
+
+In the first line output 𝑛 (1≤𝑛≤104). In the second line print the permutation of 𝑛 integers 𝑝1,𝑝2,…,𝑝𝑛.
+
+Example
+inputCopy
+3
+
+1
+
+2
+
+1
+
+0
+outputCopy
+? 1 2
+
+? 3 2
+
+? 1 3
+
+? 2 1
+
+! 1 3 2

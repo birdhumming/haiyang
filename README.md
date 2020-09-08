@@ -1,3 +1,14 @@
+/* 
+https://oj.uz/submission/292972
+https://oj.uz/submissions?handle=tmwilliamlin168&problem=
+
+https://www.youtube.com/watch?v=kCqf6dvadlQ
+https://www.hackerrank.com/contests
+
+https://atcoder.jp/contests/
+
+*/
+
 算法竞赛进阶指南_含目录.pdf
 https://drive.google.com/file/d/1rH6Jodk-XSzm6Kdq8Lyzzpx-yOhecbU4/view?usp=sharing
 信息学奥赛一本通（C++）第五版.pdf
