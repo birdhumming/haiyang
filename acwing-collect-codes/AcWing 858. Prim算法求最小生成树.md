@@ -13,4 +13,6 @@ Prim
 1.迭代n次，每次迭代找到集合外距离最近的点（一开始没有选中一个点，因此迭代n次）。
 2.用t更新其他点到集合的距离（dijkstra 算法是更新其他点到到起点的距离）。
 3.更新到集合中。
-模拟：![dijkstra vs prim](acwing-collect-codes/"dijkstra vs prim".png)
+模拟：
+
+![dijkstra vs prim](acwing-collect-codes/"dijkstra vs prim".png)
