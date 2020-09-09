@@ -17,4 +17,4 @@ Prim
 
 
 
-![dijkstra vs prim](acwing-collect-codes/'dijkstra%20vs%20prim.png)
+![dijkstra vs prim](dijkstra%20vs%20prim.png)
