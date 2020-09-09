@@ -1,3 +1,27 @@
+In this video, I describe the steps to start competitive programming for a person from any level and I point out several common mistakes, so that you can easily land a job at a top company!
+
+HackerRank: https://www.hackerrank.com/
+Learn typing: https://www.keybr.com/
+Scratch: https://scratch.mit.edu/
+Learn C++: https://www.youtube.com/watch?v=mUQZ1...
+Competitive Programmer's Handbook: https://cses.fi/book/book.pdf
+GeeksForGeeks: https://www.geeksforgeeks.org/fundame...
+A2OJ Ladders: https://www.a2oj.com/Ladders.html
+Mostafa Saad's Junior Training Sheet: https://goo.gl/unDETI
+
+More videos about competitive programming will be coming soon!
+
+I created a Discord server for discussions and more: https://discord.gg/AneA5wg
+
+If this was helpful, consider liking or subscribing!
+You can follow my Instagram as I'll start to post CP related stuff: https://www.instagram.com/tmwilliamli...
+
+Signal lost clip: https://www.youtube.com/watch?v=mvM2e...
+Unfortunately, YouTube was unable to identify the "Sad Violin" music in this video, so here is the information:
+Song: Sad Romance (a.k.a. Sad Violin)
+Artist: 지평권 (Ji Pyeong Kwon)
+
+
 /* 
 https://oj.uz/submission/292972
 https://oj.uz/submissions?handle=tmwilliamlin168&problem=
