@@ -3,9 +3,9 @@ In this video, I describe the steps to start competitive programming for a perso
 HackerRank: https://www.hackerrank.com/
 Learn typing: https://www.keybr.com/
 Scratch: https://scratch.mit.edu/
-Learn C++: https://www.youtube.com/watch?v=mUQZ1...
+Learn C++: https://www.youtube.com/watch?v=mUQZ1qmKlLY
 Competitive Programmer's Handbook: https://cses.fi/book/book.pdf
-GeeksForGeeks: https://www.geeksforgeeks.org/fundame...
+GeeksForGeeks: https://www.geeksforgeeks.org/fundamentals-of-algorithms/
 A2OJ Ladders: https://www.a2oj.com/Ladders.html
 Mostafa Saad's Junior Training Sheet: https://goo.gl/unDETI
 
