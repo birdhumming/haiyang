@@ -4249,4 +4249,7 @@ Prim
 3.更新到集合中。
 模拟：
 
-![dijkstra vs prim](acwing-collect-codes/"dijkstra vs prim".png)
+![dijkstra vs prim](https://github.com/birdhumming/haiyang/blob/master/acwing-collect-codes/dijkstra%20vs%20prim.png)
+![Legend](Pictures/Legend.png)
+
+![Legend](Pictures/Legend.png)
