@@ -52,6 +52,9 @@ ll qexp(ll x, ll y){
         return ans;
 }
 
+//base and exponent
+
+//multiplicand and multiplier
 
 //get x*y in log(y) time by converting multiplication to addition
 ll qmulti(ll x, ll y){
