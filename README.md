@@ -1,9 +1,64 @@
+786. 第k个数，
+三数排序 - 75？
+
+鸿蒙 OS 开源项目：https://www.openatom.org/openharmony
+鸿蒙 OS 代码仓库：https://openharmony.gitee.com/
+
+LeetCode 326. 3的幂
+作者：    yxc ,  2020-09-10 21:08:09 ,  阅读 2
+
+0
+
+
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        return n > 0 && 1162261467 % n == 0;
+    }
+};
+
+
+LeetCode 324. 摆动排序 II
+作者：    yxc ,  2020-09-10 21:04:23 ,  阅读 5
+
+0
+
+
+class Solution {
+public:
+    void wiggleSort(vector<int>& nums) {
+        int n = nums.size();
+        auto midptr = nums.begin() + n / 2;
+        nth_element(nums.begin(), midptr, nums.end());
+        int mid = *midptr;
+
+        #define A(i) nums[(i * 2 + 1) % (n | 1)]
+
+        for (int i = 0, j = 0, k = n - 1; i <= k;) {
+            if (A(i) > mid) swap(A(i ++ ), A(j ++ ));
+            else if (A(i) < mid) swap(A(i), A(k -- ));
+            else i ++ ;
+        }
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/477154/
+
+
+topcoder is an app - C problem do 100 of them
+
+快速幂 - convert power to multiplication, express power number in binary and use it
+龟速乘 - convert multiplication to addition, express the multiplicant in binary to add
+
 拓扑排序Topological sort 本质就是图的遍历~ Traversal of graph
 遍历完所有的边而不能有重复，即所谓“一笔画问题”或“欧拉路径”；【完全解决】
 遍历完所有的顶点而没有重复，即所谓“哈密尔顿问题”。【部分可解】
 遍历完所有的边而可以有重复，即所谓“中国邮递员问题”；【完全解决】
 遍历完所有的顶点而可以重复，即所谓“旅行推销员问题”。【部分可解】
 暴搜、暴搜
+
+
 
 HackerRank: https://www.hackerrank.com/
 Learn typing: https://www.keybr.com/
