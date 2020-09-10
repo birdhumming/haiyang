@@ -1,4 +1,9 @@
-
+拓扑排序Topological sort 本质就是图的遍历~ Traversal of graph
+遍历完所有的边而不能有重复，即所谓“一笔画问题”或“欧拉路径”；【完全解决】
+遍历完所有的顶点而没有重复，即所谓“哈密尔顿问题”。【部分可解】
+遍历完所有的边而可以有重复，即所谓“中国邮递员问题”；【完全解决】
+遍历完所有的顶点而可以重复，即所谓“旅行推销员问题”。【部分可解】
+暴搜、暴搜
 
 HackerRank: https://www.hackerrank.com/
 Learn typing: https://www.keybr.com/
