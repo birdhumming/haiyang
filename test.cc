@@ -3,6 +3,18 @@
 using namespace std;
 typedef long long ll;
 
+int qmi(int m, int k, int p)
+{
+    int res = 1%p, t = m;
+    while (k)
+    {
+        if (k&1) res = res * t % p;
+        t = t * t % p;
+        k >>= 1;
+    }
+    return res;
+}
+
 //get x^y in log(y) time by converting power to multiplication
 ll qexp(ll x, ll y){
 	ll ans=1;
@@ -28,13 +40,15 @@ ll qmulti(ll x, ll y){
 
 int main()
 {
-    long long x,y;
-    cin>>x>>y;
+    long long x,y,p;
+    cin>>x>>y>>p;
     long long res=1;
 	
     res=qexp(x,y);
-    cout<<res<<endl;
+    //cout<<res<<endl;
     res=qmulti(x,y);
+    //cout<<res<<endl;
+    res=qmi(x,y,p);
     cout<<res<<endl;
 
     res=1;
@@ -45,6 +59,6 @@ int main()
         x=x*x;
         y>>=1;
     }
-    cout<<res<<endl;
+    //cout<<res<<endl;
     return 0;
 }
