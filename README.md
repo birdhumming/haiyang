@@ -1,3 +1,113 @@
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define fir(i,a,b) for(ll i=a;i<=b;i++)
+
+const int N = 1e5+10;
+
+ll n,m,t,a[N],b[N],s[N],x,y;
+ll calc(ll a[], ll n){
+fir(i,1,n){
+    a[i]-=(a[0]/n);
+    s[i]=s[i-1]+a[i];
+}
+sort(s+1,s+n+1);
+ll mid=(n+1)>>1,ans=0;
+fir(i,1,n) ans+=abs(s[mid]-s[i]);
+return ans;
+}
+
+int main(){
+    cin>>n>>m>>t;
+    fir(i,1,t){scanf("%d%d",&x,&y); a[x]++;b[y]++;}
+    fir(i,1,n) a[0]+=a[i];
+    fir(i,1,m) b[0]+=b[i];
+
+    ll as=a[0]%n,bs=b[0]%m;
+    if(!as && !bs) cout<<"both "<<calc(a,n)+calc(b,m);
+    else if(!as) cout<<"row "<<calc(a,n);
+    else if(!bs)cout<<"column "<<calc(b,m);
+    else cout<<"impossible";
+
+    return 0;
+}
+```
+
+```
+#include<iostream>
+#include<math.h>
+using namespace std;
+typedef long long ll;
+
+//get x^y in log(y) time by converting power to multiplication
+ll qexp(ll x, ll y){
+        ll ans=1;
+        while(y){
+                if(y&1) ans=ans*x;
+                x*=x;
+                y>>=1;
+        }
+        return ans;
+}
+
+
+//get x*y in log(y) time by converting multiplication to addition
+ll qmulti(ll x, ll y){
+        ll ans=0;
+        while(y){
+                if(y&1) ans=ans+x;
+                x+=x;
+                y>>=1;
+        }
+        return ans;
+}
+
+int main()
+{
+    long long x,y;
+    cin>>x>>y;
+    long long res=1;
+
+    res=qexp(x,y);
+    cout<<res<<endl;
+    res=qmulti(x,y);
+    cout<<res<<endl;
+
+    res=1;
+        //get x^y in log N time by converting power to multiplication
+    while(y)
+    {
+        if(y&1) res=res*x;
+        x=x*x;
+        y>>=1;
+    }
+    cout<<res<<endl;
+    return 0;
+}
+```
+
+```
+#include<iostream>
+#include<math.h>
+using namespace std;
+int main()
+{
+    long long a,b,q;
+    cin>>a>>b>>q;
+    long long res=1%q;
+    while(b)
+    {
+        if(b&1) res=res*a%q;
+        a=a*a%q;
+        b>>=1;
+    }
+    cout<<res;
+    return 0;
+}
+```
+
 786. 第k个数，
 三数排序 - 75？
 
@@ -91,41 +201,6 @@ https://drive.google.com/file/d/1bLZjeTzLe31xpZxNSXU93bVLTlXI0KNk/view?usp=shari
 C++与数据结构
 https://drive.google.com/file/d/1DVbjLIktdJcXvj3-Qn7F0yJQrHvL7zE3/view?usp=sharing
 
-```
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long
-#define fir(i,a,b) for(ll i=a;i<=b;i++)
-
-const int N = 1e5+10;
-
-ll n,m,t,a[N],b[N],s[N],x,y;
-ll calc(ll a[], ll n){
-fir(i,1,n){
-    a[i]-=(a[0]/n);
-    s[i]=s[i-1]+a[i];
-}
-sort(s+1,s+n+1);
-ll mid=(n+1)>>1,ans=0;
-fir(i,1,n) ans+=abs(s[mid]-s[i]);
-return ans;
-}
-
-int main(){
-    cin>>n>>m>>t;
-    fir(i,1,t){scanf("%d%d",&x,&y); a[x]++;b[y]++;}
-    fir(i,1,n) a[0]+=a[i];
-    fir(i,1,m) b[0]+=b[i];
-
-    ll as=a[0]%n,bs=b[0]%m;
-    if(!as && !bs) cout<<"both "<<calc(a,n)+calc(b,m);
-    else if(!as) cout<<"row "<<calc(a,n);
-    else if(!bs)cout<<"column "<<calc(b,m);
-    else cout<<"impossible";
-
-    return 0;
-}
-```
 
 ```
 '''
