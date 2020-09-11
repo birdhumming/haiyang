@@ -3025,6 +3025,7 @@ int main()
 
 
 // 整数二分算法模板
+// https://www.youtube.com/watch?v=IQzU6rjV_Gs
 
 bool check(int x) {/* ... */} // 检查x是否满足某种性质
 
