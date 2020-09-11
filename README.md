@@ -3624,8 +3624,8 @@ if (hh <= tt)
 				(1) 输入是一个数x，删除所有x   O(k + logn)
 				(2) 输入一个迭代器，删除这个迭代器
 			lower_bound()/upper_bound()
-				lower_bound(x)  返回大于等于x的最小的数的迭代器
-				upper_bound(x)  返回大于x的最小的数的迭代器
+				lower_bound(x)  返回大于等于x的最小的数的迭代器 //后继 包括x; page 25 of blue book
+				upper_bound(x)  返回大于x的最小的数的迭代器 //后继 不包括x; page 25 of blue book
 		map/multimap
 			insert()  插入的数是一个pair
 			erase()  输入的参数是pair或者迭代器
@@ -4539,3 +4539,53 @@ int main() {
     printf("%d\n", ans);
     return 0;
 }
+
+visible lattice points POJ3090 page 147 of blue book
+
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+using namespace std;
+ 
+const int Max=1010;
+int t,n,m,ans;
+int sum[Max][Max];
+ 
+inline int gcd(int a,int b)
+{
+	if(!b) return a;
+	return gcd(b,a%b);
+}
+ 
+inline void pre()
+{
+	for(int i=1;i<=1000;i++)
+	  for(int j=1;j<i;j++)
+		if(gcd(i,j)==1) sum[i][j]=1;
+	for(int i=1;i<=1000;i++)
+	  for(int j=1;j<i;j++) sum[i][j]+=sum[i][j-1];
+}
+ 
+inline void solve(int n)
+{
+	ans=0;
+	for(int i=1;i<=n;i++) ans+=sum[i][i-1];
+	ans=ans*2+3;
+}
+ 
+int main()
+{
+	pre();
+	scanf("%d",&t);
+	for(int i=1;i<=t;i++)
+	{
+	  scanf("%d",&n);
+	  solve(n);
+	  cout<<i<<" "<<n<<" "<<ans<<"\n";
+	}
+	return 0;
+}
+ 
