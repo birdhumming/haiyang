@@ -2933,9 +2933,14 @@ trie tree, union find set, heap,
 jichuke - wk3 xitike
 
 
+十大经典排序算法（动图演示）
+
+https://www.cnblogs.com/onepixel/p/7674659.html
+quicksort - not same as below
+
 ```
 // 快速排序算法模板
-void quick_sort(int q[], int l, int r)
+void quicksort(int q[], int l, int r)
 {
     if (l >= r) return;
     
@@ -2947,17 +2952,17 @@ void quick_sort(int q[], int l, int r)
         if (i < j) swap(q[i], q[j]);
         else break;
     }
-    quick_sort(q, l, j), quick_sort(q, j + 1, r);
+    quicksort(q, l, j), quicksort(q, j + 1, r);
 }
 
 // 归并排序算法模板
-void merge_sort(int q[], int l, int r)
+void mergesort(int q[], int l, int r)
 {
     if (l >= r) return;
     
     int mid = l + r >> 1;
-    merge_sort(q, l, mid);
-    merge_sort(q, mid + 1, r);
+    mergesort(q, l, mid);
+    mergesort(q, mid + 1, r);
     
     int k = 0, i = l, j = mid + 1;
     while (i <= mid && j <= r)
@@ -4405,3 +4410,82 @@ Prim
 模拟：
 
 ![dijkstra vs prim](https://github.com/birdhumming/haiyang/blob/master/acwing-collect-codes/dijkstra%20vs%20prim.png)
+
+swap() is in STL
+https://www.geeksforgeeks.org/swap-in-cpp/
+
+
+AcWing 2418. 光之大陆
+墨染空的头像墨染空
+57分钟前
+做完这题就感觉计数特别玄学，问题出在网上所有题解都认为旋转算不同方案，需要 ×k。但我觉得不需要，因为映射的时候已经选择了对应的编号，想了 3 天，发现这一点网上的题解的理解好像都是错的。。
+
+遂发题解。
+
+或者说，我们做题的都是自己构造了一个自己认为正确的“广义” Prufer 序列，但并没有考虑具体映射关系，编号和缩点后编号的是否映射到位，所以计数不可避免的出现一些重复、缺漏的部分，但是阴差阳错的就对了。。
+
+这题就是求 n 个点的区分编号、联通点仙人掌图数量。
+
+我们可以考虑把 n 分成若干简单环，然后考虑把他们连起来的方案数。
+
+考虑把每个简单环缩点，设缩点后有 j 个点，设 c[x] 为 x 缩点后属于的编号。
+
+那么对于 j 个缩点的图，有多少种生成树个数呢？
+
+考虑 Prufer 编码，稍稍做一点改动，考虑每次选择的点是 n 个，需要连 j−1 条边，所以是 nj−2。这样为什么是正确的呢？考虑构造一个类似的映射方式，在标准 Prufer 编码映射上的改动：
+
+在有关度数的所有操作，把 x 当作 c[x] 进行相关操作
+在有关生成 Prufer 序列，连接父亲儿子边这些操作，用原始编号。
+这样的话我们发现映射的时候，如果当作一个以 n 为根的有根树，对于一条边而言，映射出了这条边父亲的缩点前的具体编号与儿子缩点后的具体编号（这个可以考虑 Prufer 映射的过程，连边在这种特殊的映射中 (x,y)， y 实际上是缩点后的编号），所以对于每条边，我们还要计数选择这条边儿子连接的具体是 y 这个缩的点连接的是这个环中具体的哪个点（选择一个接口），设每个缩点的环大小是 sz，答案应该是 nj−2×∏sz
+后面 sz 的乘积，我们可以在把分成环的时候把贡献送进去。
+
+所以 fi,j 实际上是把 i 个点的仙人掌缩点后分成 j 个点，再从每个环里面选出一个点作为接口连接父亲边，的方案数。
+
+所以这个 ×k 实际上并不是网上流传的朝向本质不同，而是广义 Prufer 计数留下的历史遗漏问题，缩点后编号和原始编号映射没有映射全，需要额外增加计数导致的。
+
+答案就是 ∑ni=1fn,i×ni−2。
+
+考虑求解 fi,j，可以类比 AcWing 307. 连通图 的方式，枚举基准点 i 的联通块大小 k。
+
+fi,j=∑k=1ifi−k,j−1×Ck−1i−1×gk×k
+这个 gi 表示大小为 i 的环的方案数：
+
+gi={0, i=2(i−1)!2,otherwise
+不存在大小为 2 的环，i=1 默认是一个点，在这个题里环旋转、翻转本质相同。
+
+注意 i=1 的时候特判，贡献即 (n−1)!2
+这个东西在预处理组合数后可以 O(n3) 做，这题就做完了。
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+const int N = 205;
+
+typedef long long LL;
+
+int n, P, f[N][N], fact[N], C[N][N];
+
+int main() {
+    scanf("%d%d", &n, &P);
+    f[0][0] = C[0][0] = 1;
+    fact[1] = 1, fact[3] = 3;
+    for (int i = 4; i <= n; i++) fact[i] = fact[i - 1] * i % P;
+    for (int i = 1; i <= n; i++) {
+        C[i][0] = 1;
+        for (int j = 1; j <= i; j++) 
+            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % P;
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            for (int k = 1; k <= i; k++) {
+                f[i][j] = (f[i][j] + (LL)f[i - k][j - 1] * C[i - 1][k - 1] % P * fact[k]) % P;
+            }
+        }
+    }
+    int ans = fact[n - 1], s = 1;
+    for (int i = 2; i <= n; i++, s = s * n % P) ans = (ans + (LL)f[n][i] * s) % P;
+    printf("%d\n", ans);
+    return 0;
+}

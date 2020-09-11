@@ -180,3 +180,11 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/468998/
+
+
+https://programmersought.com/article/29941961413/
+
+fhq treap  https://blog.csdn.net/CABI_ZGX/article/details/79963427
+
+
+https://programmer.group/learning-notes-fhq-treap.html
