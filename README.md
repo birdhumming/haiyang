@@ -3036,7 +3036,7 @@ int bsearch_1(int l, int r)
     {
         int mid = l + r >> 1;
         if (check(mid)) r = mid;    // check()判断mid是否满足性质
-        else l = mid + 1;
+        else l = mid + 1;			// TLE for leetcode LIS
     }
     return l;
 }
@@ -4541,7 +4541,7 @@ int main() {
 }
 
 visible lattice points POJ3090 page 147 of blue book
-
+```
 #include <iostream>
 #include <algorithm>
 #include <cstdio>
@@ -4589,3 +4589,93 @@ int main()
 	return 0;
 }
  
+```
+ TLE code:
+https://leetcode.com/submissions/detail/388061438/
+
+```
+ class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int tt=0;
+        vector<int> q(nums.size());
+        for(auto x:nums){
+            if(!tt||x>q[tt-1]) q[tt++]=x;
+            else{
+                int l=0,r=tt-1;
+                while(l<r){
+                    int mid=1+r>>1;
+                    if(q[mid]>=x)r=mid;
+                    else l=mid+1;
+                }
+                q[r]=x;
+            }
+        }
+     return tt;   
+    }
+};
+
+AC code 1:
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        if(nums.size()==0)return 0;
+        
+        int tt=1;
+        vector<int> q(nums.size()+1,0);
+        q[1]=nums[0];
+        
+        //for(auto x:nums){
+        for (int i=1;i<nums.size();i++){
+            int l=1;
+            int r=tt;
+            while(l<=r){
+                int mid=l+r>>1;
+                if(q[mid]<nums[i]) l=mid+1;
+                else r=mid-1;
+                
+            }
+                q[l]=nums[i];
+            if(l>tt)tt=l;
+        
+        }
+     return tt;   
+    }
+};
+
+
+AC code 2:
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        
+
+const int N = 100010;
+
+int n;
+int q[N];
+
+    n=nums.size();
+    int len = 0;
+    for (int i = 0; i < n; i ++ )
+    {
+        int l = 0, r = len;
+        while (l < r)
+        {
+            int mid = l + r + 1 >> 1;
+            if (q[mid] < nums[i]) l = mid;
+            else r = mid - 1;
+        }
+        len = max(len, r + 1);
+        q[r + 1] = nums[i];
+    }
+
+    //printf("%d\n", len);
+    return len;
+
+    
+    }
+};
+```
