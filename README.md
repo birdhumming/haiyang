@@ -2939,23 +2939,27 @@ https://www.cnblogs.com/onepixel/p/7674659.html
 quicksort - not same as below
 
 ```
-// 快速排序算法模板
+// 快速排序算法模板; with double pointer starting on each end
+// pivot using one number x=q[left]
+
 void quicksort(int q[], int l, int r)
 {
     if (l >= r) return;
-    
+    // sect into two parts
     int i = l - 1, j = r + 1, x = q[l];
     while (i < j)
     {
         do i ++ ; while (q[i] < x);
         do j -- ; while (q[j] > x);
-        if (i < j) swap(q[i], q[j]);
+        if (i < j) swap(q[i], q[j]); // or int t=q[i];q[i]=q[j];q[j]=t;
         else break;
     }
-    quicksort(q, l, j), quicksort(q, j + 1, r);
+    quicksort(q, l, j), quicksort(q, j + 1, r); // use j not i-1, i where x=q[r]
 }
 
 // 归并排序算法模板
+// get/use mid-point index first; sort left and right; then merge
+
 void mergesort(int q[], int l, int r)
 {
     if (l >= r) return;
@@ -2963,8 +2967,10 @@ void mergesort(int q[], int l, int r)
     int mid = l + r >> 1;
     mergesort(q, l, mid);
     mergesort(q, mid + 1, r);
+
+    // below is merge two sorted parts into one - 二路归并
     
-    int k = 0, i = l, j = mid + 1;
+	int k = 0, i = l, j = mid + 1;
     while (i <= mid && j <= r)
         if (q[i] < q[j]) tmp[k ++ ] = q[i ++ ];
         else tmp[k ++ ] = q[j ++ ];
