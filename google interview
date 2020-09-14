@@ -1,0 +1,126 @@
+acwing
+google interview - 2455 19 
+275 2457
+
+https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
+
+AcWing 19. 二叉树的下一个节点    原题链接    中等
+作者：    yxc ,  2019-01-05 02:58:17 ,  阅读 2974
+
+30
+
+
+12
+算法
+(模拟) O(h)O(h)
+这道题目就是让我们求二叉树中给定节点的后继。
+
+分情况讨论即可，如下图所示：
+
+如果当前节点有右儿子，则右子树中最左侧的节点就是当前节点的后继。比如F的后继是H；
+如果当前节点没有右儿子，则需要沿着father域一直向上找，找到第一个是其father左儿子的节点，该节点的father就是当前节点的后继。比如当前节点是D，则第一个满足是其father左儿子的节点是F，则C的father就是D的后继，即F是D的后继。
+
+
+时间复杂度分析
+不论往上找还是往下找，总共遍历的节点数都不大于树的高度。所以时间复杂度是 O(h)O(h)，其中 hh 是树的高度。
+
+C++ 代码
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode *father;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL), father(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* p) {
+        if (p->right) {
+            p = p->right;
+            while (p->left) p = p->left;
+            return p;
+        }
+
+        while (p->father && p == p->father->right) p = p->father;
+        return p->father;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/714/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 275. 传纸条    原题链接    简单
+作者：    yxc ,  2019-08-18 23:02:48 ,  阅读 1563
+
+33
+
+
+6
+算法
+(线性DP) O(n3)O(n3)
+首先考虑路径有交集该如何处理。
+可以发现交集中的格子一定在每条路径的相同步数处。因此可以让两个人同时从起点出发，每次同时走一步，这样路径中相交的格子一定在同一步内。
+
+状态表示：f[k, i, j] 表示两个人同时走了k步，第一个人在 (i, k - i) 处，第二个人在 (j, k - j)处的所有走法的最大分值。
+
+状态计算：按照最后一步两个人的走法分成四种情况：
+
+两个人同时向右走，最大分值是 f[k - 1, i, j] + score(k, i, j)；
+第一个人向右走，第二个人向下走，最大分值是 f[k - 1, i, j - 1] + score(k, i, j)；
+第一个人向下走，第二个人向右走，最大分值是 f[k - 1, i - 1, j] + score(k, i, j)；
+两个人同时向下走，最大分值是 f[k - 1, i - 1, j - 1] + score(k, i, j)；
+注意两个人不能走到相同格子，即i和j不能相等。
+
+时间复杂度
+一共有 O(n3)O(n3) 个状态，每个状态需要 O(1)O(1) 的计算量，因此总时间复杂度是 O(n3)O(n3)。
+
+C++ 代码
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 55;
+
+int n, m;
+int g[N][N];
+int f[N * 2][N][N];
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= m; j ++ )
+            scanf("%d", &g[i][j]);
+
+    for (int k = 2; k <= n + m; k ++ )
+        for (int i = max(1, k - m); i <= n && i < k; i ++ )
+            for (int j = max(1, k - m); j <= n && j < k; j ++ )
+                for (int a = 0; a <= 1; a ++ )
+                    for (int b = 0; b <= 1; b ++ )
+                    {
+                        int t = g[i][k - i];
+                        if (i != j || k == 2 || k == n + m)
+                        {
+                            t += g[j][k - j];
+                            f[k][i][j] = max(f[k][i][j], f[k - 1][i - a][j - b] + t);
+                        }
+                    }
+
+    printf("%d\n", f[n + m][n][n]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/3954/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
