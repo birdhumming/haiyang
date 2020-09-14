@@ -1,0 +1,340 @@
+AcWing 1452. 寻找矩阵的极小值    原题链接    中等
+作者：    Tie ,  2020-04-11 16:16:53 ,  阅读 230
+
+1
+
+
+// Forward declaration of queryAPI.
+// int query(int x, int y); 
+// return int means matrix[x][y].
+
+// n行 * n列
+// 二分所有列：最多log(n)上取整次，每次遍历中间一列和L,R (n + 2), 如果最后剩下最后一列，还需要遍历这一列的最小值
+// 时间复杂度：最大：log(n)上取整 * (n + 2) + n
+// 遍历最中间一列，找出最小值， 然后和L， R比较，继续延伸到左右两边，每次将范围缩小一半
+// 列二分 + 行二分：不一定有解
+// 行二分：如果是最后一行，时间可能还是n*log(n); 且可能不会有解
+class Solution {
+public:
+    vector<int> getMinimumValue(int n) {
+        typedef long long LL; // 可能爆int
+        const LL INF = 1e15; // 找一个大数
+        // 二分列
+        int l = 0, r = n - 1; // 矩阵从0开始
+        while (l < r) {
+            int mid = (l + r) >> 1; // 求出中间列位置
+            int k; // 记录当前值的行位置
+            LL val = INF; // 需要更新的最小值，先把val定义成最大
+            for (int i = 0; i < n; i ++ ) { // 找中间一列的最小值，遍历中间列（i，mid）
+                int t = query(i, mid); // query提供接口，用来确定矩阵中的值
+                if (t < val) { // 如果当前值小于val
+                    val = t; // 更新val
+                    k = i; // 更新k
+                }
+            }
+            LL left = mid ? query(k, mid - 1) : INF; // 如果mid大于0，求出第k行mid-1的值
+            LL right = mid + 1 < n ? query(k, mid + 1) : INF; // 如果mid在范围内
+
+            if (val < left && val < right) return {k, mid}; // 找到答案
+            if (left < val) r = mid - 1; // 左边有解
+            else l = mid + 1; // 右边有解
+        }
+
+        // 二分后，最后只剩一列，找出这一列的最小值
+        int k;
+        LL val = INF;
+        for (int i = 0; i < n; i ++ ) {
+            int t = query(i, r);
+            if (t < val) {
+                val = t;
+                k = i;
+            }
+        }
+
+        return {k, r};
+    }
+};
+
+作者：Tie
+链接：https://www.acwing.com/solution/content/11351/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。AcWing 1452. 寻找矩阵的极小值    原题链接    中等
+作者：    Tie ,  2020-04-11 16:16:53 ,  阅读 230
+
+1
+
+
+// Forward declaration of queryAPI.
+// int query(int x, int y); 
+// return int means matrix[x][y].
+
+// n行 * n列
+// 二分所有列：最多log(n)上取整次，每次遍历中间一列和L,R (n + 2), 如果最后剩下最后一列，还需要遍历这一列的最小值
+// 时间复杂度：最大：log(n)上取整 * (n + 2) + n
+// 遍历最中间一列，找出最小值， 然后和L， R比较，继续延伸到左右两边，每次将范围缩小一半
+// 列二分 + 行二分：不一定有解
+// 行二分：如果是最后一行，时间可能还是n*log(n); 且可能不会有解
+class Solution {
+public:
+    vector<int> getMinimumValue(int n) {
+        typedef long long LL; // 可能爆int
+        const LL INF = 1e15; // 找一个大数
+        // 二分列
+        int l = 0, r = n - 1; // 矩阵从0开始
+        while (l < r) {
+            int mid = (l + r) >> 1; // 求出中间列位置
+            int k; // 记录当前值的行位置
+            LL val = INF; // 需要更新的最小值，先把val定义成最大
+            for (int i = 0; i < n; i ++ ) { // 找中间一列的最小值，遍历中间列（i，mid）
+                int t = query(i, mid); // query提供接口，用来确定矩阵中的值
+                if (t < val) { // 如果当前值小于val
+                    val = t; // 更新val
+                    k = i; // 更新k
+                }
+            }
+            LL left = mid ? query(k, mid - 1) : INF; // 如果mid大于0，求出第k行mid-1的值
+            LL right = mid + 1 < n ? query(k, mid + 1) : INF; // 如果mid在范围内
+
+            if (val < left && val < right) return {k, mid}; // 找到答案
+            if (left < val) r = mid - 1; // 左边有解
+            else l = mid + 1; // 右边有解
+        }
+
+        // 二分后，最后只剩一列，找出这一列的最小值
+        int k;
+        LL val = INF;
+        for (int i = 0; i < n; i ++ ) {
+            int t = query(i, r);
+            if (t < val) {
+                val = t;
+                k = i;
+            }
+        }
+
+        return {k, r};
+    }
+};
+
+作者：Tie
+链接：https://www.acwing.com/solution/content/11351/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1452. 寻找矩阵的极小值    原题链接    中等
+作者：    沙漠绿洲 ,  2020-08-19 11:49:04 ,  阅读 55
+
+0
+
+
+C++ 代码
+// Forward declaration of queryAPI.
+// int query(int x, int y);
+// return int means matrix[x][y].
+
+class Solution {
+public:
+    using LL = long long;
+    using PII = pair<int, int>;
+    const LL INF = 1e15;
+
+    PII serch(int j, int n){ //在列上找到最小位置cnt和最小值ret
+        int cnt = 0;
+        LL ret = INF;
+        for(int i = 0; i < n; ++ i){
+            int res = query(i, j);
+            if(res < ret)
+                cnt = i, ret = res;
+        }
+        return {cnt, ret};
+    }
+
+    vector<int> getMinimumValue(int n) {
+        LL l = 0, r = n - 1;
+        while(l < r){        
+            int mid = l + r >> 1;  // 二分列
+
+            PII p = serch(mid, n);
+            LL left = mid - 1 >= 0 ? query(p.first, mid - 1) : INF;
+            LL right = mid + 1 < n ? query(p.first, mid + 1) : INF;
+
+            if(left > p.second && right > p.second) return {p.first, mid};
+            if(left < p.second) r = mid - 1;
+            else l = mid + 1;
+        }
+        return {serch(l , n).first, l};
+    }
+};
+
+作者：沙漠绿洲
+链接：https://www.acwing.com/solution/content/18746/
+
+
+2456. 记事本
+   题目
+   讨论
+   题解
+   视频讲解
+
+最初在一个记事本上只有一个字符 A。
+
+你每次可以对这个记事本进行两种操作：
+
+Copy All (复制全部) : 你可以复制这个记事本中的所有字符(部分的复制是不允许的)。
+Paste (粘贴) : 你可以粘贴你上一次复制的字符。
+给定一个数字 n。
+
+你需要使用最少的操作次数，在记事本中打印出恰好 n 个 A。
+
+输出能够打印出 n 个 A 的最少操作次数。
+
+输入格式
+一个整数 n。
+
+输出格式
+一个整数，表示最少操作次数。
+
+数据范围
+1≤n≤106
+输入样例：
+3
+输出样例：
+3
+
+3rd problem is  math problem, integral
+
+given a segment, add two points, ending in 3 parts
+what's the probability the 3 parts form a triangle?
+
+1/8 / 1/2 = 1/4
+
+integral
+x 0-1/2
+y 1/2-1
+
+y-x 0-1/2
+
+1. 756 acwing
+
+
+AcWing 756. 蛇形矩阵 好理解的模拟法    原题链接    困难
+作者：    Yuerer ,  2020-01-30 14:37:05 ,  阅读 937
+
+14
+
+
+1
+题解
+利用 left right top bottom 四个变量 来表示 这个矩形的边界
+
+#include <iostream>
+
+using namespace std;
+const int N = 105;
+
+int a[N][N];
+int n, m;
+
+int main() {
+    cin >> n >> m;
+
+    int left = 0, right = m - 1, top = 0, bottom = n - 1;
+    int k = 1;
+    while (left <= right && top <= bottom) {
+        for (int i = left ; i <= right; i ++) {
+            a[top][i] = k ++;
+        }
+        for (int i = top + 1; i <= bottom; i ++) {
+            a[i][right] = k ++;
+        }
+        for (int i = right - 1; i >= left && top < bottom; i --) {
+            a[bottom][i] = k ++;
+        }
+        for (int i = bottom - 1; i > top && left < right; i --) {
+            a[i][left] = k ++;
+        }
+        left ++, right --, top ++, bottom --;
+    }
+    for (int i = 0; i < n; i ++) {
+        for (int j = 0; j < m; j ++) {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+作者：Yuerer
+链接：https://www.acwing.com/solution/content/8007/
+
+
+AcWing 756. 蛇形矩阵    原题链接    困难
+作者：    XDDX ,  2020-01-17 03:15:03 ,  阅读 987
+
+8
+
+
+4
+题目描述
+输入两个整数n和m，输出一个n行m列的矩阵，将数字 1 到 n*m 按照回字蛇形填充至矩阵中。
+
+具体矩阵形式可参考样例。
+
+输入格式
+输入共一行，包含两个整数n和m。
+
+输出格式
+输出满足要求的矩阵。
+
+矩阵占n行，每行包含m个空格隔开的整数。
+
+数据范围
+1≤n,m≤100
+
+样例
+输入样例：
+3 3
+
+输出样例：
+1 2 3
+8 9 4
+7 6 5
+
+#include <iostream>
+
+using namespace std;
+
+int m,n;
+
+int const N = 110;
+
+int f[N][N];
+
+int main()
+{
+    cin >> n >> m;
+    int dx[4] = { 0, 1, 0, -1};
+    int dy[4] = { 1, 0, -1, 0};//准备两个数值表示当前行走方向 依此为 东-南-西-北-东-...(右-下-左-上-右-...) 
+    int x = 1, y = 1,d = 0;//x,y表示从(1,1)点开始行走 ， d表示初始方向为东  
+    for(int i = 1; i <= n * m; i ++)
+    {
+        if((x + dx[d] > n || y + dy[d] > m || y + dy[d] == 0) || (f[x + dx[d]][y + dy[d]]))//判断行走的下一个状态是否碰壁 
+        //( 下移时是否碰越下界 || 右移时是否越右界  || 左移时是否越左界) || (若不改变移动方向 下一点是否已经到达过)
+            d = (d + 1) % 4;//碰壁后换移动方向 
+        f[x][y] = i;//标记当前到达点 
+        x += dx[d];
+        y += dy[d];//以当前方向(可能改变也可能未改变)移动一次 
+    }
+    for(int i = 1; i <= n; i ++)
+    {
+        for(int j = 1;j <= m; j ++)
+            cout << f[i][j] << ' ';
+        cout << endl;
+    }//输出 
+    return 0;
+}
+
+作者：XDDX
+链接：https://www.acwing.com/solution/content/7674/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
