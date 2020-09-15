@@ -4711,3 +4711,7 @@ AI
 cs50 https://cs50.harvard.edu/ai/2020/
 AI Book-
 https://drive.google.com/file/d/1Ipqb9gjCP0D9j5aqRhg80uIQg5knFbvi/view?usp=sharing
+
+KMP better explanation:
+https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
+
