@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://www.acwing.com/blog/content/2229/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>c++ STL总结表格 - AcWing</title>
+    
+
+
+<meta name="keywords" content="STL">
+<meta name="description" content="STL">
+<meta name="baidu-site-verification" content="UW1SBiMHO7">
+<meta name="google-site-verification" content="YTgbOq_0TDShJS6KTcUYCQoAAZTm308SJ7ibsafBD_Y">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" type="image/png" href="https://cdn.acwing.com/static/web/img/favicon.ico">
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/bootstrap.min.css">
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/bootstrap-toggle.min.css">
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/signform.css">
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/jquery-ui.min.css">
+
+
+<!--link rel="stylesheet" href="https://cdn.acwing.com/static/web/css/pace.css"-->
+<!--script src="https://cdn.acwing.com/static/web/js/pace.js"></script-->
+<script>
+    let onbeforeunload_functions = [];
+</script>
+<script src="./c++ STL总结表格 - AcWing_files/jquery-3.3.1.min.js"></script>
+<script src="./c++ STL总结表格 - AcWing_files/bootstrap.min.js"></script>
+<script src="./c++ STL总结表格 - AcWing_files/bootstrap-toggle.min.js"></script>
+<script src="./c++ STL总结表格 - AcWing_files/jquery-ui.min.js"></script>
+<script src="./c++ STL总结表格 - AcWing_files/jquery.cookie.js"></script>
+<script>
+    $(document).ready(function () {
+        var csrftoken = $.cookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            },
+            cache: true
+        });
+    });
+</script>
+<script src="./c++ STL总结表格 - AcWing_files/signform-0.0.1.js"></script>
+<script src="./c++ STL总结表格 - AcWing_files/handlebars-v1.3.0.js"></script>
+<script src="./c++ STL总结表格 - AcWing_files/effect_anchor.js"></script>
+
+<script>
+    let user_state = {
+        is_authenticated: false,
+        is_mobile: false,
+    };
+    if (user_state.is_authenticated){
+        user_state.user_id = None;
+    }
+    
+</script>
+<script>
+    let GLOBAL_COMMENT_SONS = {};
+</script>
+
+
+<style>
+    /* latin */
+    @font-face {
+      font-family: 'Satisfy';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Satisfy Regular'), local('Satisfy-Regular'), url(https://cdn.acwing.com/static/web/fonts/rP2Hp2yn6lkG50LoCZOIHQ.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 400;
+      src: local('Lato Italic'), local('Lato-Italic'), url(https://cdn.acwing.com/static/web/fonts/S6u8w4BMUTPHjxsAUi-qJCY.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 400;
+      src: local('Lato Italic'), local('Lato-Italic'), url(https://cdn.acwing.com/static/web/fonts/S6u8w4BMUTPHjxsAXC-q.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 700;
+      src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://cdn.acwing.com/static/web/fonts/S6u_w4BMUTPHjxsI5wq_FQft1dw.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: italic;
+      font-weight: 700;
+      src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://cdn.acwing.com/static/web/fonts/S6u_w4BMUTPHjxsI5wq_Gwft.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Lato Regular'), local('Lato-Regular'), url(https://cdn.acwing.com/static/web/fonts/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Lato Regular'), local('Lato-Regular'), url(https://cdn.acwing.com/static/web/fonts/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Lato Bold'), local('Lato-Bold'), url(https://cdn.acwing.com/static/web/fonts/S6u9w4BMUTPHh6UVSwaPGR_p.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Lato';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Lato Bold'), local('Lato-Bold'), url(https://cdn.acwing.com/static/web/fonts/S6u9w4BMUTPHh6UVSwiPGQ.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</style>
+<style>
+    
+        #acwing_body {
+            background: white url("https://cdn.acwing.com/static/web/img/background.png") fixed;
+            background-size: auto;
+        }
+    
+
+    
+    @media (min-width: 768px) and (max-width: 1000px) {
+       .collapse {
+           display: none !important;
+       }
+    }
+</style>
+
+
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/ace.min.css">
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/martor.min.css">
+
+    <link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/martor.css">
+
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/comment.css">
+
+
+    <link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/style-0.0.7.css">
+
+<link rel="stylesheet" href="./c++ STL总结表格 - AcWing_files/navbar.css">
+
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body id="acwing_body" style="min-height: 100vh;"><div id="MathJax_Message" style="display: none;"></div>
+
+
+
+<div id="acwing_page">
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg" style="z-index: 10;">
+        <div class="container">
+            <!-- Header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    
+                </button>
+                <a class="navbar-brand" href="https://www.acwing.com/">AcWing</a>
+            </div>
+
+            <!-- Items -->
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="https://www.acwing.com/about/">首页</a></li>
+                    <li class=""><a href="https://www.acwing.com/problem/">题库</a></li>
+                    <li class=""><a href="https://www.acwing.com/solution/">题解</a></li>
+                    <li class=""><a href="https://www.acwing.com/blog/">分享</a></li>
+                    <li class=""><a href="https://www.acwing.com/community/">问答</a></li>
+                    <li class=""><a href="https://www.acwing.com/activity/">活动</a></li>
+                    <li class=""><a href="https://www.acwing.com/file_system/file/content/whole/index/content/whole/application/1/">应用</a></li>
+                    <li class=""><a href="https://www.acwing.com/http_wss/danmu/world/">吐槽</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    
+                        <li>
+                            <a href="https://www.acwing.com/blog/content/2229/#" data-toggle="modal" data-target="#login-modal">登录/注册</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="base_body">
+    <div id="file-content-whole-field-full-480329-41a3393e" class="player-web-full-screen" style="display: none"></div>
+    <div id="file-content-whole-field-480329-41a3393e">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-9">
+        
+                    <div class="panel panel-default copy-with-link">
+                        <div class="panel-body">
+                            
+                                
+    <h2 style="margin-top: 10px;">c++ STL总结表格</h2>
+
+<div style="color: #999999; font-size:14px;">
+    作者：
+    <a href="https://www.acwing.com/user/myspace/index/13039/">
+        <img class="img-circle" src="./c++ STL总结表格 - AcWing_files/13039_sm_5e23838cf6.jpg" alt="作者的头像">
+        &nbsp;
+        <span style="font-size: 18px;">jasonlin</span>
+    </a>
+    ,&nbsp;
+    2020-04-13 23:39:42
+    ,&nbsp;
+    阅读&nbsp;338
+</div>
+
+                            
+                            <hr style="margin-bottom: 10px;">
+                            <div class="row">
+                                <div class="vote_cut col-xs-1" align="center">
+                                    
+    <a href="https://www.acwing.com/blog/content/2229/#" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-triangle-top vote"></span></a>
+    <br>
+    <span class="votecnt">5</span>
+    <br>
+    <a href="https://www.acwing.com/blog/content/2229/#" data-toggle="modal" data-target="#login-modal">
+        <span class="glyphicon glyphicon-triangle-bottom vote"></span>
+    </a>
+    <br>
+    <a href="https://www.acwing.com/blog/content/2229/#" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-star vote"></span></a>
+    <br>
+    <span class="favoritecnt">
+        
+            3
+        
+    </span>
+
+                                </div>
+                                <div class="col-xs-11 vote_cut">
+                                    
+                                        
+
+<div class="main-martor main-martor-content" data-field-name="content">
+    <div class="section-martor">
+        <div class="ui bottom attached tab active martor-preview" data-tab="preview-tab-content">
+            <p><img alt="0001.jpg" src="./c++ STL总结表格 - AcWing_files/13039_c27beba27d-0001.jpg" style="cursor: pointer;"> </p>
+<p>来源于 ：<a href="https://www.rankred.com/useful-c-cheat-sheets/">20 Most Useful C and C++ Cheat Sheets | 2020 Edition</a> </p>
+<p>下载下来，转为JPG， 便于查看</p>
+        </div>
+    </div><!-- end  /.section-martor -->
+</div>
+<div id="overlay" class="open" style="background-image: url(&quot;https://cdn.acwing.com/media/article/image/2020/04/13/13039_c27beba27d-0001.jpg&quot;);"></div>
+<script>
+    $(document).ready(function () {
+        let $images = $('.main-martor-content').find("img");
+        $images.on('click', function() {
+          $('#overlay')
+            .css({backgroundImage: `url(${this.src})`})
+            .addClass('open')
+            .one('click', function() { $(this).removeClass('open'); });
+        });
+
+        $images.css("cursor", "pointer");
+    });
+</script>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-9">
+                
+                    <div class="panel panel-default copy-with-link">
+                        <div class="panel-body">
+                            
+
+
+<h3 style="font-weight: normal; margin: 10px 0 30px 0;">0 评论</h3>
+<div class="row">
+    <div class="col-md-1 col-sm-2 col-xs-3">
+        
+    </div>
+    
+        <div class="col-xs-12">
+            <form class="comment_reply_form" role="form" enctype="multipart/form-data">
+                <input type="hidden" name="csrfmiddlewaretoken" value="WbIAbpG8gq2adRmyxYRirorGovbcytgDxlQRKJdAJOkgpLMJHgZtrJhHKwWhnzNO">
+                <div data-toggle="modal" data-target="#login-modal">
+                    <textarea class="file-comment" name="content" cols="40" rows="2" maxlength="10000" required="" title="回复" placeholder="在这里写评论...（支持MarkDown和Latex语法）"></textarea>
+                </div>
+            </form>
+            <div class="col-md-offset-10 col-md-2 col-sm-offset-9 col-sm-3 col-xs-offset-7 col-xs-5">
+                <button class="form-control btn btn-link" style="border-radius: 5px" data-toggle="modal" data-target="#login-modal">
+                    提交评论
+                </button>
+            </div>
+        </div>
+    
+</div>
+<div id="comment_list_field_480329">
+    
+</div>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+        
+    </div>
+    <div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-body">你确定删除吗？</div>
+            <div class="modal-footer">
+                <form id="modal_danger_delete_url" method="post" action="https://www.acwing.com/blog/content/2229/" enctype="multipart/form-data">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="WbIAbpG8gq2adRmyxYRirorGovbcytgDxlQRKJdAJOkgpLMJHgZtrJhHKwWhnzNO">
+                    <button type="button" class="btn" data-dismiss="modal">取消</button>
+                    <button id="modal_danger_delete_url_btn" class="btn btn-danger" data-dismiss="modal" type="submit">
+                        删除
+                    </button>
+                </form>
+            </div>
+        </div> <!-- / .modal-content -->
+    </div> <!-- / .modal-dialog -->
+</div>
+</div>
+    <footer id="acwing_footer" class="footer">
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="col-sm-8 copyright">
+                <span>
+                    © 2018-2020 AcWing 版权所有
+                    &nbsp;|&nbsp;
+                    <a href="http://beian.miit.gov.cn/">京ICP备17053197号-1</a>
+                </span>
+            </div>
+            <div class="text-right col-sm-4 region-us">
+                <div class="links">
+                    <a href="https://www.acwing.com/footer/contactus/">联系我们</a>
+                    &nbsp;|&nbsp;
+                    <a href="https://www.acwing.com/footer/faq/">常见问题</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+
+
+    
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    	<div class="modal-dialog" style="width: 85%; max-width: 350px;">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+                    <span class="acwing-brand">AcWing</span>
+				</div>
+
+                <!-- Begin # DIV Form -->
+                <div id="div-forms">
+
+                    <!-- Begin # Login Form -->
+                    <form class="sign-form" id="login-form" role="form" action="https://www.acwing.com/user/account/signin/" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="WbIAbpG8gq2adRmyxYRirorGovbcytgDxlQRKJdAJOkgpLMJHgZtrJhHKwWhnzNO">
+		                <div class="modal-body">
+				    		<div id="div-login-msg">
+                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-login-msg">请输入登录信息</span>
+                            </div>
+				    		<input id="login_username" name="username" class="form-control" type="text" placeholder="用户名或邮箱" maxlength="30" required="">
+				    		<input id="login_password" name="password" class="form-control" type="password" placeholder="密码" maxlength="16" required="">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login_remember_me" name="remember_me" type="checkbox" checked="checked"> 记住我
+                                </label>
+                            </div>
+        		    	</div>
+				        <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
+                            </div>
+                            <div>
+                                <div style="width:50%;padding:0;margin:0;float:left;box-sizing:border-box;" align="left">
+                                    <button id="login_lost_btn" type="button" class="btn btn-link">忘记密码</button>
+                                </div>
+                                <div style="width:50%;padding:0;margin:0;float:left;box-sizing:border-box;" align="right">
+                                    <button id="login_register_btn" type="button" class="btn btn-link">注册</button>
+                                </div>
+                            </div>
+                            <div>
+                                更多登录方式：
+                                <a id="third_party_weixin_connect_link_base" href="https://www.acwing.com/third_party/weixin/open_platform/login/apply_code/?source_url=/blog/content/2229/">
+                                    <img class="img" src="./c++ STL总结表格 - AcWing_files/icon48_wx_logo.png" width="30px" alt="微信图标">
+                                </a>
+                                <a href="https://www.acwing.com/third_party/qq/login/apply_code?source_url=/blog/content/2229/">
+                                    <img class="img" src="./c++ STL总结表格 - AcWing_files/qq.jpg" width="26px" alt="qq图标">
+                                </a>
+                            </div>
+				        </div>
+                    </form>
+                    <!-- End # Login Form -->
+
+                    <!-- Begin | Lost Password Form -->
+                    <form class="sign-form" id="lost-form" role="form" action="https://www.acwing.com/user/account/password_forget/" method="post" enctype="multipart/form-data" style="display:none;">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="WbIAbpG8gq2adRmyxYRirorGovbcytgDxlQRKJdAJOkgpLMJHgZtrJhHKwWhnzNO">
+    	    		    <div class="modal-body">
+		    				<div id="div-lost-msg">
+                                <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-lost-msg">请输入绑定的邮箱地址</span>
+                            </div>
+		    				<input id="lost_email" name="email" class="form-control" type="email" placeholder="邮箱地址" maxlength="254" required="">
+            			</div>
+		    		    <div class="modal-footer">
+                            <div>
+                                <button type="submit" id="lost_password_btn" class="btn btn-primary btn-lg btn-block">发送</button>
+                            </div>
+                            <div>
+                                <div style="width:50%;padding:0;margin:0;float:left;box-sizing:border-box;" align="left">
+                                    <button id="lost_login_btn" type="button" class="btn btn-link">登录</button>
+                                </div>
+                                <div style="width:50%;padding:0;margin:0;float:left;box-sizing:border-box;" align="right">
+                                    <button id="lost_register_btn" type="button" class="btn btn-link">注册</button>
+                                </div>
+                            </div>
+		    		    </div>
+                    </form>
+                    <!-- End | Lost Password Form -->
+
+                    <!-- Begin | Register Form -->
+                    <form class="sign-form" id="register-form" role="form" action="https://www.acwing.com/user/account/signup/" method="post" enctype="multipart/form-data" style="display:none;">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="WbIAbpG8gq2adRmyxYRirorGovbcytgDxlQRKJdAJOkgpLMJHgZtrJhHKwWhnzNO">
+            		    <div class="modal-body">
+		    				<div id="div-register-msg">
+                                <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-register-msg">请输入注册信息</span>
+                            </div>
+		    				<input id="register_username" name="username" class="form-control" type="text" placeholder="用户名" maxlength="30" required="">
+                            <input id="register_password" name="password" class="form-control" type="password" placeholder="密码" maxlength="16" required="">
+                            <input id="register_email" name="email" class="form-control" type="email" placeholder="邮箱地址" maxlength="50" required="">
+            			</div>
+		    		    <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">注册</button>
+                            </div>
+                            <div align="right">
+                                <button id="register_login_btn" type="button" class="btn btn-link">登录</button>
+                            </div>
+		    		    </div>
+                    </form>
+                    <!-- End | Register Form -->
+
+                </div>
+                <!-- End # DIV Form -->
+
+			</div>
+		</div>
+	</div>
+    <!-- END # MODAL LOGIN -->
+
+
+
+
+
+
+<div id="modal-warning" class="modal modal-message modal-warning fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="glyphicon glyphicon-warning-sign"></i>
+            </div>
+            <div id="warning_message_content" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
+            </div>
+        </div> <!-- / .modal-content -->
+    </div> <!-- / .modal-dialog -->
+</div>
+
+
+
+
+
+<script src="./c++ STL总结表格 - AcWing_files/copy_with_link.js"></script>
+<script>
+    let article_author = "jasonlin";
+    if (article_author.length === 0) article_author = "AcWing";
+    let VIDEO_CONTENT_WATERMARK_LOGO_URL = "https://cdn.acwing.com/static/web/img/32X32.ico";
+</script>
+<script src="./c++ STL总结表格 - AcWing_files/highlight.min.js"></script>
+<script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+          showMathMenu: false,
+        });
+</script>
+<script type="text/javascript" src="./c++ STL总结表格 - AcWing_files/MathJax.js"></script>
+<script>
+    $('pre').each(function(i, block){
+        hljs.highlightBlock(block);
+    });
+</script>
+
+<script>
+    
+    
+        $(document).ready(function () {
+            let $weixin_connect_link = $('#third_party_weixin_connect_link_base');
+            $weixin_connect_link.attr("href", "/third_party/weixin/open_platform/login/apply_code/?source_url=/blog/content/2229/");
+            if (typeof WeixinJSBridge === "object" && typeof WeixinJSBridge.invoke === "function") {
+                callback();
+            } else {
+                if (document.addEventListener) {
+                    document.addEventListener("WeixinJSBridgeReady", callback, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent("WeixinJSBridgeReady", callback);
+                    document.attachEvent("onWeixinJSBridgeReady", callback);
+                }
+            }
+            function callback() {
+                $weixin_connect_link.attr("href", "/third_party/weixin/open_platform/login/apply_code/1/?source_url=/blog/content/2229/");
+            }
+        });
+    
+    window.onbeforeunload = function (ev) {
+
+        
+
+        let notify = false;
+        for (let i = 0; i < onbeforeunload_functions.length; i ++ ){
+            let ret = onbeforeunload_functions[i]();
+            if (ret){
+                notify = true;
+            }
+        }
+        if (notify){
+            return true;
+        }
+    };
+
+    let CLICK_URL_STATUS = "status";
+    let CLICK_URL_COUNT = "count";
+    let CLICK_URL_CLICK = "click";
+    let CLICK_URL = "/" + CLICK_URL_STATUS + "/" + CLICK_URL_COUNT + "/" + CLICK_URL_CLICK + "/";
+</script>
+<script src="./c++ STL总结表格 - AcWing_files/click.js"></script>
+
+</body></html>
