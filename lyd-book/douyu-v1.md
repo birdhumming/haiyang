@@ -2,6 +2,7 @@ DAG - 有向无环图
 DP - topological sort - shortest path
 
 KMP - pattern matching
+KMP better explanation: https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
 
 https://v.douyu.com/show/wLjGvLp2nYNvmO90
 
@@ -1231,4 +1232,397 @@ int main()
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
+phone list
+
+lyd code
+
+//Author:XuHt
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+using namespace std;
+const int N = 10006, L = 12;
+int trie[N*L][10], tot;
+bool ed[N*L];
+char s[N][L];
+
+bool Phone_List() {
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) scanf("%s", s[i]);
+	memset(trie, 0, sizeof(trie));
+	memset(ed, 0, sizeof(ed));
+	tot = 1;
+	for (int i = 0; i < n; i++) {
+		int len = strlen(s[i]), p = 1;
+		for (int j = 0; j < len; j++) {
+			int a = s[i][j] - '0';
+			if (!trie[p][a]) trie[p][a] = ++tot;
+			p = trie[p][a];
+			if (ed[p]) return 1;
+		}
+		for (int i = 0; i < 10; i++)
+			if (trie[p][i]) return 1;
+		ed[p] = 1;
+	}
+	return 0;
+}
+
+int main() {
+	int t;
+	cin >> t;
+	while (t--) cout << (Phone_List() ? "NO" : "YES") << endl;
+	return 0;
+}
+
+搞心态–算错复杂度用map哈希居然不如直接unordered_set= =
+https://paste.ubuntu.com/p/B3bvkZxWZd/
+
+
+逆乾   3个月前     回复
+mapmap的话会根据第一关键字排序，可能是因为这个所以TLETLE了
+
+#include <bits/stdc++.h>
+using namespace std;
+typedef unsigned long long ull;
+const int N=11,base=131,M=1e5+5;
+ull h[N];
+string s[M];
+unordered_set<ull>cnt;
+int main()
+{
+    int t,n;cin>>t;
+    while(t--)
+    {
+        cnt.clear();
+        cin>>n;
+        for(int i=0;i<n;i++) cin>>s[i];
+        sort(s,s+n);
+        int flag=0;
+        for(int i=0;i<n;i++)
+        { 
+          memset(h,0,sizeof h);
+          int len=s[i].size();
+          h[0]=s[i][0]-'a';
+          for(int j=1;j<len;j++)
+          {
+              h[j]=h[j-1]*base+s[i][j]-'a';
+              if(cnt.count(h[j])) flag=1;
+              if(flag) break;
+          }if(cnt.count(h[0])) flag=1;
+          cnt.insert(h[len-1]);
+          if(flag) break;
+        }
+        if(flag) puts("NO");
+        else     puts("YES");
+    }
+    return 0;
+}
+
+
+不想写Trie（或Hash）的往这看
+sort+string::find函数
+
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int n;
+const int N = 10000 + 20;
+string a[N];
+
+int main()
+{
+    int T;
+    cin >> T;
+    while (T--)
+    {
+        cin >> n;
+        for (int i = 1; i <= n; i++)
+        {
+            cin >> a[i];
+        }
+        sort(a + 1, a + 1 + n);
+        bool flag = false;
+        for (int i = 1; i <= n - 1; i++)
+        {
+            if (a[i + 1].find(a[i]) == 0)
+            {
+                flag = true;
+                break;
+            }
+        }
+        if (flag)
+        {
+            cout << "NO" << endl;
+        }
+        else
+        {
+            cout << "YES" << endl;
+        }
+    }
+}
+
+作者：Sophon
+链接：https://www.acwing.com/solution/content/2872/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+你的做法是O(nlogn)的（有排序），trie的做法是O(n)的。
+(如果你换成基数排序的话也可以O(n)）
+
+众所周知这几乎是Trie的模板题，但我在普通做法的基础上大大优化时间和空间。
+
+假设有一个串是某个串的前缀，则存在i<j,si是sj的前缀或sj是si的前缀i<j,si是sj的前缀或sj是si的前缀（听起来很弱智？继续往下看）
+利用好这个性质能大幅优化空间：
+假设当前的串是sisi,且sj(1≤j<i)sj(1≤j<i)已经存入Trie，那么我们只需要处理上面提及的两种情况,而不需要保存每个串：
+1. Trie中某个串是sisi的前缀：从根开始沿sisi往下走，如果路径上有某个点是叶子节点，则Trie中某个串是sisi的前缀。
+2. sisi是Trie中某个串的前缀：走到sisi的叶子节点后，如果这个节点有孩子，那么sisi就是某个串的前缀
+
+先查再插入即可。
+
+优化时间：对于每组数据都对Trie进行memset太过浪费了，在开新点时清空它的叶子标记和孩子即可。
+
+时间复杂度有点玄学，就不分析了。
+
+（另外，写这篇题解的时候想到了一个更秒的做法：先把所有串都插入Trie，然后从Trie的根开始dfs，如果如何一条路径上遇到多于一个的叶子标记就是NO，反之YES）
+
+//Wan Hong 2.2
+//home
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+#include<queue>
+#include<vector>
+typedef long long ll;
+typedef std::pair<ll,ll> pll;
+typedef std::string str;
+#define INF (1ll<<58)
+ll read()
+{
+    ll f=1,x=0;
+    char c=getchar();
+    while(c<'0'||c>'9')
+    {
+        if(c=='-')f=-1;
+        c=getchar();
+    }
+    while(c>='0'&&c<='9')x=x*10+c-'0',c=getchar();
+    return f*x;
+}
+ll max(ll a,ll b)
+{
+    return a>b?a:b;
+}
+ll min(ll a,ll b)
+{
+    return a<b?a:b;
+}
+bool umax(ll& a,ll b)
+{
+    if(b>a)return a=b,1;
+    return 0;
+}
+bool umin(ll& a,ll b)
+{
+    if(b<a)return a=b,1;
+    return 0;
+}
+
+/**********/
+#define MAXN 100011
+struct Trie 
+{
+    int t[MAXN][11],cnt;
+    bool leaf[MAXN];
+    void build()//用了一点小技巧，在开新点时清空它的信息，避免memset多次
+    {
+        cnt=1;
+        for(ll i=0;i<=9;++i)t[1][i]=0;
+    }
+    void insert(char* a)
+    {
+        ll n=strlen(a),u=1;
+        for(ll i=0;i<n;++i)
+        {
+            int &v=t[u][a[i]-'0'];
+            if(!v)
+            {
+                v=++cnt;
+                leaf[v]=0;
+                for(ll i=0;i<=9;++i)t[v][i]=0;
+            }
+            u=v;
+        }
+        leaf[u]=1;
+    }
+    bool query(char* a)
+    {
+        ll n=strlen(a),u=1;
+        for(ll i=0;i<n;++i)
+        {
+            int &v=t[u][a[i]-'0'];
+            if(leaf[v])return 1;
+            if(!v)return 0;
+            u=v;
+        }
+        for(ll i=0;i<=9;++i)
+            if(t[u][i])return 1;
+        return 0;
+    }
+}t;
+char a[MAXN];
+int main()
+{
+    ll T=read();
+    while(T--)
+    {
+        t.build();
+        ll n=read();
+        bool flag=0;
+        for(ll i=1;i<=n;++i)
+        {
+            scanf("%s",a);
+            if(!flag)
+            {
+                flag|=t.query(a);
+                t.insert(a);
+            }
+        }
+        if(flag)puts("NO");
+        else puts("YES");
+    }
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/4180/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+算法1
+(Trie) O(n)O(n)
+利用Trie树求前缀，每个打标记。
+
+时间复杂度
+O(n)O(n)
+都是看着视频打的。
+
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 100010;
+int n, idx, son[N][10];
+char str[20];
+bool flag[N];
+bool add(char *str)
+{
+    int p = 0;
+    bool fa = false, fb = false;
+    for(int i = 0; str[i]; i ++)
+    {
+        int u = str[i] - '0';
+        if(!son[p][u])
+        {
+            son[p][u] = ++ idx;
+            fb = true;
+        }
+        p = son[p][u];
+        if(flag[p]) fa = true; 
+    }
+    flag[p] = true;
+    return fb && !fa;
+}
+int main()
+{
+    int T;
+    cin >> T;
+    while(T --)
+    {
+        cin >> n;
+        memset(son, 0, sizeof son);
+        memset(flag, false, sizeof flag);
+        idx = 0;
+        bool res = true;
+        for(int i = 0; i < n; i ++)
+        {
+            cin >> str;
+            if(!add(str)) res = false;
+        }
+        if(res) puts("YES");
+        else puts("NO");
+    }
+    return 0;
+}
+
+作者：cht
+链接：https://www.acwing.com/solution/content/15104/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 100010;
+typedef long long LL;
+int son[N][12], cnt[N], idx;
+char str[N][12];
+int T;
+int n;
+
+void insert(char str[]){
+    int p = 0;
+    for(int i = 0; str[i]; i++){
+        int t = str[i] - '0';
+        if(!son[p][t]) son[p][t] = ++idx;
+        p = son[p][t];
+    }
+    cnt[p]++;
+}
+
+bool check(char str[]){
+    int p = 0;
+    for(int i = 0; str[i]; i++){
+        if(cnt[p]) return false;
+        int t = str[i] - '0';
+        p = son[p][t];
+    }
+    return true;
+}
+
+
+int main(){
+    cin>>T;
+    while(T--){
+        cin>>n;
+        idx = 0;
+        memset(son, 0, sizeof son);
+        memset(cnt, 0, sizeof cnt);
+        memset(str, 0, sizeof str);
+        int flag = true;
+        for(int i = 0; i < n; i++){
+            scanf("%s", str[i]);
+
+            insert(str[i]);
+        }
+
+        for(int i = 0; i < n; i++){
+            if(!check(str[i])) {
+                flag = false; 
+            }
+        }
+        if(!flag) puts("NO");
+        else puts("YES");
+    }
+    return 0;
+}
+
+作者：sy
+链接：https://www.acwing.com/solution/content/15012/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 ```
