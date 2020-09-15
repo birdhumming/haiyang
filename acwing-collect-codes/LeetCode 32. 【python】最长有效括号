@@ -1,0 +1,66 @@
+LeetCode 32. 【python】最长有效括号
+lh359149153的头像lh359149153
+1小时前
+最长有效括号
+给定一个只包含 ‘(‘ 和 ‘)’ 的字符串，找出最长的包含有效括号的子串的长度。
+
+样例1
+输入: "(()"
+输出: 2
+解释: 最长有效括号子串为 "()"
+
+输入: ")()())"
+输出: 4
+解释: 最长有效括号子串为 "()()"
+算法1
+(栈+前缀和) O(n2)
+一.核心思想：
+1.每个左括号对应的右括号是一定的
+2.括号序列合法 <–> （等价于）所有前缀和>=0 and 总和等于0（数量相等）
+即：求满足上述性质的最长子序列
+
+二.思路
+1.双指针：i遍历；start 枚举当前这一段的开头
+2.cnt前缀和 （设(=1;)=-1）
+1)cnt<0: start=i, cnt=0
+2)cnt>0: 继续做
+3)cnt=0: [start,i]是一段合法序列，更新最大值
+3.（重要理解）还要翻转括号序列（运用ASCII+异或）+从右往左再做一次（建一个work函数）
+注：因为有情况e.g.((())) 一开始左括号多于右括号
+
+时间复杂度
+参考文献
+python 代码
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        res=self.work(s)
+        #难点1.如何翻转
+        s=s[::-1]
+        s2=''
+        for i in range(len(s)):
+            #同难点1
+            s2+=chr(ord(s[i])^1)
+        return max(res,self.work(s2))
+
+
+    def work(self,s):
+        #1.初始化
+        res=0
+        start,cnt=0,0
+        i=0
+        #2.带入y总分情况分析
+        while i<len(s):
+            if s[i]=='(':
+                cnt+=1
+            else:
+                cnt-=1
+                if cnt<0:
+                    start=i+1
+                    cnt=0
+                elif cnt==0:
+                    res=max(res,i-start+1)
+            i+=1
+        return res  
+
+
+        
