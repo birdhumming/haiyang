@@ -5255,3 +5255,9 @@ Jack 112 3.4 Mary 102 3.8 Mary 117 3.9 Ala 333 3.5 Zero 101 4
 STL notes -
 https://www.acwing.com/file_system/file/content/whole/index/content/1291096/
 ```
+
+pyohio
+
+https://github.com/catherinedevlin/talks/tree/master/pyohio_2020
+
+https://github.com/bryall?tab=repositories
