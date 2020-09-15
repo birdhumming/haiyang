@@ -1,3 +1,8 @@
+DAG - 有向无环图
+DP - topological sort - shortest path
+
+KMP - pattern matching
+
 https://v.douyu.com/show/wLjGvLp2nYNvmO90
 
 https://www.acwing.com/problem/search/2/?csrfmiddlewaretoken=aYKyrGXyfWy5Xc83a58KiUtOanID7BhNL8SP00u0IkQb96yekngVifjPwotIWHOY&search_content=%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97
@@ -56,6 +61,8 @@ Yes
 如果说两个字符串是同一条项链的话,那么毫无疑问,他们的最小表示肯定一样的.因此我们可以使用O(n)的最小表示法.
 最小表示法极为容易理解,但是建议看李煜东大佬的书,书上写得很详细作者我写的不详细
 C++ 代码
+
+```
 #include <bits/stdc++.h>
 using namespace std;
 #define fir(i,a,b) for(int i=a;i<=b;i++)
@@ -1223,3 +1230,5 @@ int main()
 链接：https://www.acwing.com/solution/content/12793/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+```
