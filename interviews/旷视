@@ -1,0 +1,72 @@
+旷视
+
+旷视6号员工范浩强， fhq tree
+
+https://www.qbitai.com/2019/07/4886.html
+
+AcWing 1451. 单链表快速排序    原题链接    简单
+作者：    夏志迁 ,  2020-03-21 21:09:28 ,  阅读 540
+
+3
+
+
+class Solution {
+public:
+
+// 1. getTail API
+ListNode* getTail(ListNode *head){
+    while(head->next){
+        head = head->next;
+    }
+    return head;
+}
+
+
+ListNode* quickSortList(ListNode* head) {
+
+    // 2. 空节点或单节点
+    if(!head || !head->next) return head;
+
+
+    // 3. 单链表表头为helper
+    ListNode *lhead = new ListNode(-1), *mhead = new ListNode(-1), *rhead = new ListNode(-1);
+    auto left = lhead, mid = mhead, right = rhead;
+
+    // 4.遍历链表
+    int x = head->val;
+    for(auto p = head; p ; p = p->next){
+        if (p->val < x)
+            left = left->next = p; // 5. 插入元素 + 移动指针
+        else if (p->val == x)
+            mid = mid->next = p;
+        else
+            right = right->next = p;
+    }
+
+    // 得到三个链表，递归左边和右边链表
+    left->next = mid->next = right->next = nullptr; // 6.各个链表尾部置null
+
+    //7. 只需遍历左区间 与 右区间
+    lhead->next = quickSortList(lhead->next);
+    rhead->next = quickSortList(rhead->next);
+
+    //8. 链表拼接
+    getTail(lhead)->next = mhead->next;
+    getTail(mhead)->next = rhead->next;
+
+
+    // 9. 专门的re
+    auto re = lhead->next;
+
+    // 10. 内存回收
+    delete lhead;
+    delete mhead;
+    delete rhead;
+
+    return re;
+}
+
+作者：夏志迁
+链接：https://www.acwing.com/solution/content/10250/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
