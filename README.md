@@ -1,6 +1,7 @@
 way to think - silu = ideas  
 
 BFS can get shortest path; DFS can't
+bfs uses priority queue
 
 matrix rank - https://www.mathsisfun.com/algebra/matrix-rank.html
 
