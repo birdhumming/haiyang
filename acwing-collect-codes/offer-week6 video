@@ -509,3 +509,400 @@ public:
 https://www.acwing.com/solution/content/19076/
 
 1:07 out of 1;42 total
+
+
+AcWing 75. 和为S的两个数字--python 快捷做法    原题链接    简单
+作者：    polaris ,  2019-08-07 22:10:04 ,  阅读 351
+
+use hash table to return
+
+
+python3 代码
+class Solution(object):
+    def findNumbersWithSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        d = dict()
+        for num in nums:
+            if num in d.keys():
+                return [target-num,num]
+            else:
+                d[target-num] = num
+
+作者：polaris
+链接：https://www.acwing.com/solution/content/3557/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 75. 和为S的两个数字    原题链接    简单
+作者：    李大戮 ,  2019-08-25 00:11:56 ,  阅读 203
+
+0
+
+
+算法1
+(暴力枚举) O(n2)O(n2)
+C++ 代码
+class Solution {
+public:
+    vector<int> findNumbersWithSum(vector<int>& nums, int target) {
+        vector <int> a;
+        for(int i = 0; i < nums.size(); i++) {
+            for(int j = nums.size() - 1; j >=0; j--) {
+                if(nums[i] + nums[j] == target) {
+                    a.push_back(nums[i]);
+                    a.push_back(nums[j]);
+                    return a;
+                }
+            }
+        }
+        return a;
+    }
+};
+双指针算法
+class Solution {
+public:
+    vector<int> findNumbersWithSum(vector<int>& nums, int target) {
+        //先对vector进行排序，然后再使用双指针算法
+        sort(nums.begin(),nums.end());
+        vector <int> a;
+        int i = 0, j = nums.size() - 1;
+        while(i < j) {
+            if (nums[i] + nums[j] == target) {
+                a.push_back(nums[i]);
+                a.push_back(nums[j]);
+                return a;
+            } else if (nums[i] + nums[j] < target) {
+                //因为已经是排好序了，所以nums[j]肯定为最大，如果sum比目标小，移动i指针
+                i++;
+            } else {
+                j--;
+            }
+        }
+
+        return a;
+    }
+};
+
+作者：李大戮
+链接：https://www.acwing.com/solution/content/4123/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+题目描述
+输入一个数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。
+
+如果有多对数字的和等于s，输出任意一对即可。
+
+你可以认为每组输入中都至少含有一组满足条件的输出。
+
+样例
+输入：[1,2,3,4] , sum=7
+
+输出：[3,4]
+算法1
+(暴力枚举)
+时间复杂度
+O(n2)O(n2)
+C++ 代码
+class Solution {
+public:
+    vector<int> findNumbersWithSum(vector<int>& nums, int target) {
+        for(int i = 0; i < nums.size(); i ++)
+            for(int j = 0; j < i; j ++)
+                if(nums[i] + nums[j] == target)
+                    return vector<int> {nums[j], nums[i]};
+    }
+};
+算法2
+(哈希)
+时间复杂度
+O(n)O(n)
+C++ 代码
+class Solution {
+public:
+    vector<int> findNumbersWithSum(vector<int>& nums, int target)
+    {
+        unordered_set<int> se;
+        for(int i = 0; i < nums.size(); i ++)
+        {
+            if(se.count(target - nums[i])) return vector<int> {target - nums[i], nums[i]};
+            se.insert(nums[i]);
+        }
+
+        return vector<int>();
+    }
+};
+
+作者：贺谦
+链接：https://www.acwing.com/solution/content/12999/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 75. 和为S的两个数字--使用set而不用map    原题链接    简单
+作者：    密集指针 ,  2020-08-20 21:05:11 ,  阅读 34
+
+0
+
+
+根据题意，只需返回任意两个和为target的数即可，故可使用set而不用map
+class Solution {
+public:
+    vector<int> findNumbersWithSum(vector<int>& nums, int target) {
+        unordered_set<int> s;
+        for(auto x : nums){
+            if(s.find(target - x) != s.end()) return {x, target - x};
+            else s.emplace(x);
+        }
+        return {};
+    }
+};
+
+作者：密集指针
+链接：https://www.acwing.com/solution/content/18884/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 76. 和为S的连续正数序列    原题链接    中等
+作者：    extrovert ,  2019-07-02 22:11:07 ,  阅读 729
+
+3
+
+
+2
+题目描述
+输入一个正数s，打印出所有和为s的连续正数序列（至少含有两个数）。
+
+例如输入15，由于1+2+3+4+5=4+5+6=7+8=15，所以结果打印出3个连续序列1～5、4～6和7～8。
+
+样例
+
+
+输入：15
+
+输出：[[1,2,3,4,5],[4,5,6],[7,8]]
+
+
+
+
+算法1
+(双指针) O(n)O(n)
+设置两个指针i和j，分别指向连续正数序列的起始和终止
+
+用s表示当前连续正数序列的和，即s=i+(i+1)+…+js=i+(i+1)+…+j
+以i递增的方式遍历整个序列(1到n)，代表查找以i开头的时候结尾j应该是多少。当s<sums<sum说明j应该往后移动，当s=sums=sum说明满足题意，当s>sums>sum说明向后走即可。
+
+注意上述遍历过程中，s=sums=sum的情况下不需要把j往前移动，原因是当进入下一个循环前s−=is−=i，即(i+1)到j的和肯定小于sum。
+
+C++ 代码
+
+class Solution {
+public:
+    vector<vector<int> > findContinuousSequence(int sum) {
+        vector<vector<int>> res;
+        for (int i = 1, j = 1, s = 1; i <= sum; i ++ )
+        {
+            while (s < sum) j ++, s += j;
+            if (s == sum && j > i)
+            {
+                vector<int> line;
+                for (int k = i; k <= j; k ++ ) line.push_back(k);
+                res.push_back(line);
+            }
+            s -= i;
+        }
+        return res;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/25914/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+作者：extrovert
+链接：https://www.acwing.com/solution/content/2670/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 76. 等差数列求和    原题链接    中等
+作者：    我太菜了 ,  2020-03-13 15:07:03 ,  阅读 243
+
+2
+
+
+题目描述
+blablabla
+
+等差数列求和
+设等差数列有kk项，首项为a1a1，ak=a1+k−1ak=a1+k−1，则有a1+ak2⋅k=suma1+ak2⋅k=sum，即a1=2⋅sum−k2+k2ka1=2⋅sum−k2+k2k。
+根据题意有a1≥1,k≥2a1≥1,k≥2。根据kk，寻找a1a1的整数解。
+
+class Solution(object):
+    def findContinuousSequence(self, sum):
+        """
+        :type sum: int
+        :rtype: List[List[int]]
+        """
+        if sum < 3:
+            return []
+
+        def get(k):
+            return (2*sum-k*k+k) / (2*k)
+
+        res = []
+        k = 2
+        while True:
+            a = get(k)
+            if a < 1:
+                break
+            if a - int(a) == 0:
+                a = int(a)
+                res.append(list(range(a, a + k)))
+            k += 1
+        return res
+
+作者：我太菜了
+链接：https://www.acwing.com/solution/content/9940/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+算法1
+(暴力枚举) O(n2)O(n2)
+blablabla
+
+时间复杂度
+参考文献
+python 代码
+class Solution(object):
+    def findContinuousSequence(self, sum):
+        """
+        :type sum: int
+        :rtype: List[List[int]]
+        """
+        res = []
+
+        j = 1
+        s = 1
+        for i in range(1, sum + 1):
+
+            while s < sum:
+                j += 1
+                s += j
+            if s == sum and j - i > 0:
+                temp = []
+                for k in range(i, j + 1):
+                    temp.append(k)
+                res.append(temp)
+
+            s -= i
+        return res
+
+作者：daijie24
+链接：https://www.acwing.com/solution/content/15803/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 76. 和为S的连续正数序列    原题链接    中等
+作者：    yzm0211 ,  2019-04-04 23:47:34 ,  阅读 313
+
+0
+
+
+算法1
+暴力枚举
+C++ 代码
+class Solution {
+public:
+    vector<vector<int> > findContinuousSequence(int sum) {
+        vector<vector<int>>res;
+        for(int i = 1; i <= (sum+1)/2; i++){
+            int _sum= 0;
+             vector<int> temp;
+            for(int j = i ; j <= (sum +1)/2; ){
+                _sum += j;
+                temp.push_back(j);
+                if(_sum == sum){
+                    res.push_back(temp);
+                    break;
+                }else if(_sum > sum){
+                    break;
+                }else
+                    j++;
+
+            }
+        }
+        return res;
+    }
+};
+算法2
+双指针做法优化成O(n);
+考虑用两个数start和end分别表示序列的最小值和最大值。首先把start初始化为1, end初始化为2。如果从start到end的序列的和大于s，我们可以从序列中去掉较小的值，也就是增大start的值。如果从start到end的序列的和小于s，我们可以增大big，让这个序列包含更多的数字。因为这个序列至少要有两个数字，我们一直增加start到(1+s)/2 为止。
+
+C++ 代码
+class Solution {
+public:
+    vector<vector<int> > findContinuousSequence(int sum) {
+       // vector<int>temp;
+        vector<vector<int>>res;
+        //int _sum = 0;
+        int start = 1, end = 2;
+        int curSum = 0;
+        while(start <  end && end <= (sum+1)/2){
+            curSum = (start + end)*(end-start +1)/2;
+            if(curSum == sum){
+                vector<int>line;
+                for(int i = start;i <= end;i++)
+                    line.push_back(i);
+                res.push_back(line);
+               end++;
+
+            }else if(curSum < sum){
+                end++;
+            }else{
+                start++;
+            }
+
+        }
+        return res;
+    }
+};
+
+作者：yzm0211
+链接：https://www.acwing.com/solution/content/1366/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+class Solution(object):
+    def findContinuousSequence(self, sum):
+        """
+        :type sum: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        left, right = 1, 2
+        while right <= (sum + 1) // 2 and right > left:
+            tmp = int(float(right + left) / 2 * (right - left + 1))
+            if tmp == sum:
+                right += 1
+                res.append([index for index in range(left, right)])
+            elif tmp < sum:
+                right += 1
+            else:
+                left += 1
+        return res
+
+作者：刷完剑指offer了时间复杂度都没改
+链接：https://www.acwing.com/solution/content/2304/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
