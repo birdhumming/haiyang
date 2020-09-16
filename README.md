@@ -1,3 +1,20 @@
+https://github.com/ZJULearning
+http://dengcai.zjulearning.org.cn/
+https://www.zhihu.com/question/32019460/answer/887877092
+https://youtu.be/U6r3R87AKHI 第1175期 沈向洋：有效的科研法则
+
+interviews-
+https://www.acwing.com/file_system/file/content/whole/index/content/1293307/
+https://www.acwing.com/file_system/file/content/whole/index/content/1293224/
+https://www.acwing.com/file_system/file/content/whole/index/content/1293200/
+https://www.acwing.com/file_system/file/content/whole/index/content/1293036/
+
+derivative/calculus https://www.quora.com/How-would-you-find-the-original-function-given-the-derivative-of-that-function-For-example-find-f-x-if-f-x-x-2-1
+
+DNS why use UDP?
+https://www.geeksforgeeks.org/why-does-dns-use-udp-and-not-tcp/
+https://www.quora.com/Why-does-DNS-use-UDP#:~:text=DNS%20uses%20the%20User%20Datagram,UDP%20reply%20from%20the%20server.
+
 good solutions - 
 
 https://www.acwing.com/solution/content/19076/
