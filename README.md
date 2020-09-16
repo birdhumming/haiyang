@@ -1,3 +1,6 @@
+BFS can get shortest path; DFS can't
+
+matrix rank - https://www.mathsisfun.com/algebra/matrix-rank.html
 
 ```
 #include <bits/stdc++.h>
