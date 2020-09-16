@@ -8,6 +8,9 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1293307/
 https://www.acwing.com/file_system/file/content/whole/index/content/1293224/
 https://www.acwing.com/file_system/file/content/whole/index/content/1293200/
 https://www.acwing.com/file_system/file/content/whole/index/content/1293036/
+https://www.acwing.com/blog/content/19/ hulu by yxc
+https://www.acwing.com/blog/content/3042/
+
 
 derivative/calculus https://www.quora.com/How-would-you-find-the-original-function-given-the-derivative-of-that-function-For-example-find-f-x-if-f-x-x-2-1
 

@@ -1,0 +1,78 @@
+hulu
+
+1489 acwing
+
+AcWing 1489. 田忌赛马    原题链接    中等
+作者：    福如东海 ,  2020-04-07 14:56:49 ,  阅读 176
+
+3
+
+
+算法1
+(贪心) O(nlogn)O(nlogn)
+对田忌和国王的马都从小到大排序
+如果田忌最快的马 > 国王最快的马, 则让它们比赛(因为这种情况下，田忌最快的马对国王所有的马都能赢，肯定是耗掉国王最快的马对田忌剩余的马最有优势)
+
+如果田忌最快的马 < 国王最快的马, 则让田忌最慢马与国王最快的马比赛(因为这种情况下，田忌所有的马对国王最快的这匹马都会输，反正要输一场，用田忌最慢的马去输，肯定对田忌剩余的马最有优势)
+
+如果田忌最快的马 == 国王最快的马,
+则 比较 最慢的马,
+
+如果田忌的更慢，肯定还是用最慢的马 去耗国王最快马
+如果田忌的更快，说明田忌所有的马都能赢国王最慢的马, 让田忌最慢的马去赢，保留更快的马，对之后比赛更有优势
+如果一样快,
+让 最慢去耗 国王最快马
+
+排序O(nlogn), 贪心比较过程O(n)
+时间复杂度O(nlogn)
+
+C++ 代码
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+const int N = 1005;
+int n;
+int a[N], b[N];
+
+int main() {
+    while (scanf("%d", &n), n) {
+        for (int i = 0; i < n; i ++) cin >> a[i];
+        for (int i = 0; i < n; i ++) cin >> b[i];
+        sort(a, a + n);
+        sort(b, b + n);
+        int l1 = 0, r1 = n - 1;
+        int l2 = 0, r2 = n - 1;
+        int res = 0;
+
+        while (l1 <= r1 && l2 <= r2) {
+            if (a[r1] > b[r2]) {
+                res += 200;
+                r1--, r2--;
+            }
+            else if (a[r1] < b[r2]) {
+                res -= 200;
+                l1++, r2--;
+            }
+            else  {
+                if (a[l1] > b[l2]) {
+                    l2++, l1++;
+                    res += 200;
+                } else if (a[l1] < b[l2]) {
+                    l1++, r2--;
+                    res -= 200;
+                } else {
+                     if (a[l1] <b[r2]) res -= 200;
+                    l1++, r2--;
+                }
+            }
+        }
+        cout << res << endl;
+    }
+    return 0;
+}
+
+作者：福如东海
+链接：https://www.acwing.com/solution/content/11141/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
