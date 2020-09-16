@@ -1,3 +1,8 @@
+good solutions - 
+
+https://www.acwing.com/solution/content/19076/
+https://www.acwing.com/solution/content/804/
+
 time is a much more limited resource than space!!!
 
 tree - recursion defined; 2 split if having monotonicity;
