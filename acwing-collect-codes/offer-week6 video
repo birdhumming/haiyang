@@ -906,3 +906,337 @@ class Solution(object):
 链接：https://www.acwing.com/solution/content/2304/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+double pointer to reverse words: 
+
+https://www.acwing.com/solution/content/8584/
+
+题目描述
+输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。
+
+为简单起见，标点符号和普通字母一样处理。
+
+例如输入字符串"I am a student."，则输出"student. a am I"。
+
+样例
+输入："I am a student."
+
+输出："student. a am I"
+算法1(双指针算法) O(n)O(n)
+首先，我们要有特判
+
+如果输入"",就该输出""
+
+不然会Segmentation Fault
+
+其次，我们可以套双指针的模板
+
+不懂的可以去看 yxc视频
+
+主要思路是：
+
+1.使用vector来存储一个个单词
+2.用双指针算法来找到一个个单词
+2-1.用快慢指针找出一个单词
+2-2.用substr函数截取当前单词段
+2-3.将单词段放入vector中
+3.反转单词（reverse函数可以实现）
+4.将单词用空格拼接起来
+怎么样？一目了然吧？
+
+接下来，我们将用实战演练来实现我们的算法
+
+让我们开始吧！
+
+实战演练
+class Solution {
+public:
+    string reverseWords(string s) 
+    {
+        if(!s.size()) return "" ;             //特判
+        vector<string> words ;                //1 存储单词
+        for(int i=0,j=0;i<s.size();i=++j)     //遍历循环，i为快指针，j为慢指针，i=++j是为了跳出空格，找出下一个单词
+        {
+            while(s[j]!=' '&&j<s.size()) j++ ;//2-1 双指针模板，找到单词结尾
+            words.push_back(s.substr(i,j-i)) ;//2-2&2-3 存入vector
+        }
+        reverse(words.begin(),words.end()) ;  //3 反转vector
+        string res ;                          //答案
+        for(int i=0;i<words.size()-1;i++)
+            res+=words[i]+" " ;               //4 拼接单词
+        res+=words[words.size()-1] ;
+        // 注意，最后一个单词后面没有空格，需要特判
+        return res ;                         //返回结果
+    }
+};
+算法2（常规操作）O(n)O(n)
+和前面一样，也是双指针。
+
+这种算法更加简单好写
+
+方法是这样的：
+
+1.反转整个单词 （reverse函数实现）//所有单词顺序反转，每个单词本身也反转了 例：abc def 变成 fed cba
+2.用双指针算法来找到一个个单词    //让单词本身反转 例：fed cba 变成 def abc 题目解决
+2-1.用快慢指针找出一个单词
+2-2.反转这个单词段
+可参见 这篇优质题解
+
+作者：李乾
+链接：https://www.acwing.com/solution/content/8584/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+整个进行翻转，再翻转单词
+C++ 代码
+class Solution {
+public:
+    string reverseWords(string s) {
+        reverse(s.begin(),s.end());
+        s.push_back(' ');
+        for(int i = 0; i < s.size();){
+            int r = i,l = i;
+            while(s[r] != ' ') r++;
+            i = r+1;
+            while(l < r ){
+                swap(s[l++],s[r--]);
+            }
+        }
+        return s.substr(1);
+    }
+};
+
+作者：yzm0211
+链接：https://www.acwing.com/solution/content/1367/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+算法1
+使用vector将单词与空格分别存入,最后逆序输出
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        vector<string> data;
+        string result;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!=' ') result+=s[i];
+            else data.push_back(" "+result),result="";
+        }
+        data.push_back(result);
+        result="";
+        for(int i=data.size()-1;i>=0;i--) {
+            result+=data[i];
+        }
+        return result;
+    }
+};
+双指针算法 // yxc video code
+class Solution {
+public:
+    string reverseWords(string s) {
+        reverse(s.begin(),s.end());
+        for(int i=0,j;i<s.size();i++)
+        {
+            j=i;
+            while(j<s.size() && s[j]!=' ') j++;
+            reverse(s.begin()+i,s.begin()+j);
+            i=j;
+        }
+
+        return s;
+    }
+};
+
+作者：Struggle
+链接：https://www.acwing.com/solution/content/13344/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 77. 翻转单词顺序---双指针(不翻转)    原题链接    中等
+作者：    巨鹿噜噜噜路 ,  2020-06-01 18:29:43 ,  阅读 129
+
+2
+
+
+C++ 代码
+class Solution {
+public:
+    string reverseWords(string s) {
+        string ans;
+        //从末尾开始枚举
+        for(int i = s.length() - 1; i >= 0; i--) {
+            int j = i;
+            //j指针找到空格就停止
+            while(j >= 0 && s[j] != ' ') j--;
+            ans += s.substr(j + 1, i - j);
+            if(j > 0) ans += ' ';
+            //更新i指针
+            i = j;
+        }
+        return ans;
+    }
+};
+
+作者：巨鹿噜噜噜路
+链接：https://www.acwing.com/solution/content/14059/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+第11个点居然输入空字符串卡我
+直接try特判
+
+class Solution(object):
+    def reverseWords(self, s):
+        try:
+            a=s.split()
+            b=""
+            for i in range(1,len(a)):
+               b=str(b)+str(a[-int(i)])+" "
+            return str(b)+a[0]
+        except:
+            return ""
+
+
+left rotate string 78
+
+class Solution {
+public:
+    string leftRotateString(string str, int n) {
+
+        return str.substr(n)+str.substr(0,n);
+    }
+};
+
+
+题目描述
+字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。
+
+请定义一个函数实现字符串左旋转操作的功能。
+
+比如输入字符串”abcdefg”和数字2，该函数将返回左旋转2位得到的结果”cdefgab”。
+
+注意：
+
+数据保证n小于等于输入字符串的长度。
+
+样例
+输入："abcdefg" , n=2
+
+输出："cdefgab"
+算法1
+(拼接字符串) O(n)O(n)
+右半边字符串拼接左半边字符串
+实际上占用了string的额外内存空间，最好用数组翻转
+
+时间复杂度
+时间复杂度O(n)O(n)，空间复杂度O(n)O(n)，
+
+python代码
+class Solution(object):
+    def leftRotateString(self, s, n):
+        """
+        :type s: str
+        :type n: int
+        :rtype: str
+        """
+        return s[n:] + s[:n]
+
+算法2
+(数组翻转) O(n)O(n)
+(1) 整个数组翻转
+(2) 左半边翻转
+(3) 右半边翻转
+时间复杂度
+时间复杂度O(n)O(n)，空间复杂度O(1)O(1)，
+
+python 代码
+class Solution(object):
+    def reverse(self, s, l, r):
+        """
+        数组翻转
+        :type s: list(int)
+        :type l: int
+        :type r: int
+        """
+        r -= 1
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
+
+    def leftRotateString(self, s, n):
+        """
+        左旋转字符串
+        :type s: str
+        :type n: int
+        :rtype: str
+        """
+        if len(s) == 0 or n == 0: return s
+        s = list(s)
+        self.reverse(s, 0, len(s))
+        self.reverse(s, 0, len(s)-n)
+        self.reverse(s, len(s)-n, len(s))
+        return ''.join(s)
+
+作者：WakeUp
+链接：https://www.acwing.com/solution/content/6224/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+class Solution(object):
+    def leftRotateString(self, s, n):
+        """
+        :type s: str
+        :type n: int
+        :rtype: str
+        """
+        return s[n:] + s[:n]
+
+
+class Solution {
+public:
+    string leftRotateString(string str, int n) {
+        return str.substr(n)+str.substr(0, n);
+    }
+};
+
+
+算法1
+(模拟，string)
+时间复杂度
+O(n)O(n)
+C++ 代码
+class Solution {
+public:
+    string leftRotateString(string str, int n) {
+        string res;
+        for(int i = n; i < str.size(); i ++) res += str[i];
+        for(int i = 0; i < n; i ++) res += str[i];
+        return res;
+    }
+};
+算法2
+(模拟，reverse)
+时间复杂度
+O(n)O(n)
+C++ 代码
+class Solution {
+public:
+    string leftRotateString(string s, int n) {
+        reverse(s.begin(), s.end());
+        reverse(s.begin(), s.begin() + s.size() - n);
+        reverse(s.begin() + s.size() - n, s.end());
+        return s;
+    }
+};
+
+作者：贺谦
+链接：https://www.acwing.com/solution/content/13050/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
