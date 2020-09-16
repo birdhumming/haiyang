@@ -1229,9 +1229,9 @@ C++ 代码
 class Solution {
 public:
     string leftRotateString(string s, int n) {
-        reverse(s.begin(), s.end());
-        reverse(s.begin(), s.begin() + s.size() - n);
-        reverse(s.begin() + s.size() - n, s.end());
+        reverse(s.begin(), s.end());   //yxc code in video
+        reverse(s.begin(), s.begin() + s.size() - n);  //yxc code in video
+        reverse(s.begin() + s.size() - n, s.end()); //yxc code in video
         return s;
     }
 };
