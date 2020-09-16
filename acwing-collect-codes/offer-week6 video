@@ -1,0 +1,511 @@
+offer week 6 video!! https://www.bilibili.com/video/BV1ab411q7bC
+
+
+AcWing 68. 0到n-1中缺失的数字    原题链接    简单
+作者：    yxc ,  2019-05-31 10:28:00 ,  阅读 1502
+
+22
+
+
+8
+算法
+(二分) O(logn)O(logn)
+这道题目给定的是递增数组，假设数组中第一个缺失的数是 xx，那么数组中的数如下所示；
+
+
+从中可以看出，数组左边蓝色部分都满足nums[i] == i，数组右边橙色部分都不满足nums[i] == i，因此我们可以二分出分界点 xx 的值。
+
+另外要注意特殊情况：当所有数都满足nums[i] == i时，表示缺失的是 nn。
+
+时间复杂度分析
+二分中的迭代只会执行 O(logn)O(logn) 次，因此时间复杂度是 O(logn)O(logn)。
+
+C++ 代码
+class Solution {
+public:
+    int getMissingNumber(vector<int>& nums) {
+        if (nums.empty()) return 0;
+
+        int l = 0, r = nums.size() - 1;
+        while (l < r)
+        {
+            int mid = l + r >> 1;
+            if (nums[mid] != mid) r = mid;
+            else l = mid + 1;
+        }
+
+        if (nums[r] == r) r ++ ;
+        return r;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/1261/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 70. 二叉搜索树的第k个结点    原题链接    简单
+作者：    贺谦 ,  2020-05-09 22:46:22 ,  阅读 225
+
+1
+
+
+题目描述
+给定一棵二叉搜索树，请找出其中的第k小的结点。
+
+你可以假设树和k都存在，并且1≤k≤树的总结点数。
+
+样例
+输入：root = [2, 1, 3, null, null, null, null] ，k = 3
+
+    2
+   / \
+  1   3
+
+输出：3
+算法1
+(DFS)
+每一层dfs()，就是每一个节点及其左右子树的遍历。第一层，是 2 1 3。第二层，是1 null null，第三层，是 3 null null。
+一开始明白算法是什么样，但是对dfs的理解不深，写了3个if，每个都k –，还忘记加引用&。最后直接MLE了。
+时间复杂度
+O(n)O(n)
+C++ 代码
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* res;
+    TreeNode* kthNode(TreeNode* root, int k) {
+        dfs(root, k);
+        return res;
+    }
+
+    /*
+    TreeNode *dfs(TreeNode *r, int &k)
+    {
+        if(k == 0) return r;
+        if(r->left)
+        {
+            k --;
+            dfs(r->left, k);
+        }
+
+        if(r)
+        {
+            k --;
+            dfs(r, k);
+        }
+
+        if(r->right) 
+        {
+            k --;
+            dfs(r->right, k);
+        }
+
+        return r;
+    }
+    */
+
+    void dfs(TreeNode *r, int &k)
+    {
+        if(!r) return;
+        dfs(r->left, k);
+
+        k --;
+        if(!k) res = r;
+
+        dfs(r->right, k);
+    }
+};
+算法2
+(DFS、剪枝)
+剪枝的思想：只有当k大于0的时候才会去遍历右子树。因为右子树是遍历顺序的最后一个。k=0的时候直接输出答案了，如果是root，就直接输出，不会再遍历右子树。
+时间复杂度
+O(n)O(n)
+C++ 代码
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* res;
+    TreeNode* kthNode(TreeNode* root, int k) {
+        dfs(root, k);
+        return res;
+    }
+
+
+    void dfs(TreeNode *r, int &k)
+    {
+        if(!r) return;
+        dfs(r->left, k);
+
+        k --;
+        if(!k) res = r;
+        else dfs(r->right, k);
+    }
+};
+C++ 代码
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* res;
+    TreeNode* kthNode(TreeNode* root, int k) {
+        dfs(root, k);
+        return res;
+    }
+
+
+    void dfs(TreeNode *r, int &k)
+    {
+        if(!r) return;
+        dfs(r->left, k);
+
+        k --;
+        if(!k) res = r;
+        if(k > 0) dfs(r->right, k);
+    }
+};
+
+作者：贺谦
+链接：https://www.acwing.com/solution/content/12985/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 71. 二叉树的深度    原题链接    简单
+作者：    Tovi ,  2020-02-24 00:34:32 ,  阅读 335
+
+C++ 代码
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int treeDepth(TreeNode* root) {
+        if (root == NULL)   return 0;
+        return max(treeDepth(root->left), treeDepth(root->right)) + 1;
+    }
+};
+
+作者：Tovi
+链接：https://www.acwing.com/solution/content/7286/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 72. 平衡二叉树    原题链接    简单
+作者：    莫楚轩 ,  2019-04-09 20:58:44 ,  阅读 760
+
+3
+
+
+2
+题目描述
+blablabla
+
+算法1
+(暴力枚举) O(n)O(n)
+将求深度的代码稍作修改，不重复求深度。
+
+时间复杂度分析：因为只遍历结点一次，所以最坏情形为O(n)
+
+C++ 代码
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        /*
+        unit test
+        root is nil
+        root not nil, left is nil, right is nil
+        root not nil, left not nil, right nil.
+        */
+        int height=dfs(root);
+        if(height>=0) return true;
+        else return false;
+    }
+
+    // 当非平衡时，return -1; 平衡时，return high;
+    // 首先判断左子树平衡与否，再判断右子树平衡与否，在判断整棵树平衡与否；
+    int dfs(TreeNode *root){
+        if(!root) return 0;
+        int left=dfs(root->left); 
+        if(left<0) return -1;
+        int right=dfs(root->right);
+        if(right<0) return -1;
+        if(abs(left-right)>1) return -1;
+        return max(left,right)+1;
+    }
+};
+
+作者：莫楚轩
+链接：https://www.acwing.com/solution/content/1132/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+balanced binary tree better explained:
+https://www.geeksforgeeks.org/how-to-determine-if-a-binary-tree-is-balanced/
+AVL stands for Adelson-Velskii and Landis. The AVL Balance Condition. 
+Left and right subtrees of every node. have equal heights differing by at most 1.
+
+
+
+AcWing 73. 数组中只出现一次的两个数字    原题链接    中等
+作者：    yzm0211 ,  2019-04-04 21:45:24 ,  阅读 1194
+
+13
+
+
+2
+该题解题思路
+异或得到 x^y
+取 x与y中第k位为1的数
+将数分为两个集合，第k位为1的集合和第k位不是1的集合
+其中x y分别在这两个集合，且相同的元素是在同一个集合里面
+于是将其转化成了求重复数字中的单个数值的问题
+C++ 代码
+class Solution {
+public:
+    vector<int> findNumsAppearOnce(vector<int>& nums) {
+        int sum = 0;
+        for(auto x : nums) sum ^=x; // get xor of all nums
+        int k = 0;
+        while(!(sum>>k & 1))k++; // locate a 1 in sum binary
+        int first = 0;
+        for(auto x: nums)
+            if(x>>k&1)
+                first ^= x; // first set has 1 set in kth position; second set doesn't
+        return vector<int>{first,sum^first}; //output first set xor; second is just sum^first
+    }
+
+};
+
+作者：yzm0211
+链接：https://www.acwing.com/solution/content/1324/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 74. 数组中唯一只出现一次的数字    原题链接    中等
+作者：    Sherry_ ,  2019-06-27 20:18:41 ,  阅读 615
+
+10
+
+
+1
+算法
+看每一位1的数量
+C++ 代码
+class Solution {
+public:
+    int findNumberAppearingOnce(vector<int>& nums) {
+        int ans = 0;
+        for (int i = 31; i >= 0; --i) {
+            int cnt = 0;
+            for (int x: nums) {
+                if (x >> i & 1) {
+                    cnt ++;
+                }
+            }
+            if (cnt % 3 == 1) {
+                ans = (ans * 2) + 1;
+            }
+            else {
+                ans = ans * 2;
+            }
+        }
+        return ans;
+    }
+};
+
+作者：Sherry_
+链接：https://www.acwing.com/solution/content/2618/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+class Solution {
+public:
+    int findNumberAppearingOnce(vector<int>& nums) {
+        int tmp[32] = {0};
+        for(auto x : nums)
+        {
+            for(int k = 0; k < 32; k++)
+                tmp[k] += x >> k & 1;
+        }
+
+        int ans = 0;
+        for(int i = 0; i < 32; i++)
+            ans += tmp[i] % 3 << i;
+
+        return ans;
+    }
+};
+
+作者：yzm0211
+链接：https://www.acwing.com/solution/content/1471/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+python3 代码
+class Solution(object):
+    def findNumberAppearingOnce(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        count = [0] * 32  # 统计每1个二进制位上，1出现的次数
+        for num in nums:
+            k = 0
+            while k < 32:
+                count[k] += num >> k & 1
+                k += 1
+        res = 0
+        for i in range(32):
+            # 因为其他数字都出现了三次，只有一个数字出现了一次
+            # 也就说明count[i]%3等于0或1
+            res += count[i] % 3 * 2 ** i
+        return res
+
+作者：polaris
+链接：https://www.acwing.com/solution/content/3556/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 74. Python 装x解法 数组中唯一只出现一次的数字    原题链接    困难
+作者：    丶Axe ,  2019-11-08 17:03:32 ,  阅读 228
+
+0
+
+
+Life is short.
+// video explain https://www.acwing.com/video/197/
+//leetcode  https://leetcode.com/problems/single-number-ii/solution/
+
+class Solution(object):
+    def findNumberAppearingOnce(self, nums):
+        a = b = 0
+        for n in nums:
+            a = (a ^ n) & ~b
+            b = (b ^ n) & ~a
+        return a
+
+作者：丶Axe
+链接：https://www.acwing.com/solution/content/6017/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+//leap ideas
+//
+
+算法1
+(暴力枚举) O(n)O(n)
+状态机连续遇到n个1以后变为0，遇到0直接变为0
+
+时间复杂度分析：blablabla
+
+C++ 代码
+class Solution {
+public:
+    int findNumberAppearingOnce(vector<int>& nums) {
+        int one=0,two=0;
+        for(auto x:nums)
+        {
+            one=(one^x)&~two;
+            two=(two^x)&~one;
+        }
+        return one;
+    }
+};
+
+作者：季科
+链接：https://www.acwing.com/solution/content/2135/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+题目描述
+在一个数组中除了一个数字只出现一次之外，其他数字都出现了三次。
+
+请找出那个只出现一次的数字。
+
+你可以假设满足条件的数字一定存在
+
+样例
+输入：[1,1,1,2,2,2,3,4,4,4]
+
+输出：3
+状态转移
+本题与前一题思路类似，前一题中，其他数都出现了两次，因此需要的状态转移方式是，如果出现两个1就抵消为0，用一个变量和异或运算即可实现，而本题是需要1出现三次时才会抵消，因此有三种状态，即1出现的次数为3k, 3k + 1, 3k + 2次
+
+逐个位来看，要设计一个两位的状态转移，出现三个1时，循环抵消，出现0时不变，一个变量只能记录两种状态，因此要用两个变量来记录状态，用one和two两个变量来记录1出现次数
+00表示1出现3k次，01表示1出现3k + 1次，10表示1出现3k + 2次
+
+  真值表
+  two     one     x       two     one
+  0       0       1       0       1   
+  0       1       1       1       0
+  1       0       1       0       0
+  0       0       0       0       0
+  0       1       0       0       1
+  1       0       0       1       0
+先看one的状态转移方程
+
+ one = (~one & ~two & x) | (one & ~two & ~x)
+     = ~two & ((~one & x) | (one & ~x))
+     = ~two & (one ^ x)
+同理，再用转移后的one来求two的状态转移方程
+
+这里，one为当且仅当1出现次数为3k + 1, tow为当且仅当1出现次数为3k + 2
+因此如果题目改为，有一个数出现了两次，则返回two即可
+
+C++ 代码
+class Solution {
+public:
+    int findNumberAppearingOnce(vector<int>& nums) {
+        int one=0,two=0;
+        for(auto x:nums)
+        {
+            one=(one^x)&~two;
+            two=(two^x)&~one;
+        }
+        return one;
+    }
+};
+
+作者：Rainbow_0
+链接：https://www.acwing.com/solution/content/19076/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+https://www.acwing.com/solution/content/19076/
+
+1:07 out of 1;42 total

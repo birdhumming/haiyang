@@ -1,3 +1,5 @@
+tree - recursion defined; 2 split if having monotonicity;
+
 way to think - silu = ideas  
 
 BFS can get shortest path; DFS can't; this is b/c BFS has distance info, DFS doesn't. DFS is easier to implement, it uses recursion.
