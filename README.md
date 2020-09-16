@@ -1,7 +1,15 @@
 way to think - silu = ideas  
 
-BFS can get shortest path; DFS can't
-bfs uses priority queue
+BFS can get shortest path; DFS can't; this is b/c BFS has distance info, DFS doesn't. DFS is easier to implement, it uses recursion.
+bfs uses priority queue - Handbook chap 12 has best explanation
+
+A queue is a data structure that contains some elements, and the only way the contents of the structure change are by popping elements off of the front of the queue, or by pushing elements onto the back. Elements are popped off in the order that they’re pushed, so for example the first element that’s pushed will be the first element that’s popped, and the last will be the last.
+
+In a priority queue, each element has some type of value that can be ordered with respect to other values of the same type (like a number, or a string [strings can be ordered lexicographically]). As elements are pushed onto the back or popped off of the front, the priority queue re-orders itself to make the front of the queue contain the element with the smallest value (or the largest, if the priority is defined to be in descending order).
+
+So, if you pop all of the elements off of a priority queue, their values will always come out in either ascending or descending order. But if you do that with a queue — elements come out in FIFO (first in first out) order
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1291720/
 
 matrix rank - https://www.mathsisfun.com/algebra/matrix-rank.html
 
@@ -5272,3 +5280,7 @@ https://github.com/bryall?tab=repositories
 9.16 算法+数据结构-学习整理
 作者：    lh359149153 ,  2020-09-16 10:46:56 ,  阅读 5
 https://www.acwing.com/file_system/file/content/whole/index/content/1291653/
+
+offer - 68 69 onwards; 68 old videos outdated solution; acwing.com has 2 split method which is better O(lgn) vs O(n)
+search offer-
+https://www.acwing.com/problem/search/2/?csrfmiddlewaretoken=smYVk3eisbDA9q4IUpL1cHuelZcS5cgT5fzLoOYPrwkhWaHAoVsc6P4CHNfGkyge&search_content=offer
