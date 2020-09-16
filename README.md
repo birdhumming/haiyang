@@ -1,3 +1,5 @@
+way to think - silu = ideas  
+
 BFS can get shortest path; DFS can't
 
 matrix rank - https://www.mathsisfun.com/algebra/matrix-rank.html
