@@ -1,3 +1,5 @@
+time is a much more limited resource than space!!!
+
 tree - recursion defined; 2 split if having monotonicity;
 
 way to think - silu = ideas  
