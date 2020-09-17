@@ -2,6 +2,9 @@
 An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
 LIST OF AWESOME LEARNING RESOURCES https://www.topcoder.com/thrive/articles/List%20of%20awesome%20learning%20resources
 
+https://hihocoder.com/
+https://github.com/zbh24/hihocoder
+
 http://web.stanford.edu/class/cs97si/ 
 https://github.com/prakhar1989/awesome-courses#algorithms
 https://github.com/tgnco1218/10-Algo book
@@ -5428,9 +5431,20 @@ https://www.acwing.com/solution/content/8105/
 https://www.acwing.com/solution/content/19711/
 
 AcWing 123. 士兵 solution
+https://www.acwing.com/solution/content/856/ - best solution by qinhuaian
 https://www.acwing.com/solution/content/5818/
 https://www.acwing.com/solution/content/2392/
-https://www.acwing.com/solution/content/856/
-https://www.acwing.com/solution/content/17335/
+https://www.acwing.com/solution/content/17335/ - not bad solution
+https://www.acwing.com/solution/content/3768/
+https://www.acwing.com/solution/content/9191/
 
 2nd part of 3:11 of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
+
+124. 数的进制转换
+https://www.acwing.com/solution/content/859/
+https://www.acwing.com/solution/content/5922/
+https://www.acwing.com/solution/content/1416/ not yxc code
+https://www.acwing.com/solution/content/18956/ yxc code
+
+https://hihocoder.com/problemset
+https://github.com/zbh24/hihocoder
