@@ -1,3 +1,120 @@
+acwing problems search 算法竞赛进阶:
+https://www.acwing.com/problem/search/1/?csrfmiddlewaretoken=LJlNG06jldQ0t9MYbvf6sv020MbfzIBVOF0ox0fium0dX1R7h90QnunvHygV8wPz&search_content=%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6
+
+work on more problems; summarize and replay; group work; write blogs - CSDN
+STEAM has no build up; CS changes every few years - medical science doesn't!
+offer book is much easier than blue book
+programming can be easily wrong and fail unexpectedly, no one can guarantee anything even very 
+high sklled programmer. some bugs are hidden and very hard to debug
+my youtube videos are not good - https://v.douyu.com/show/JmbBMkGbdVZM40XA
+算法竞赛进阶指南 0x08 练习 2019-03-03 20点场+22pm
+page 58 of blue book
+
+https://www.acwing.com/solution/content/15610/
+
+AcWing 116. 飞行员兄弟    原题链接    中等
+作者：    Yida915 ,  2019-02-09 11:19:56 ,  阅读 704
+
+4
+
+
+题目描述
+如原题
+
+感谢秦淮岸～灯火阑珊 的题解，给我指引了方向。
+这道题相当于一个简化版的“费解的开关 ”
+
+朴素想法1
+深搜DFS（超时）
+这道题只有4*4的大小，总共16个格子。DFS应该不错。
+明确一点，每个格子最多按一遍。
+每一轮迭代，遍历每一个格子，这个格子按/不按。
+
+时间复杂度分析：每轮迭代遍历16次，visit保证不重复迭代同一位置。迭代深度为16。所以这个复杂度应该是O(1616)O(1616)。怪不得过不了。
+
+C++ 代码
+贴这里做一个警示
+
+/**
+ * 与之前“费解的开关”那道题一样，不能DFS，应该枚举状态！
+ */
+void dfs(int state, int visit, vector<pii> &path){
+    if(ok) return;
+    if(state==final){
+        cout<<path.size()<<endl;
+        for(int i=0;i<path.size();i++)
+        cout<<path[i].first<<" "<<path[i].second<<endl;
+        ok = 1;
+        return;
+    }
+    for(int i=0;i<16;i++){
+        if(ok) return;
+        int x = i/4, y = i%4, temp = state, pos;
+        if((visit>>i)&1) continue; // cannot press same location twice
+        path.push_back({x, y});
+        // apply changes to state
+        for(int j=0;j<4;j++) state ^= (1<<(x*4 + j));
+        for(int j=0;j<4;j++) {
+            pos = (1<<(y + j*4));
+            if(pos != (1<<i)) state ^= pos;
+        }
+        dfs(state, visit|(1<<i), path);
+        path.pop_back();
+        state = temp;
+    }
+}
+
+算法2
+枚举+位运算
+不需要DFS。枚举每一个位置是否应该被按（000…001 –> 111…111），这个枚举默认了每个位置最多按一次，这就是解空间。
+枚举解空间并进行遍历处理即可，注意一行一列变换的时候，中心点只能变换一次。
+因为只涉及到16个位置，所以用一个变量state就能够存储所有位置的状态, 所以可以不用开数组(虽说开数组的开销也很小)
+
+时间复杂度分析：枚举状态一共O(216)O(216)，每轮处理16个bit里面对应的操作，最终复杂度应该是O(16∗216O(16∗216
+C++ 代码
+#define pii pair<int, int>
+
+int main(){
+    int state = 0;
+    char c;
+    for(int i=0;i<16;i++){
+        cin>>c;
+        if (c=='+') state |= (1<<i);
+    }
+    for(int k=1;k<(1<<17);k++){
+        int temp = state;
+        vector<pii> path;
+        for(int i=0;i<16;i++){
+            if((k>>i)&1){       // should press
+                int x = i/4, y = i%4, pos;
+                // apply changes to state
+                for(int j=0;j<4;j++) state ^= (1<<(x*4 + j));
+                for(int j=0;j<4;j++) {
+                    pos = (1<<(y + j*4));
+                    if(pos != (1<<i)) state ^= pos; // flip only once
+                }
+                path.push_back({x+1, y+1});
+            }
+        }
+        if(state == 0){ // all open
+            cout<<path.size()<<endl;
+            for(auto i: path){
+                cout<<i.first<<" "<<i.second<<endl;
+            }
+            break;
+        }
+        state = temp;
+    }
+
+    return 0;
+}
+
+作者：Yida915
+链接：https://www.acwing.com/solution/content/983/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
 https://v.douyu.com/author/PDAPVoKO3wxN
 
 DAG - 有向无环图
