@@ -1,5 +1,6 @@
 
 An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
+LIST OF AWESOME LEARNING RESOURCES https://www.topcoder.com/thrive/articles/List%20of%20awesome%20learning%20resources
 
 http://web.stanford.edu/class/cs97si/ 
 https://github.com/prakhar1989/awesome-courses#algorithms
@@ -16,7 +17,8 @@ https://www.quora.com/What-have-you-gained-from-competitive-programming
 Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne
 https://drive.google.com/file/d/1UgJDvc4pPDJgqA0bcH_M2NQ75S6_P27F/view?usp=sharing
 
-list of tech notes http://www.linya.pub/
+
+后台开发技术博客汇总 list of tech notes http://www.linya.pub/
 华为消费者BG推荐算法面经
 https://www.acwing.com/file_system/file/content/whole/index/content/1293884/
 深信服“算法大牛计划”面经 已拿意向书
