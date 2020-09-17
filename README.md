@@ -13,6 +13,12 @@ https://www.quora.com/How-can-I-become-good-at-competitive-programming-Are-there
 https://www.quora.com/How-is-competitive-programming-different-from-real-life-programming
 https://www.quora.com/What-have-you-gained-from-competitive-programming
 
+list of tech notes http://www.linya.pub/
+华为消费者BG推荐算法面经
+https://www.acwing.com/file_system/file/content/whole/index/content/1293884/
+深信服“算法大牛计划”面经 已拿意向书
+https://www.acwing.com/file_system/file/content/whole/index/content/1293850/
+
 CH/POJ? in comments https://www.acwing.com/solution/content/826/
 
 刷LeetCode的方式：先从Top100 liked 的tag开始刷（这个tag的题我刷了好几遍）。刷完之后按topic的tag刷过一段时间，后来改成了选择难度之后按顺序刷。一开始就按照ac率从高到低乱刷，后面就只刷点赞比点踩多不少的题。有一段时间每周的周赛基本都参加，不过最后也就是2000分的水准，比较弱。我一道题如果较长时间想不出来（比如半小时到一小时），就会去看discussion，主要是太懒了不想动脑子。自己A了的题也会去看discussion，去学别人比较好的解法（后来是学写法），然后自己照着敲一遍。不会或者不是最优解法的题，过一段时间如果记得的话就再做一遍，不过一般都是不记得了：(
