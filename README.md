@@ -5352,6 +5352,12 @@ search offer-
 https://www.acwing.com/problem/search/2/?csrfmiddlewaretoken=smYVk3eisbDA9q4IUpL1cHuelZcS5cgT5fzLoOYPrwkhWaHAoVsc6P4CHNfGkyge&search_content=offer
 
 AcWing 121. 赶牛入圈  solution
+https://www.acwing.com/solution/content/10813/ yxc code
+https://www.acwing.com/solution/content/11926/ yxc
+https://www.acwing.com/solution/content/16779/
+https://github.com/lydrainbowcat/tedukuri/blob/master/%E9%85%8D%E5%A5%97%E5%85%89%E7%9B%98/%E4%B9%A0%E9%A2%98/0x08%20%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95%20%E6%80%BB%E7%BB%93%E4%B8%8E%E7%BB%83%E4%B9%A0/Corral%20the%20Cows/POJ3179%20Corral%20the%20Cows.cpp
+lyd code
+
 https://www.acwing.com/solution/content/1091/
 https://www.acwing.com/solution/content/1223/ 二分+双指针 good
 https://www.acwing.com/solution/content/5547/
