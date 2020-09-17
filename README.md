@@ -5334,7 +5334,7 @@ Jack 112 3.4 Mary 102 3.8 Mary 117 3.9 Ala 333 3.5 Zero 101 4
 
 STL notes -
 https://www.acwing.com/file_system/file/content/whole/index/content/1291096/
-```
+
 
 pyohio
 
@@ -5355,4 +5355,12 @@ AcWing 121. 赶牛入圈  solution
 https://www.acwing.com/solution/content/1091/
 https://www.acwing.com/solution/content/1223/
 https://www.acwing.com/solution/content/5547/
-2:05 out of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
+2nd part of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
+AcWing 122. 糖果传递 solution
+https://www.acwing.com/solution/content/955/
+https://www.acwing.com/solution/content/5531/
+https://www.acwing.com/solution/content/8116/ with picture
+https://www.acwing.com/solution/content/6910/
+https://www.acwing.com/solution/content/8105/
+https://www.acwing.com/solution/content/19711/
+
