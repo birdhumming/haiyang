@@ -5496,3 +5496,6 @@ int main() {
 ``` lyd code above
 https://hihocoder.com/problemset
 https://github.com/zbh24/hihocoder
+
+2nd part of 4:01 of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
+acrobat cow
