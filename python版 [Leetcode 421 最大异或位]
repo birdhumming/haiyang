@@ -1,0 +1,397 @@
+python版 [Leetcode 421 最大异或位] acwing 143
+
+def findMaximumXOR(self, nums):
+    answer = 0
+    for i in range(32)[::-1]:
+        answer <<= 1
+        prefixes = {num >> i for num in nums}
+        answer += any(answer^1 ^ p in prefixes for p in prefixes)
+    return answer
+
+
+works:
+https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/submissions/
+
+class Solution:
+    def findMaximumXOR(self, nums: List[int]) -> int:
+        ans=0
+        for i in range(32)[::-1]:
+            ans<<=1
+            px={num>>i for num in nums}
+            ans+=any(ans^1 ^ p in px for p in px)
+        return ans
+        
+https://blog.csdn.net/fuxuemingzhu/article/details/79473171
+class Solution:
+    def findMaximumXOR(self, nums: List[int]) -> int:
+        ans = mask = 0
+        for x in range(32)[::-1]:
+            mask += 1 << x
+            prefixSet = set([n & mask for n in nums])
+            temp = ans | 1 << x
+            for prefix in prefixSet:
+                if temp ^ prefix in prefixSet:
+                    ans = temp
+                    break
+        return ans
+        
+
+
+    AcWing 143. 最大异或对    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-02 06:36:20 ,  阅读 2719
+
+20
+
+
+3
+题目描述
+在给定的NN个整数A1，A2……ANA1，A2……AN中选出两个进行xor（异或）运算，得到的结果最大是多少？
+
+输入格式
+第一行输入一个整数N。
+
+第二行输入NN个整数A1～ANA1～AN。
+
+输出格式
+输出一个整数表示答案。
+
+数据范围
+1≤N≤1051≤N≤105
+0≤Ai<2310≤Ai<231
+样例
+输入样例：
+3
+1 2 3
+输出样例：
+3
+异或性质+前缀+字典树
+这道题目很难想到是字典树,如果不是放在字典树单元的话.
+其实来说,一个整数,是可以转化成为一个32位的二进制数,而也就可以变成长度为32位的二进制字符串.
+既然如此话,那么我们可以这么做,每一次检索的时候,我们都走与当前AiAi这一位相反的位置走,也就是让Xor值最大,如果说没有路可以走的话,那么就走相同的路.
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+#define fic(i,a,b) for(int i=a;i>=b;i--)
+#define fir(i,a,b) for(int i=a;i<=b;i++)
+const int N=100100;
+int trie[N*32][2],tot=1,a[N],n,ans;
+void insert(int x) 
+{
+    int p=1;
+    fic(k,30,0)
+    {
+        int ch=x>>k&1;
+        if (trie[p][ch]==0) 
+            trie[p][ch]=(++tot);
+        p=trie[p][ch];
+    }
+}
+int Search(int x)
+{
+    int p=1,ans=0;
+    fic(k,30,0)
+    {
+        int ch=x>>k&1;//取出第k位
+        if (trie[p][ch^1])//异或走路
+        {
+            p=trie[p][ch^1];
+            ans|=(1<<k);
+        }
+        else
+            p=trie[p][ch];
+    }
+    return ans;
+}
+int main()
+{
+    cin>>n;
+    fir(i,1,n)
+    {
+        scanf("%d",&a[i]);
+        insert(a[i]);
+        ans=max(ans,Search(a[i]));//取最大值
+    }
+    cout<<ans<<endl;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/923/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 143. 最大异或对 分析二维数组son    原题链接    简单
+作者：    optimjie ,  2019-11-18 16:07:44 ,  阅读 692
+
+6
+
+
+1
+算法初学者分析y总代码，加上自己的理解，如果有啥错误还请大家指正
+算法1
+(暴力枚举) O(n2)O(n2)
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        // 但其实 a[i] ^ a[j] == a[j] ^ a[i]
+        // 所以内层循环 j < i // 因为 a[i] ^ a[i] == 0 所以事先把返回值初始化成0 不用判断相等的情况
+    }
+}
+算法2
+(trie树)
+trie树中要明确两个问题：
+
+son[N][x]是个啥？idx是个啥？
+
+首先son[N][x]这是个二维数组。
+
+第一维N是题目给的数据范围，像在trie树中的模板题当中N为字符串的总长度（这里的总长度为所有的字符串的长度加起来），在本题中N需要自己计算，最大为N*31（其实根本达不到这么大，举个简单的例子假设用0和1编码，按照前面的计算最大的方法应该是4乘2=8但其实只有6个结点）。
+
+第二维x代表着儿子结点的可能性有多少，模板题中是字符串，而题目本身又限定了均为小写字母所以只有26种可能性，在本题中下一位只有0或者1两种情况所以为2。
+
+而这个二维数组本身存的是当前结点的下标，就是N喽，所以总结的话son[N][x]存的就是第N的结点的x儿子的下标是多少，然后idx就是第一个可以用的下标。
+
+C++ 代码
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int a[N], son[N * 31][2]; // 在trie树中 二维数组son存的是节点的下标                 
+                          // 第一维就是下标的值  第二维代表着儿子 在本题中 只有0或1 两个儿子
+int n, idx;
+
+void insert(int x)
+{
+    int p = 0; // 
+    for (int i = 30; i >= 0; i--)
+    {
+        int u = x >> i & 1; // 取二进制数的某一位的值
+        if (!son[p][u]) son[p][u] = ++idx; // 如果下标为p的点的u（0或1）这个儿子不存在，那就创建
+        p = son[p][u];
+    }
+}
+
+int query(int x)
+{
+    int p = 0, ret = 0;
+    for (int i = 31; i >= 0; i--)
+    {
+        int u = x >> i & 1;
+        if (!son[p][!u])
+        {
+            p = son[p][u];
+            ret = ret * 2 + u; // 这个地方与十进制一样 n = n * 10 + x;
+        }                      // 则八进制就是 n = n * 8 + x;
+        else
+        {
+            p = son[p][!u];
+            ret = ret * 2 + !u;
+        }
+    }
+    ret = ret ^ x;
+    return ret;
+}
+
+int main()
+{
+    cin >> n;
+    int maxXorNum = 0; 
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+        insert(a[i]);
+        maxXorNum = max(maxXorNum, query(a[i]));
+    }
+
+    cout << maxXorNum << endl;
+
+    return 0;
+}
+
+作者：optimjie
+链接：https://www.acwing.com/solution/content/6156/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+cWing 143. 最大异或对    原题链接    简单
+作者：    松鼠爱葡萄 ,  2020-08-24 17:23:06 ,  阅读 64
+
+3
+
+
+3
+异或
+
+相同得零， 相异得一
+
+暴力代码
+int res=0;
+for(int i=0;i<n;i++)
+    for(int i=0;i<n;i++)
+        res=max(res, a[i]^a[j]);
+trie树优化
+枚举AiAi , 从A1A1, A2A2, … , AnAn 选出AjAj , 使得AixorAjAixorAj 最大
+
+
+
+
+
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+const int N = 1e5 + 10, M = 3e6 + 10;//M=31*N
+int a[N], son[M][2], idx;
+
+void insert(int x) {
+    int p = 0;
+    for (int i = 30; i >= 0; i--) {
+        int s = x >> i & 1;
+        if (!son[p][s]) son[p][s] = ++idx;
+        p = son[p][s];
+    }
+}
+
+int query(int x) {
+    int p = 0;
+    int res = 0;
+    for (int i = 30; i >= 0; i--) {
+        int s = x >> i & 1;
+        if (son[p][!s]) {
+            res += 1 << i;
+            p = son[p][!s];
+        } else p = son[p][s];
+    }
+    return res;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        insert(a[i]);
+    }
+    int res = 0;
+    for (int i = 0; i < n; i++) {
+        res = max(res, query(a[i]));
+    }
+    cout << res;
+    return 0;
+}
+
+作者：松鼠爱葡萄
+链接：https://www.acwing.com/solution/content/19191/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 143. 最大异或对    原题链接    简单
+作者：    Struggle ,  2020-06-16 10:40:02 ,  阅读 102
+
+2
+
+
+x>>i&1 的解释
+
+#include<iostream>
+using namespace std;
+const int N=31*1e5;
+int f[N][2],g[N],index;
+void insert(int x)//创建trie树
+{
+    int p=0;
+    for(int i=30;i>=0;i--)
+    {
+    //x>>i&1 是x的二进制表示中第i位上的数
+        if(!f[p][(x>>i&1)]) f[p][(x>>i&1)]=++index;
+        p=f[p][x>>i&1];
+    }
+}
+int query(int x)//直接返回最大异或对
+{
+    int p=0,res=0;
+    //为什么取30?
+    //题目给的数据范围是[0,2^31) 注意2^31没有取到
+    //因为都是整数 所以[0,2^31)其实就是[0,2^31-1]
+    //所以位数为31,最大右移30位即可(为什么位数为31位? 假设31的二进制上每位数都为1,利用等比数列求和公式可以知道,31位的二进制对应的最大十进制数就是2^31-1)
+    for(int i=30;i>=0;i--)
+    {
+    //res+=1<<i怎么理解?
+    // 只有当if(f[p][!(x>>i&1)]) 成立时,才会执行res+=1<<i
+    //而if(f[p][!(x>>i&1)]) 的意思是如果trie数中的第i位数是否存在x的二进制数的第i位数取反的值
+    //我们知道 当trie数中的第i位数存在x的二进制数的第i位数取反的值,此时该位上的异或值最大,最大为1
+    //所以此时x的二进制数的第i位数与trie数中的第i位数异或值为1;
+    //∴res+=1<<i
+        if(f[p][!(x>>i&1)]) res+=1<<i,p=f[p][!(x>>i&1)];
+        else p=f[p][x>>i&1];
+    }
+    return res;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    int res=0;
+    for(int i=0;i<n;i++) cin>>g[i];
+    for(int i=0;i<n;i++) insert(g[i]);
+    for(int i=0;i<n;i++)
+        res=max(res,query(g[i]));
+    cout<<res;
+    return 0;
+}
+
+作者：Struggle
+链接：https://www.acwing.com/solution/content/13708/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+算法1
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 100010, M = N * 30;
+int n, a[N], son[M][2], res, idx;
+void add(int x)
+{
+    int p = 0;
+    for(int i = 30; i >= 0; i --)
+    {
+        int &s = son[p][x >> i & 1];
+        if(!s) s = ++ idx;
+        p = s;
+    }
+}
+int query(int x)
+{
+    int p = 0, ans = 0;
+    for(int i = 30; i >= 0; i --)
+    {
+        int s = x >> i & 1;
+        if(son[p][!s])
+        {
+            ans += 1 << i;
+            p = son[p][!s];
+        }
+        else p = son[p][s];
+    }
+    return ans;
+}
+int main()
+{
+    cin >> n;
+    for(int i = 0; i < n; i ++) cin >> a[i], add(a[i]);
+    for(int i = 0; i < n; i ++) res = max(res, query(a[i]));
+    cout << res << endl;
+    return 0;
+}
+
+作者：cht
+链接：https://www.acwing.com/solution/content/14056/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
