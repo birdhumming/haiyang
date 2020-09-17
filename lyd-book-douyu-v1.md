@@ -1,7 +1,7 @@
 acwing problems search 算法竞赛进阶:
 https://www.acwing.com/problem/search/1/?csrfmiddlewaretoken=LJlNG06jldQ0t9MYbvf6sv020MbfzIBVOF0ox0fium0dX1R7h90QnunvHygV8wPz&search_content=%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6
 
-work on more problems; summarize and replay; group work; write blogs - CSDN
+solve more problems; summarize and replay; group work; write blogs - CSDN
 STEAM has no build up; CS changes every few years - medical science doesn't!
 offer book is much easier than blue book
 programming can be easily wrong and fail unexpectedly, no one can guarantee anything even very 
@@ -10,6 +10,7 @@ my youtube videos are not good - https://v.douyu.com/show/JmbBMkGbdVZM40XA
 算法竞赛进阶指南 0x08 练习 2019-03-03 20点场+22pm
 page 58 of blue book
 
+get links no need to copy and paste -
 https://www.acwing.com/solution/content/15610/
 
 AcWing 116. 飞行员兄弟    原题链接    中等
