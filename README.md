@@ -13,6 +13,9 @@ https://www.quora.com/How-can-I-become-good-at-competitive-programming-Are-there
 https://www.quora.com/How-is-competitive-programming-different-from-real-life-programming
 https://www.quora.com/What-have-you-gained-from-competitive-programming
 
+Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne
+https://drive.google.com/file/d/1UgJDvc4pPDJgqA0bcH_M2NQ75S6_P27F/view?usp=sharing
+
 list of tech notes http://www.linya.pub/
 华为消费者BG推荐算法面经
 https://www.acwing.com/file_system/file/content/whole/index/content/1293884/
