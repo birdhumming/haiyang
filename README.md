@@ -5498,4 +5498,84 @@ https://hihocoder.com/problemset
 https://github.com/zbh24/hihocoder
 
 2nd part of 4:01 of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
-acrobat cow
+
+AcWing 125. 耍杂技的牛
+acrobat cow https://www.acwing.com/problem/content/116/ 114. 国王游戏
+https://www.acwing.com/solution/content/845/
+https://www.acwing.com/solution/content/1265/
+https://www.acwing.com/solution/content/13782/
+https://www.acwing.com/solution/content/18870/
+https://www.acwing.com/solution/content/16201/ python
+
+```
+//Author:XuHt
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 50006, INF = 0x3f3f3f3f;
+struct P {
+	int x, y;
+	bool operator < (const P w) const {
+		return x + y < w.x + w.y;
+	}
+} p[N];
+int n;
+
+int main() {
+	cin >> n;
+	for (int i = 1; i <= n; i++) scanf("%d %d", &p[i].x, &p[i].y);
+	sort(p + 1, p + n + 1);
+	int ans = -INF, k = 0;
+	for (int i = 1; i <= n; i++) {
+		ans = max(ans, k - p[i].y);
+		k += p[i].x;
+	}
+	cout << ans << endl;
+	return 0;
+}
+```
+
+AcWing 126. 最大的和
+https://www.acwing.com/solution/content/867/
+https://www.acwing.com/solution/content/4127/ yxc code
+https://www.acwing.com/solution/content/1812/ dp
+https://www.acwing.com/solution/content/3036/
+https://www.acwing.com/solution/content/8803/
+```
+//Author:XuHt
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 106;
+int n, a[N][N], x[N], ans = 0;
+
+int main() {
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= n; j++)
+			scanf("%d", &a[i][j]);
+	for (int i = 1; i <= n; i++) {
+		memset(x, 0, sizeof(x));
+		for (int j = i; j <= n; j++) {
+			int num = 0;
+			for (int k = 1; k <= n; k++) {
+				num += x[k] += a[j][k];
+				ans = max(ans, num);
+				if (num < 0) num = 0;
+			}
+		}
+	}
+	cout << ans << endl;
+	return 0;
+}
+```
+
+AcWing 127. 任务
+https://www.acwing.com/solution/content/868/
+
+https://github.com/littlewyy/OI 
+https://www.acwing.com/solution/content/5481/ yxc code; multiset not set for dup values
+https://www.acwing.com/solution/content/19733/
