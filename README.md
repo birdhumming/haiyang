@@ -5351,7 +5351,7 @@ offer - 68 69 onwards; 68 old videos outdated solution; acwing.com has 2 split m
 search offer-
 https://www.acwing.com/problem/search/2/?csrfmiddlewaretoken=smYVk3eisbDA9q4IUpL1cHuelZcS5cgT5fzLoOYPrwkhWaHAoVsc6P4CHNfGkyge&search_content=offer
 
-AcWing 121. 赶牛入圈  solution
+AcWing 121. 赶牛入圈  solution discretization
 https://www.acwing.com/solution/content/10813/ yxc code
 https://www.acwing.com/solution/content/11926/ yxc
 https://www.acwing.com/solution/content/16779/
