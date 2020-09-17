@@ -5353,8 +5353,11 @@ https://www.acwing.com/problem/search/2/?csrfmiddlewaretoken=smYVk3eisbDA9q4IUpL
 
 AcWing 121. 赶牛入圈  solution
 https://www.acwing.com/solution/content/1091/
-https://www.acwing.com/solution/content/1223/
+https://www.acwing.com/solution/content/1223/ 二分+双指针 good
 https://www.acwing.com/solution/content/5547/
+https://www.acwing.com/solution/content/1246/ 二分 + 扫描线
+https://www.acwing.com/solution/content/7199/
+
 2nd part of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
 AcWing 122. 糖果传递 solution
 https://www.acwing.com/solution/content/955/
@@ -5364,3 +5367,10 @@ https://www.acwing.com/solution/content/6910/
 https://www.acwing.com/solution/content/8105/
 https://www.acwing.com/solution/content/19711/
 
+AcWing 123. 士兵 solution
+https://www.acwing.com/solution/content/5818/
+https://www.acwing.com/solution/content/2392/
+https://www.acwing.com/solution/content/856/
+https://www.acwing.com/solution/content/17335/
+
+2nd part of 3:11 of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
