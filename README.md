@@ -5350,3 +5350,9 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1291653/
 offer - 68 69 onwards; 68 old videos outdated solution; acwing.com has 2 split method which is better O(lgn) vs O(n)
 search offer-
 https://www.acwing.com/problem/search/2/?csrfmiddlewaretoken=smYVk3eisbDA9q4IUpL1cHuelZcS5cgT5fzLoOYPrwkhWaHAoVsc6P4CHNfGkyge&search_content=offer
+
+AcWing 121. 赶牛入圈  solution
+https://www.acwing.com/solution/content/1091/
+https://www.acwing.com/solution/content/1223/
+https://www.acwing.com/solution/content/5547/
+2:05 out of 5:08 for 0.x8 long 5 hour video - in basic programming/blue book
