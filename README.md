@@ -3077,6 +3077,837 @@ https://www.cnblogs.com/onepixel/p/7674659.html
 quicksort - not same as below
 
 ```
+// 快速幂，求a^b mod p
+int power(int a, int b, int p) {
+	int ans = 1;
+	for (; b; b >>= 1) {
+		if (b & 1) ans = (long long)ans * a % p;
+		a = (long long)a * a % p;
+	}
+	return ans;
+}
+
+// 64位整数乘法的O(log b)算法
+long long mul(long long a, long long b, long long p) {
+	long long ans = 0;
+	for (; b; b >>= 1) {
+		if (b & 1) ans = (ans + a) % p;
+		a = a * 2 % p;
+	}
+	return ans;
+}
+
+// 64位整数乘法的long double算法
+typedef unsigned long long ull;
+ull mul(ull a, ull b, ull p) {
+	a %= p, b %= p;  // 当a,b一定在0~p之间时，此行不必要
+	ull c = (long double)a * b / p;
+	ull x = a * b, y = c * p;
+	long long ans = (long long)(x % p) - (long long)(y % p);
+	if (ans < 0) ans += p;
+	return ans;
+}
+
+// hamilton路径
+int f[1 << 20][20];
+int hamilton(int n, int weight[20][20]) {
+	memset(f, 0x3f, sizeof(f));
+	f[1][0] = 0;
+	for (int i = 1; i < 1 << n; i++)
+		for (int j = 0; j < n; j++)
+			if (i >> j & 1)
+				for (int k = 0; k < n; k++)
+					if (i >> k & 1)
+						f[i][j] = min(f[i][j], f[i ^ 1 << j][k] + weight[k][j]);
+	return f[(1 << n) - 1][n - 1];
+}
+
+// lowbit运算，找到二进制下所有是1的位
+int H[37];
+// 预处理
+for (int i = 0; i < 36; i++) H[(1ll << i) % 37] = i;
+// 对多次询问进行求解
+while (cin >> n) {
+	while (n > 0) {
+		cout << H[(n & -n) % 37] << ' ';
+		n -= n & -n;
+	}
+	cout << endl;
+}
+
+// 随机数据生成模板
+#include<cstdlib>
+#include<ctime>
+
+int random(int n) {
+    return (long long)rand() * rand() % n;
+}
+
+int main() {
+    srand((unsigned)time(0));
+    // ...具体内容...
+}
+
+// 实例：随机生成整数序列
+// 不超过100000个绝对值在1000000000内的整数
+int n = random(100000) + 1;
+int m = 1000000000;
+for (int i = 1; i <= n; i++) {
+    a[i] = random(2 * m + 1) - m;
+}
+
+// 实例：随机生成区间列
+for (int i = 1; i <= m; i++) {
+    int l = random(n) + 1;
+    int r = random(n) + 1;
+    if (l > r) swap(l, r);
+    printf("%d %d\n", l, r);
+}
+
+// 实例：随机生成树
+for (int i = 2; i <= n; i++) {
+    // 从 2~n 之间的每个点 i 向 1~i-1 之间的点随机连一条边
+    int fa = random(i - 1) + 1;
+    int val = random(1000000000) + 1;
+    printf("%d %d %d\n", fa, i, val);
+}
+
+// 实例：随机生成图
+// 无向图，连通，不含重边、自环
+pair<int, int> e[1000005]; // 保存数据
+map< pair<int, int>, bool > h; // 防止重边
+// 先生成一棵树，保证连通
+for (int i = 1; i < n; i++) {
+    int fa = random(i) + 1;
+    e[i] = make_pair(fa, i + 1);
+    h[e[i]] = h[make_pair(i + 1, fa)] = 1;
+}
+// 再生成剩余的 m-n+1 条边
+for (int i = n; i <= m; i++) {
+    int x, y;
+    do {
+        x = random(n) + 1, y = random(n) + 1;
+    } while (x == y || h[make_pair(x, y)]);
+    e[i] = make_pair(x, y);
+    h[e[i]] = h[make_pair(y, x)] = 1;
+}
+// 随机打乱，输出
+random_shuffle(e + 1, e + m + 1);
+for (int i = 1; i <= m; i++)
+    printf("%d %d\n", e[i].first, e[i].second);
+
+
+// Windows系统对拍程序
+#include<cstdlib>
+#include<cstdio>
+#include<ctime>
+int main() {
+    for (int T = 1; T <= 10000; T++) {
+        // 自行设定适当的路径
+        system("C:\\random.exe");
+        // 返回当前程序已经运行的CPU时间，windows下单位ms，类unix下单位s
+        double st = clock();
+        system("C:\\sol.exe");
+        double ed = clock();
+        system("C:\\bf.exe");
+        if (system("fc C:\\data.out C:\\data.ans")) {
+            puts("Wrong Answer");
+            // 程序立即退出，此时data.in即为发生错误的数据，可人工演算、调试
+            return 0;
+        }
+        else {
+            printf("Accepted, 测试点 #%d, 用时 %.0lfms\n", T, ed - st);
+        }
+    }
+}
+// 递归实现指数型枚举
+vector<int> chosen;
+void calc(int x) {
+	if (x == n + 1) {
+		for (int i = 0; i < chosen.size(); i++)
+			printf("%d ", chosen[i]);
+		puts("");
+		return;
+	}
+	calc(x + 1);
+	chosen.push_back(x);
+	calc(x + 1);
+	chosen.pop_back();
+}
+
+// 递归实现组合型枚举
+vector<int> chosen; 
+void calc(int x) {
+	if (chosen.size() > m || chosen.size() + (n - x + 1) < m) return;
+	if (x == n + 1) {
+		for (int i = 0; i < chosen.size(); i++)
+			printf("%d ", chosen[i]);
+		puts("");
+		return;
+	}
+	calc(x + 1);
+	chosen.push_back(x);
+	calc(x + 1);
+	chosen.pop_back();
+}
+
+// 递归实现排列型枚举
+int order[20];
+bool chosen[20];
+void calc(int k) {
+	if (k == n + 1) {
+		for (int i = 1; i <= n; i++)
+			printf("%d ", order[i]);
+		puts("");
+		return;
+	}
+	for (int i = 1; i <= n; i++) {
+		if (chosen[i]) continue;
+		order[k] = i;
+		chosen[i] = 1;
+		calc(k + 1);
+		chosen[i] = 0;
+		order[k] = 0;
+	}
+}
+
+
+// 模拟机器实现，把组合型枚举改为非递归
+vector<int> chosen;
+int stack[100010], top = 0, address = 0;
+
+void call(int x, int ret_addr) { // 模拟计算机汇编指令call
+	int old_top = top;
+	stack[++top] = x; // 参数x
+	stack[++top] = ret_addr; // 返回地址标号
+	stack[++top] = old_top; // 在栈顶记录以前的top值
+}
+
+int ret() { // 模拟计算机汇编指令ret
+	int ret_addr = stack[top - 1];
+	top = stack[top]; // 恢复以前的top值
+	return ret_addr;
+}
+
+int main() {
+	int n, m;
+	cin >> n >> m;
+	call(1, 0); // calc(1)
+	while (top) {
+		int x = stack[top - 2]; // 获取参数
+		switch (address) {
+		case 0:
+			if (chosen.size() > m || chosen.size() + (n - x + 1) < m) {
+				address = ret(); // return
+				continue;
+			}
+			if (x == n + 1) {
+				for (int i = 0; i < chosen.size(); i++)
+					printf("%d ", chosen[i]);
+				puts("");
+				address = ret(); // return
+				continue;
+			}
+			call(x + 1, 1); // 相当于calc(x + 1)，返回后会从case 1继续执行
+			address = 0;
+			continue; // 回到while循环开头，相当于开始新的递归
+		case 1:
+			chosen.push_back(x);
+			call(x + 1, 2); // 相当于calc(x + 1)，返回后会从case 2继续执行
+			address = 0;
+			continue; // 回到while循环开头，相当于开始新的递归
+		case 2:
+			chosen.pop_back();
+			address = ret(); // 相当于原calc函数结尾，执行return
+		}
+	}
+}
+
+// 在单调递增序列a中查找>=x的数中最小的一个（即x或x的后继）
+while (l < r) {
+	int mid = (l + r) / 2;
+	if (a[mid] >= x) r = mid; else l = mid + 1;
+}
+
+// 在单调递增序列a中查找<=x的数中最大的一个（即x或x的前驱）
+while (l < r) {
+	int mid = (l + r + 1) / 2;
+	if (a[mid] <= x) l = mid; else r = mid - 1;
+}
+
+// 实数域二分，设置eps法
+while (l + eps < r) {
+	double mid = (l + r) / 2;
+	if (calc(mid)) r = mid; else l = mid; 
+}
+
+// 实数域二分，规定循环次数法
+for (int i = 0; i < 100; i++) {
+	double mid = (l + r) / 2;
+	if (calc(mid)) r = mid; else l = mid;	
+}
+
+// 把n本书分成m组，每组厚度之和<=size，是否可行
+bool valid(int size) {
+	int group = 1, rest = size;
+	for (int i = 1; i <= n; i++) {
+		if (rest >= a[i]) rest -= a[i];
+		else group++, rest = size - a[i];
+	}
+	return group <= m;
+}
+
+// 二分答案，判定“每组厚度之和不超过二分的值”时能否在m组内把书分完
+int l = 0, r = sum_of_Ai;
+while (l < r) {
+	int mid = (l + r) / 2;
+	if (valid(mid)) r = mid; else l = mid + 1;
+}
+cout << l << endl;
+
+// 离散化
+void discrete() {
+	sort(a + 1, a + n + 1);
+	for (int i = 1; i <= n; i++) // 也可用STL中的unique函数
+		if (i == 1 || a[i] != a[i - 1])
+			b[++m] = a[i];
+}
+
+// 离散化后，查询x映射为哪个1~m之间的整数
+void query(int x) {
+	return lower_bound(b + 1, b + m + 1, x) - b;
+}
+
+
+// 归并排序求逆序对
+void merge(int l, int mid, int r) {
+	// 合并a[l~mid]与a[mid+1~r]
+	// a是待排序数组, b是临时数组, cnt是逆序对个数
+	int i = l, j = mid + 1;
+	for (int k = l; k <= r; k++)
+		if (j > r || i <= mid && a[i] < a[j]) b[k] = a[i++];
+		else b[k] = a[j++], cnt += mid - i + 1;
+	for (int k = l; k <= r; k++) a[k] = b[k];
+}
+
+// 区间最值问题的ST算法
+void ST_prework() {
+	for (int i = 1; i <= n; i++) f[i][0] = a[i];
+	int t = log(n) / log(2) + 1;
+	for (int j = 1; j < t; j++)
+		for (int i = 1; i <= n - (1<<j) + 1; i++)
+			f[i][j] = max(f[i][j-1], f[i + (1<<(j-1))][j-1]);
+}
+
+int ST_query(int l, int r) {
+	int k = log(r - l + 1) / log(2);
+	return max(f[l][k], f[r - (1<<k) + 1][k]);
+}
+
+// 递归法求中缀表达式的值，O(n^2)
+int calc(int l, int r) {
+	// 寻找未被任何括号包含的最后一个加减号
+	for (int i = r, j = 0; i >= l; i--) {
+		if (s[i] == '(') j++;
+		if (s[i] == ')') j--;
+		if (j == 0 && s[i] == '+') return calc(l, i - 1) + calc(i + 1, r);
+		if (j == 0 && s[i] == '-') return calc(l, i - 1) - calc(i + 1, r);
+	}
+	// 寻找未被任何括号包含的最后一个乘除号
+	for (int i = r, j = 0; i >= l; i--) {
+		if (s[i] == '(') j++;
+		if (s[i] == ')') j--;
+		if (j == 0 && s[i] == '*') return calc(l, i - 1) * calc(i + 1, r);
+		if (j == 0 && s[i] == '/') return calc(l, i - 1) / calc(i + 1, r);
+	}
+	// 首尾是括号
+	if (s[l] == '('&&s[r] == ')') return calc(l + 1, r - 1);
+	// 是一个数
+	int ans = 0;
+	for (int i = l; i <= r; i++) ans = ans * 10 + s[i] - '0';
+	return ans;
+}
+
+// ----------------------------------------------------
+// 后缀表达式转中缀表达式，同时求值，O(n)
+
+// 数值栈 
+vector<int> nums; 
+// 运算符栈 
+vector<char> ops;
+
+// 优先级 
+int grade(char op) {
+	switch (op) {
+	case '(':
+		return 1;
+	case '+':
+	case '-':
+		return 2;
+	case '*':
+	case '/':
+		return 3;
+	}
+	return 0;
+}
+
+// 处理后缀表达式中的一个运算符 
+void calc(char op) {
+	// 从栈顶取出两个数 
+	int y = *nums.rbegin();
+	nums.pop_back();
+	int x = *nums.rbegin();
+	nums.pop_back();
+	int z;
+	switch (op) {
+	case '+':
+		z = x + y;
+		break;
+	case '-':
+		z = x - y;
+		break;
+	case '*':
+		z = x * y;
+		break;
+	case '/':
+		z = x / y;
+		break;
+	}
+	// 把运算结果放回栈中 
+	nums.push_back(z);	
+}
+
+// 中缀表达式转后缀表达式，同时对后缀表达式求值 
+int solve(string s) {
+	nums.clear();
+	ops.clear();
+	int top = 0, val = 0;
+	for (int i = 0; i < s.size(); i++) {
+		// 中缀表达式的一个数字 
+		if (s[i] >= '0' && s[i] <= '9') {
+			val = val * 10 + s[i] - '0';
+			if (s[i+1] >= '0' && s[i+1] <= '9') continue;
+			// 后缀表达式的一个数，直接入栈 
+			nums.push_back(val);
+			val = 0;
+		}
+		// 中缀表达式的左括号 
+		else if (s[i] == '(') ops.push_back(s[i]);
+		// 中缀表达式的右括号 
+		else if (s[i] == ')') {
+			while (*ops.rbegin() != '(') {
+				// 处理后缀表达式的一个运算符 
+				calc(*ops.rbegin());
+				ops.pop_back();
+			}
+			ops.pop_back();
+		}
+		// 中缀表达式的加减乘除号 
+		else {
+			while (ops.size() && grade(*ops.rbegin()) >= grade(s[i])) {
+				calc(*ops.rbegin());
+				ops.pop_back();
+			}
+			ops.push_back(s[i]);
+		} 
+	}
+	while (ops.size()) {
+		calc(*ops.rbegin());
+		ops.pop_back();
+	}
+	// 后缀表达式栈中最后剩下的数就是答案 
+	return *nums.begin();
+}
+
+// ----------------------------------------------------
+// 单调栈
+a[n + 1] = p = 0;
+for (int i = 1; i <= n + 1; i++) {
+	if (a[i] > s[p]) {
+		s[++p] = a[i], w[p] = 1;
+	} else {
+		int width=0;
+		while (s[p] > a[i]) {
+			width += w[p];
+			ans = max(ans, (long long)width * s[p]);
+			p--;
+		}
+		s[++p] = a[i], w[p] = width + 1;
+	}
+}
+// 单调队列
+int l = 1, r = 1;
+q[1] = 0; // save choice j=0
+for(int i = 1; i <= n; i++)
+{
+	while (l <= r && q[l] < i - m) l++;
+	ans = max(ans, sum[i] - sum[q[l]]);
+	while (l <= r && sum[q[r]] >= sum[i]) r--;
+	q[++r] = i;
+}
+
+// 双向链表
+struct Node {
+	int value; // data
+	Node *prev, *next; // pointers
+};
+Node *head, *tail;
+
+void initialize() { // create an empty list
+	head = new Node();
+	tail = new Node();
+	head->next = tail;
+	tail->prev = head;
+}
+
+void insert(Node *p, int value) { // insert data after p
+	q = new Node();
+	q->value = value;
+	p->next->prev = q; q->next = p->next;
+	p->next = q; q->prev = p;
+}
+
+void remove(Node *p) { // remove p
+	p->prev->next = p->next;
+	p->next->prev = p->prev;
+	delete p;
+}
+
+void recycle() { // release memory
+	while (head != tail) {
+		head = head->next;
+		delete head->prev;
+	}
+	delete tail;
+}
+
+// 数组模拟链表
+struct Node {
+	int value;
+	int prev, next;
+} node[SIZE];
+int head, tail, tot;
+
+int initialize() {
+	tot = 2;
+	head = 1, tail = 2;
+	node[head].next = tail;
+	node[tail].prev = head;
+}
+
+int insert(int p, int value) {
+	q = ++tot;
+	node[q].value = value;
+	node[node[p].next].prev = q;
+	node[q].next = node[p].next;
+	node[p].next = q; node[q].prev = p;
+}
+
+void remove(int p) {
+	node[node[p].prev].next = node[p].next;
+	node[node[p].next].prev = node[p].prev;
+}
+
+
+// 邻接表：加入有向边(x, y)，权值为z
+void add(int x, int y, int z) {
+	ver[++tot] = y, edge[tot] = z; // 真实数据
+	next[tot] = head[x], head[x] = tot; // 在表头x处插入
+}
+
+// 邻接表：访问从x出发的所有边
+for (int i = head[x]; i; i = next[i]) {
+	int y = ver[i], z = edge[i];
+	// 一条有向边(x, y)，权值为z
+}
+
+// Hash 例题：兔子与兔子
+char s[1000010];
+unsigned long long f[1000010], p[1000010];
+int n, q;
+int main() {
+	scanf("%s", s + 1);
+	n = strlen(s + 1);
+	cin >> q;
+	p[0] = 1; // 131^0
+	for (int i = 1; i <= n; i++) {
+		f[i] = f[i-1] * 131 + (s[i]-'a'+1); // hash of 1~i
+		p[i] = p[i-1] * 131; // 131^i
+	}
+	for (int i = 1; i <= q; i++) {
+		int l1, r1, l2, r2;
+		scanf("%d%d%d%d", &l1, &r1, &l2, &r2);
+		if (f[r1] - f[l1-1] * p[r1-l1+1] == // hash of l1~r1
+			f[r2] - f[l2-1] * p[r2-l2+1]) { // hash of l2~r2
+			puts("Yes");
+		} else {
+			puts("No");
+		}
+	}
+}
+
+// KMP
+next[1] = 0;
+for (int i = 2, j = 0; i <= n; i++) {
+	while (j > 0 && a[i] != a[j+1]) j = next[j];
+	if (a[i] == a[j+1]) j++;
+	next[i] = j;
+}
+
+for (int i = 1, j = 0; i <= m; i++) {
+	while (j > 0 && (j == n || b[i] != a[j+1])) j = next[j];
+	if (b[i] == a[j+1]) j++;
+	f[i] = j;
+	// if (f[i] == n)，此时就是A在B中的某一次出现
+}
+
+
+// 最小表示法
+int n = strlen(s + 1);
+for (int i = 1; i <= n; i++) s[n+i] = s[i];
+int i = 1, j = 2, k;
+while (i <= n && j <= n) {
+	for (k = 0; k < n && s[i+k] == s[j+k]; k++);
+	if (k == n) break; // s likes "aaaaa"
+	if (s[i+k] > s[j+k]) {
+		i = i + k + 1;
+		if (i == j) i++;
+	} else {
+		j = j + k + 1;
+		if (i == j) j++;
+	}
+}
+ans = min(i, j);
+
+// 假设字符串由小写字母构成
+int trie[SIZE][26], tot = 1;
+
+// Trie的插入
+void insert(char* str) {
+	int len = strlen(str), p = 1;
+	for (int k = 0; k < len; k++) {
+		int ch = str[k]-'a';
+		if (trie[p][ch] == 0) trie[p][ch] = ++tot;
+		p = trie[p][ch];
+	}
+	end[p] = true;
+}
+
+// Trie的检索
+bool search(char* str) {
+	int len = strlen(str), p = 1;
+	for (int k = 0; k < len; k++) {
+		p = trie[p][str[k]-'a'];
+		if (p == 0) return false;
+	}
+	return end[p];
+}
+// 二叉堆
+int heap[SIZE], n;
+void up(int p) {
+	while (p > 1) {
+		if (heap[p] > heap[p/2]) {
+			swap(heap[p], heap[p/2]);
+			p/=2;
+		}
+		else break;
+	}	
+}
+void down(int p) {
+	int s = p*2;
+	while (s <= n) {
+		if (s < n && heap[s] < heap[s+1]) s++;
+		if (heap[s] > heap[p]) {
+			swap(heap[s], heap[p]);
+			p = s, s = p*2;
+		}
+		else break;
+	}
+}
+void Insert(int val) {
+	heap[++n] = val;
+	up(n);
+}
+int GetTop() {
+	return heap[1];
+}
+void Extract() {
+	heap[1] = heap[n--];
+	down(1);
+}
+void Remove(int k) {
+	heap[k] = heap[n--];
+	up(k), down(k);
+}
+
+// 深度优先遍历框架
+void dfs(int x) {
+	v[x] = 1;
+	for (int i = head[x]; i; i = next[i]) {
+		int y = ver[i];
+		if (v[y]) continue;
+		dfs(y);
+	}
+}
+
+// DFS序
+void dfs(int x) {
+	a[++m] = x;
+	v[x] = 1;
+	for (int i = head[x]; i; i = next[i]) {
+		int y = ver[i];
+		if (v[y]) continue;
+		dfs(y);
+	}
+	a[++m] = x;
+}
+
+// 求树中各点的深度
+void dfs(int x) {
+	v[x] = 1;
+	for (int i = head[x]; i; i = next[i]) {
+		int y = ver[i];
+		if (v[y]) continue; // 点y已经被访问过了
+		d[y] = d[x] + 1;
+		dfs(y);
+	}
+}
+
+// 求树的重心
+void dfs(int x) {
+	v[x] = 1; size[x] = 1; // 子树x的大小
+	int max_part = 0; // 删掉x后分成的最大子树的大小
+	for (int i = head[x]; i; i = next[i]) {
+		int y = ver[i];
+		if (v[y]) continue; // 点y已经被访问过了
+		dfs(y);
+		size[x] += size[y];
+		max_part = max(max_part, size[y]);
+	}
+	max_part = max(max_part, n - size[x]);
+	if (max_part < ans) {
+		ans = max_part;
+		pos = x;
+	}
+}
+
+// 划分图的连通块
+void dfs(int x) {
+	v[x] = cnt;
+	for (int i = head[x]; i; i = next[i]) {
+		int y = ver[i];
+		if (v[y]) continue;
+		dfs(y);
+	}
+}
+for (int i = 1; i <= n; i++)
+	if (!v[i]) {
+		cnt++;
+		dfs(i);
+	}
+
+// 广度优先遍历框架
+void bfs() {
+	memset(d, 0, sizeof(d));
+	queue<int> q;
+	q.push(1); d[1] = 1;
+	while (q.size()) {
+		int x = q.front(); q.pop();
+		for (int i = head[x]; i; i = next[i]) {
+			int y = ver[i];
+			if (d[y]) continue;
+			d[y] = d[x] + 1;
+			q.push(y);
+		}
+	}
+}
+
+// 拓扑排序
+void add(int x, int y) { // 在邻接表中添加一条有向边
+	ver[++tot] = y, next[tot] = head[x], head[x] = tot;
+	deg[y]++;
+}
+void topsort() {
+	queue<int> q;
+	for (int i = 1; i <= n; i++)
+		if (deg[i] == 0) q.push(i);
+	while (q.size()) {
+		int x = q.front(); q.pop();
+		a[++cnt] = x;
+		for (int i = head[x]; i; i = next[i]) {
+			int y = ver[i];
+			if (--deg[y] == 0) q.push(y);
+		}
+	}
+}
+int main() {
+	cin >> n >> m; // 点数、边数
+	for (int i = 1; i <= m; i++) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		add(x, y);
+	}
+	topsort();
+	for (int i = 1; i <= cnt; i++)
+		printf("%d ", a[i]);
+	cout << endl;
+}
+// 试除法判断n是否为质数
+bool is_prime(int n) {
+    if (n < 2) return false;
+    for (int i = 2; i <= sqrt(n); i++)
+        if (n % i == 0) return false;
+    return true;
+}
+
+// Eratosthenes筛法
+void primes(int n) {
+    memset(v, 0, sizeof(v)); // 合数标记
+    for (int i = 2; i <= n; i++) {
+        if (v[i]) continue;
+        cout << i << endl; // i是质数
+        for (int j = i; j <= n/i; j++) v[i*j] = 1;
+    }
+}
+
+// 线性筛法
+int v[MAX_N], prime[MAX_N];
+void primes(int n) {
+	memset(v, 0, sizeof(v)); // 最小质因子
+	m = 0; // 质数数量
+	for (int i = 2; i <= n; i++) {
+		if (v[i] == 0) { // i是质数
+			v[i] = i;
+			prime[++m] = i;
+		}
+		// 给当前的数i乘上一个质因子
+		for (int j = 1; j <= m; j++) {
+			// i有比prime[j]更小的质因子，或者超出n的范围
+			if (prime[j] > v[i] || prime[j] > n/i) break;
+			// prime[j]是合数i*prime[j]的最小质因子
+			v[i*prime[j]] = prime[j];
+		}
+	}
+	for (int i = 1; i <= m; i++)
+		cout << prime[i] << endl;
+}
+
+// 试除法分解质因数
+void divide(int n) {
+    m = 0;
+    for (int i = 2; i*i <= n; i++) {
+        if (n % i == 0) { // i是质数
+            p[++m] = i, c[m] = 0;
+            while (n % i == 0) n /= i, c[m]++; // 除掉所有的i
+        }
+    }
+    if (n > 1) // n是质数
+        p[++m] = n, c[m] = 1;
+    for (int i = 1; i <= m; i++)
+        cout << p[i] << '^' << c[i] <<endl;
+}
+//https://github.com/lydrainbowcat/tedukuri/blob/master/%E9%85%8D%E5%A5%97%E5%85%89%E7%9B%98/%E6%AD%A3%E6%96%87%E5%8C%85%E5%90%AB%E7%9A%84%E7%A8%8B%E5%BA%8F%E7%89%87%E6%AE%B5/0x31%20prime.cpp
+
 // 快速排序算法模板; with double pointer starting on each end
 // pivot using one number x=q[left]
 
