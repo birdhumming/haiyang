@@ -6629,3 +6629,19 @@ https://www.acwing.com/solution/content/728/
 24. 机器人的运动范围
 https://www.acwing.com/solution/content/730/
 https://www.acwing.com/solution/content/1685/ python
+
+AcWing 25. 剪绳子
+https://www.acwing.com/solution/content/731/
+
+AcWing 26. 二进制中1的个数
+https://www.acwing.com/solution/content/732/
+
+AcWing 27. 数值的整数次方
+https://www.acwing.com/solution/content/733/
+
+AcWing 28. 在O(1)时间删除链表结点 
+https://www.acwing.com/solution/content/734/
+
+AcWing 29. 删除链表中重复的节点
+https://www.acwing.com/solution/content/735/
+may delete head node, so must have a dummy head to deal with the possibility
