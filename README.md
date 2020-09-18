@@ -6615,3 +6615,13 @@ AcWing 18. 重建二叉树python
 https://www.acwing.com/solution/content/13383/
 https://www.acwing.com/solution/content/706/ yxc
 https://www.acwing.com/solution/content/15038/ with comments
+
+
+fibonacci with quick power and matrix multiply
+https://www.acwing.com/blog/content/25/
+
+AcWing 22. 旋转数组的最小数字
+https://www.acwing.com/solution/content/727/
+
+AcWing 23. 矩阵中的路径
+https://www.acwing.com/solution/content/728/
