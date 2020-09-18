@@ -4145,7 +4145,7 @@ vector<int> div(vector<int> &A, int b, int &r)
 	sort(alls.begin(), alls.end()); // 将所有值排序
 	alls.erase(unique(alls.begin(), alls.end()), alls.end());	// 去掉重复元素
 	
-	// 二分求出x对应的离散化的值
+	// 二分求出x对应的离散化的值; can use lower_bound()=binary search
 	int find(int x)
 	{
 		int l = 0, r = alls.size() - 1;
@@ -4158,6 +4158,19 @@ vector<int> div(vector<int> &A, int b, int &r)
 		return r + 1;
 	}
 
+
+// 离散化
+void discrete() {
+	sort(a + 1, a + n + 1);
+	for (int i = 1; i <= n; i++) // 也可用STL中的unique函数
+		if (i == 1 || a[i] != a[i - 1])
+			b[++m] = a[i];
+}
+
+// 离散化后，查询x映射为哪个1~m之间的整数
+void query(int x) {
+	return lower_bound(b + 1, b + m + 1, x) - b;
+}
 
 4. 区间合并
 	
@@ -6456,3 +6469,12 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1296458/
 AcWing 115. 给树染色 
 https://www.acwing.com/solution/content/1065/ yxc
 https://www.acwing.com/solution/content/857/ qinhuaian
+自己的一点拙见：这个贪心题，不要被树节点的顺序套进去。对于一个给定的树，染色方法是唯一的，先每次找到均值最大的节点，然后和其父节点合并，不需要理会根节点，直接合并 n - 1 次，最后肯定会合并为一个点，而且这个点必定为根节点。
+为什么一定到最后的时候，权值最大的点一定是根节点呢？因为合并的过程总是“自下而上”的合并。也就是说既然父节点染色后才能染色子节点，那么就逆向思维，先把最大的子节点染色，然后立马染色父节点，直到最后一直向上合并到父节点。 好了，现在我们把刚才的过程全部逆推，那么逆推的过程就是从“根节点” 开始染色的过程，也就是最优解的染色路径
+https://www.acwing.com/solution/content/3425/
+思路yxc大佬已经讲得很清楚啦,这里是一点小优化,利用并查集和大根堆(STL priority_queue)将时间复杂度从O(n2)O(n2)降至O(nlogn)O(nlogn)
+一些要注意的细节:
+1. 节点是有可能重复入队的,又因节点的“合并权值”实时更新,所以当它被取出来的时候只需要判重且用它最新的权值即可
+2. 记得重置fa数组和vis数组,这是一道多组输入的题目(UVA原题是这样的)
+3. 祖先节点是不能入队的,一定要加以判断(因为它不能合并了)
+https://www.acwing.com/solution/content/16465/
