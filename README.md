@@ -6625,3 +6625,7 @@ https://www.acwing.com/solution/content/727/
 
 AcWing 23. 矩阵中的路径
 https://www.acwing.com/solution/content/728/
+
+24. 机器人的运动范围
+https://www.acwing.com/solution/content/730/
+https://www.acwing.com/solution/content/1685/ python
