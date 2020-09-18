@@ -6494,11 +6494,36 @@ never would thought of that
 nowcoder.com
 牛客寒假算法基础集训营2 2019 only douyu has videos, bili doesn't have videos; can't find in nowcoder.com
 https://ac.nowcoder.com/acm/contest/327 list of problems
+A	处女座的签到题	点击查看	605/5894	未通过
+B	处女座与cf	点击查看	195/1535	未通过
+C	处女座的砝码	点击查看	734/2516	未通过
+D	处女座与重修费	点击查看	3079/3871	未通过
+E	处女座与汉明距离	点击查看	30/113	未通过
+F	处女座与宝藏	点击查看	117/627	未通过
+G	处女座与复读机	点击查看	671/4298	未通过
+H	处女座的测验（一）	点击查看	581/1645	未通过
+I	处女座的测验（二）	点击查看	98/509	未通过
+J	处女座的期末复习	点击查看	1589/6587	未通过
+
 https://ac.nowcoder.com/acm/contest/view-submission?submissionId=44573137
 https://ac.nowcoder.com/acm/contest/view-submission?submissionId=40411528
 
 牛客寒假算法基础集训营1 2019
 https://ac.nowcoder.com/acm/contest/317
+题号	标题	已通过代码	通过率	我的状态
+A	小a的计算器	点击查看	3608/11408	未通过
+B	小a与"204"	点击查看	2254/6769	未通过
+C	小a与星际探索	点击查看	1255/8372	未通过
+D	小a与黄金街道	点击查看	699/4472	未通过
+E	小a的轰炸游戏	点击查看	148/693	未通过
+F	小a的子序列	点击查看	117/259	未通过
+G	小a的排列	点击查看	413/1926	未通过
+H	小a的学期	点击查看	112/495	未通过
+I	小a与军团模拟器	点击查看	61/209	未通过
+J	小a的集合	点击查看	48/391	未通过
+
 
 大雪菜! only few videos
 https://www.youtube.com/channel/UCm5KNfhpbisux6MUgQnrGRg/videos
+
+电光火石
