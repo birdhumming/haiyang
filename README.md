@@ -6649,4 +6649,4 @@ may delete head node, so must have a dummy head to deal with the possibility
 AcWing 30. 正则表达式匹配
 https://www.acwing.com/solution/content/736/
 
-darren yao usaco book http://darrenyao.com/usacobook/cpp.pdf
+darren yao short usaco book http://darrenyao.com/usacobook/cpp.pdf
