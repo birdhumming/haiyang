@@ -5581,3 +5581,16 @@ https://www.acwing.com/solution/content/868/
 https://github.com/littlewyy/OI 
 https://www.acwing.com/solution/content/5481/ yxc code; multiset not set for dup values
 https://www.acwing.com/solution/content/19733/
+
+douyu front to 2019-3 next is 2-26 greedy
+douyu back 
+
+Douyu yxc AcWing videos - https://v.douyu.com/author/PDAPVoKO3wxN 2018-06-18-19pm 数论问题讲解 - euler phi, factor counting 2018-06-25/26-20pm 最小生成树算法及IndeedTokyo笔试题讲解; prim() kruskal(), indeed interview 2018-07-02-20pm 动态规划 - leetcode mostly and one toutiao interview question 2018-07-09-20pm 二分专题 2018-07-16-20pm 暑期LeetCode打卡——Week1，链表(1/2), 22pm 暑期LeetCode打卡——Week1，链表(2/2)
+
+2018-07-23-20pm 暑期LeetCode打卡——Week2，递归(1/2), 22pm; leetcode 17 46 dfs 47 78
+
+2018-07-30-19pm Week3 树专题+KickStart D轮讲解（1/2, 21pm Week3 树专题+KickStart D轮讲解（2/2） 2018-08-06-3 parts Week4 动态规划专题 (5/5) 2018-08-13-19pm Week5 字符串处理专题 (1/2), 21pm 2018-08-20-20pm Week6 二分与单调队列/栈专题(1/2)， 2018-08-20-22pm Week6 二分与单调队列/栈专题(2/2) 2018-08-30 20pm, 22pm Week7 哈希表专题 2018-09-3 20p Week8 动态规划专题II (1/2) 2018-09-10 20pm 22pm Week8 动态规划专题II (1/2); leetcode 专题打卡， 第一，第二期； #19- 复杂度分析
+
+2018-09-17 20pm leetcode 第二期Week1——深搜/宽搜专题, flood fill 2018-09-24-20pm 第二期Week2——位运算专题 2018-10-01-20pm 第二期Week3——贪心专题; leetcode 2nd season has only 3 weeks 2018-10-08 outage 2018-10-15-20pm 背包九讲(1/2), 21pm 背包九讲(1/2) 2018-10-23-20pm 背包九讲(2/2) 2018/10/23 LeetCode season 3 刷题打卡Week1题目走 2018-10-23 20点场 2018-10-30-20pm 刷题活动第三期Week2 DFS专题 2018-10-30 20点场 2018-11-05 20点场 刷题活动第三期Week3 数学专题 2018-11-05 20点场 2018-11-19 19点场 leetcode 刷题第四期Week1 Google专题 2018-11-19 19点场 2018-11-26 19点场 leetcode 刷题第四期Week2Facebook专题 2018-11-26 19点场 2018-12-03 20点场 leetcode 刷题第四期Week3FGoogle专题 2018-12-03 20点场 2018-12-17 20点场 浅谈排序算法 2018-12-17 20点场 2018-12-24 20点场 浅谈排序算法（下） 2018-12-24 20点场 2018-12-31 17点场 剑指Offer-Week1 2018-12-31 17点场 剑指Offer-Week2 2019-01-07 20点场 剑指Offer-Week3 2019-01-14 19点场 0x00基本算法--0x01 位运算 2019-01-15 19点场 0x00基本算法--0x02递推与递归 2019-01-18 19点场 0x00基本算法--0x03前缀和与差分 2019-01-20 20点场 《剑指Offer》打卡活动——Week4 2019-01-21 20点场, 《剑指Offer》打卡活动——Week4 2019-01-21 22点场 《算法竞赛进阶指南》0x04. 二分 2019-01-22 19点场 《算法竞赛进阶指南》0x05. 排序 2019-01-24 21点场 牛客寒假算法基础集训营1 2019-01-25 20点场 牛客寒假算法基础集训营1 2019-01-26 19点场 算法竞赛进阶指南 0x06 倍增 2019-01-27 21点场 牛客寒假算法基础集训营2讲解 2019-02-02 20点场, 牛客寒假算法基础集训营2讲解 2019-02-02 21点场, 牛客寒假算法基础集训营2讲解 2019-02-02 22点场 牛客寒假算法基础集训营2讲解 2019-02-07 20点场, 牛客寒假算法基础集训营2讲解 2019-02-07 21点场 剑指Offer打卡活动——Week5 2019-02-24 20点场, 剑指Offer打卡活动——Week5 2019-02-24 22点场 算法竞赛进阶指南 0x07 贪心 2019-02-26 19点场, 算法竞赛进阶指南 0x07 贪心 2019-02-26 21点场 算法竞赛进阶指南 0x08 练习 2019-03-03 20点场, 算法竞赛进阶指南 0x08 练习 2019-03-03 22点场 算法竞赛进阶指南 0x08 练习 2019-03-06 18点场, 蓝桥杯 B 组！ 2019-03-24 21点场, 蓝桥杯 B 组！ 2019-03-24 23点场, 算法竞赛进阶指南 第二章 总结与练习 2019-05-07 20点场, 算法竞赛进阶指南 第二章 总结与练习 2019-05-07 22点场
+
+2019-02-02, 19-01-24, Week7 哈希表专题; 19-01-26 19pm 200k data will blow up stack; don't use dfs recursion; use bfs https://v.douyu.com/show/DrwnvzygQDlWPNaX 2018-6-18 2019-11-22 has 5-bit numbering
