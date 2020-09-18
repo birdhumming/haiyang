@@ -5609,3 +5609,15 @@ bug - last int should be double; unexpected error
 
 AcWing 114. 国王游戏
 https://www.acwing.com/solution/content/1062/
+
+数论算法，欧拉筛，杜教筛，dirichlet卷积，和积性函数都过了一遍
+这一块在 RSA 算法中可以用来破解某一类 “具有某种特征” 的密码数值
+感觉还挺好用的 ​​​​
+https://www.acwing.com/file_system/file/content/whole/index/content/1296843/
+
+AcWing 2. 01背包问题 
+https://www.acwing.com/file_system/file/content/whole/index/content/1296749/
+
+Entity Framework一种现代的，为.NET框架设计的“对象-数据库”转换映射器。
+浙商银行总行科技部秋招面经
+https://www.acwing.com/file_system/file/content/whole/index/content/1296458/
