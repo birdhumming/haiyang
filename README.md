@@ -26,6 +26,8 @@ https://drive.google.com/file/d/1UgJDvc4pPDJgqA0bcH_M2NQ75S6_P27F/view?usp=shari
 https://www.acwing.com/file_system/file/content/whole/index/content/1293884/
 深信服“算法大牛计划”面经 已拿意向书
 https://www.acwing.com/file_system/file/content/whole/index/content/1293850/
+知乎后端开发工程师 交叉面（第一次面试遇到架构师）
+https://www.acwing.com/file_system/file/content/whole/index/content/1295875/
 
 CH/POJ? in comments https://www.acwing.com/solution/content/826/
 
@@ -5577,13 +5579,15 @@ int main() {
 
 AcWing 127. 任务
 https://www.acwing.com/solution/content/868/
-
 https://github.com/littlewyy/OI 
 https://www.acwing.com/solution/content/5481/ yxc code; multiset not set for dup values
 https://www.acwing.com/solution/content/19733/
 
 douyu front to 2019-3 next is 2-26 greedy
-douyu back 
+douyu back 做题看书太枯燥，抽象，只有看录像，听人讲；brian dean william lin 不会给你讲
+
+AcWing 110. 防晒
+https://www.acwing.com/solution/content/785/
 
 Douyu yxc AcWing videos - https://v.douyu.com/author/PDAPVoKO3wxN 2018-06-18-19pm 数论问题讲解 - euler phi, factor counting 2018-06-25/26-20pm 最小生成树算法及IndeedTokyo笔试题讲解; prim() kruskal(), indeed interview 2018-07-02-20pm 动态规划 - leetcode mostly and one toutiao interview question 2018-07-09-20pm 二分专题 2018-07-16-20pm 暑期LeetCode打卡——Week1，链表(1/2), 22pm 暑期LeetCode打卡——Week1，链表(2/2)
 
