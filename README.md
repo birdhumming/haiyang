@@ -6480,8 +6480,25 @@ https://www.acwing.com/solution/content/3425/
 https://www.acwing.com/solution/content/16465/
 
 
-offer
+offer bili has best videos https://space.bilibili.com/7836741/channel/detail?cid=92901
 AcWing 13. 找出数组中重复的数字 
 https://www.acwing.com/solution/content/13215/ set
 https://www.acwing.com/solution/content/1675/ python
 https://www.acwing.com/solution/content/4013/ python
+
+bash script - error_check has exit in it, so always exit after error!
+bug is always at a place you wouldn't expect! 
+error is always at another place.
+never would thought of that
+
+nowcoder.com
+牛客寒假算法基础集训营2 2019 only douyu has videos, bili doesn't have videos; can't find in nowcoder.com
+https://ac.nowcoder.com/acm/contest/327 list of problems
+https://ac.nowcoder.com/acm/contest/view-submission?submissionId=44573137
+https://ac.nowcoder.com/acm/contest/view-submission?submissionId=40411528
+
+牛客寒假算法基础集训营1 2019
+https://ac.nowcoder.com/acm/contest/317
+
+大雪菜! only few videos
+https://www.youtube.com/channel/UCm5KNfhpbisux6MUgQnrGRg/videos
