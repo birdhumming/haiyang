@@ -6527,3 +6527,50 @@ J	小a的集合	点击查看	48/391	未通过
 https://www.youtube.com/channel/UCm5KNfhpbisux6MUgQnrGRg/videos
 
 电光火石
+
+class Solution {
+public:
+    int duplicateInArray(vector<int>& nums) {
+        int l = 1, r = nums.size() - 1;
+        while (l < r) {
+            int mid = l + r >> 1; // 划分的区间：[l, mid], [mid + 1, r]
+            int s = 0;
+            for (auto x : nums) s += x >= l && x <= mid;
+            if (s > mid - l + 1) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/693/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+class Solution {
+public:
+    int duplicateInArray(vector<int>& nums) {
+        int l = 1, r = nums.size() - 1;
+        while (l < r) {
+            int mid = l + r >> 1; // 划分的区间：[l, mid], [mid + 1, r]
+            int s = 0;
+            for (auto x : nums)
+                if (x >= l && x <= mid)
+                    s ++ ; //            for (auto x : nums) s += x >= l && x <= mid;
+
+            if (s > mid - l + 1) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/693/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+https://www.acwing.com/solution/content/1220/ better doulbe pointer
