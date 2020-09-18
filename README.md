@@ -6574,3 +6574,44 @@ public:
 
 
 https://www.acwing.com/solution/content/1220/ better doulbe pointer
+
+
+https://www.acwing.com/solution/content/12527/
+https://www.acwing.com/solution/content/702/ yxc
+
+
+a^b^c mod p???
+https://www.e-olymp.com/en/contests/17135
+Problems
+A
+Again irreducible
+B
+Send a Table
+C
+Number Theory
+D
+Sequence
+E
+Longge`s problem
+F
+GCD Extreme II
+G
+Totient Extreme
+H
+LCM Sum
+I
+Sequence
+J
+Inverse
+K
+Happy sum
+L
+Modular division
+M
+a^b^c
+https://www.e-olymp.com/en/contests/17135
+
+AcWing 18. 重建二叉树python
+https://www.acwing.com/solution/content/13383/
+https://www.acwing.com/solution/content/706/ yxc
+https://www.acwing.com/solution/content/15038/ with comments
