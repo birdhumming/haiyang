@@ -6478,3 +6478,10 @@ https://www.acwing.com/solution/content/3425/
 2. 记得重置fa数组和vis数组,这是一道多组输入的题目(UVA原题是这样的)
 3. 祖先节点是不能入队的,一定要加以判断(因为它不能合并了)
 https://www.acwing.com/solution/content/16465/
+
+
+offer
+AcWing 13. 找出数组中重复的数字 
+https://www.acwing.com/solution/content/13215/ set
+https://www.acwing.com/solution/content/1675/ python
+https://www.acwing.com/solution/content/4013/ python
