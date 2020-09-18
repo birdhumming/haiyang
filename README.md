@@ -6650,3 +6650,6 @@ AcWing 30. 正则表达式匹配
 https://www.acwing.com/solution/content/736/
 
 darren yao short usaco book http://darrenyao.com/usacobook/cpp.pdf
+
+machine learning https://www.youtube.com/watch?v=h0e2HAPTGF4
+https://www.youtube.com/watch?v=KNAWp2S3w94
