@@ -6648,6 +6648,19 @@ may delete head node, so must have a dummy head to deal with the possibility
 
 AcWing 30. 正则表达式匹配
 https://www.acwing.com/solution/content/736/
+https://leetcode.com/problems/regular-expression-matching/
+https://www.acwing.com/activity/content/code/content/105348/
+转态表示：f[i][j] 表示s[i,…]和p[j,…]相匹配
+
+状态转移：
+1、p[j]是正常字符，f[i][j]=s[i]==p[j]&&f[i+1][j+1];
+2、p[j]是”.”，f[i][j]=f[i+1][j+1]
+3、p[j+1]是”*”，s[i]==p[j]&&f[i][j]=f[i+1][j]||f[i][j+2]
+
+注意点：
+1.记忆化搜索
+2.由于是从后往前进行递推判断，所以需要用到递归
+
 
 darren yao short usaco book http://darrenyao.com/usacobook/cpp.pdf
 
