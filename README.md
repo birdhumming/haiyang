@@ -6693,3 +6693,9 @@ null pointer
 https://www.acwing.com/file_system/file/content/whole/index/content/1301066/
 Java Stream 操作
 https://www.acwing.com/file_system/file/content/whole/index/content/1300681/
+
+Hulu 2021秋招在线笔试（9.16场）
+https://www.acwing.com/file_system/file/content/whole/index/content/1301834/
+
+AcWing 204. 表达整数的奇怪方式 
+https://www.acwing.com/file_system/file/content/whole/index/content/1301830/
