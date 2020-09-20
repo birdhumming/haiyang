@@ -6666,3 +6666,8 @@ darren yao short usaco book http://darrenyao.com/usacobook/cpp.pdf
 
 machine learning https://www.youtube.com/watch?v=h0e2HAPTGF4
 https://www.youtube.com/watch?v=KNAWp2S3w94
+
+华为云 语音语义创新Lab 日常实习面经
+https://www.acwing.com/file_system/file/content/whole/index/content/1299523/
+Galois理论
+https://www.acwing.com/file_system/file/content/whole/index/content/1299264/
