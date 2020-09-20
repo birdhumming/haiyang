@@ -6699,3 +6699,42 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1301834/
 
 AcWing 204. 表达整数的奇怪方式 
 https://www.acwing.com/file_system/file/content/whole/index/content/1301830/
+
+AcWing 77. 良心题解，看这篇就好
+https://www.acwing.com/solution/content/8584/
+python:
+```
+class Solution(object):
+    def reverseWords(self, s):
+        try:
+            a=s.split()
+            b=""
+            for i in range(1,len(a)):
+               b=str(b)+str(a[-int(i)])+" "
+            return str(b)+a[0]
+        except:
+            return ""
+```
+78. 左旋转字符串
+
+```
+// c++ has substr() http://www.cplusplus.com/reference/string/string/substr/ after #include <string>
+class Solution {
+public:
+    string leftRotateString(string str, int n) {
+
+        return str.substr(n)+str.substr(0,n);
+    }
+};
+//python
+class Solution(object):
+    def leftRotateString(self, s, n):
+        """
+        :type s: str
+        :type n: int
+        :rtype: str
+        """
+        return s[n:] + s[:n]
+```
+AcWing 79. 滑动窗口的最大值 deque
+https://www.acwing.com/solution/content/853/
