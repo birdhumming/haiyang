@@ -6672,4 +6672,24 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1299523/
 Galois理论
 https://www.acwing.com/file_system/file/content/whole/index/content/1299264/
 
+
 leetcode solutions https://github.com/luliyucoordinate/Leetcode
+
+https://blog.csdn.net/qq_17550379/article/details/103578091?utm_medium=distribute.pc_relevant.none-task-blog-OPENSEARCH-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-OPENSEARCH-1.channel_param
+https://leetcode.com/problems/sequential-digits/ 1291 Leetcode 1291：顺次数
+
+AcWing 851. spfa和bellman-ford的区别，以及和djikstra的区别
+https://www.acwing.com/file_system/file/content/whole/index/content/1301376/
+
+计算机网络中 URL URN URI 的概念
+https://www.acwing.com/file_system/file/content/whole/index/content/1301249/
+百度 SRE （三面挂）
+一面
+好未来测试开发
+一面
+知乎后端开发（已 offer ）
+https://www.acwing.com/file_system/file/content/whole/index/content/1300249/
+null pointer
+https://www.acwing.com/file_system/file/content/whole/index/content/1301066/
+Java Stream 操作
+https://www.acwing.com/file_system/file/content/whole/index/content/1300681/
