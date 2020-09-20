@@ -6671,3 +6671,5 @@ https://www.youtube.com/watch?v=KNAWp2S3w94
 https://www.acwing.com/file_system/file/content/whole/index/content/1299523/
 Galois理论
 https://www.acwing.com/file_system/file/content/whole/index/content/1299264/
+
+leetcode solutions https://github.com/luliyucoordinate/Leetcode
