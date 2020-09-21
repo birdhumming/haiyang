@@ -6736,5 +6736,9 @@ class Solution(object):
         """
         return s[n:] + s[:n]
 ```
-AcWing 79. 滑动窗口的最大值 deque
+AcWing 79. 滑动窗口的最大值 deque makes it so easy - sorted
 https://www.acwing.com/solution/content/853/
+
+
+AcWing 80. 骰子的点数: dfs recursion TLE or dp O(n^2)
+https://www.acwing.com/solution/content/13074/
