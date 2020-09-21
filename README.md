@@ -1,3 +1,4 @@
+https://clist.by/
 
 An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
 LIST OF AWESOME LEARNING RESOURCES https://www.topcoder.com/thrive/articles/List%20of%20awesome%20learning%20resources
@@ -3806,7 +3807,24 @@ for (int i = 1; i <= n; i++)
 		dfs(i);
 	}
 
-// 广度优先遍历框架
+//bfs from darren yao
+void bfs(int start){
+	memset(dist, -1, sizeof dist);
+	queue<int> q;
+	dist[start]=0;
+	q.push(start);
+	while(!q.empty()){
+		int v=q.front();q.pop();
+		for(int e:adj[v]){
+			if(dist[e]==-1){
+				dist[e]=dist[v+1];
+				q.push(e);
+			}
+		}
+	}
+}
+// 广度优先遍历框架 lyd code
+//use distance not visited
 void bfs() {
 	memset(d, 0, sizeof(d));
 	queue<int> q;
@@ -3821,6 +3839,27 @@ void bfs() {
 		}
 	}
 }
+//bfs from cp handbook ch 12; adjacency list graph
+void bfs(){
+	queue<int> q;
+	bool visited[N];
+	int distance[N];
+
+	visited[x]=true;
+	distance[x]=0;
+	q.push(x);
+	while(!q.empty()){
+		int s=q.front(); q.pop();
+		for(auto u: adj[s]){
+			if(visited[u]) continue;
+			visited[u]=true;
+			distance[u]=distance[s]+1;
+			q.push(u);
+		}
+	}
+}
+
+
 
 // 拓扑排序
 void add(int x, int y) { // 在邻接表中添加一条有向边
