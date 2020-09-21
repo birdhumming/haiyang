@@ -3859,6 +3859,11 @@ void bfs(){
 	}
 }
 
+//pygame simulate bfs https://www.youtube.com/watch?v=x-VTfcmrLEQ
+//dfs https://www.youtube.com/watch?v=NUgMa5coCoE&feature=youtu.be
+// Graph Animation Code Step by Step in repl.it/python/pygame
+// https://www.youtube.com/watch?v=z14lm74wK40
+// https://repl.it/talk/share/Graph-Animation-Code-Step-by-Step-coded-in-pythonPygame/54142
 
 
 // 拓扑排序
