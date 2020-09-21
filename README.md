@@ -6742,3 +6742,46 @@ https://www.acwing.com/solution/content/853/
 
 AcWing 80. 骰子的点数: dfs recursion TLE or dp O(n^2)
 https://www.acwing.com/solution/content/13074/
+
+字节日常实习二面
+https://www.acwing.com/file_system/file/content/whole/index/content/1302698/
+
+堆？（以小根堆为例，大根堆则反之）（算法基础课）
+AcWing 838. 堆排序
+一、堆的功能
+1. 插入一个数；
+2. 求集合当中的最小值；
+3. 删除最小值；
+4. 删除任意一个元素（STL无法直接做到）；
+5. 修改任意一个元素（STL无法直接做到）；
+
+二、什么是堆
+1. 完全二叉树；
+2. 小根堆，每个点都小于等于左右儿子；
+3. 每个点都是以自己为根的子树的最小值；
+
+三、堆的存储
+一维数组， 一号元素是根节点，x的左儿子：2x，x的右儿子：2x+1（完全二叉树状的数据结构都这么存）
+
+四、堆的操作
+1. down(x)，可以把节点往下移，把大的值与左右儿子里最小的那个进行交换；
+2. up(x)，可以把节点往上移，把小的值往上移进行交换；
+3. 在堆的末尾插入一个值：heap[size++]=x,up(size)，最小值heap[1]；
+4. 删除最小值，用堆的最后一个元素覆盖第一个元素，heap[1]=heap[size],size--,down(1),（因为尾节点比头节点更容易删除）;
+5. 删除任意一个元素，heap[k]=heap[size],size--,down(k),up(k);
+6. 修改任意一个元素，heap[k]=x,down(x),up(x);
+
+PS:下标如果从0开始，那么左儿子2x也是0，会发生冲突
+
+acwing 838代码
+
+作者：床前明月光
+链接：https://www.acwing.com/file_system/file/content/whole/index/content/1302373/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+https://www.acwing.com/file_system/file/content/whole/index/content/1302373/
+
+
+数据结构可视化，图论算法可视化，动态规划可视化
+
+https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
