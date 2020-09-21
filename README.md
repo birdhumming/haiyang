@@ -6930,3 +6930,4 @@ def circle_fill(xy, line_color, fill_color, radius, thickness):
     pygame.draw.circle(screen, fill_color, xy, radius - thickness)
 
 ```
+c++ negative number mod is negative which is not math correct, eg -4 mod 10 =-4 wrong it should be -4 mod 10=6
