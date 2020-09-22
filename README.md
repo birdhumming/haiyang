@@ -4694,7 +4694,7 @@ if (hh <= tt)
 		}
 
 2. 树与图的遍历
-	(1) 深度优先遍历
+	(1) 深度优先遍历 dfs
 		int dfs(int u)
 		{
 			st[u] = true; // st[u] 表示点u已经被遍历过
@@ -4706,7 +4706,7 @@ if (hh <= tt)
 			}
 		}
 	
-	(2) 宽度优先遍历
+	(2) 宽度优先遍历 bfs
 	
 		queue<int> q;
 		st[1] = true; // 表示1号点已经被遍历过
@@ -4720,7 +4720,7 @@ if (hh <= tt)
 			for (int i = h[t]; i != -1; i = ne[i])
 			{
 				int j = e[i];
-				if (!s[j])
+				if (!s[j]) //wrong, s[j] should be st[j]! yxc mistake
 				{
 					st[j] = true; // 表示点j已经被遍历过
 					q.push(j);
