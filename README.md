@@ -6931,3 +6931,26 @@ def circle_fill(xy, line_color, fill_color, radius, thickness):
 
 ```
 c++ negative number mod is negative which is not math correct, eg -4 mod 10 =-4 wrong it should be -4 mod 10=6
+
+```
+//leetcode 1
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> a;
+        vector<int> res;
+        for (int i=0; i<nums.size();i++){
+            
+            int ano=target-nums[i];
+            if(a.count(ano)){
+                res.push_back(a[ano]);res.push_back(i);
+                //res=vector<int>({a[ano],i});
+                break;
+            }
+            a[nums[i]]=i;
+            
+            }
+        return res;
+    }
+};
+```
