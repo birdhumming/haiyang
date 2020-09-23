@@ -6986,3 +6986,64 @@ public:
     }
 };
 ```
+
+【提高版】DP知识笔记
+https://www.acwing.com/user/myspace/blog/14067/
+
+https://www.acwing.com/solution/content/490/
+```
+
+// slide window with set
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxLen = 0;
+        set<char> uniqSet;
+        if(!s.length()) 
+            return maxLen;
+        int n = s.length();
+        int i = 0, j = 0;
+        while(i<n && j<n){
+            if(!uniqSet.count(s[j])){
+                uniqSet.insert(s[j]);
+                maxLen = max(maxLen, j-i+1);
+                j++;
+            }
+            else{
+
+                uniqSet.erase(s[i]);
+                i++;
+
+            }
+        }
+        return maxLen;
+    }
+};
+
+// slide window with hashmap
+class Solution {
+public:
+    int ans = 0;
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char ,int> hash;
+        if(s == "") return ans;
+        for(int i = 0, j = 0; j < s.size(); j++){
+            if(++hash[s[j]] > 1){
+                while(i < j){
+                    hash[s[i]]--;
+                    i++;
+                    if(hash[s[j]] == 1){
+                        break;
+                    } 
+                }
+            }
+        ans = max(ans, j-i+1);
+        }
+        return ans;
+    }
+};
+
+作者：st
+链接：https://www.acwing.com/solution/content/490/
+```
+
