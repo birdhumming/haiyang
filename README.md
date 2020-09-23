@@ -7046,4 +7046,11 @@ public:
 作者：st
 链接：https://www.acwing.com/solution/content/490/
 ```
+splay
+https://www.acwing.com/blog/content/2154/
 
+google的新NLP模型#PRADO: Projection Attention Networks for Document Classification On-Device 有点厉害，1/300参数却有接近BERT的性能
+http://www.aclweb.org/anthology/D19-1506.pdf
+工作原理: 切割方法 [待后续阅读]
+
+然后，even more，还有一个基于PRADO的改进型pQRNN 三模块：文本token转化为三元向量序列的投影算子，密集bottleneck层和若干QRNN编码器
