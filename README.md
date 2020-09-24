@@ -7054,3 +7054,9 @@ http://www.aclweb.org/anthology/D19-1506.pdf
 工作原理: 切割方法 [待后续阅读]
 
 然后，even more，还有一个基于PRADO的改进型pQRNN 三模块：文本token转化为三元向量序列的投影算子，密集bottleneck层和若干QRNN编码器
+
+学习笔记：费用流
+https://blog.csdn.net/weixin_44043668/article/details/108738212
+
+华为软件开发面经
+https://www.acwing.com/file_system/file/content/whole/index/content/1324817/
