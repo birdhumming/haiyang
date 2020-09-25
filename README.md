@@ -7075,3 +7075,5 @@ https://baike.baidu.com/item/%E7%AC%AC%E5%9B%9B%E8%8C%83%E5%BC%8F/3193985
 排序，递归，dp， 贪心，遍历，图论
 
 石家庄， 23中，
+
+	173	矩阵距离
