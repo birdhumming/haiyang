@@ -7060,3 +7060,7 @@ https://blog.csdn.net/weixin_44043668/article/details/108738212
 
 华为软件开发面经
 https://www.acwing.com/file_system/file/content/whole/index/content/1324817/
+
+841	字符串哈希
+
+https://puzzling.stackexchange.com/questions/183/twelve-balls-and-a-scale
