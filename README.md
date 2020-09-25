@@ -7061,6 +7061,17 @@ https://blog.csdn.net/weixin_44043668/article/details/108738212
 华为软件开发面经
 https://www.acwing.com/file_system/file/content/whole/index/content/1324817/
 
+1303	斐波那契前 n 项和
+
 841	字符串哈希
 
 https://puzzling.stackexchange.com/questions/183/twelve-balls-and-a-scale
+https://medium.com/@medben/the-12-balls-problem-%EF%B8%8F-1d4eb747ef38
+
+https://zhuanlan.zhihu.com/p/86730847
+https://baike.baidu.com/item/%E6%88%B4%E6%96%87%E6%B8%8A/1050962?fr=aladdin
+https://baike.baidu.com/item/%E7%AC%AC%E5%9B%9B%E8%8C%83%E5%BC%8F/3193985
+
+排序，递归，dp， 贪心，遍历，图论
+
+石家庄， 23中，
