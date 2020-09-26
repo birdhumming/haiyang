@@ -7093,6 +7093,103 @@ https://weibo.com/u/3718602827?is_all=1#_rnd1601074650046
 
 leetcode 3
 https://www.acwing.com/solution/content/490/
+```
+算法1
+(暴力枚举) O(n3)O(n3)
+两重循环枚举所有substring。对于每个substring再用一重循环判断是否unique。总时间复杂度是 O(n3)O(n3) 。
+
+时间复杂度分析： O(n3)O(n3)
+C++ 代码
+// brute force 
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxLen = 0;
+        if(!s.size())
+            return maxLen;
+        for(int i = 0; i < s.size(); i++){
+            for(int j = 0; j < s.size(); j++){
+                if(isUniq(s, i, j))
+                    maxLen = max(maxLen, j-i+1);
+            }
+        }
+        return maxLen;
+    }
+    bool isUniq(string s, int start, int end){
+        set<char> uniqSet;
+        for(int i = start; i <= end; i++){
+            if(uniqSet.count(s[i]))
+                return false;
+            uniqSet.insert(s[i]);
+        }
+        return true;
+    }
+};
+算法2
+(slide window with set or hashmap) O(2n)O(2n)
+yxc的方法好像属于这一类。hashmap或set里保存该双指针中间的substring的char frequency。右端指针每前进一位要到hashmap/set里判断是否出现过。如果出现，左端指针前进一位并更新hashmap/set，直到右端指针指向的char被删掉为止，然后更新maxLen。
+
+用set还是hashmap个人觉得完全没区别。
+
+时间复杂度分析：最坏情况每个char被左右指针分别访问一次（全重复序列）。遍历了2n个状态，所以复杂度O(2n)O(2n)。（为了和下面的区分）
+
+C++ 代码
+
+// slide window with set
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxLen = 0;
+        set<char> uniqSet;
+        if(!s.length()) 
+            return maxLen;
+        int n = s.length();
+        int i = 0, j = 0;
+        while(i<n && j<n){
+            if(!uniqSet.count(s[j])){
+                uniqSet.insert(s[j]);
+                maxLen = max(maxLen, j-i+1);
+                j++;
+            }
+            else{
+
+                uniqSet.erase(s[i]);
+                i++;
+
+            }
+        }
+        return maxLen;
+    }
+};
+
+// slide window with hashmap
+class Solution {
+public:
+    int ans = 0;
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char ,int> hash;
+        if(s == "") return ans;
+        for(int i = 0, j = 0; j < s.size(); j++){
+            if(++hash[s[j]] > 1){
+                while(i < j){
+                    hash[s[i]]--;
+                    i++;
+                    if(hash[s[j]] == 1){
+                        break;
+                    } 
+                }
+            }
+        ans = max(ans, j-i+1);
+        }
+        return ans;
+    }
+};
+
+
+
+作者：st
+链接：https://www.acwing.com/solution/content/490/
+```
 
 算法3
 
