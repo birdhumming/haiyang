@@ -7090,3 +7090,70 @@ AcWing 600. Python Functools模块
 acwing_yxc
 https://weibo.com/u/3718602827?is_all=1#_rnd1601074650046
 炉石传说
+
+leetcode 3
+https://www.acwing.com/solution/content/490/
+
+算法3
+
+(slide window optimized with hashmap) O(n)
+
+减少了平均访问到的状态的个数。
+
+hashmap key是char value是最后一次访问到该char的index。右端指针每前进一位要到hashmap里判断是否出现过。如果出现，左端指针前进到该重复char的最后一次出现的index的后一位。相当于直接跳过了一段与没有包含该重复char的序列。更新hashmap，然后更新maxLen。
+
+时间复杂度分析： 稳定O(n)
+。
+
+C++ 代码
+
+```
+// slide window optimized with hashmap
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.length();
+        int maxLen = 0;
+        unordered_map<char, int> charToIdx;
+        for(int i = 0, j = 0; j < n; j++){
+            if(charToIdx.count(s[j]))
+                i = max(i, charToIdx[s[j]]);
+            maxLen = max(maxLen, j-i+1);
+            charToIdx[s[j]] = j+1;
+        }
+        return maxLen;
+    }
+};
+
+算法4
+
+(slide window fastest) O(n)
+
+原理同前。更快了而已。
+
+时间复杂度分析： O(n)
+。
+
+C++ 代码
+
+
+// slide window quick
+class Solution{
+public:
+int lengthOfLongestSubstring(string s) {
+        vector<int> charToIdx(256, -1);
+        int maxLen = 0;
+        for (int i = -1, j = 0; j != s.length(); j++) {
+            if (charToIdx[s[j]] > i)
+                i = charToIdx[s[j]];
+            charToIdx[s[j]] = j;
+            maxLen = max(maxLen, j - i);
+        }
+        return maxLen;
+    }
+};
+```
+作者：st
+链接：https://www.acwing.com/solution/content/490/
+
+https://www.acwing.com/solution/content/49/
