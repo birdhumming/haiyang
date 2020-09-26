@@ -7435,5 +7435,183 @@ public:
 ```
 作者：yxc
 链接：https://www.acwing.com/solution/content/50/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+题目描述
+4. Median of Two Sorted Arrays
+There are two sorted arrays nums1 and nums2 of size m and n respectively.
+
+Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+You may assume nums1 and nums2 cannot be both empty.
+
+Example 1:
+
+nums1 = [1, 3]
+nums2 = [2]
+The median is 2.0
+Example 2:
+
+nums1 = [1, 2]
+nums2 = [3, 4]
+The median is (2 + 3)/2 = 2.5
+题意：求两个有序数组的中位数。
+
+算法1
+(二分) O(log(min(n,m)O(log(min(n,m)
+题意：求两个有序数组的中位数。
+
+题解1：二分搜索。为了方便讨论我们首先假设两个数组的长度分别为n,m，并且有n <= m，并且n + m是奇数，那么我们要找的数字其实就是两个数组合并后第k = (n + m + 1) / 2小的数字。我们尝试将两个数组划分成两个部分，A数组左侧有i个元素，B数组左侧有j个元素，并且i + j = k。
+
+          left_part          |        right_part
+    A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[n-1]
+    B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[m-1]
+如果我们能够保证A[i - 1] < B[j] && B[j - 1] < A[i]，那么说明left_part中的所有元素都小于right_part中的元素，并且第k小的元素就是max(A[i - 1],B[j - 1])。
+
+如果A[i - 1] > B[j]说明i偏大，我们需要将i缩小尝试得到A[i - 1] < B[j]。
+
+如果B[j - 1] > A[i]说明i偏小，我们需要将i放大尝试得到B[j - 1] < A[i]。
+
+那么我们使用二分查找来找到左边放多少个i数字比较合适，初始搜索区间为[0:n]，如果左边放置i个元素，那么右边放置j = k - i个元素。
+
+接下来我们考虑一些边界条件：
+
+如果i = 0，相当于最小的k个数都在B中，这时整体第k小的元素就是B[k - 1]
+
+如果j = 0，相当于最小的k个数都在A中，这时整体第k小的元素就是A[k - 1]
+
+否则，最小的k个数，i个在A中，j个在B中，这时整体第k小的元素就是max(A[i - 1],B[j - 1])
+
+上面我们的讨论，我们是基于n + m是奇数的，这时候我们只需要找到上述元素就好了，但是当n + m是偶数的时候，我们还需要找到right_part中最小的元素，这个值也就是min(A[i],B[j])，这时候仍然需要讨论一些边界情况：
+
+如果i = n，那么A中没有比A[i - 1]还大的了，那么只能是B[j]
+
+如果j = m，那么B中没有比B[j - 1]还大的了，那么只能是A[i]
+
+否则，整体第k + 1小的元素就是min(A[i],A[j])
+
+C++ 代码
+```
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size(),m = nums2.size();
+        if(n > m){swap(nums1,nums2),swap(n,m);}
+        int l = 0,r = n,k = (n + m + 1) >> 1;
+        while(l <= r)
+        {
+            int i = (l + r) >> 1,j = k - i;
+            if(i < n && nums1[i] < nums2[j - 1] )
+                l = i + 1;
+            else if(i > 0 && nums1[i - 1] > nums2[j])
+                r = i - 1;
+            else
+            {
+                int max_left,min_right;
+                if(i == 0) max_left = nums2[k - 1];
+                else if(j == 0) max_left = nums1[k - 1];
+                else max_left = max(nums1[i - 1],nums2[j - 1]);
+                if((n + m) % 2 == 1) return max_left;
+
+                if(i == n) min_right = nums2[j];
+                else if(j == m) min_right = nums1[i];
+                else min_right = min(nums1[i],nums2[j]);
+                return (max_left + min_right)/2.0;
+            }
+        }
+        return 0.0;
+    }  
+```
+算法2
+(分治) O(log(n+m)O(log(n+m)
+题解2:我们将问题直接转化成求两个数组中第k小的元素，和题解1类似，只不过这次我们从另一种角度去考虑。
+
+首先我们给出getKthSmallest函数的参数含义：表示从nums1[i:nums1.size() - 1]和nums2[j:nums2.size() - 1]这两个切片中找到第k小的数字。假设nums1和nums2的切片元素个数分别为len1和len2，为了方便讨论，我们定义为len1 < len2。
+
+考虑一般的情况，我们在这两个切片中各取k / 2个元素，令si = i + k / 2, sj = j + 2 / k，得到切片nums1[i : si - 1]和nums2[j : sj - 1]。
+
+如果nums1[si - 1] < nums2[sj - 1]说明nums1[i : si - 1]中的元素都是小于第k小的元素的，我们可以舍去这部分元素，在剩下的区间内去找第k - k / 2小的元素。
+
+如果nums1[si - 1] >= nums2[sj - 1]说明nums2[j : sj - 1]中的元素都是小于第k小的元素的，我们可以舍去这部分元素，在剩下的区间内去找第k - k / 2小的元素。
+
+考虑特殊情况，当nums1[i : nums1.size() - 1]切片中的元素小于k / 2个了，那么我们就将这个切片中的所有元素取出来，在nums2中仍然取k / 2个元素，这是因为k是一个有效值即len1 + len2 >= k，不可能出现len1 < k / 2的同时len2 < k / 2；另一方面因为我们确保了len1 < len2，所以也不可能出现len1 >= k / 2的时候，len2 < k / 2，即len2 >= k / 2恒成立。
+
+C++ 代码
+```
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size(),m = nums2.size(),sum = n + m;
+        if(sum % 2 == 0)
+        {
+            int left = getKthSmallest(nums1,0,nums2,0,sum / 2);
+            int right = getKthSmallest(nums1,0,nums2,0,sum / 2 + 1);
+            return (left + right) / 2.0;
+        }else
+            return getKthSmallest(nums1,0,nums2,0,sum / 2 + 1);
+    }
+    int getKthSmallest(vector<int> &nums1,int i,vector<int> &nums2,int j,int k)
+    {
+        if(nums1.size() - i > nums2.size() - j) return getKthSmallest(nums2,j,nums1,i,k);
+        if(i == nums1.size()) return nums2[j + k - 1];
+        if(k == 1) return min(nums1[i],nums2[j]);
+        int si = min(i + k / 2,(int)nums1.size()),sj = j + k / 2;
+        if(nums1[si - 1] > nums2[sj - 1])
+            return getKthSmallest(nums1,i,nums2,j + k / 2,k - k / 2);
+        else
+            return getKthSmallest(nums1,si,nums2,j,k - (si - i));
+    }
+};
+```
+写在最后：这道题是我力扣刷题以来遇到的最抽象的一道题。
+
+作者：T-SHLoRk
+链接：https://www.acwing.com/solution/content/4487/
+
+
+暴力枚举） O(n2)O(n2)
+由于字符串长度小于1000，因此我们可以用 O(n2)O(n2) 的算法枚举所有可能的情况。
+首先枚举回文串的中心 ii，然后分两种情况向两边扩展边界，直到遇到不同字符为止:
+
+回文串长度是奇数，则依次判断 s[i−k]==s[i+k],k=1,2,3,…s[i−k]==s[i+k],k=1,2,3,…
+回文串长度是偶数，则依次判断 s[i−k]==s[i+k−1],k=1,2,3,…s[i−k]==s[i+k−1],k=1,2,3,…
+如果遇到不同字符，则我们就找到了以 ii 为中心的回文串边界。
+
+时间复杂度分析：一共两重循环，所以时间复杂度是 O(n2)O(n2)。
+
+C++ 代码
+```
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int res = 0;
+        string str;
+        for (int i = 0; i < s.size(); i ++ )
+        {
+            for (int j = 0; i - j >= 0 && i + j < s.size(); j ++ )
+                if (s[i - j] == s[i + j])
+                {
+                    if (j * 2 + 1 > res)
+                    {
+                        res = j * 2 + 1;
+                        str = s.substr(i - j, j * 2 + 1);
+                    }
+                }
+                else break;
+
+            for (int j = i, k = i + 1; j >= 0 && k < s.size(); j -- , k ++ )
+                if (s[j] == s[k])
+                {
+                    if (k - j + 1 > res) 
+                    {
+                        res = k - j + 1;
+                        str = s.substr(j, k - j + 1);
+                    }
+                }
+                else break;
+        }
+        return str;
+    }
+};
+```
+作者：yxc
+链接：https://www.acwing.com/solution/content/51/
+
+有个类似于KMP的时间复杂度是 O(n)O(n) 的算法——Manacher算法。不过这个算法比较偏，基本上只能用来求最长回文子串了，所以平时基本不会用到
