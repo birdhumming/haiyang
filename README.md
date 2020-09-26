@@ -8068,6 +8068,8 @@ public:
 作者：yxc
 链接：https://www.acwing.com/solution/content/102/
 
+easier to understand
+
 ```
 class Solution(object):
     def isMatch(self, s, p):
@@ -8127,3 +8129,5 @@ class Solution(object):
 ```
 作者：yxc
 链接：https://www.acwing.com/solution/content/102/
+
+种一棵树最好的时间，是十年前或者现在
