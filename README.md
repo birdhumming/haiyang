@@ -7066,7 +7066,7 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1324817/
 841	字符串哈希
 
 https://puzzling.stackexchange.com/questions/183/twelve-balls-and-a-scale
-https://medium.com/@medben/the-12-balls-problem-%EF%B8%8F-1d4eb747ef38
+not right - https://medium.com/@medben/the-12-balls-problem-%EF%B8%8F-1d4eb747ef38
 
 https://zhuanlan.zhihu.com/p/86730847
 https://baike.baidu.com/item/%E6%88%B4%E6%96%87%E6%B8%8A/1050962?fr=aladdin
@@ -7089,3 +7089,4 @@ AcWing 600. Python Functools模块
 
 acwing_yxc
 https://weibo.com/u/3718602827?is_all=1#_rnd1601074650046
+炉石传说
