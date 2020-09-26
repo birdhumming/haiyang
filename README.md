@@ -8259,3 +8259,221 @@ public:
 ```
 作者：yxc
 链接：https://www.acwing.com/solution/content/101/
+
+题目描述
+罗马数字包含以下七种字符: I，V，X，L，C，D 和 M。
+
+字符          数值
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+例如， 罗马数字 2 写做 II，即为两个并列的 1。12 写做 XII，即为 X + II。 27 写做 XXVII, 即为 XX + V + II。
+
+通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
+
+I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
+C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
+
+样例
+输入："III"
+输出：3
+输入："IV"
+输出：4
+输入："IX"
+输出：9
+输入："LVIII"
+输出：58
+解释：L = 50, V= 5, III = 3.
+输入："MCMXCIV"
+输出：1994
+解释：M = 1000, CM = 900, XC = 90, IV = 4
+算法
+(模拟) O(n)O(n)
+定义映射，将单一字母映射到数字。
+从前往后扫描，如果发现 s[i+1] 的数字比 s[i] 的数字大，那么累计 s[i+1]-s[i] 差值即可，并将 i 多向后移动一位；否则直接累计 s[i] 的值。
+时间复杂度
+仅遍历一次整个字符串，故时间复杂度为 O(n)O(n)。
+空间复杂度
+哈希表仅需要记录常数个数字，故空间复杂度为 O(1)O(1)。
+C++ 代码
+```
+class Solution {
+public:
+    int romanToInt(string s) {
+        int n = s.length(), ans = 0;
+        unordered_map<char, int> words;
+        words['I'] = 1; words['V'] = 5;
+        words['X'] = 10; words['L'] = 50; 
+        words['C'] = 100; words['D'] = 500;
+        words['M'] = 1000;
+        for (int i = 0; i < n; i++) {
+            if (i != n - 1 && words[s[i + 1]] > words[s[i]]) {
+                ans += words[s[i + 1]] - words[s[i]];
+                i++;
+            }
+            else
+                ans += words[s[i]];
+        }
+        return ans;
+    }
+};
+```
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/116/
+
+14
+题目描述
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+样例
+输入: ["flower","flow","flight"]
+输出: "fl"
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+说明
+所有输入只包含小写字母 a-z。
+算法
+(暴力枚举) O(nm)O(nm)
+暴力枚举方法很简单：先找到所有字符串的最短长度 m，然后从长度 1 到 m 依次枚举判断是否所有字符串的前缀是否都相等。
+注意输入可能为空数组。
+时间复杂度
+最坏情况下，对于 nn 个字符串，都需要遍历到最短长度，故总时间复杂度为 O(nm)O(nm)。
+空间复杂度
+需要额外 O(m)O(m) 的空间存储答案。
+C++ 代码
+```
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        int n = strs.size();
+
+        if (n == 0)
+            return "";
+
+        size_t m = strs[0].length();
+
+        for (int i = 1; i < n; i++)
+            m = min(m, strs[i].length());
+
+        for (int s = 1; s <= m; s++) {
+            char c = strs[0][s - 1];
+            for (int i = 1; i < n; i++)
+                if (strs[i][s - 1] != c)
+                    return strs[0].substr(0, s - 1);
+        }
+
+        return strs[0].substr(0, m);
+    }
+};
+```
+
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/58/
+
+题目描述
+给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+
+样例
+给定数组 nums = [-1, 0, 1, 2, -1, -4]，
+
+满足要求的三元组集合为：
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+算法1
+(两重枚举，集合判重) O(n2)O(n2)
+使用 C++ 中的集合 unordered_set。
+
+首先对 nums 进行从小到大排序。
+两重循环枚举 nums 数组，第一重循环仅枚举不重复的数字。
+第二重循环需要用两个集合 hash 和 vis 记录某个数字是否存在，在循环体重我们做两件事：
+判断 -nums[st] − nums[i] 是否在 hash 集合中；若存在，则可以记录进答案；并且需要向 vis 集合添加数字-nums[st] - nums[i]。若不存在，则向 hash 集合中添加数字 nums[i]。
+做完上一步后需要判断 vis 集合中是否存在数字 -nums[st] - nums[i]（显然如果1中刚刚添加过一定是存在的）；若存在，则删除 hash 集合中数字 -nums[st] - nums[i]。
+注意：使用 vis 集合的目的是防止 -nums[st] - nums[i] 和 nums[i] 数对被重复计算入答案。
+
+时间复杂度
+排序时间复杂度是 O(nlogn)O(nlogn)，枚举的时间复杂的是 O(n2)O(n2)，每次需要用集合操作平均 O(1)O(1)，所以总时间复杂度为 O(n2)O(n2)，但常数较大。
+C++ 代码
+```
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        unordered_set<int> hash, vis;
+        sort(nums.begin(), nums.end());
+
+        for (int st = 0; st < nums.size(); st++) {
+            while (st != 0 && nums[st] == nums[st - 1])
+                st++;
+            hash.clear();
+            vis.clear();
+            for (int i = st + 1; i < nums.size(); i++) {
+                auto got = hash.find(-nums[st] - nums[i]);
+                if (got == hash.end())
+                    hash.insert(nums[i]);
+                else {
+                    res.push_back({nums[st], nums[i], -nums[st] - nums[i]});
+                    vis.insert(-nums[st] - nums[i]);
+                }
+                if (vis.find(-nums[st] - nums[i]) != vis.end())
+                    hash.erase(-nums[st] - nums[i]);
+            }
+        }
+        return res;
+    }
+};
+```
+算法2
+(两重枚举，无重复构造) O(n2)O(n2)
+延续算法 2 的思路，尝试不使用集合操作来判重。
+同样是一重循环 st 无重复枚举第一个数字，然后接下来采用两头向里寻找的方式无重复的构造剩下的两个数字，具体在循环中：
+初始化 l 为 st+1，r 为 n-1。
+当 l<r 时，如果当前 nums[l] + nums[r] == target，则增加答案并同时向后无重复移动 l，向前无重复移动 r；否则根据 nums[l] + nums[r] 与 target 的关系判断移动 l 还是移动 r。
+时间复杂度
+排序的时间复杂度为 O(nlogn)O(nlog⁡n)。
+第一层 for 循环执行 nn 次，每次内部会遍历 st 后所有的数字一次，故时间复杂度为 O(n2)O(n2)。
+空间复杂度
+需要数组存储所有答案，故空间复杂度最高为 O(n2)O(n2)。
+C++ 代码
+```
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        for (int st = 0; st < nums.size(); st++) {
+            while (st != 0  && st < nums.size() && nums[st] == nums[st - 1])
+                st++;
+            int l = st + 1, r = nums.size() - 1;
+            while (l < r) {
+                if (nums[st] + nums[l] + nums[r] == 0) {
+                    res.push_back({nums[st], nums[l], nums[r]});
+                    do { l++; }while (l < r && nums[l - 1] == nums[l]);
+                    do { r--; }while (l < r && nums[r] == nums[r + 1]);
+                }
+                else if (nums[st] + nums[l] + nums[r] < 0) {
+                    do { l++; }while (l < r && nums[l - 1] == nums[l]);
+                }
+                else {
+                    do { r--; }while (l < r && nums[r] == nums[r + 1]);
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/60/
