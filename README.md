@@ -8131,3 +8131,38 @@ class Solution(object):
 链接：https://www.acwing.com/solution/content/102/
 
 种一棵树最好的时间，是十年前或者现在
+
+(指针扫描) O(n)O(n)
+这题的思路比较精巧，我们先给出做法，再给出证明。
+
+做法：用两个指针 i,ji,j 分别指向首尾，如果 ai>ajai>aj，则 j−−j−−；否则 i++i++，直到 i=ji=j 为止，每次迭代更新最大值。
+
+证明：假设最优解对应的两条线的下标是 i′,j′(i′<j′)i′,j′(i′<j′)，在 i,ji,j 不断靠近的过程中，不妨假设 ii 先走到 i′i′，则此时有 j′<jj′<j。反证，如果此时 ai≤ajai≤aj，设 SS 表示 i,j能盛多少水i,j能盛多少水，S′S′ 表示 i′,j′i′,j′ 能盛多少水，则：
+S=min(ai,aj)∗(j−i)S=min(ai,aj)∗(j−i)
+=ai∗(j−i)=ai∗(j−i)
+>ai∗(j′−i)>ai∗(j′−i)
+≥min(ai,aj′)∗(j′−i)=S′≥min(ai,aj′)∗(j′−i)=S′
+与 S′S′ 是最优解矛盾，因此 ai>ajai>aj，所以 jj 会一直走到 j′j′，从而得到最优解。
+
+时间复杂度分析：两个指针总共扫描 nn 次，因此总时间复杂度是 O(n)O(n).
+
+C++ 代码
+```
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int res = 0;
+        for (int i = 0, j = height.size() - 1; i < j; )
+        {
+            res = max(res, 
+                min(height[i], height[j]) * (j - i));
+            if (height[i] > height[j]) j -- ;
+            else i ++ ;
+        }
+        return res;
+    }
+};
+```
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/100/
