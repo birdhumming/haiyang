@@ -7615,3 +7615,515 @@ public:
 链接：https://www.acwing.com/solution/content/51/
 
 有个类似于KMP的时间复杂度是 O(n)O(n) 的算法——Manacher算法。不过这个算法比较偏，基本上只能用来求最长回文子串了，所以平时基本不会用到
+
+
+题目描述
+在行数等于3时，将字符串"PAYPALISHIRING"按”N”字形排列，如下所示：
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+此时我们按行读取，会得到"PAHNAPLSIIGYIR".
+
+要求编写一个函数，输入一个字符串和一个整数(表示行数)，输出转换后的字符串：
+
+string convert(string text, int nRows);
+例如 convert("PAYPALISHIRING", 3)会返回"PAHNAPLSIIGYIR".
+
+算法
+(找规律) O(n)O(n)
+这种按某种形状打印字符的题目，一般通过手画小图找规律来做。
+我们先画行数是4的情况：
+
+0     6       12
+1   5 7    11 ..
+2 4   8 10
+3     9
+从中我们发现，对于行数是 nn 的情况：
+
+对于第一行和最后一行，是公差为 2(n−1)2(n−1) 的等差数列，首项是 00 和 n−1n−1；
+对于第 ii 行(0<i<n−1)(0<i<n−1)，是两个公差为 2(n−1)2(n−1) 的等差数列交替排列，首项分别是 ii 和 2n−i−22n−i−2；
+所以我们可以从上到下，依次打印每行的字符。
+
+时间复杂度分析：每个字符遍历一遍，所以时间复杂度是O(n)O(n).
+
+C++ 代码
+```
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        string res;
+        if (numRows == 1) return s;
+        for (int j = 0; j < numRows; j ++ )
+        {
+            if (j == 0 || j == numRows - 1)
+            {
+                for (int i = j; i < s.size(); i += (numRows-1) * 2)
+                    res += s[i];
+            }
+            else
+            {
+                for (int k = j, i = numRows * 2 - 1 - j - 1;
+                        i < s.size() || k < s.size();
+                        i += (numRows - 1) * 2, k += (numRows - 1) * 2)
+                {
+                    if (k < s.size()) res += s[k];
+                    if (i < s.size()) res += s[i];
+                }
+            }
+        }
+        return res;
+    }
+};
+
+```
+作者：yxc
+链接：https://www.acwing.com/solution/content/75/
+
+
+题目描述
+给定一个int型整数，请将各位数字反转。
+如果结果大于INT_MAX或小于INT_MIN，请返回0.
+
+注意：
+
+假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,231−1][−231,231−1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
+样例1
+输入： 123
+输出： 321
+样例2
+输入：-123
+输出：-321
+样例3
+输入：120
+输出：21
+算法
+(循环) O(logn)O(logn)
+依次从右往左计算出每位数字，然后逆序累加在一个整数中。
+另外，这题有两点需要注意：
+
+因为int型整数逆序后可能会溢出，所以我们要用long long记录中间结果；
+在C++中，负数的取模运算和数学意义上的取模运算不同，结果还是负数，比如 −12%10=−2−12%10=−2，所以我们不需要对负数进行额外处理。
+时间复杂度分析：一共有 O(logn)O(logn) 位，对于每一位的计算量是常数级的，所以总时间复杂度是 O(logn)O(logn).
+
+C++ 代码
+```
+class Solution {
+public:
+    int reverse(int x) {
+        int res = 0;
+        while (x) {
+            if (x > 0 && res > (INT_MAX - x % 10) / 10) return 0;
+            if (x < 0 && res < (INT_MIN - x % 10) / 10) return 0;
+            res = res * 10 + x % 10;
+            x /= 10;
+        }
+        return res;
+    }
+};
+```
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/97/
+
+
+题目描述
+实现 atoi 函数，将以字符串(string)形式表示的整数，转换成整型(int)。
+aoti 函数需要满足的条件：
+
+忽略所有行首空格，找到第一个非空格字符，可以是 ‘+/−+/−’ 表示是正数或者负数，紧随其后找到最长的一串连续数字，将其解析成一个整数；
+整数后可能有任意非数字字符，请将其忽略；
+从前往后遍历时，如果第一段连续数字为空，则返回0；
+如果整数大于INT_MAX，请返回int_MAX；如果整数小于INT_MIN，请返回INT_MIN；
+算法
+(模拟) O(n)O(n)
+这道题的难点在于边界情况非常多，需要仔细考虑。
+做这道题目时，推荐先写一个傻瓜版，然后提交，再根据Wrong Case去逐步添加针对各种情况的处理。
+
+时间复杂度分析：假设字符串长度是 nn，每个字符最多遍历一次，所以总时间复杂度是 O(n)O(n).
+
+C++ 代码
+```
+class Solution {
+public:
+    int myAtoi(string str) {
+        int res = 0;
+        int k = 0;
+        while (k < str.size() && str[k] == ' ') k ++ ;
+        if (k == str.size()) return 0;
+
+        int minus = 1;
+        if (str[k] == '-') minus = -1, k ++ ;
+        if (str[k] == '+')
+            if (minus == -1) return 0;
+            else k ++ ;
+
+        while (k < str.size() && str[k] >= '0' && str[k] <= '9') {
+            int x = str[k] - '0';
+            if (minus > 0 && res > (INT_MAX - x) / 10) return INT_MAX;
+            if (minus < 0 && -res < (INT_MIN + x) / 10) return INT_MIN;
+            if (-res * 10 - x == INT_MIN) return INT_MIN;
+            res = res * 10 + x;
+            k ++ ;
+        }
+
+        res *= minus;
+        return res;
+    }
+};
+```
+作者：yxc
+链接：https://www.acwing.com/solution/content/98/
+
+请你来实现一个atoi函数，使其能将字符串转换成整数。
+
+首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。接下来的转化规则如下：
+
+如果第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字字符组合起来，形成一个有符号整数。
+假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成一个整数。
+该字符串在有效的整数部分之后也可能会存在多余的字符，那么这些字符可以被忽略，它们对函数不应该造成影响。
+注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，则你的函数不需要进行转换，即无法进行有效转换。
+在任何情况下，若函数不能进行有效的转换时，请返回 0 。
+
+提示：
+
+本题中的空白字符只包括空格字符 ' ' 。
+假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−2^31,  2^31 − 1]。如果数值超过这个范围，请返回  INT_MAX (2^31 − 1) 或 INT_MIN (−2^31) 。
+样例
+输入: "42"
+输出: 42
+输入: "   -42"
+输出: -42
+解释: 第一个非空白字符为 '-', 它是一个负号。
+     我们尽可能将负号与后面所有连续出现的数字组合起来，最后得到 -42 。
+输入: "4193 with words"
+输出: 4193
+解释: 转换截止于数字 '3' ，因为它的下一个字符不为数字。
+输入: "words and 987"
+输出: 0
+解释: 第一个非空字符是 'w', 但它不是数字或正、负号。
+     因此无法执行有效的转换。
+输入: "-91283472332"
+输出: -2147483648
+解释: 数字 "-91283472332" 超过 32 位有符号整数范围。 
+     因此返回 INT_MIN (−231) 。
+算法1
+用long记录
+
+1、找到第一个非空的字符位置k，若k == n表示全都是空字符，直接返回0
+2、op记录截取后的整数的正负性，1表示正号，-1表示负号
+3、使用long类型的res来存储截取后的整数（一定是正整数，因为括号还没包括），在某一刻若res > INT_MAX，则break，表示已经超出
+4、截取到res后，附上op的符号，若res > INT_MAX或者res < INT_MIN则分别返回INF_MAX或者INT_MIN
+时间复杂度 O(n)O(n)
+Java 代码
+```
+class Solution {
+    public int myAtoi(String str) {
+        int n = str.length();
+        int k = 0;
+        while(k < n && str.charAt(k) == ' ') k ++;
+        if(k == n) return 0;
+
+        int op = 1;//假设是正号
+        if(str.charAt(k) == '-') 
+        {
+            op = -1;
+            k ++;
+        }
+        else if(str.charAt(k) == '+') k ++;
+
+        long res = 0;
+        while(k < n && str.charAt(k) >= '0' && str.charAt(k) <= '9')
+        {
+            res = res * 10 + str.charAt(k) - '0';
+            k ++;
+
+            if(res > Integer.MAX_VALUE) break;
+        }
+
+        res = res * op;
+        if(res > Integer.MAX_VALUE) res = Integer.MAX_VALUE;
+        if(res < Integer.MIN_VALUE) res = Integer.MIN_VALUE;
+
+        return (int)res;
+    }
+}
+```
+算法2
+用int记录
+
+1、找到第一个非空的字符位置k，若k == n表示全都是空字符，直接返回0
+2、op记录截取后的整数的正负性，1表示正号，-1表示负号
+3、使用int类型的res来存储截取后的整数（一定是正整数，因为括号还没包括），
+在某一刻若op是正数，(res * 10 + x) * op > INT_MAX，即res * op > (INT_MAX - x ) / 10，则返回INF_MAX，表示已经超出（其中x是正数）
+在某一刻若op是负数，(res * 10 + x) * op < INT_MIN，即res * op > (INT_MIN - x * (-1)) / 10，则返回INF_MIN，表示已经超出（其中x是负数）
+4、截取到res后，附上op的符号，若res > INT_MAX或者res < INT_MIN则分别返回INF_MAX或者INT_MIN
+5、最后返回res
+时间复杂度 O(n)O(n)
+Java 代码
+```
+class Solution {
+    public int myAtoi(String str) {
+        int n = str.length();
+        int k = 0;
+        while(k < n && str.charAt(k) == ' ') k ++;
+        if(k == n) return 0;//没找到
+
+        int op = 1;//假设是正号
+        if(str.charAt(k) == '-') 
+        {
+            op = -1;
+            k ++;
+        }
+        else if(str.charAt(k) == '+') k ++;
+
+        int res = 0;
+        while(k < n && str.charAt(k) >= '0' && str.charAt(k) <= '9')
+        {
+            int x = str.charAt(k) - '0';
+            if(op > 0 && res * op > (Integer.MAX_VALUE - x ) / 10) 
+            {
+                res = Integer.MAX_VALUE; break;
+            }
+            if(op < 0 && res * op < (Integer.MIN_VALUE - x * (-1)) / 10) 
+            {
+                res = Integer.MIN_VALUE; break;
+            }
+            res = res * 10 + str.charAt(k) - '0';
+            k ++;
+        }
+        return res * op;
+    }
+}
+```
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/14502/
+
+
+题目描述
+判断一个整数的字符串表示是否是回文串。
+提示：
+
+负数因为负号的存在，不是回文串；
+如果用Reverse Integer 题目中的做法，需要避免整数溢出的问题；
+算法
+(循环) O(1)O(1)
+我们可以借鉴Reverse Integer题目的做法，一个正整数的字符串表示是回文串，当且仅当它的逆序和它本身相等。
+但如果直接这么做，会存在整数溢出的问题，比如1111111119的逆序是9111111111(大于INT_MAX)。
+所以我们要对其改进：我们只需先算出后一半的逆序值，再判断是否和前一半相等即可。
+
+时间复杂度分析：int型整数在十进制表示下最多有10位，对于每一位的计算是常数级的，因此总时间复杂度是 O(1)O(1)。
+
+C++ 代码
+```
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0 || x && x % 10 == 0) return false;
+        int s = 0;
+        while (s <= x)
+        {
+            s = s * 10 + x % 10;
+            if (s == x || s == x / 10) return true; // 分别处理整数长度是奇数或者偶数的情况
+            x /= 10;
+        }
+        return false;
+    }
+};
+```
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/99/
+
+
+题目描述
+给定一个字符串 s 和模板串 p，实现支持通配符 '.' 和 '*' 的正则表达式匹配。
+
+'.' : 可以匹配任意单个字符
+'*' : 表示0个或任意多个前一个字符
+模板串需要匹配整个字符串。
+模板串 p 一定合法，即 '*' 前面一定有非 '*' 字符。
+
+注意：
+s 可能为空，只包含小写字母 a-z。
+p 可能为空，只包含小写字母 a-z，以及 . 和 *。
+样例1
+输入：
+s = "aa"
+p = "a"
+输出：false
+解释："a"不能匹配整个字符串"aa"
+样例2
+输入：
+s = "aa"
+p = "a*"
+输出：true
+解释：'a*'表示0个或任意多个'a'的时候，可以匹配"aa"
+样例3
+输入：
+s = "ab"
+p = ".*"
+输入：true
+解释：".*"表示0个或任意多个'.'，而'.'可以匹配任意字符，所以p和s可以匹配
+样例4
+输入：
+s = "aab"
+p = "c*a*b"
+输出：true
+解释：这里的p表示0个c、2个a、1个b，可以匹配s
+样例5
+输入：
+s = "mississippi"
+p = "mis*is*p*."
+输出：false
+算法
+(动态规划) O(nm)O(nm)
+设状态 f(i,j)f(i,j) 表示字符串 s 的前 ii 个字符和字符串 p 的前 jj 个字符能否匹配。这里假设 s 和 p 的下标均从 1 开始。初始时，f(0,0)=truef(0,0)=true。
+平凡转移 f(i,j)=f(i,j)f(i,j)=f(i,j) or f(i−1,j−1)f(i−1,j−1)，当 i>0i>0 且 s(i) == p(j) || p(j) == '.'。
+当 p(j) == '*' 时，若 j>=2j>=2，f(i,j)f(i,j) 可以从 f(i,j−2)f(i,j−2) 转移，表示丢弃这一次的 '*' 和它之前的那个字符；若 i>0i>0 且 s(i) == p(j - 1)，表示这个字符可以利用这个 '*'，则可以从 f(i−1,j)f(i−1,j) 转移，表示利用 '*'。
+初始状态 f(0,0)=truef(0,0)=true；循环枚举 ii 从 0 到 nn；jj 从 1 到 mm。因为 f(0,j)f(0,j) 有可能是有意义的，需要被转移更新。
+最终答案为 f(n,m)f(n,m)。
+时间复杂度
+状态数为 O(nm)O(nm)，每次转移仅需常数时间，故总时间复杂度为 O(nm)O(nm)。
+空间复杂度
+状态数为 O(nm)O(nm)，则需要 O(nm)O(nm) 的数组存储状态。
+C++ 代码
+```
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int n = s.length(), m = p.length();
+        vector<vector<bool>> f(n + 1, vector<bool>(m + 1, false));
+        s = " " + s;
+        p = " " + p;
+        f[0][0] = true;
+        for (int i = 0; i <= n; i++)
+            for (int j = 1; j <= m; j++) {
+                if (i > 0 && (s[i] == p[j] || p[j] == '.'))
+                    f[i][j] = f[i][j] | f[i - 1][j - 1];
+                if (p[j] == '*') {
+                    if (j >= 2)
+                        f[i][j] = f[i][j] | f[i][j - 2];
+                    if (i > 0 && (s[i] == p[j - 1] || p[j - 1] == '.'))
+                        f[i][j] = f[i][j] | f[i - 1][j];
+                }
+            }
+        return f[n][m];
+    }
+};
+```
+
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/557/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+算法
+(动态规划) O(nm)O(nm)
+状态表示：f[i][j]表示p从j开始到结尾，是否能匹配s从i开始到结尾
+状态转移：
+
+如果p[j+1]不是通配符'*'，则f[i][j]是真，当且仅当s[i]可以和p[j]匹配，且f[i+1][j+1]是真；
+如果p[j+1]是通配符'*'，则下面的情况只要有一种满足，f[i][j]就是真；
+f[i][j+2]是真；
+s[i]可以和p[j]匹配，且f[i+1][j]是真；
+第1种情况下的状态转移很好理解，那第2种情况下的状态转移怎么理解呢？
+
+最直观的转移方式是这样的：枚举通配符'*'可以匹配多少个p[j]，只要有一种情况可以匹配，则f[i][j]就是真；
+这样做的话，我们发现，f[i][j]除了枚举0个p[j]之外，其余的枚举操作都包含在f[i+1][j]中了，所以我们只需判断
+f[i+1][j]是否为真，以及s[i]是否可以和p[j]匹配即可。
+
+时间复杂度分析：nn 表示s的长度，mm 表示p的长度，总共 nmnm 个状态，状态转移复杂度 O(1)O(1)，所以总时间复杂度是 O(nm)O(nm).
+
+C++ 代码
+```
+class Solution {
+public:
+    vector<vector<int>>f;
+    int n, m;
+    bool isMatch(string s, string p) {
+        n = s.size();
+        m = p.size();
+        f = vector<vector<int>>(n + 1, vector<int>(m + 1, -1));
+        return dp(0, 0, s, p);
+    }
+
+    bool dp(int x, int y, string &s, string &p)
+    {
+        if (f[x][y] != -1) return f[x][y];
+        if (y == m)
+            return f[x][y] = x == n;
+        bool first_match = x < n && (s[x] == p[y] || p[y] == '.');
+        bool ans;
+        if (y + 1 < m && p[y + 1] == '*')
+        {
+            ans = dp(x, y + 2, s, p) || first_match && dp(x + 1, y, s, p);
+        }
+        else
+            ans = first_match && dp(x + 1, y + 1, s, p);
+        return f[x][y] = ans;
+    }
+};
+```
+作者：yxc
+链接：https://www.acwing.com/solution/content/102/
+
+```
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        m = len(s)
+        pu = []
+        start = 0
+        #把*和字母合并起来考虑
+        while(start < len(p)):
+            if start < len(p) - 1 and p[start + 1] == '*':
+                pu.append(p[start:start+2])
+                start += 2
+            else:
+                pu.append(p[start])
+                start += 1
+
+        pu = pu[::-1] #正向动态规划，，好理解点orz，把s p先倒过来
+        s = s[::-1]
+        n = len(pu)
+        # 增加一个'' 帮助解决边界问题
+        f = [[False for _ in range(m + 1)] for _ in range(n + 1)]
+        f[0][0] = True
+        for i in range(1, m + 1):
+            f[0][i] = False
+        for i in range(1, n + 1):
+            if '*' in pu[i-1] and f[i-1][0] is True:
+                f[i][0] = True
+            else:
+                f[i][0] = False
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                pi = i - 1
+                sj = j - 1
+                # 当前char 匹配
+                if (pu[pi] == s[sj] or pu[pi] == '.') and f[i-1][j-1] is True:
+                    f[i][j] = True
+                # *匹配，且*所在char匹配
+                elif '*' in pu[pi] and (pu[pi][0] == s[sj] or pu[pi][0] == '.'):
+                    if f[i-1][j] is True or f[i-1][j-1] is True  or f[i][j-1] is True:
+                        f[i][j] = True
+                    else:
+                        f[i][j] = False
+                # *匹配， 但*所在char不匹配。
+                elif '*' in pu[pi]:
+                    if f[i-1][j] is True:
+                        f[i][j] = True
+                    else:
+                        f[i][j] = False
+                #其他情况都不行
+                else:
+                    f[i][j] = False
+        return f[n][m]
+```
+作者：yxc
+链接：https://www.acwing.com/solution/content/102/
