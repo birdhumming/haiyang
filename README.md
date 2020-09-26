@@ -7093,13 +7093,14 @@ https://weibo.com/u/3718602827?is_all=1#_rnd1601074650046
 
 leetcode 3
 https://www.acwing.com/solution/content/490/
-```
+
 算法1
 (暴力枚举) O(n3)O(n3)
 两重循环枚举所有substring。对于每个substring再用一重循环判断是否unique。总时间复杂度是 O(n3)O(n3) 。
 
 时间复杂度分析： O(n3)O(n3)
 C++ 代码
+```
 // brute force 
 class Solution {
 public:
@@ -7125,9 +7126,11 @@ public:
         return true;
     }
 };
+```
 算法2
 (slide window with set or hashmap) O(2n)O(2n)
-yxc的方法好像属于这一类。hashmap或set里保存该双指针中间的substring的char frequency。右端指针每前进一位要到hashmap/set里判断是否出现过。如果出现，左端指针前进一位并更新hashmap/set，直到右端指针指向的char被删掉为止，然后更新maxLen。
+yxc的方法好像属于这一类。hashmap或set里保存该双指针中间的substring的char frequency。右端指针每前进一位要到hashmap/set里判断是否出现过。如果出现，左端指针前进一位并更新hashmap/set，直到右端指针指向的char被删掉为止，
+然后更新maxLen。
 
 用set还是hashmap个人觉得完全没区别。
 
@@ -7135,6 +7138,7 @@ yxc的方法好像属于这一类。hashmap或set里保存该双指针中间的s
 
 C++ 代码
 
+```
 // slide window with set
 class Solution {
 public:
@@ -7185,11 +7189,11 @@ public:
     }
 };
 
-
+```
 
 作者：st
 链接：https://www.acwing.com/solution/content/490/
-```
+
 
 算法3
 
@@ -7221,7 +7225,7 @@ public:
         return maxLen;
     }
 };
-
+```
 算法4
 
 (slide window fastest) O(n)
@@ -7233,7 +7237,7 @@ public:
 
 C++ 代码
 
-
+```
 // slide window quick
 class Solution{
 public:
@@ -7255,7 +7259,7 @@ int lengthOfLongestSubstring(string s) {
 
 https://www.acwing.com/solution/content/49/
 
-```
+
 (双指针扫描) O(n)O(n)
 定义两个指针 i,j(i<=j)i,j(i<=j)，表示当前扫描到的子串是 [i,j][i,j] (闭区间)。扫描过程中维护一个哈希表unordered_map<char,int> hash，表示 [i,j][i,j]中每个字符出现的次数。
 线性扫描时，每次循环的流程如下：
@@ -7265,6 +7269,7 @@ https://www.acwing.com/solution/content/49/
 复杂度分析：由于 i,ji,j 均最多增加n次，且哈希表的插入和更新操作的复杂度都是 O(1)O(1)，因此，总时间复杂度 O(n)O(n).
 
 C++ 代码
+```
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -7279,7 +7284,7 @@ public:
         return res;
     }
 };
-
+```
 作者：yxc
 链接：https://www.acwing.com/solution/content/49/
-```
+
