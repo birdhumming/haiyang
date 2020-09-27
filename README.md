@@ -9008,7 +9008,7 @@ https://stackoverflow.com/questions/1841863/size-of-struct-in-c
 4 byte alignment with padding
 https://stackoverflow.com/questions/20737176/how-are-struct-members-allocated-in-memory
 
-basic class has 6 sections - dp basic
+basic class has 6 sections - dp greedy graph basic math data structure;
 第六讲 贪心完成情况：0/8
 包括区间问题，Huffman树，排序不等式，绝对值不等式，推公式等内容。
 第五讲 动态规划完成情况：0/18
@@ -9021,3 +9021,26 @@ basic class has 6 sections - dp basic
 包括单链表，双链表，栈，队列，单调栈，单调队列，KMP，Trie，并查集，堆，哈希表等内容。
 第一讲 基础算法完成情况：0/19
 包括排序、二分、高精度、前缀和与差分、双指针算法、位运算、离散化、区间合并等内容。
+
+
+import this
+The Zen of Python, by Tim Peters # Python 之禅
+1) Beautiful is better than ugly. # 写得俊总比寒碜好
+2) Explicit is better than implicit. # 写明白好过打哑谜
+3) Simple is better than complex. # 简单好过复杂
+4) Complex is better than complicated. # 复杂好过一团乱麻
+5) Flat is better than nested. # 摊开来好过一层套一层
+6) Sparse is better than dense. # 留白好过挤成团
+7) Readability counts. # 让人读得明白是规矩
+8) Special cases aren’t special enough to break the rules. # 这天皇老子一样大的特殊情况也不能打破
+9) Although practicality beats purity. # 中用强过中看
+10) Errors should never pass silently. # 但错误(Error) 也不能让他落了跑
+11) Unless explicitly silenced. # 放走的也得留个印
+12) In the face of ambiguity, refuse the temptation to guess. # 能动手就别瞎猜
+13) There should be one– and preferably only one –obvious way to do it. # 通天大道就一条
+14) Although that way may not be obvious at first unless you’re Dutch. # 哪怕你不是Dutch，不容易找着，那也只有一条
+15) Now is better than never. # 动手总比不动的强
+16) Although never is often better than right now. # 但是 老也不动 也强过 火烧屁股着急忙慌
+17) If the implementation is hard to explain, it’s a bad idea. # 实现要是讲不利索，它就是个棒槌
+18) If the implementation is easy to explain, it may be a good idea. # 实现至少得能讲利索，那才有点儿意思
+19) Namespaces are one honking great idea – let’s do more of those! # 命名空间是个宝，能整多少整多少
