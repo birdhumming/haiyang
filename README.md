@@ -8943,6 +8943,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 
 stupid code - dummy head must be initialized with next pointing to original head!!!
 forgot that and keep debugging elsewhere won't help!
+不做题光听基本没用！还是做不出来。
 
 ```
 /**
