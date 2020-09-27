@@ -9044,3 +9044,5 @@ The Zen of Python, by Tim Peters # Python 之禅
 17) If the implementation is hard to explain, it’s a bad idea. # 实现要是讲不利索，它就是个棒槌
 18) If the implementation is easy to explain, it may be a good idea. # 实现至少得能讲利索，那才有点儿意思
 19) Namespaces are one honking great idea – let’s do more of those! # 命名空间是个宝，能整多少整多少
+
+advanced ch 2 last problem 1:55 timedd
