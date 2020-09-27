@@ -9541,3 +9541,5 @@ http://www.mamicode.com/info-detail-2600077.html
 
 what level of detail do you need to know about this world?
 economics - AI big data - medical science?
+
+leetcode 19!
