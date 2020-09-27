@@ -9003,8 +9003,11 @@ public:
 ```
 
 struct is always a continuous segment of memory;
-对齐原理 -  struct{int a4; char a; } 16 bytes total; 
-8 byte alignment 
+对齐原理 -  struct{int a4; char a; } 8 bytes total; 
+https://stackoverflow.com/questions/1841863/size-of-struct-in-c
+4 byte alignment with padding
+https://stackoverflow.com/questions/20737176/how-are-struct-members-allocated-in-memory
+
 basic class has 6 sections - dp basic
 第六讲 贪心完成情况：0/8
 包括区间问题，Huffman树，排序不等式，绝对值不等式，推公式等内容。
