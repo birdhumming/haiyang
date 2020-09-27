@@ -8919,3 +8919,65 @@ public:
 ```
 作者：wzc1995
 链接：https://www.acwing.com/solution/content/66/
+
+leetcode 19 - double pointer
+```
+public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode first = dummy;
+    ListNode second = dummy;
+    // Advances first pointer so that the gap between first and second is n nodes apart
+    for (int i = 1; i <= n + 1; i++) {
+        first = first.next;
+    }
+    // Move first to the end, maintaining the gap
+    while (first != null) {
+        first = first.next;
+        second = second.next;
+    }
+    second.next = second.next.next;
+    return dummy.next;
+}
+
+stupid code - dummy head must be initialized with next pointing to original head!!!
+forgot that and keep debugging elsewhere won't help!
+
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *h= new ListNode(-1); h->next=head; // here is the problem; looking elsewhere won't help!
+        ListNode *a=h;
+        ListNode *b=h;
+
+        for (int i=1; i<=n+1;i++) b=b->next;
+        while(b){
+            a=a->next;
+            
+            b=b->next;
+        }
+        //if(a->next && a->next->next){
+        //a=a->next;
+        a->next=a->next->next;
+            //h=h->next;
+        //}
+        //else if(!a){a=a->next;}
+        //else
+        //{h=nullptr;}
+        return h->next;
+        
+    }
+};
+```
+ barking on the wrong tree never helps! and is misleading
