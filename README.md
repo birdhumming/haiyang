@@ -9046,3 +9046,271 @@ The Zen of Python, by Tim Peters # Python 之禅
 19) Namespaces are one honking great idea – let’s do more of those! # 命名空间是个宝，能整多少整多少
 
 advanced ch 2 last problem 1:55 timedd
+
+第六章 基础算法完成情况：0/12
+包括位运算、递推与递归、前缀和与差分、二分、排序、RMQ等内容
+第五章 数学知识完成情况：0/35
+包括筛质数、分解质因数、快速幂、约数个数、欧拉函数、同余、矩阵乘法、组合计数、高斯消元、容斥原理、概率与数学期望、博弈论等内容
+第四章 高级数据结构完成情况：0/21
+包括并查集、树状数组、线段树、可持久化数据结构、平衡树、AC自动机等内容
+第三章 图论完成情况：0/58
+包括单源最短路的建图方式、单源最短路的综合应用、单源最短路的扩展应用、Floyd算法、最小生成树、最小生成树的扩展应用、负环、差分约束、最近公共祖先、强连通分量、双连通分量、二分图、欧拉回路和欧拉路径、拓扑排序等内容
+第二章 搜索完成情况：0/25
+包括Flood Fill、最短路模型、多源BFS、最小步数模型、双端队列广搜、双向广搜、A*、DFS之连通性模型、DFS之搜索顺序、DFS之剪枝与优化、迭代加深、双向DFS、IDA*等内容
+第一章 动态规划完成情况：0/68
+包括数字三角形模型、最长上升子序列模型、背包模型、状态机、状态压缩DP、区间DP、树形DP、数位DP、单调队列优化DP、斜率优化DP等内容
+
+typedef只能定义自定义类型，first second不是类型，所以只能用#define。#define是编译预处理，没有错误检测，可以认为是单纯的字符串替换。
+
+个人习惯，只要正确即可，没有好坏之分。
+对齐原理，如果struct里分别有int, char, int, 那么char后面的字节是为对齐填充的，还是后面的int？
+直接在最后一个int后面补上一段。
+
+
+题目描述
+农夫知道一头牛的位置，想要抓住它。
+
+农夫和牛都位于数轴上，农夫起始位于点 NN，牛位于点 KK。
+
+农夫有两种移动方式：
+
+从 XX 移动到 X−1X−1 或 X+1X+1，每次移动花费一分钟
+从 XX 移动到 2∗X2∗X，每次移动花费一分钟
+假设牛没有意识到农夫的行动，站在原地不动。
+
+农夫最少要花多少时间才能抓住牛？
+
+输入格式
+共一行，包含两个整数NN和KK。
+
+输出格式
+输出一个整数，表示抓到牛所花费的最少时间。
+
+数据范围
+0≤N,K≤1050≤N,K≤105
+样例
+输入样例：
+
+5 17
+输出样例：
+
+4
+算法1
+(普通的bfs)
+有三种情况，每次都扩展题目里的三种状态就行了。为了不出现死循环，这里要判个重。如果之前有步数记录，则说明走过这个地方，不考虑。
+
+算法2
+(我的玄学优化bfs)
+其实可以发现，虽然数轴是无限的，但是如果到了零以下，是没有牛的，而且则只有一种方案可以让农夫重新到正数：t−>t+1t−>t+1(这不是自讨苦吃嘛，走的还更远了。我相信农夫不会傻到这种程度)
+然后，我们又发现，加一也不能大于牛最大可能在的地方（这个大家都懂吧）。
+最后可以发现，如果从牛最大可能在的地方再乘2，就必须往回走了。而且如果先往回走再乘2，一定更优。因为如果那样的话，就相当于一次性走了两步。所以，一定不会大于牛最大可能在的地方。而且，因为1e5是一个偶数，所以乘2后一定是两格两格走，不会有特殊情况。如果是奇数可能会出现本来只走一格，先减一再乘2后还是走一格。
+
+嗯，等等，是不是只有这一个特殊情况呢？
+没错，你的猜想是对的，所以，是奇数就减一再与k比较。我们成功优化。
+
+你以为这样就完了吗？
+不可能的！
+不难发现，如果一个数大于k，则只能选择t−>t−1t−>t−1，所以我们可以判断一下，t是否大于k。如果大于，则只执行t−>t−1t−>t−1。当然，我们还可以在开始判断一下，如果是，则直接输出n-k。
+
+你以为这样就完了吗？
+真的完了。（本蒟蒻想不出来了）
+C++ 代码
+```
+#include<bits/stdc++.h>
+using namespace std;
+const int NN=1e5;
+int n,k,sum[NN+4];
+int bfs()
+{
+    queue<int>q;
+    q.push(n);
+    while(q.size())
+    {
+        int t=q.front();
+        if(t==k)
+            return sum[t];
+        q.pop();
+        if(t+1<=NN&&t+1<=k&&!sum[t+1])//玄学优化
+        {
+            sum[t+1]=sum[t]+1;
+            q.push(t+1);
+        }
+        if(t-1>=0&&!sum[t-1])//玄学优化
+        {
+            sum[t-1]=sum[t]+1;
+            q.push(t-1);
+        }
+        if(t*2<=NN&&t*2-(k&1)<=k&&!sum[t*2])//玄学优化
+        {
+            sum[t*2]=sum[t]+1;
+            q.push(t*2);
+        }
+    }
+}
+int main()
+{
+    scanf("%d%d",&n,&k);
+    if(n>k)//玄学优化
+    {
+        printf("%d",n-k);
+        return 0;
+    }
+    printf("%d",bfs());
+    return 0;
+}
+``
+优化代码
+少量优化(因为不优化会数组越界)
+优化了一半的时间，数据大点可以保证不TLE
+
+到了最后了，本蒟蒻写一篇题解也不容易，希望各位大佬点一下那个向上的三角支持我一下，谢谢！
+
+作者：hyc_noi
+链接：https://www.acwing.com/solution/content/11117/
+
+分析
+假设位置为x
+1.只能跳到2*x或者 x+1 ，x-1，也就是说只要n>k就只能向后跳（特判）
+2.跳的方向设定为 dx[3]={1,-1,x},而如果跳到的位置大于2*k其实是
+完全没有必要的，因为那样的话就必须一步一步在跳回来
+C++ 代码
+```
+#include<bits/stdc++.h>
+using namespace std;
+int flag[200100];
+int n,k;
+struct edge {
+    int x;
+} adj;
+queue<edge>q;
+int main() {
+    memset(flag,-1,sizeof(flag));
+    cin>>n>>k;
+    if (k<=n) {
+        cout<<n-k;
+        return 0;
+    } else {
+        int a;
+        adj.x=n;
+        flag[n]=0;
+        q.push(adj);
+        while(!q.empty()) {
+            edge f=q.front();
+            a=f.x;
+            int dx[3]= {1,-1,a};
+            q.pop();
+            for (int i=0; i<3; i++) {
+                int xx=f.x+dx[i];
+                if (xx>=1&&xx<=2*k&&(flag[xx]==-1||flag[xx]>flag[f.x]+1)) {
+                    flag[xx]=flag[f.x]+1;
+                    adj.x=xx;
+                    q.push(adj);
+                }
+            }
+        }
+        cout<<flag[k];
+        return 0;
+    }
+}
+```
+作者：Dear_You
+链接：https://www.acwing.com/solution/content/5858/
+
+算法分析
+题目讲述一共有3种移动情况且权重一致
+
+从 X 移动到 X−1
+
+从 X 移动到 X+1
+
+从 X 移动到 2∗X
+
+相当于X 与X - 1,X + 1,2 * X ,各连一条边,从n开始进行bfs到k，dist[k]表示k点到n点的最短距离
+
+时间复杂度 O(k)O(k)
+参考文献
+算法提高课
+
+看完题目以后，农夫不就是向右移动{-1,1，当前位置}这三种情况吗，
+于是就普通至极，至于范围的话，
+如果k==1e5,n>50000时，实际上最短步数一定只有两种情况：
+
+如果n-50000<k-n时，就会后退到50000再*2
+否则就一直+1到k
+范围就是0<=n<=1e5
+
+```
+#include<cstdio>
+#include<cstring>
+#include<iostream>
+
+using namespace std;
+
+const int N=1e5+10;
+
+int n,k;
+int q[N];
+int dist[N];
+
+int bfs()
+{
+    int hh=0,tt=0;
+    int x=n;
+    q[0]=x;
+    memset(dist,-1,sizeof(dist));
+    dist[x]=0;
+
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        int dx[]={-1,1,t};
+
+        for(int i=0;i<3;i++)
+        {
+            int a=t+dx[i];
+            if(a<0||a>N) continue;
+            if(dist[a]!=-1) continue;
+            if(a==k) return dist[t]+1;
+
+            dist[a]=dist[t]+1;
+            q[++tt]=a;
+        }
+    }
+
+}
+
+int main()
+{
+    cin>>n>>k;
+
+    cout<<bfs()<<endl;
+
+    return 0;
+}
+```
+作者：xmycxx
+链接：https://www.acwing.com/solution/content/18881/
+
+
+python 
+```
+n, k = map(int, input().split())
+if n >= k: print(n - k); exit(0)
+
+dist = [float('inf')] * ((max(n, k) << 1) + 1)
+dist[n] = 0
+
+q = [n]
+while q:
+    nq = []
+    for x in q:
+        for dx in (1, -1, x):
+            nx = x + dx
+            if nx == k: print(dist[x] + 1); exit(0)
+            if nx >= 0 and nx <= 2 * k and dist[nx] > dist[x] + 1:
+                dist[nx] = dist[x] + 1
+                nq.append(nx)
+    q = nq
+```
+作者：roon2300
+链接：https://www.acwing.com/solution/content/16657/
