@@ -8939,6 +8939,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
     second.next = second.next.next;
     return dummy.next;
 }
+```
 
 stupid code - dummy head must be initialized with next pointing to original head!!!
 forgot that and keep debugging elsewhere won't help!
