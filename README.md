@@ -8477,3 +8477,144 @@ public:
 ```
 作者：wzc1995
 链接：https://www.acwing.com/solution/content/60/
+
+题目描述
+给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
+
+样例
+输入：nums = [-1,2,1,-4], target = 1
+输出：2
+解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2) 。
+提示：
+
+3 <= nums.length <= 10^3
+-10^3 <= nums[i] <= 10^3
+-10^4 <= target <= 10^4
+算法分析
+排序 + 双指针
+
+1、枚举每个数，表示该数num[i]已被确定，在排序后的情况下，通过双指针l，r分别从左边l = i + 1和右边n - 1往中间靠拢，找到sum = nums[i] + nums[l] + nums[r]所有情况中最接近target的sum，更新ans
+2、在找的过程中，假设sum = nums[i] + nums[l] + nums[r]
+若sum > target，则r往左走，使sum变小，更接近target
+若sum < target，则l往右走，使sum变大，更接近target
+若sum == target，则表示找到了与num[i]搭配的组合num[l]和num[r]，直接返回
+3、判重处理
+确定好nums[i]时，l 需要从i + 1开始
+当nums[i] == nums[i - 1]，表示当前确定好的数与上一个一样，需要直continue
+时间复杂度 O(n2)O(n2)
+Java 代码
+```
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int n = nums.length;
+        int ans = 0x3f3f3f3f;
+        Arrays.sort(nums);
+        for(int i = 0;i < n;i ++)
+        {
+            if(i != 0 && nums[i] == nums[i - 1]) continue;
+
+            int l = i + 1,r = n - 1;
+
+            while(l < r)
+            {
+                int sum = nums[i] + nums[l] + nums[r];
+                if(Math.abs(sum - target) < Math.abs(ans - target)) ans = sum;
+                if(sum > target)
+                {
+                    r -- ;
+                    continue;
+                }
+
+                if(sum < target)
+                {
+                    l ++ ;
+                    continue;
+                }
+
+                return target;
+            }
+        }
+        return ans;
+    }
+}
+```
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/15002/
+
+题目描述
+给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
+
+样例
+例如，给定数组 nums = [-1，2，1，-4], 和 target = 1。
+
+与 target 最接近的三个数的和为 2 (-1 + 2 + 1 = 2)。
+算法1
+(暴力枚举) O(n3)O(n3)
+三重循环枚举下标 i, j, k，然后判断 nums[i] + nums[j] + nums[k] 是否与 target 更接近。
+时间复杂度
+由于有三重循环，所以复杂度是 O(n3)O(n3)。
+空间复杂度
+仅需要常数的额外空间。
+C++ 代码
+```
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        int ans = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < nums.size(); i++)
+            for (int j = i + 1; j < nums.size(); j++)
+                for (int k = j + 1; k < nums.size(); k++)
+                    if (abs(nums[i] + nums[j] + nums[k] - target) < abs(ans - target))
+                        ans = nums[i] + nums[j] + nums[k];
+
+        return ans;
+    }
+};
+```
+算法2
+(两重枚举) O(n2)O(n2)
+算法思想类似于3Sum。
+
+首先将 nums 数组排序，然后固定一重循环枚举起始位置 i。
+然后初始 l = i + 1，r = n - 1；如果发现 nums[i] + nums[l] + nums[r] == target，则可以直接返回 target；
+若发现 nums[i] + nums[l] + nums[r] < target，则 l++；否则 r--；
+直到 l>=r 停止，继续向后增加初始位置 i。
+时间复杂度
+排序的时间复杂度为 O(nlogn)O(nlog⁡n)。
+共有 nn 个起始位置，然后每次循环 ll 和 rr 的时间复杂度为 O(n)O(n)。
+故总时间复杂度为 O(n2)O(n2)。
+空间复杂度
+仅需要常数的额外空间。
+C++ 代码：
+```
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        int ans = nums[0] + nums[1] + nums[2];
+
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < nums.size(); i++) {
+            int l = i + 1, r = nums.size() - 1;
+
+            while (l < r) {
+
+                if (abs(nums[i] + nums[l] + nums[r] - target) < abs(ans - target))
+                    ans = nums[i] + nums[l] + nums[r];
+
+                if (nums[i] + nums[l] + nums[r] == target)
+                    return target;
+                else if (nums[i] + nums[l] + nums[r] < target)
+                    l++;
+                else
+                    r--;
+            }
+        }
+
+        return ans;
+    }
+};
+```
+
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/64/
