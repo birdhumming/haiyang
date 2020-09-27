@@ -8618,3 +8618,304 @@ public:
 
 作者：wzc1995
 链接：https://www.acwing.com/solution/content/64/
+
+LeetCode 17. Letter Combinations of a Phone Number C++/Java/Python3 迭代    原题链接    中等
+作者：    张立斌 ,  2019-09-23 01:04:27 ,  阅读 509
+
+2
+
+
+1
+算法
+时间复杂度: O(2^n)
+空间复杂度: O(2^n)
+
+C++代码
+```
+class Solution {
+ public:
+  static vector<string> letterCombinations(const string &digits) {
+    if (digits.empty()) {
+      return {};
+    }
+    vector<string> res(1, "");
+    for (const auto digit : digits) {
+      vector<string> res1(res.size() << 2);
+      int r1 = 0;
+      for (const auto &str : res) {
+        for (const auto ch : digitsArr[digit - '2']) {
+          res1[r1] = str;
+          res1[r1].push_back(ch);
+          ++r1;
+        }
+      }
+      res1.resize(r1);
+      res = move(res1);
+    }
+    return res;
+  }
+
+ private:
+  static const array<string, 8> digitsArr;
+};
+const array<string, 8> Solution::digitsArr = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+```
+Java代码
+```
+class Solution {
+  public static List<String> letterCombinations(final String digits) {
+    if (digits.isEmpty()) {
+      return new ArrayList<>();
+    }
+    List<String> res = new ArrayList<>(1);
+    res.add("");
+    for (int i = 0; i < digits.length(); ++i) {
+      final char digit = digits.charAt(i);
+      final List<String> res1 = new ArrayList<>(res.size() << 2);
+      for (String str : res) {
+        final String strDigit = digitsArr[digit - '2'];
+        for (int j = 0; j < strDigit.length(); ++j) {
+          final char ch = strDigit.charAt(j);
+          res1.add(str + ch);
+        }
+      }
+      res = res1;
+    }
+    return res;
+  }
+
+  private static String[] digitsArr = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+}
+```
+Python3代码
+```
+class Solution:
+  __digitArr = ["abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+
+  def letterCombinations(self, digits: str) -> list:
+    if not digits:
+      return []
+    res = [""]
+    for digit in digits:
+      res1 = []
+      for str in res:
+        for ch in Solution.__digitArr[ord(digit) - ord('2')]:
+          res1.append(str + ch)
+      res = res1
+    return res
+```
+作者：张立斌
+链接：https://www.acwing.com/solution/content/4773/
+
+
+算法
+(递归) O(4l)O(4l)
+可以通过手工或者循环的方式预处理每个数字可以代表哪些字母。
+通过递归尝试拼接一个新字母。
+递归到目标长度，将当前字母串加入到答案中。
+注意，有可能数字串是空串，需要特判。
+时间复杂度
+由于使用了递归的方式，时间复杂度与答案个数相同。
+设数字串长度为 ll，则最坏时间复杂度为 O(4l)O(4l)。
+C++ 代码
+```
+class Solution {
+public:
+    vector<char> digit[10];
+    vector<string> res;
+
+    void init() {
+        char cur = 'a';
+        for (int i = 2; i < 10; i++) {
+            for (int j = 0; j < 3; j++)
+                digit[i].push_back(cur++);
+            if (i == 7 || i == 9)
+                digit[i].push_back(cur++);
+        }
+    }
+
+    void solve(string digits, int d, string cur) {
+        if (d == digits.length()) {
+            res.push_back(cur);
+            return;
+        }
+
+        int cur_num = digits[d] - '0';
+
+        for (int i = 0; i < digit[cur_num].size(); i++)
+            solve(digits, d + 1, cur + digit[cur_num][i]);
+    }
+
+    vector<string> letterCombinations(string digits) {
+        if (digits == "")
+            return res;
+        init();
+        solve(digits, 0, "");
+        return res;
+    }
+};
+```
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/65/
+
+```
+class Solution {
+    String[] mapping=new String[]{"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    List<String> list=new LinkedList();
+    public List<String> letterCombinations(String digits) {
+        if(digits==null || digits.length()==0) return list;
+        dfs(digits,0,"");
+        return list;
+    }
+
+    void dfs(String s,int pos,String res){
+        if(pos==s.length()){
+            list.add(res);
+        }else{
+            int num=s.charAt(pos)-'0';
+            String mapStr=mapping[num];
+            for(int i=0;i<mapStr.length();i++){
+                char c=mapStr.charAt(i);
+                dfs(s,pos+1,res+c);
+            }
+        }
+    }
+}
+```
+作者：脆脆鲨
+链接：https://www.acwing.com/solution/content/2908/
+
+```
+class Solution {
+public:
+    string dict[8]={"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    vector<string> ans;
+    string path;
+    vector<string> letterCombinations(string digits) {
+        if(!digits.size()) return vector<string>();
+        dfs(digits,0);
+        return ans;
+    }
+    void dfs(string & s,int n)
+    {
+        if(n==s.size())
+        {
+            ans.push_back(path);
+            return ;
+        }
+        int ch=s[n]-'2';
+        for(int i=0;i<dict[ch].size();i++)
+        {
+            string tmp=path;
+            path+=dict[ch][i];
+            dfs(s,n+1);
+            path=tmp;
+        }
+
+
+    }
+};
+```
+作者：linux_2019
+链接：https://www.acwing.com/solution/content/4457/
+
+法分析
+排序 + 双指针
+
+1、与三数之和操作类似，枚举每两个数，表示该数nums[i]和nums[j]已被确定，在排序后的情况下，通过双指针l，r分别从左边l = i + 1和右边n - 1往中间靠拢，找到nums[i] + nums[j] + nums[l] + nums[r] == target的所有符合条件的搭配
+2、在找符合条件搭配的过程中，假设sum = nums[i] + nums[j] + nums[l] + nums[r]
+若sum > target，则r往左走，使sum变小
+若sum < target，则l往右走，使sum变大
+若sum == target，则表示找到了与nums[i]搭配的组合nums[l]和nums[r]，存到ans中
+3、判重处理
+确定好nums[i]时，l 需要从i + 1开始
+当nums[i] == nums[i - 1]，表示当前确定好的数与上一个一样，需要直接continue
+当nums[j] == nums[j - 1]，表示当前确定好的数与上一个一样，需要直接continue
+当找符合条件搭配时，即sum == 0,需要对相同的nums[l]和nums[r]进行判重出来
+时间复杂度 O(n3)O(n3)
+Java 代码
+```
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        int n = nums.length;
+        Arrays.sort(nums);
+        for(int i = 0;i < n;i ++)
+        {
+            if(i != 0 && nums[i] == nums[i - 1]) continue;
+            for(int j = i + 1;j < n;j ++)
+            {
+                if(j != i + 1 && nums[j] == nums[j - 1]) continue;
+
+                int l = j + 1,r = n - 1;
+                while(l < r)
+                {
+                    int sum = nums[i] + nums[j] + nums[l] + nums[r];
+                    if(sum > target)
+                    {
+                        r --;
+                        continue;
+                    }
+                    if(sum < target)
+                    {
+                        l ++;
+                        continue;
+                    }
+                    ans.add(Arrays.asList(nums[i],nums[j],nums[l],nums[r]));
+
+                    //去重处理
+                    do{l ++;} while(l < r && nums[l] == nums[l - 1]);
+                    do{r --;} while(l < r && nums[r] == nums[r + 1]);
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/15033/
+
+算法
+(三重枚举，无重复构造) O(n3)O(n3)
+完全基于 3Sum 算法的思路，排序后再增加一重循环即可。
+时间复杂度
+可以参考 3Sum 的时间复杂度，此题的时间复杂度为 O(n3)O(n3)
+C++代码
+```
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+
+        for (int i = 0; i < n; i++) {
+            while (i > 0 && i < n && nums[i] == nums[i - 1])
+                i++;
+
+            for (int j = i + 1; j < n; j++) {
+                while (j != i + 1 && j < n && nums[j] == nums[j - 1])
+                    j++;
+
+                int l = j + 1, r = n - 1;
+
+                while (l < r) {
+                    if (nums[i] + nums[j] + nums[l] + nums[r] == target) {
+                        res.push_back({nums[i], nums[j], nums[l], nums[r]});
+                        do { l++; } while (l < r && nums[l - 1] == nums[l]);
+                        do { r--; } while (l < r && nums[r] == nums[r + 1]);
+                    } else if (nums[i] + nums[j] + nums[l] + nums[r] < target) {
+                        do { l++; } while (l < r && nums[l - 1] == nums[l]);
+                    } else {
+                        do { r--; } while (l < r && nums[r] == nums[r + 1]);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+作者：wzc1995
+链接：https://www.acwing.com/solution/content/66/
