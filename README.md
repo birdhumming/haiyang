@@ -8982,3 +8982,22 @@ public:
 };
 ```
  barking on the wrong tree never helps! and is misleading
+
+ ```
+ class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *h= new ListNode(-1); h->next=head; // here is the problem; looking elsewhere won't help!
+        ListNode *a=h;
+        ListNode *b=h;
+
+        for (int i=1; i<=n+1;i++) b=b->next;
+        while(b){
+            a=a->next;            
+            b=b->next;
+        }
+        a->next=a->next->next;
+        return h->next;       
+    }
+};
+```
