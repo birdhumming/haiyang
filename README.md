@@ -9538,3 +9538,6 @@ http://www.mamicode.com/info-detail-2600077.html
 7.3 最小表示法
 7.4 构造
 7.5 打表
+
+what level of detail do you need to know about this world?
+economics - AI big data - medical science?
