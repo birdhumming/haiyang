@@ -10596,3 +10596,186 @@ just a few subjects -
 https://github.com/tongzhang1994/LeetCode-Summary
 
 leetcode solutions https://github.com/luliyucoordinate/Leetcode
+
+
+
+wrong - 
+```
+class Solution {
+public:
+    ListNode* deleteDuplication(ListNode* head) {
+        ListNode *h = new ListNode(-1); h->next=head;
+        
+        ListNode *a=h->next;
+        while(a){
+            auto b = a;
+            while(b && a->val==b->next->val){b=b->next;}
+            a->next=b;
+        }
+        
+        return h->next;
+        
+    }
+};
+```
+
+
+个人感觉本题最大的难点是判断哪些元素是重复以及想到如何跨越重复元素连接到下一个非重元素处。yxc大佬的思路是加入dummy node（头结点）,从而避免边界情况（因为可能开头的元素就是重复的），本题最大的考点是双指针，这个双指针的总结如下，头指针指向当前最后一个非重复元素所在的结点pi，第二个指针指向的是下一个元素的下一个结点pj，从而通过判断pj是否为pi的next的next来判断pi和pj之间是否只有一个元素，是的话，则将pi移到pi的next，否则的话将pi的next指针指向pj，此时的做法相当于直接删除了pi和pj之间的重复元素，此处我加上delete中间元素的过程。
+
+算法1
+(双指针) O(n)O(n)
+C++ 代码
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+class Solution {
+public:
+    ListNode* deleteDuplication(ListNode* head) {
+        if(! head ) return head;
+        auto dummy = new ListNode(-1);
+        dummy -> next = head;
+        auto p = dummy;
+
+        while(p -> next){
+            auto q = p -> next;
+            while(q && p -> next -> val == q -> val) q = q->next;
+
+            if(q == p -> next -> next) p = p -> next;
+            else{
+                auto t1 = p -> next;
+                p -> next = q;
+                int v = t1 -> val;
+                while(t1 && t1 -> val == v) {
+                    auto t2 = t1;
+                    t1 = t1 ->next;
+                    delete t2;
+                }
+            }
+        }
+        return dummy -> next;
+    }
+
+};
+```
+
+算法1
+这是投机取巧的做法
+在时间和空间不太要求的情况下
+可使用STL进行unique的操作
+遍历链表 将元素放进map
+在遍历map将不重复的元素放进链表
+注意边界条件
+
+C++ 代码
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    map<int,int> s;
+    ListNode* deleteDuplication(ListNode* head) {
+        ListNode* p = head;
+        //边界情况直接返回
+        if(p == NULL)
+            return p;
+        //将链表数值放入map 让容器自动去重
+        while(p != NULL){
+            s[p->val]++;
+            p = p->next;
+        }
+
+        p = head;
+        ListNode* pre=head;
+        //遍历容器 再次放入链表
+        for(auto& e:s){
+            if(e.second == 1){
+                p->val = e.first;
+                pre = p;
+                p = p->next;
+            }
+        }
+        //多余的链表删除 这里直接NULL 没有释放
+        pre->next=NULL;
+        //注意边界条件
+        if(pre == head)
+            return NULL;
+        return head;
+    }
+};
+
+
+class Solution {
+public:
+    ListNode* deleteDuplication(ListNode* head) {
+        if (!head || !head->next) return nullptr;
+        ListNode dummy(0);
+        ListNode *pre = &dummy;
+        pre->next = head;
+        ListNode* cur = head;
+        while(cur && cur->next) {
+            if (cur->val == cur->next->val) {
+                int val = cur->val;
+                while(cur && cur->val == val) {
+                    cur = cur->next;
+                }
+                pre->next = cur;
+            } else {
+                pre = cur;
+                cur = cur->next;
+            }
+        }
+
+        return dummy.next;
+    }
+};
+
+class ListNode(object):
+    def __init__(self,x):
+        self.val=x
+        self.next=None
+
+class Solution(object):
+    def deleteDuplication(self,head):
+        dummy=ListNode(None)
+        dummy.next=head
+        pt0=head
+        #快指针
+        pt1=dummy
+        #慢指针
+        pre=None
+
+        while pt0:
+            if pt0.next==None:
+                if pt0.val==pre:
+                    pt1.next=None
+                else:
+                    pt1.next=pt0
+                break
+            if pt0.val!=pre and pt0.val!=pt0.next.val:
+            #延伸
+                pt1.next=pt0
+
+                pt1=pt1.next
+
+            pre=pt0.val
+
+            pt0=pt0.next
+
+        return dummy.next
+
+
+```
+
