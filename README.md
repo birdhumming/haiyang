@@ -9708,3 +9708,268 @@ AcWing 655. 天数转换
 
 作者：AcWing
 链接：https://www.acwing.com/activity/content/punch_the_clock/21/
+
+
+理解大根堆—简单明了的一个例子
+求最小的k个数，遍历一遍数组，把每个数都塞进大根堆heap中，如果heap的数量大于k，则弹出最大的一个，这样保证heap中只有k个数，因为每个数都要进去过一遍，这样heap最终剩余的肯定是最小的k个数了，而且还是从大到小的顺序排好的。
+
+C++ 代码
+```
+class Solution {
+public:
+    vector<int> getLeastNumbers_Solution(vector<int> input, int k) {
+        priority_queue<int> heap;
+        while(!input.empty()){
+            heap.push(input.back()),input.pop_back();
+            if(heap.size()>k) heap.pop();
+        }
+        vector<int> res;
+        while(!heap.empty()){
+            res.push_back(heap.top());
+            heap.pop();
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
+```
+
+今年大三了，今天中午参加了学校的省赛选拔，两个小时，七选择七编程，选择题小学生水平，按我同学说，题目的难度是：这不有手就行？。谈一谈我今年的感觉把。真的是很菜，自己还很自负，自己一直还认为自己学的不错，自我感觉良好，自己也挺努力。本来想发一条朋友圈说说最近感受，现在都不知道这个社会怎么了，网易云都不敢了，生怕别人评论你丧。但是今天真的去比一比，自己好像还真的很差。第一题是一个大整数除法，我一直还侥幸的认为，哎呦哪有人这么无聊，搞什么除法呢结果第一题最简单的题目就是大整数的除法，输入被除数n（n是10的1000次方），输入a，b。如果n能整除a，b.输出yes。我默写板子，一直在wa，wa，wa，结果无奈，就用longlong用了，就只能过百分之20的测试点。调了几分钟都没对。第二题是双指针，和力扣的11题基本一摸一样，结果就过了百分之40的测试点，关键我昨天复习了双指针。第三题大概是力扣的155题，但是比它难，它中间没有栈的操作函数框架，需要自己写函数，然后指定操作，然后补全函数，而且题目真很坑，操作描述得很模糊很模糊很模糊。我根本连意思都不明白，手都下不了。第四题好像是数列问题，需要自己判断数列特征（是等比还是等差），然后给你一个项数，求出对应项数的值，注意这又是一个大整数，在等比数列求项数的时候，需要重新写pow。第四题好像勉强安慰的吧，唯一一题满分。第五记是一个树，然后要建立序列什么的，据我同学说要用dp，结果没写。第六题是：自己去建图，里面一个一块一块的三角形，求里面连接三角的数量的最大值，和连通块的感觉差不多，但是我就过了百分之16.6的数据点，当时心态都崩了，一直调一直调试。第七题是是一个dfs的题目，过了百分之83.3,当时以为很简单，我还挺高兴。真的是很操蛋的一天，大三了编程水平依然很低很低。我9月分才入手的基础课，现在才看到数学，在正在看dp。自己看课和自己写代码，真的是不一样的。12月还要考pat，我还是第一次考pat，现在心里真的五味杂陈， 我真的是太差了。还有一件事，今天也是校内选拔之后我才知道的。我大一的时候一把把四六级都过了，都5开头，我一直还觉得我英语蛮好，甚至有点洋洋得意？！今天我才知道，我的一个朋友比我强太多了，人家还很谦虚，真的是一块遮羞布一下给我扯到底。在acwing社区想分享一下最近，可能大家不会认识我，在不同的空间里也不会那么尴尬了。想分享分享自己近况吧。更希望自己以后谦逊，也要努力。更希望12月pat满分，六级570.
+
+
+今天看的白板推导，总体感觉很合理，有上lecture的味了，个人觉得讲师思路很清晰，且工整。并且写完白板就是半个大神笔记本的直视感。
+前几节基本就是statistical inference，Linear models，
+后面正在学习中
+https://www.bilibili.com/video/BV1aE411o7qd?p=6
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1334901/
+
+```
+/*
+主席树
+*/
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,tot;
+int rt[100005];
+struct oppo {
+    int l,r,all;
+} a[4000006];
+void add(int &bh,int sbh,int l,int r,int k) {
+    int mid=(1ll*l+1ll*r)/2;
+    if(bh==0)
+        bh=++tot;
+    if(l==r) {
+        a[bh].all=a[sbh].all+1;
+        return;
+    }
+    if(k<=mid) {
+        a[bh].r=a[sbh].r;
+        add(a[bh].l,a[sbh].l,l,mid,k);
+    } else {
+        a[bh].l=a[sbh].l;
+        add(a[bh].r,a[sbh].r,mid+1,r,k);
+    }
+    a[bh].all=a[a[bh].l].all+a[a[bh].r].all;
+}
+int ask(int lbh,int rbh,int l,int r,int k) {
+    if(l==r)
+        return l;
+    int mid=(1ll*l+1ll*r)/2;
+    if(a[a[rbh].l].all-a[a[lbh].l].all>=k) return ask(a[lbh].l,a[rbh].l,l,mid,k);
+    else return ask(a[lbh].r,a[rbh].r,mid+1,r,k-a[a[rbh].l].all+a[a[lbh].l].all);
+}
+int main() {
+    cin>>n>>m;
+    for(int i=1; i<=n; i++) {
+        int t;
+        scanf("%d",&t);
+        t+=1000000000;
+        add(rt[i],rt[i-1],1,2000000000,t);
+    }
+    for(int i=1; i<=m; i++) {
+        int l,r,k;
+        scanf("%d%d%d",&l,&r,&k);
+        cout<<ask(rt[l-1],rt[r],1,2000000000,k)-1000000000<<"\n";
+    }
+    return 0;
+}
+```
+
+包括区间问题，Huffman树，排序不等式，绝对值不等式，推公式等内容。
+区间问题
+AcWing 905. 区间选点816人打卡
+AcWing 908. 最大不相交区间数量762人打卡
+AcWing 906. 区间分组665人打卡
+AcWing 907. 区间覆盖625人打卡
+Huffman树
+AcWing 148. 合并果子685人打卡
+排序不等式
+AcWing 913. 排队打水641人打卡
+绝对值不等式
+AcWing 104. 货仓选址634人打卡
+推公式
+AcWing 125. 耍杂技的牛568人打卡
+第五讲 动态规划完成情况：0/18
+包括背包问题，线性DP，区间DP，计数类DP，数位统计DP，状态压缩DP，树形DP，记忆化搜索等内容。
+背包问题
+AcWing 2. 01背包问题1399人打卡
+AcWing 3. 完全背包问题1283人打卡
+AcWing 4. 多重背包问题1191人打卡
+AcWing 5. 多重背包问题 II1076人打卡
+AcWing 9. 分组背包问题1064人打卡
+线性DP
+AcWing 898. 数字三角形1174人打卡
+AcWing 895. 最长上升子序列1189人打卡
+AcWing 896. 最长上升子序列 II848人打卡
+AcWing 897. 最长公共子序列1080人打卡
+AcWing 902. 最短编辑距离890人打卡
+AcWing 899. 编辑距离761人打卡
+区间DP
+AcWing 282. 石子合并997人打卡
+计数类DP
+AcWing 900. 整数划分755人打卡
+数位统计DP
+AcWing 338. 计数问题409人打卡
+状态压缩DP
+AcWing 291. 蒙德里安的梦想596人打卡
+AcWing 91. 最短Hamilton路径582人打卡
+树形DP
+AcWing 285. 没有上司的舞会678人打卡
+记忆化搜索
+AcWing 901. 滑雪688人打卡
+第四讲 数学知识完成情况：0/26
+包括质数，约数，欧拉函数，快速幂，扩展欧几里得算法，中国剩余定理，高斯消元，求组合数，容斥原理，博弈论等内容。
+质数
+AcWing 866. 试除法判定质数1105人打卡
+AcWing 867. 分解质因数1049人打卡
+AcWing 868. 筛质数1009人打卡
+约数
+AcWing 869. 试除法求约数953人打卡
+AcWing 870. 约数个数866人打卡
+AcWing 871. 约数之和822人打卡
+AcWing 872. 最大公约数920人打卡
+欧拉函数
+AcWing 873. 欧拉函数770人打卡
+AcWing 874. 筛法求欧拉函数694人打卡
+快速幂
+AcWing 875. 快速幂883人打卡
+AcWing 876. 快速幂求逆元726人打卡
+扩展欧几里得算法
+AcWing 877. 扩展欧几里得算法678人打卡
+AcWing 878. 线性同余方程620人打卡
+中国剩余定理
+AcWing 204. 表达整数的奇怪方式371人打卡
+高斯消元
+AcWing 883. 高斯消元解线性方程组456人打卡
+AcWing 884. 高斯消元解异或线性方程组315人打卡
+求组合数
+AcWing 885. 求组合数 I627人打卡
+AcWing 886. 求组合数 II552人打卡
+AcWing 887. 求组合数 III486人打卡
+AcWing 888. 求组合数 IV432人打卡
+AcWing 889. 满足条件的01序列453人打卡
+容斥原理
+AcWing 890. 能被整除的数482人打卡
+博弈论
+AcWing 891. Nim游戏550人打卡
+AcWing 892. 台阶-Nim游戏428人打卡
+AcWing 893. 集合-Nim游戏429人打卡
+AcWing 894. 拆分-Nim游戏348人打卡
+第三讲 搜索与图论完成情况：0/17
+包括DFS，BFS，树与图的深度优先遍历，树与图的广度优先遍历，拓扑排序，Dijkstra，bellman-ford，spfa，Floyd，Prim，Kruskal，染色法判定二分图，匈牙利算法等内容。
+DFS
+AcWing 842. 排列数字1628人打卡
+AcWing 843. n-皇后问题1466人打卡
+BFS
+AcWing 844. 走迷宫1412人打卡
+AcWing 845. 八数码956人打卡
+树与图的深度优先遍历
+AcWing 846. 树的重心1179人打卡
+树与图的广度优先遍历
+AcWing 847. 图中点的层次1161人打卡
+拓扑排序
+AcWing 848. 有向图的拓扑序列1166人打卡
+Dijkstra
+AcWing 849. Dijkstra求最短路 I1287人打卡
+AcWing 850. Dijkstra求最短路 II1145人打卡
+bellman-ford
+AcWing 853. 有边数限制的最短路1084人打卡
+spfa
+AcWing 851. spfa求最短路1071人打卡
+AcWing 852. spfa判断负环1002人打卡
+Floyd
+AcWing 854. Floyd求最短路1040人打卡
+Prim
+AcWing 858. Prim算法求最小生成树1019人打卡
+Kruskal
+AcWing 859. Kruskal算法求最小生成树999人打卡
+染色法判定二分图
+AcWing 860. 染色法判定二分图922人打卡
+匈牙利算法
+AcWing 861. 二分图的最大匹配874人打卡
+第二讲 数据结构完成情况：0/16
+包括单链表，双链表，栈，队列，单调栈，单调队列，KMP，Trie，并查集，堆，哈希表等内容。
+单链表
+AcWing 826. 单链表1621人打卡
+双链表
+AcWing 827. 双链表1359人打卡
+栈
+AcWing 828. 模拟栈1484人打卡
+队列
+AcWing 829. 模拟队列1467人打卡
+单调栈
+AcWing 830. 单调栈1594人打卡
+单调队列
+AcWing 154. 滑动窗口1473人打卡
+KMP
+AcWing 831. KMP字符串1367人打卡
+Trie
+AcWing 835. Trie字符串统计1438人打卡
+AcWing 143. 最大异或对1097人打卡
+并查集
+AcWing 836. 合并集合1491人打卡
+AcWing 837. 连通块中点的数量1380人打卡
+AcWing 240. 食物链878人打卡
+堆
+AcWing 838. 堆排序1309人打卡
+AcWing 839. 模拟堆960人打卡
+哈希表
+AcWing 840. 模拟散列表1203人打卡
+AcWing 841. 字符串哈希1068人打卡
+第一讲 基础算法完成情况：0/19
+包括排序、二分、高精度、前缀和与差分、双指针算法、位运算、离散化、区间合并等内容。
+快速排序
+AcWing 785. 快速排序2502人打卡
+AcWing 786. 第k个数2220人打卡
+归并排序
+AcWing 787. 归并排序2213人打卡
+AcWing 788. 逆序对的数量1920人打卡
+二分
+AcWing 789. 数的范围2038人打卡
+AcWing 790. 数的三次方根1911人打卡
+高精度
+AcWing 791. 高精度加法1769人打卡
+AcWing 792. 高精度减法1583人打卡
+AcWing 793. 高精度乘法1519人打卡
+AcWing 794. 高精度除法1446人打卡
+前缀和与差分
+AcWing 795. 前缀和1893人打卡
+AcWing 796. 子矩阵的和1751人打卡
+AcWing 797. 差分1711人打卡
+AcWing 798. 差分矩阵1524人打卡
+双指针算法
+AcWing 799. 最长连续不重复子序列1726人打卡
+AcWing 800. 数组元素的目标和1595人打卡
+位运算
+AcWing 801. 二进制中1的个数1698人打卡
+离散化
+AcWing 802. 区间和1322人打卡
+区间合并
+AcWing 803. 区间合并
+
+作者：AcWing
+链接：https://www.acwing.com/activity/content/punch_the_clock/11/
+
+basic algorithm class  above - list of problems
+
