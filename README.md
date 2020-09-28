@@ -1,4 +1,4 @@
-https://clist.by/
+dhttps://clist.by/
 
 An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
 LIST OF AWESOME LEARNING RESOURCES https://www.topcoder.com/thrive/articles/List%20of%20awesome%20learning%20resources
@@ -10792,8 +10792,8 @@ public:
         while(p->next){
             auto q=p->next;
             while(q->next && q->next->val==p->next->val)q=q->next; //check if repeating values exist
-            if(p->next==q)p=p->next;
-            else p->next=q->next;
+d            if(p->next==q)p=p->next; //not repeating element, move forward
+            else p->next=q->next; //delete repeating q's
         }
 
         return h->next;
