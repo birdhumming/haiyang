@@ -10779,3 +10779,25 @@ class Solution(object):
 
 ```
 
+my code which is working:
+
+```
+class Solution {
+public:
+    ListNode* deleteDuplication(ListNode* head) {
+        auto h=new ListNode(-1); h->next=head;
+        
+        auto p=h; //don't move yet  
+        
+        while(p->next){
+            auto q=p->next;
+            while(q->next && q->next->val==p->next->val)q=q->next; //check if repeating values exist
+            if(p->next==q)p=p->next;
+            else p->next=q->next;
+        }
+
+        return h->next;
+    }
+};
+```
+
