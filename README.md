@@ -10779,7 +10779,7 @@ class Solution(object):
 
 ```
 
-my code which is working:
+my code which is working: must watch his video and watch his code both to get it working!!!
 
 ```
 class Solution {
@@ -10801,3 +10801,104 @@ d            if(p->next==q)p=p->next; //not repeating element, move forward
 };
 ```
 
+
+0 NULL nullptr what about ''? no empty string
+
+如果有公共结点肯定是在后面重叠，且后面部分都是共同的。
+方法1：先计算出两个链表的长度，可以让比较长的先走两个链表长度之差的步数，两个再一起走。
+方法2：不同部分为a， 和b，公共部分为c；a + c + b = b + c + a;让两个一起走，a走到头就转向b， b走到头转向a，则在公共部分相遇。
+
+```
+class Solution {
+public:
+    ListNode *findFirstCommonNode(ListNode *headA, ListNode *headB) {
+        auto p = headA, q = headB;
+        while(p != q) {
+            if(p) p = p->next;
+            else p = headB;
+            if (q) q = q->next;
+            else q = headA;
+        }
+        return p;
+    }
+};
+
+class Solution {
+public:
+    ListNode *findFirstCommonNode(ListNode *headA, ListNode *headB) {
+        auto a=headA,b=headB;
+        
+        while(a!=b){
+            if(a)a=a->next;
+            else a=headB;
+            if(b)b=b->next;
+            else b=headA;
+        }
+        return a;
+    }
+};
+
+```
+
+算法1
+(链表操作，迭代) O(n)O(n)
+翻转即将所有节点的next指针指向前驱节点。
+由于是单链表，我们在迭代时不能直接找到前驱节点，所以我们需要一个额外的指针保存前驱节点。同时在改变当前节点的next指针前，不要忘记保存它的后继节点。
+
+空间复杂度分析：遍历时只有3个额外变量，所以额外的空间复杂度是 O(1)O(1)。
+时间复杂度分析：只遍历一次链表，时间复杂度是 O(n)O(n)。
+
+C++ 代码
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *prev = nullptr;
+        ListNode *cur = head;
+        while (cur)
+        {
+            ListNode *next = cur->next;
+            cur->next = prev;
+            prev = cur, cur = next;
+        }
+        return prev;
+    }
+};
+```
+算法2
+(链表操作，递归) O(n)O(n)
+首先我们先考虑 reverseList 函数能做什么，它可以翻转一个链表，并返回新链表的头节点，也就是原链表的尾节点。
+所以我们可以先递归处理 reverseList(head->next)，这样我们可以将以head->next为头节点的链表翻转，并得到原链表的尾节点tail，此时head->next是新链表的尾节点，我们令它的next指针指向head，并将head->next指向空即可将整个链表翻转，且新链表的头节点是tail。
+
+空间复杂度分析：总共递归 nn 层，系统栈的空间复杂度是 O(n)O(n)，所以总共需要额外 O(n)O(n) 的空间。
+时间复杂度分析：链表中每个节点只被遍历一次，所以时间复杂度是 O(n)O(n)。
+
+C++ 代码：
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) return head;
+        ListNode *tail = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return tail;
+    }
+};
+```
