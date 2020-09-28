@@ -10550,3 +10550,20 @@ AcWing 1048. 鸡蛋的硬度110人打卡
 AcWing 41. 包含min函数的栈111人打卡
 AcWing 34. 链表中环的入口结点
 
+leetcode solutions summary
+https://github.com/tongzhang1994/LeetCode-Summary
+
+My LeetCode solutions with Chinese explanation. 我的LeetCode中文题解。
+每个题目都保证击败超过80%的提交，并尽量给出多种解法并分析算法复杂度。
+每日持续更新中，欢迎交流，欢迎star :D
+另外，
+algorithm文件夹对经典算法作了简单介绍并给出代码模板，方便刷题参考使用；
+CodingInterview给出了《剑指offer》第2版中对应的LeetCode题目
+
+https://github.com/ShusenTang/LeetCode
+
+LeetCode Problem Summary
+https://yzygitzh.github.io/algorithm/2018/11/09/leetcode-summary.html
+
+just a few subjects - 
+https://github.com/tongzhang1994/LeetCode-Summary
