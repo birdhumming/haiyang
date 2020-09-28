@@ -10902,3 +10902,97 @@ public:
     }
 };
 ```
+
+
+atoi(str.c_str())
+stoi(str)
+
+```
+class Solution {
+public:
+    int strToInt(string str) {
+        stringstream s;
+        int num=0;
+        if(str=="")return 0;
+        s<<str;
+        s>>num;
+        return num;
+    }
+};
+```
+分享一个字符串处理的小技巧，不用每次判断下标索引是否越界，提升代码可读性与实用性
+在字符串后面加上一个空字符‘\0’，当下标指向‘\0’时，下标将不会继续前进（代入实际情况理解一下就好了），从而防止了下标越界
+```
+class Solution {
+public:
+    int strToInt(string s) {
+        s += '\0';
+        int i = 0;
+        while(s[i] == ' ') ++i;
+        long ret = 0;
+        bool isPos = false;
+        if(s[i] == '-' || s[i] == '+'){
+            if(s[i] == '-') isPos = true;
+            ++i;
+        } 
+        while(s[i] >= '0' && s[i] <= '9'){
+            ret = ret * 10 + s[i] - '0';
+            ++i;
+            if(!isPos && ret >= INT32_MAX) return INT32_MAX;
+            if(isPos && ret - 1 >= INT32_MAX) return INT32_MIN; 
+        }
+        return isPos ? -ret : ret;
+    }
+};
+```
+
+python
+```
+class Solution(object):
+    def strToInt(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        if not str or len(str) == 0:
+            return 0
+        flag = 1
+        str = str.lstrip()
+        if str[0] == '+':
+            str = str[1:]
+        elif str[0] == '-':
+            flag = -1
+            str = str[1:]
+        res = 0
+        i = 0
+        while i < len(str):
+            if str[i].isdigit():
+                res *= 10
+                res += int(str[i]) 
+                i += 1
+            else:
+                break
+        res *= flag
+        if res > 2 ** 31 - 1:
+             return  2 ** 31 - 1 
+        if res < - 2 ** 31:
+             return  - 2 ** 31 
+        return res 
+
+or
+
+class Solution(object):
+    def strToInt(self, s):
+        s = s.strip()
+        if not s:
+            return 0
+        sign = -1 if s[0] == '-' else 1
+        s = s[1:] if s[0] in ('+', '-') else s
+        ret = i = 0
+        while i < len(s) and s[i].isdigit():
+            ret = ret * 10 + ord(s[i]) - ord('0')
+            i += 1
+        return min(2**31-1, max(sign*ret, -2**31))
+```
+作者：丶Axe
+链接：https://www.acwing.com/solution/content/6209/
