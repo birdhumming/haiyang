@@ -6683,6 +6683,31 @@ https://www.acwing.com/solution/content/734/
 AcWing 29. 删除链表中重复的节点
 https://www.acwing.com/solution/content/735/
 may delete head node, so must have a dummy head to deal with the possibility
+```
+class Solution {
+public:
+    ListNode* deleteDuplication(ListNode* head) {
+        ListNode* newhead=new ListNode(INT_MIN);
+        newhead->next=head;
+        ListNode* curr=newhead;
+
+       while(curr){
+           auto f=curr->next;
+           while(f && f->next && f->next->val==f->val){
+               auto c=f->next;
+               while(c && c->val==f->val) c=c->next;
+               f=c;
+           }
+           curr->next=f;
+           curr=curr->next;
+       }
+
+        return newhead->next;
+    }
+
+};
+```
+
 
 AcWing 30. 正则表达式匹配
 https://www.acwing.com/solution/content/736/
