@@ -9542,7 +9542,9 @@ http://www.mamicode.com/info-detail-2600077.html
 what level of detail do you need to know about this world?
 economics - AI big data - medical science?
 
-leetcode 19!
+leetcode 19! 150 first normal; remaining competitive
+
+136 for basic syntax
 
 例题
 AcWing 67. 数字在排序数组中出现的次数175人打卡
