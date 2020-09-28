@@ -11031,4 +11031,25 @@ public:
 
     }  
 };
+wrong? need current list variable - 
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        auto h= new ListNode(-1);
+        
+        while(l1 && l2){
+            if(l1->val<=l2->val){
+                h->next=l1;
+                l1=l1->next;
+            }else{
+                h->next=l2;
+                l2=l2->next;
+            }
+        }
+        return h->next;
+        
+    }
+};
 ```
+
+dedup I not dedup II done
