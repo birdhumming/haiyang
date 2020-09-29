@@ -11180,3 +11180,21 @@ DP https://www.acwing.com/file_system/file/content/whole/index/content/1336954/
 
 图论和搜索【Py3模板】
 https://www.acwing.com/file_system/file/content/whole/index/content/1336883/
+
+字节跳动广告技术部-广告算法凉经
+https://www.acwing.com/file_system/file/content/whole/index/content/1339859/
+算法题
+//扭转后的有序数组，找到指定的数，返回下标，找不到时返回-1
+//样例输入：3，4，5，6，7，1，2 查找数字7
+//样例输出：4
+算法题
+有个数组，寻找一个切分点，使左右两个数组的方差差距最小
+min abs（a-b）
+算法题
+二叉树之字形遍历
+进程和线程的区别
+你了解什么深度学习的优化器
+如何抑制过拟合
+LR的损失函数，推导一下
+为什么会产生梯度消失和梯度爆炸，如何解决？
+
