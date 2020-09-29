@@ -11053,3 +11053,130 @@ public:
 ```
 
 dedup I not dedup II done
+
+Definition 给自己的定义
+1. 打卡 完成态：写完图解 并代码实现2+次 saber通过
+2. 伪打卡 进行态：代码要实现一次
+立个flag（伪打卡）：
+## KickStart 2019 A轮题目讲解
+https://www.bilibili.com/video/BV1vb411x7Pv
+
+## 背包九讲
+https://www.bilibili.com/video/BV1qt411Z7nE
+
+白板推导 Machine Learning
+https://www.bilibili.com/video/BV1aE411o7qd?p=1
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1337042/
+《List》
+创建： bikes = [‘trek’, ‘redline’, ‘mercedes’]
+第一项 bikes[0] 最后一项 bikes[-1]
+遍历整个表 for item in bikes: print(item)
+给表加个项 bikes.append(‘宝马’)
+数字表：
+
+squares = []
+for x in range(1,233):
+    squares.append(x**2)
+简写Comprehension squares = [x**2 for x in range(1,233)]
+分割Slice a list
+
+finisher = ['a', 'b', 'c', 'd']
+first_two = finisher[:2]
+复制表
+newlist = bikes[:]
+
+Tuples
+同list 不过表里东西不能变，dimensions = (1920, 1080)
+
+Dict 字典
+类似hashmap
+创建： alien = {‘color’:’green’, ‘points’:5}
+读表： print(“外星人颜色是” + alien[‘color’])
+加一项(key:value) alien[‘Xaa’] = 23 加了'Xaa':23这一项
+遍历：
+
+Dict = { 'eric' : 17, 'ever' : 4}
+for name, age in dict.item():
+    print(name + 'is' + str(age))
+<INPUT> 输入
+n = input() 或者 num = int(input()) 或者 map(int, input())
+·默认保存为string字符串类型
+
+函数def
+def UCL():
+    print("IC sucks")
+传参
+
+def UCL(Times):
+    print("IC sucks" + Times + "Times")
+UCL(100)
+IC sucks 100 Times
+
+参数默认值
+
+返回数值
+
+<Class> Object对象 (及其信息)
+class Dog():
+    """这是狗"""
+    def __init__(self, name):
+        """初始化狗Object"""
+        self.name = name
+    def sit(self):
+        """模拟坐"""
+        # 可加一个坐的具体操作
+        print(self.name + "is sitting.")
+mydog = Dog('Peso')
+print(mydog.name + "is a great dog!")
+> 'Peso is a great dog'
+mydog.sit()
+> 'Peso is siting'
+文件
+暂留空
+
+<Exception> 意外(例外情况)
+抓取例外Catching an exception
+
+prom = "How many tickets do you need?"
+numTickets = input(prom)
+try:
+    numTickets = int(numTickets)
+except ValueError:
+    print("Please try again")
+else:
+    print("Your tickets are printing")
+第二页：
+
+<Lists> 列表
+users = [‘val’, ‘bob’, ‘mia’, ‘ron’, ‘ned’]
+修改元素 users[0] = ‘valerie’
+删除元素 del users[-1] 或者按元素删: users.remove(‘mia’)
+
+<Matplotlib> 感觉和R里ggplot挺像
+
+<Plotly>
+
+似乎显示有局限性 字体显示效果…可能需要抽风女神的 B𝙸GBIG字体
+
+-- 抄自大佬 作为LaTeX学习用
+$$ \small\texttt{本}\huge\texttt{人} _ {\small\texttt{的}^{\large\texttt{萌新}\small\texttt{QAQ}}}^{\large\texttt{是}{\small\texttt{刚学}\large\texttt{OI}}}\huge\texttt{但是}^{\large\texttt{即}{\small\texttt{使}}} _ {\normalsize\text{是这样}}\texttt{我也}^{\small\texttt{要}\normalsize\texttt{用}\texttt{蒟} _ {\texttt{蒻}\large\texttt{的}}} _ {\scriptsize\texttt{声音大声喊出}}\texttt{我谔谔} $$
+
+箭头使用样例
+
+tries⇒trytries⇒try的三单形式×
+⇓⇓
+trietrie 的复数形式
+√✅☑✔
+
+(与常见func的arguments的help手册)
+
+作者：CYa搜索DP中
+链接：https://www.acwing.com/file_system/file/content/whole/index/content/1337042/
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1337130/
+
+DP https://www.acwing.com/file_system/file/content/whole/index/content/1336954/
+
+图论和搜索【Py3模板】
+https://www.acwing.com/file_system/file/content/whole/index/content/1336883/
