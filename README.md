@@ -11198,3 +11198,58 @@ min abs（a-b）
 LR的损失函数，推导一下
 为什么会产生梯度消失和梯度爆炸，如何解决？
 
+
+BFS 模板存档（NOI官网例题 电梯）
+
+```
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{   
+    //bfs
+    int n,st,en,a[205],d[205][3],bz[205],c[2]={-1,1};
+    scanf("%d%d%d",&n,&st,&en);
+    if(st == en)
+    {
+        printf("%d",0);
+        return 0;
+    }
+
+    memset(d,0,sizeof(d));
+    memset(bz,0,sizeof(bz));
+
+    for(int i=1;i<=n;i++) scanf("%d",&a[i]);
+
+    d[1][1] = st; //楼层
+    d[1][2] = 0; //到达这一层要的步数
+    bz[st] = 1;
+
+    int i=0,j=1;
+    while(i<j)
+    {
+        i++;
+        for(int t = 0;t<=1;t++)
+        {
+            int k = d[i][1]+a[d[i][1]]*c[t];
+            if(k>=1 && k<=n)
+            {
+                j++;
+                d[j][1] = k;
+                d[j][2] = d[i][2]+1;
+                if(bz[k] == 0)
+                {
+                    bz[k] =1;
+                    if(k == en)
+                    {
+                        printf("%d",d[j][2]);
+                        return 0;
+                    }
+                }
+                else j--; 
+            }
+        }
+    }
+    printf("%d",-1);
+    return 0;
+}
+```
