@@ -11393,3 +11393,7 @@ public:
 };
 ```
 
+
+线段树入门笔记（未完）
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1343081/
