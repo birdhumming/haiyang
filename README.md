@@ -11397,3 +11397,144 @@ public:
 线段树入门笔记（未完）
 
 https://www.acwing.com/file_system/file/content/whole/index/content/1343081/
+
+LeetCode ---. 阿里2020.4.13c++研发实习生笔试第二题
+__43的头像__43
+4小时前
+题目描述
+最长距离
+有 n 个人，分别在编号1 - n的城市，现在去城市 x 聚会，图有 m 条有向路径组成，每一个人到达城市 x 之后，
+仍然需要返回初始城市。每一个人的时间消耗为往返距离之和，已知每个人都会走最短的路径，求消耗时间最长
+的一个人消耗的时间是多少？(1 <= n <= 1e3,1 <= m <= 1e6,1 <= l <= 1e4)
+
+朴素版dijkstra
+O(n2)
+初看题目去程是求每一个节点到城市 x 最短路径，回城是以 x 为起点的有源最短路径。细想一下去程的问题可以进行改装： 将所有路径反向，求以x为起点的有源最短路径，就是从其他点到达 x 的去程路径。
+初始图求以 x 为起点的有源最短路径，将所有路径反向，再求以 x 为起点的有源最短路径，复杂度是朴素Dijkstra复杂度
+
+C++ 代码
+```
+#include <iostream>
+#include <cstring>
+using namespace std;
+const int N = 1e3 + 10;
+int g[N][N],dis[N],x,n,m,dis1[N],backup[N][N];
+bool st[N];
+
+int dijsk()
+{
+    memset(dis,0x3f,sizeof dis);
+    dis[x] = 0;
+    for (int i = 0;i < n;++i)
+    {
+        int t = -1;
+        for (int j = 1;j <= n;++j)
+            if (!st[j] && (-1 == t || dis[t] > dis[j])) t = j;
+        st[t] = true;
+        for (int j = 1;j <= n;++j)
+            dis[j] = min(dis[j],dis[t] + g[t][j]);
+    }
+    memset(dis1,0x3f,sizeof dis1);
+    memset(st,false,sizeof st);
+    dis1[x] = 0;
+
+    for (int i = 0;i < n;++i)
+    {
+        int t = -1;
+        for (int j = 1;j <= n;++j)
+            if (!st[j] && (-1 == t || dis1[t] > dis1[j])) t = j;
+        st[t] = true;
+        for (int j = 1;j <= n;++j)  dis1[j] = min(dis1[j],dis1[t] + g[t][j]);
+    }
+    int maxl = dis1[1] + dis[1];
+    for (int i = 2;i <= n;++i)  maxl = max(maxl,dis[i] + dis1[i]);
+    return maxl;
+}
+
+int main(void)
+{
+    cin>>n>>m;
+    memset(g,0x7f,sizeof g);
+    for (int i = 0;i < m;++i)
+    {
+        int a,b,c;
+        scanf_s("%d%d%d",&a,&b,&c);
+        g[a][b] = min(g[a][b],c);
+    }
+    cout<<dijsk()<<endl;
+    return 0;
+}
+```
+
+题型:给定n组数据ai,bi,mi，对于每组数求出一个xi，使其满足ai∗xi≡bi(modmi)，如果无解则输出impossible。
+解题思路:利用拓展欧几里得算法
+
+ai∗xi≡bi(modmi)ai∗x+mi∗y=b
+根据裴蜀定理,当b为gcd(ai,mi)的倍数时,ai∗x+mi∗y=b有解
+我们设gcd(ai,mi)=d,而ai∗x+mi∗y=d可以用拓展欧几里得算法去解
+∵b是d的倍数,要求的ai∗x+mi∗y=b中的x就为ai∗x+mi∗y=d中的x*b/d
+代码(C++)
+
+```
+#include<iostream>
+using namespace std;
+int exgcd(int a,int b,int & x,int & y)
+{
+    if(!b)
+    {
+        x=1,y=0;
+        return a;
+    }
+    int t;
+    t=exgcd(b,a%b,y,x);
+    y-=a/b*x;
+    return t;
+}
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    while(n--)
+    {
+        int a,b,x,z,m,y;
+        scanf("%d%d%d",&a,&b,&m);
+        z=exgcd(a,m,x,y);
+        if(b%z) cout<<"impossible"<<endl;
+        else printf("%d\n",(long long)x*b/z%m);
+    }
+}
+```
+https://www.acwing.com/file_system/file/content/whole/index/content/1343337/
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1343342/
+
+MySQL 和 Redis 的一致性问题
+缓存一致性问题
+分享汇总  : 文章汇总
+
+本文应该是关于缓存一致性的系列文章，每篇会讨论一个策略，持续更新中 
+
+前情提要
+最近我提前去公司入职实习了，发现公司项目中大量用到了 MySQL + Redis 这一堆存储组合。因为实际上 MySQL 作为主要的存储， Redis 作为缓存，如果有一个请求过来，请求会首先在 Redis 中搜索结果，如果 Redis 中找到了，那实际上就不会去 MySQL 中再查询了，这样就帮 MySQL 抵挡住了一定的请求。但是这样就会带来缓存不一致的问题，缓存不一致指的是 Redis 中存储的数据和 MySQL 中存储的数据不一致（CPU 也有 Cache 缓存，可以参考那个缓存不一致的概念）
+
+其实处理缓存一致性问题，业界是有几种方案的，本文会先介绍 Read/Write Through 方案
+
+Read/Write Through
+Read Through
+Read Through 是应对读操作的策略，如果有一个读操作
+
+如果请求命中缓存，则直接返回结果
+如果未命中，则从 MySQL 中查询数据，然后将数据写入 Redis 并返回数据
+
+Write Through
+Write Through 是应对写删除更新等操作的策略，如果有一个此类型请求
+
+如果缓存命中，则更新 Redis，然后更新 MySQL
+如果没命中，则直接更新 MySQL
+图示
+
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+https://www.acwing.com/file_system/file/content/whole/index/content/1343169/
+
+线段树入门笔记（未完）
+https://www.acwing.com/file_system/file/content/whole/index/content/1343081/
