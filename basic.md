@@ -470,3 +470,970 @@ https://stackoverflow.com/questions/17358445/why-does-right-shifting-negative-nu
 https://leetcode.com/problems/number-of-1-bits/
 leetcode 338 - not done
 https://leetcode.com/problems/counting-bits/
+
+
+
+AcWing 21. 斐波那契数列    原题链接    简单
+作者：    yxc ,  2019-01-06 00:00:29 ,  阅读 3320
+
+20
+
+
+5
+算法
+(递推) O(n)O(n)
+这题的数据范围很小，我们直接模拟即可。
+当数据范围很大时，就需要采用其他方式了，可以参考 求解斐波那契数列的若干方法 。
+
+用两个变量滚动式得往后计算，aa 表示第 n−1n−1 项，bb 表示第 nn 项。
+则令 c=a+bc=a+b 表示第 n+1n+1 项，然后让 a,ba,b 顺次往后移一位。
+
+时间复杂度分析
+总共需要计算 nn 次，所以时间复杂度是 O(n)O(n) 。
+
+C++ 代码
+```
+class Solution {
+public:
+    int Fibonacci(int n) {
+        int a = 0, b = 1;
+        while (n -- ) {
+            int c = a + b;
+            a = b, b = c;
+        }
+        return a;
+    }
+};
+```
+
+
+
+O(N) dp大内存法
+
+```
+class Solution {
+public:
+    int Fibonacci(int n) {
+        int dp[n+1];
+        dp[0] =0; dp[1] = 1;
+        for(int i=2;i<=n;i++) {
+        dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+};
+```
+
+算法1
+(线性扫描) O(n)O(n)
+这个题在C++里比较好做，我们可以从前往后枚举原字符串：
+
+如果遇到空格，则在string类型的答案中添加 "%20"；
+如果遇到其他字符，则直接将它添加在答案中；
+但在C语言中，我们没有string这种好用的模板，需要自己malloc出char数组来存储答案。
+此时我们就需要分成三步来做：
+
+遍历一遍原字符串，计算出答案的最终长度；
+malloc出该长度的char数组；
+再遍历一遍原字符串，计算出最终的答案数组；
+时间复杂度分析
+原字符串只会被遍历常数次，所以总时间复杂度是 O(n)O(n)。
+
+C++ 代码
+```
+class Solution {
+public:
+    string replaceSpaces(string &str) {
+        string res;
+        for (auto x : str)
+            if (x == ' ')
+                res += "%20";
+            else
+                res += x;
+        return res;
+    }
+};
+```
+算法2
+(双指针扫描) O(n)O(n)
+在部分编程语言中，我们可以动态地将原数组长度扩大，此时我们就可以使用双指针算法，来降低空间的使用：
+
+首先遍历一遍原数组，求出最终答案的长度length；
+将原数组resize成length大小；
+使用两个指针，指针i指向原字符串的末尾，指针j指向length的位置；
+两个指针分别从后往前遍历，如果str[i] == ' '，则指针j的位置上依次填充'0', '2', '%'，这样倒着看就是"%20"；如果str[i] != ' '，则指针j的位置上填充该字符即可。
+由于i之前的字符串，在变换之后，长度一定不小于原字符串，所以遍历过程中一定有i <= j，这样可以保证str[j]不会覆盖还未遍历过的str[i]，从而答案是正确的。
+
+时间复杂度分析
+原字符串只会被遍历常数次，所以总时间复杂度是 O(n)O(n)。
+
+C++ 代码
+```
+class Solution {
+public:
+    string replaceSpaces(string &str) {
+
+        int len = 0;
+        for (auto c : str)
+            if (c == ' ')
+                len += 3;
+            else
+                len ++ ;
+
+        int i = str.size() - 1, j = len - 1;
+
+        str.resize(len);
+
+        while (i >= 0)
+        {
+            if (str[i] == ' ')
+            {
+                str[j -- ] = '0';
+                str[j -- ] = '2';
+                str[j -- ] = '%';
+            }
+            else str[j -- ] = str[i];
+            i -- ;
+        }
+        return str;
+    }
+};
+```
+
+练习STL
+```
+string replaceSpaces(string &str) {
+        size_t t;
+        while((t=str.find(' '))!=string::npos){
+            str.replace(t,1,"%20");
+        }
+        return str;
+    }
+```
+
+不用改动字符串，使用string中的replace函数即可。
+```
+class Solution {
+public:
+    string replaceSpaces(string &str) 
+    {
+        for(int i=0;i<str.size();i++)
+            if(str[i]==' ')
+                str.replace(i,1,"%20") ;
+        return str ;
+    }
+};
+```
+李乾   8个月前     回复
+Q:时间复杂度=O(?)
+
+
+李乾   8个月前    回复了 李乾 的评论     回复
+@yxc
+
+
+yxc   8个月前    回复了 李乾 的评论     回复
+这里取决于replace函数的时间复杂度，由于每次执行该函数，会将一个字符变成三个字符，所以会涉及到数组的整体拷贝，那么每执行一次replace最坏情况下需要 O(n)O(n) 的时间，所以总时间复杂度最坏是 O(n2)O(n2)。
+
+yls，模仿基础课提供的解法，这样的双指针更加简洁：
+```
+class Solution {
+public:
+    string replaceSpaces(string &str) {
+        string res;
+        for (int i = 0; str[i]; i++) {
+            int j = i;
+            while (j < str.size() && str[j] != ' ') j++;
+            res += str.substr(i, j - i);
+            if (j < str.size()) res += "%20";
+            i = j;
+        }
+        return res;
+    }
+};
+```
+yxc   11个月前     回复
+不错！
+
+
+即将升入大三的菜鸡   8个月前     回复
+这样申请了额外空间，就跟解法一没差了啊
+
+
+威   2019-01-31 05:04     回复
+灿哥这种解法开辟额外空间了啊，感觉面试官会不会不满意，用指针怎么解呀
+
+
+yxc   2019-01-31 08:33     回复
+刚刚在上面添加了算法2——双指针算法，可以参考一下hh
+。
+
+算法
+(递归) O(n)O(n)
+最直接的想法就是用递归，sum(n) = n+sum(n-1)，但是要注意终止条件，由于求的是1+2+…+n的和，所以需要在n=0的时候跳出递归，但是题目要求不能使用if,while等分支判断，可以考虑利用&&短路运算来终止判断。
+
+时间复杂度分析：递归，复杂度为O(n)O(n)。
+
+C++ 代码
+```
+class Solution {
+public:
+    int getSum(int n) {
+        int res = n;
+        (n>0) && (res += getSum(n-1));//利用短路运算终止递归
+        return res;
+    }
+};
+```
+
+。
+
+题目描述
+求1+2+…+n,要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+
+样例
+输入
+
+10
+输出
+
+55
+算法1
+二逼做法，这已经是个梗了
+
+时间复杂度
+常数
+
+C++ 代码
+```
+class Solution {
+public:
+    int getSum(int n) {
+        char a[n][n+1];
+        return sizeof(a)>>1;
+    }
+};
+```
+
+Code 1
+class Solution {
+public:
+    long long getSum(long long n) {
+        return (n * n + n) / 2;
+    }
+};
+Solution
+重新审视题面
+
+要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+
+但是我的代码用了乘除法，会被 D 的，所以要换一种方法。
+
+假设 sisi 为 11 加到 ii，那么我们可以得到一个递推公式
+
+si=si−1+i
+si=si−1+i
+然后初始状态的 s1=1s1=1。
+
+最后没有用到题面不让用的东西，直接递推即可。
+```
+class Solution {
+public:
+    long long getSum(long long n) {
+        if (n == 1) return 1;
+        return getSum(n - 1) + n;
+    }
+};
+```
+
+
+(链表) O(1)O(1)
+由于是单链表，我们不能找到前驱节点，所以我们不能按常规方法将该节点删除。
+我们可以换一种思路，将下一个节点的值复制到当前节点，然后将下一个节点删除即可。
+
+时间复杂度
+只有常数次操作，所以时间复杂度是 O(1)O(1)。
+
+C++ 代码
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+
+        auto p = node->next;
+
+        node->val = p->val;
+        node->next = p->next;
+        // 这两步的作用就是将 *(node->next) 赋值给 *node，所以可以合并成一条语句：
+        // *node = *(node->next);
+
+        delete p;
+    }
+};
+
+```
+
+
+(二路归并) O(n)O(n)
+新建头部的保护结点dummy，设置cur指针指向dummy。
+若当前l1指针指向的结点的值val比l2指针指向的结点的值val小，则令cur的next指针指向l1，且l1后移；否则指向l2，且l2后移。
+然后cur指针按照上一部设置好的位置后移。
+循环以上步骤直到l1或l2为空。
+将剩余的l1或l2接到cur指针后边。
+时间复杂度
+两个链表各遍历一次，所以时间复杂度为O(n)
+
+C++ 代码
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* merge(ListNode* l1, ListNode* l2) {
+        ListNode *dummy = new ListNode(0);
+        ListNode *cur = dummy;
+        while (l1 != NULL && l2 != NULL) {
+            if (l1 -> val < l2 -> val) {
+                cur -> next = l1;
+                l1 = l1 -> next;
+            }
+            else {
+                cur -> next = l2;
+                l2 = l2 -> next;
+            }
+            cur = cur -> next;
+        }
+        cur -> next = (l1 != NULL ? l1 : l2);
+        return dummy -> next;
+    }
+};
+```
+
+兄弟们，走过路过不要错过，精简版本瞅一瞅
+精简递归
+
+```
+class Solution {
+public:
+    ListNode* merge(ListNode* l1, ListNode* l2) {
+        if(!l1 || !l2) return l1 ? l1 : l2;
+        if(l1->val > l2->val) swap(l1, l2);
+        l1->next = merge(l1->next, l2);
+        return l1;
+    }
+};
+```
+
+精简迭代
+
+```
+class Solution {
+public:
+    ListNode* merge(ListNode* l1, ListNode* l2) {
+        ListNode *dummy = new ListNode(0);
+        auto head = dummy;
+        while(l1 && l2){
+            if(l1->val > l2->val) swap(l1, l2);
+            head->next = l1;
+            l1 = l1->next;
+            head = head->next;
+        }
+        head->next = l1 ? l1 : l2;
+        return dummy->next;
+    }
+};
+```
+yxc   1个月前     回复
+
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/744/
+
+end of section 7
+
+stlnb!!
+```
+#include<stdio.h>
+#include<algorithm>
+using namespace std;
+int n,a[1000];
+int main(){
+    scanf("%d",&n);
+    for(int i=1;i<=n;++i){a[i]=i;}
+    do{
+        for(int i=1;i<=n;++i) printf("%d ",a[i]);
+        puts("");
+    }while(next_permutation(a+1,a+n+1));
+    return 0;
+}
+```
+
+算法1
+(dfs) O(n!)O(n!)
+大佬们都不会来写这些简单题目 我就分享下自己的学习记录
+使用DFS 进入递归循环的时候 将使用过的数字记录置为零 当从该函数递归出来的时候进行还原。
+DFS递归的终止条件是已经选中n个数字 然后打印该数字组合，退出。
+DFS的基本用法 初次接触可能会有概念上的理解难度 可以尝试单步调试或者打印每次进入函数的状况来帮助理解
+
+C++ 代码
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> v;
+
+int n ;
+
+void dfs(int i, vector<int>& result){
+    if(i== n){
+        for(auto& e:result){
+           cout << e << ' ';
+       }
+       cout <<endl;
+       return;
+    }
+
+   for(int j = 0; j < v.size();j++){
+       if(v[j] != 0){
+           result[i] = v[j];
+           v[j] = 0;
+           dfs(i+1,result);
+           v[j] =  result[i] ;
+       }
+   }
+}
+
+int main()
+{
+    cin >> n;
+    for(int i= 1; i<=n;i++){
+        v.push_back(i);
+    }
+    vector<int> result(n,0);
+
+    dfs(0,result);
+
+    return 0;
+}
+```
+
+题目描述
+给定一个 n×mn×m 的方格阵，沿着方格的边线走，从左上角 (0,0)(0,0) 开始，每次只能往右或者往下走一个单位距离，问走到右下角 (n,m)(n,m) 一共有多少种不同的走法。
+
+输入格式
+共一行，包含两个整数 nn 和 mm。
+
+输出格式
+共一行，包含一个整数，表示走法数量。
+
+数据范围
+1≤n,m≤101≤n,m≤10
+输入样例：
+2 3
+输出样例：
+10
+样例
+blablabla
+先吐槽一下这题题目描述中没用 MarkDown
+
+这里会给出本体的四种解法。
+
+算法1
+(暴搜) (2n+m)O(2n+m)
+首先题目数据范围不大，可以使用爆搜。
+
+每次搜索中
+
+若搜到了点 (n,m)(n,m)，那么 res++res++ 并返回
+否则如果不是最下面的点，那么搜该点下面的点
+如果不是最右边的点，那么搜该点右边的点
+CC 代码
+```
+#include <stdio.h>
+
+int n, m;
+int res;                  // res 存答案
+
+void dfs(int x, int y)    // 爆搜函数
+{
+    if (x == n && y == m) // 如果搜到了点 (n, m), 那么 res ++ 并返回
+    {
+        res ++ ;
+        return ;
+    }
+    if (x < n) dfs(x + 1, y); // 如果不是最下面的点，那么搜该点下面的点
+    if (y < m) dfs(x, y + 1); // 如果不是最右边的点，那么搜该点右边的点
+}
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+    dfs(0, 0);            // 从点 (0, 0) 开始爆搜
+    printf("%d\n", res);
+    return 0;
+}
+```
+算法2
+(动态规划) (nm)O(nm)
+f[i][j]f[i][j] 表示走到点 (i,j)(i,j) 的方案数，由于每次只能往下走或往右走，所以点 (i,j)(i,j) 只能从点 (i−1,j)(i−1,j) 或点 (i,j−1)(i,j−1) 上走过来
+所以走到点 (i,j)(i,j) 的方案数是走到点 (i−1,j)(i−1,j) 的方案数与走到点 (i,j−1)(i,j−1) 的方案数之和，推出 f[i][j]=f[i−1][j]+f[i][j−1]f[i][j]=f[i−1][j]+f[i][j−1]
+边界：f[i][0]=f[0][j]=1f[i][0]=f[0][j]=1
+CC 代码
+```
+#include <stdio.h>
+
+int n, m;
+int f[11][11];
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i <= n; i ++ )
+        for (int j = 0; j <= m; j ++ )
+            if (!i || !j) f[i][j] = 1; // 如果 i == 0 或 j == 0，那么 f[i][j] = 1
+            else    f[i][j] = f[i - 1][j] + f[i][j - 1]; // 否则 f[i][j] = f[i - 1][j] + f[i][j - 1]
+    printf("%d\n", f[n][m]);
+    return 0;
+}
+```
+算法3
+（动态规划优化) (nm)O(nm)
+用滚动数组优化一下上述dp，将空间复杂度优化至 O(m)O(m)
+CC 代码
+```
+#include <stdio.h>
+
+int n, m;
+int f[11];
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i <= m; i ++ )
+        f[i] = 1;
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= m; j ++ )
+            f[j] += f[j - 1];
+    printf("%d\n", f[m]);
+    return 0;
+}
+```
+算法4
+(组合数) (n+m)O(n+m)
+首先将dp的数组打印出来，找下规律。
+
+    1     1     1     1     1     1     1     1     1
+    1     2     3     4     5     6     7     8     9
+    1     3     6    10    15    21    28    36    45
+    1     4    10    20    35    56    84   120   165
+    1     5    15    35    70   126   210   330   495
+    1     6    21    56   126   252   462   792  1287
+    1     7    28    84   210   462   924  1716  3003
+    1     8    36   120   330   792  1716  3432  6435
+    1     9    45   165   495  1287  3003  6435 12870
+如果你从左上往右下斜着看，不难发现这就是一个旋转后的杨辉三角
+其中，数组中的第 ii 行，第 jj 个数字是杨辉三角中的第 i+ji+j 行，第 jj 个数字。（坐标为从 第 00 行，第 00 列开始）
+杨辉三角中的第 nn 行，第 mm 个数正好是 Cnm=n!m!(n−m)!Cmn=n!m!(n−m)!
+所以我们只需要求下 Cnn+mCn+mn 就好啦~
+当然，感性的理解下，你要走到点 (n,m)(n,m)，一共必然要走 n+mn+m 步，且必然有 nn 步是往下走的，就相当于是从 n+mn+m 步中，选出 nn 步往下走，答案为 Cnn+mCn+mn
+所以我们可以通过求组合数的方式来快速求出答案。
+
+CC 代码
+```
+#include <stdio.h>
+
+int n, m;
+long long res = 1;
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+    int i = m + 1, j = 2;
+    for (; i <= n + m; i ++ )
+    {
+        res *= i;
+        while (j <= n && res % j == 0)
+            res /= j, j ++ ; // 这里边乘边除是为了防止溢出，当然对于这题来说所有的数都乘完之后再除也是可以的
+    }
+    printf("%d\n", res);
+    return 0;
+}
+```
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/15154/
+
+
+AcWing 821. 跳台阶    原题链接    困难
+作者：    itdef ,  2019-05-21 23:40:39 ,  阅读 832
+
+4
+
+
+2
+题目描述
+一个楼梯共有n级台阶，每次可以走一级或者两级，问从第0级台阶走到第n级台阶一共有多少种方案。
+
+输入格式
+共一行，包含一个整数n。
+
+输出格式
+共一行，包含一个整数，表示方案数。
+
+数据范围
+1≤n≤15
+
+样例
+输入样例：
+5
+输出样例：
+8
+算法1
+(动态规划)
+动态规划入门题
+
+第0级台阶到第1级台 只有一种方法 上1级台阶
+第0级台阶到第2级台 有两种方法 1种是0-2 上2级台阶 1种是上到1级台阶 再上2级台阶
+第0级台阶到第3级台 有两种方法 1种是0-2 再2-3 1种是0-1 1-3 (其中0-1 1-2 2-3已经包含在前面的方法中了)
+
+逆向来看就是 n台阶的方案数量 = n-1台阶方案数量 + n-2的方案数量
+
+C++ 代码
+```
+#include <iostream>
+
+using namespace std;
+
+int arr[20];
+
+int main()
+{
+    int n;
+    cin >> n;
+    arr[1] = 1; arr[2] = 2;
+    for(int i = 3;i <=15;i++){
+        arr[i] = arr[i-1]+arr[i-2];
+    }
+    cout << arr[n];
+
+    return 0;
+
+}
+```
+
+作者：itdef
+链接：https://www.acwing.com/solution/content/2163/
+
+```
+题目描述
+给定一个长度为 nn 的数组 aa 以及两个整数 ll 和 rr，请你编写一个函数，void sort(int a[], int l, int r)void sort(int a[], int l, int r)，将 a[l]a[l] ~ a[r]a[r] 从小到大排序。
+
+输出排好序的数组 aa。
+
+注意，这里的数组下标从 00 开始
+样例输入
+5 2 4
+4 5 1 3 2
+样例输出
+4 5 1 2 3
+哎，难度是困难？那当然是用高端解法来操作啦
+
+算法 11
+堆排序 O(nlogn)O(nlogn)
+构建大根堆，每次将最大的元素放到最后
+
+C++C++ 代码
+#include <stdio.h>
+
+int a[1005];
+
+void swap(int i, int j)  // 技巧：手写交换，传入数组下标
+{
+    if (i ^ j)           // 特判 i = j 的情况，i ^ j 等价于 i != j
+    {
+        a[i] ^= a[j];    // 交换 a[i], a[j]
+        a[j] ^= a[i];
+        a[i] ^= a[j];
+    }
+}
+
+void down(int l, int r, int p) // 将更小的元素
+{
+    int t = p;
+    if ((p << 1) <= r - l && a[t] < a[(p << 1) - l])
+        t = (p << 1) - l;
+    if ((p << 1) + 1 - l <= r && a[t] < a[(p << 1) + 1 - l])
+        t = (p << 1) + 1 - l;
+    if (t != p)
+    {
+        swap(t, p);
+        down(l, r, t);
+    }
+}
+
+void heap_sort(int l, int r)
+{
+    for (int i = r - l >> 1; i; i -- ) // O(n)建堆
+        down(l, r, i);
+    while (r ^ l)        // 排序，同样用 r ^ l 代替 r != l
+    {
+        swap(1, r -- );  // 每次将最大的元素交换至最后，并在堆中删除
+        down(l, r, 1);   // 将交换过来的元素向下交换，使剩余元素重构堆
+    }
+}
+
+int main()
+{
+    int n, l, r;
+    scanf("%d%d%d", &n, &l, &r);
+    for (int i = 1; i <= n; i ++ )
+        scanf("%d", &a[i]);
+
+    heap_sort(l, r + 1);
+
+    for (int i = 1; i <= n; i ++ )
+        printf("%d ", a[i]);
+
+    return 0;
+}
+算法 22
+归并排序 O(nlogn)O(nlogn)
+每次将数组划分成两个部分，分别处理
+
+C++C++ 代码
+#include <stdio.h>
+
+const int N = 1005;
+
+int a[N];
+int t[N];
+
+void merge_sort(int l,int r)
+{
+    if (l >= r) return;
+    int mid = l + r >> 1;
+    merge_sort(l, mid);
+    merge_sort(mid + 1, r);
+    int i = l, j = mid + 1, k = 0;
+    while (i <= mid && j <= r)
+        if (a[i] < a[j]) t[k ++ ] = a[i ++ ];
+        else    t[k ++ ] = a[j ++ ];
+    while (i <= mid) t[k ++ ] = a[i ++ ];
+    while (j <= r) t[k ++ ] = a[j ++ ];
+    for (int i = l, j = 0; i <= r; i ++, j ++ )
+        a[i] = t[j];
+}
+
+int main()
+{
+    int n, l, r;
+    scanf("%d%d%d", &n, &l, &r);
+    for (int i = 0; i < n; i ++ )
+        scanf("%d", &a[i]);
+
+    merge_sort(l, r);
+
+    for (int i = 0; i < n; i ++ )
+        printf("%d ", a[i]);
+
+    return 0;
+}
+// 懒得注释了
+算法 33
+快速排序 O(nlogn)O(nlogn)
+每次将数组划分成两个部分，分别处理
+
+C++C++ 代码
+#include <stdio.h>
+
+const int N = 1005;
+
+int a[N];
+
+void swap(int i, int j) // 由于当 i < j 的时候才会 swap，所以不用特判
+{
+    a[i] ^= a[j];
+    a[j] ^= a[i];
+    a[i] ^= a[j];
+}
+
+void quick_sort(int l,int r)
+{
+    if (l >= r) return;
+    int x = a[l + r >> 1];
+    int i = l - 1, j = r + 1;
+    while (i < j)
+    {
+        while (a[ ++ i] < x);
+        while (a[ -- j] > x);
+        if (i < j) swap(i, j);
+    }
+    quick_sort(l, j);
+    quick_sort(j + 1, r);
+}
+
+int main()
+{
+    int n, l, r;
+    scanf("%d%d%d", &n, &l, &r);
+    for (int i = 0; i < n; i ++ )
+        scanf("%d", &a[i]);
+
+    quick_sort(l, r);
+
+    for (int i = 0; i < n; i ++ )
+        printf("%d ", a[i]);
+
+    return 0;
+}
+这就完了？
+
+算法 44
+三向切分快排 O(nlogn)O(nlogn)
+用 ii，jj，kk 三个下标将数组切分成四部分。
+a[l,i−1]a[l,i−1] 表示小于 xx 的部分，a[i,k−1]a[i,k−1]表示等于 xx 的部分，a[j+1]a[j+1] 表示大于 xx 的部分，而 a[k,j]a[k,j] 表示未判定的元素（即不知道比 xx 大，还是比中轴元素小）。
+同时要注意 a[i]a[i] 始终位于等于 xx 部分的第一个元素，a[i]a[i] 的左边是小于 xx 的部分。
+
+C++C++ 代码
+#include <stdio.h>
+
+const int N = 1005;
+
+int a[N];
+
+void swap(int i, int j)
+{
+    if (i ^ j)
+    {
+        a[i] ^= a[j];
+        a[j] ^= a[i];
+        a[i] ^= a[j];
+    }
+}
+
+void quick_sort_3way(int l, int r)
+{
+    if(l >= r) return;
+    int x = a[l];
+    int i = l, j = r, k = l + 1;
+    while(k <= j)
+        if(a[k] < x)swap(i ++ , k ++ );
+        else if(a[k] == x) k ++ ;
+        else
+        {
+            while(a[j] > x)
+                if( -- j < k)break;
+            if (j < k) break;
+            if(a[j] == x)
+                swap(k ++ , j -- );
+            else
+            {
+                swap(i ++ , j);
+                swap(j -- , k ++ );
+            }
+        }
+    quick_sort_3way(l, i - 1);
+    quick_sort_3way(j + 1, r);
+}
+
+int main()
+{
+    int n, l, r;
+    scanf("%d%d%d", &n, &l, &r);
+    for (int i = 0; i < n; i ++ )
+        scanf("%d", &a[i]);
+
+    quick_sort_3way(l, r);
+
+    for (int i = 0; i < n; i ++ )
+        printf("%d ", a[i]);
+
+    return 0;
+}
+算法 55
+双轴快排 O(nlogn)O(nlogn)
+同样，使用 ii，jj，kk 三个变量将数组分成四部分
+同时，使用两个轴，通常选取最左边的元素作为 x1x1 和最右边的元素作 x2x2。
+首先要比较这两个轴的大小，如果 x1>x2x1>x2，则交换最左边的元素和最右边的元素，以保证 x1<=x2x1<=x2。
+
+神奇的是y总快排那题的数据把这两种优化过但不取中的快排都卡掉了。。。
+
+C++C++ 代码
+#include <stdio.h>
+
+const int N = 1005;
+
+int a[N];
+
+void swap(int i, int j)
+{
+    if (i ^ j)
+    {
+        a[i] ^= a[j];
+        a[j] ^= a[i];
+        a[i] ^= a[j];
+    }
+}
+
+void quick_sort_2(int l, int r)
+{
+    if(l >= r) return;
+    if(a[l] > a[r]) swap(l, r);
+    int x1 = a[l], x2 = a[r];
+    int i = l, k = l + 1, j = r;
+    while(k < j)
+        if(a[k] < x1) swap( ++ i, k ++ );
+        else if(a[k] >= x1 && a[k] <= x2) k ++ ;
+        else
+        {
+            while(a[ -- j] > x2)
+                if(j <= k) break;
+            if (j <= k) break;
+            if(a[j] >= x1 && a[j] <= x2)
+                swap(k ++ , j);
+            else
+            {
+                swap(j, k);
+                swap( ++ i, k ++ );
+            }
+        }
+    swap(l, i),swap(r, j);
+    quick_sort_2(l, i - 1);
+    quick_sort_2(i + 1, j - 1);
+    quick_sort_2(j + 1, r);
+}
+
+int main()
+{
+    int n, l, r;
+    scanf("%d%d%d", &n, &l, &r);
+    for (int i = 0; i < n; i ++ )
+        scanf("%d", &a[i]);
+
+    quick_sort_2(l, r);
+
+    for (int i = 0; i < n; i ++ )
+        printf("%d ", a[i]);
+
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/9456/
+```
