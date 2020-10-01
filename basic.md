@@ -1437,3 +1437,631 @@ int main()
 作者：垫底抽风
 链接：https://www.acwing.com/solution/content/9456/
 ```
+
+
+利用set会自动去重的性质来做.
+```
+#include<iostream>
+#include<set>
+using namespace std;
+
+int main()
+{
+    int n,size;
+    int a[1010];
+    cin>>n>>size;
+    for(int i=0;i<n;i++) cin>>a[i];
+    set<int> a1(a,&a[size]);
+    cout<<a1.size()+n-size;
+    return 0;
+}
+
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 1010;
+int b[N], a[N];
+int n;
+void reverse(int a[], int &size){
+
+    for(int i = 0; i < size; i++){
+        b[i] = a[size - i - 1];
+
+
+    }
+    for(int i = size; i < n; i++) b[i] = a[i];
+
+}
+int main()
+{
+    int size;
+    cin>> n >> size;
+    for(int i = 0; i< n; i++) cin>> a[i];
+    //int a[n], b[n];
+    reverse(a, size);
+
+    for(int i = 0;i < n; i++) cout<<b[i] << " ";
+    return 0;
+}
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/2154/
+
+#include <cstdio>
+
+void print(char str[])
+{
+    printf("%s", str);
+}
+
+int main()
+{
+    char str[110];
+    fgets(str, 101, stdin);
+
+    print(str);
+
+    return 0;
+}
+
+```
+
+入门题目，根据题意写就好，注意是从 a 数组复制给 b 数组，所以，函数声明和调用函数的参数不要写错了哦~
+
+C++ 代码
+```
+#include <iostream>
+
+using namespace std;
+
+void copy(int a[], int b[], int size)
+{
+    for (int i = 1; i <= size; i ++ )
+        b[i] = a[i];
+}
+
+int main()
+{
+    int a[110], b[110], n, m, size;
+    cin >> n >> m >> size;
+    for (int i = 1; i <= n; i ++ )
+        cin >> a[i];
+    for (int i = 1; i <= m; i ++ )
+        cin >> b[i];
+
+    copy(a, b, size);
+
+    for (int i = 1; i <= m; i ++ )
+        cout << b[i] << ' ';
+
+    return 0;
+}
+```
+作者：liuser
+链接：https://www.acwing.com/solution/content/10802/
+
+
+```
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+const int N = 110;
+
+void copy(int a[], int b[], int size)
+{
+    memcpy(b, a, size * 4);
+}
+
+int main()
+{
+    int a[N], b[N];
+    int n, m, size;
+    cin >> n >> m >> size;
+    for (int i = 0; i < n; i ++ ) cin >> a[i];
+    for (int i = 0; i < m; i ++ ) cin >> b[i];
+
+    copy(a, b, size);
+
+    for (int i = 0; i < m; i ++ ) cout << b[i] << ' ';
+    cout << endl;
+
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int lcm(int a, int b)
+{
+    for (int i = 1; i <= a * b; i ++ )
+        if (i % a == 0 && i % b == 0)
+            return i;
+    return -1;  // 一定不会执行
+}
+
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+
+    cout << lcm(a, b) << endl;
+
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int sum(int l, int r)
+{
+    int s = 0;
+    for (int i = l; i <= r; i ++ ) s += i;
+    return s;
+}
+
+int main()
+{
+    int l, r;
+    cin >> l >> r;
+    cout << sum(l, r) << endl;
+
+    return 0;
+}
+
+#include <cstdio>
+
+double add(double x, double y)
+{
+    return x + y;
+}
+
+int main()
+{
+    double x, y;
+    scanf("%lf%lf", &x, &y);
+    printf("%.2lf\n", add(x, y));
+
+    return 0;
+}
+
+#include<bits/stdc++.h>
+using namespace std;
+double add(double x,double y){return x+y;}
+int main(){
+    double x,y; cin>>x>>y;
+    cout<<fixed<<setprecision(2)<<add(x,y)<<endl;
+    return 0;
+}
+
+
+#include <iostream>
+
+using namespace std;
+
+int abs(int x)
+{
+    if (x > 0) return x;
+    return -x;
+}
+
+int main()
+{
+    int x;
+    cin >> x;
+    cout << abs(x) << endl;
+
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int f(int n)
+{
+    if (n <= 2) return 1;
+    return f(n - 2) + f(n - 1);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    cout << f(n) << endl;
+
+    return 0;
+}
+
+//依然是一道简单的函数题。。。
+#include<bits/stdc++.h>
+using namespace std;
+int fact(int n){//阶乘函数
+    if(n==1) return 1;//递归终止条件
+    else return fact(n-1)*n;//递归关系式
+}
+int main(){
+    int n;cin>>n;
+    cout<<fact(n);
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int fact(int n)
+{
+    if (n == 1) return 1;
+    return n * fact(n - 1);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    cout << fact(n) << endl;
+
+    return 0;
+}
+
+#include<stdio.h>
+int main(int n,int m,int k){
+    scanf("%d%d",&n,&m);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++) scanf("%d",&k),printf("%d ",k);
+        puts("");
+    }
+}
+
+
+#include <iostream>
+
+using namespace std;
+
+const int N = 120;
+
+int a[N][N];
+
+void print(int a[][N], int c, int r)
+{
+    for (int i = 1; i <= c; i ++ )
+    {
+        for (int j = 1; j <= r; j ++ )
+            cout << a[i][j] << ' ';
+
+        cout << endl;
+    }
+
+    return ;
+}
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= m; j ++ )
+            cin >> a[i][j];
+
+    print(a, n, m);
+
+    return 0;
+}
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+void print2D(int a[][100], int row, int col)
+{
+    for (int i = 0; i < row; i ++ )
+    {
+        for (int j = 0; j < col; j ++ )
+            cout << a[i][j] << ' ';
+        cout << endl;
+    }
+}
+
+int main()
+{
+    int a[100][100];
+
+    int row, col;
+
+    cin >> row >> col;
+    for (int i = 0; i < row; i ++ )
+        for (int j = 0; j < col; j ++ )
+            cin >> a[i][j];
+
+    print2D(a, row, col);
+
+    return 0;
+}
+
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 1010;
+int a[N];
+int size;
+int n;
+void print(int a[], int &size){
+    for(int i = 0; i < size; i++) cout<< a[i] <<" ";
+
+    cout<< endl;
+}
+
+int main()
+{
+    //int n;
+    cin>> n >> size;
+    //int a[n];
+    for(int i = 0;i < n; i++) cin>>a[i];
+    print(a, size);
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+const int N = 1010;
+
+void print(int a[], int size)
+{
+    for (int i = 0; i < size; i ++ )
+        cout << a[i] << ' ';
+    cout << endl;
+}
+
+int main()
+{
+    int n, size;
+    int a[N];
+
+    cin >> n >> size;
+    for (int i = 0; i < n; i ++ ) cin >> a[i];
+
+    print(a, size);
+
+    return 0;
+}
+
+#include<iostream>
+using namespace std;
+
+
+
+int main()
+{
+
+    int x,y;
+    cin>>x>>y;
+
+    x=x^y;
+    y=x^y;
+    x=x^y;
+
+    cout<<x<<" " <<y<<endl;
+
+    return 0;
+
+}
+
+#include <iostream>
+
+using namespace std;
+
+void swap(int& x, int& y)
+{
+    if (x == y) return;
+
+    int t = x;
+    x = y;
+    y = t;
+}
+
+int main()
+{
+    int x, y;
+    cin >> x >> y;
+    swap(x, y);
+
+    cout << x << ' ' << y << endl;
+
+    return 0;
+}
+
+#include<iostream>
+using namespace std;
+int gcd(int a,int b)
+{
+    if(a%b==0) return b;
+    return gcd(b,a%b);
+}
+int main()
+{
+    int a,b;
+    cin>>a>>b;
+    cout<<gcd(a,b);
+    return 0;
+}
+
+//最简单的函数题了。。。
+#include<bits/stdc++.h>
+using namespace std;
+int maxn(int a,int b){if(a>=b) return a;else return b;}
+int main(){
+    int a,b; cin>>a>>b;
+    cout<<maxn(a,b)<<endl;
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int max(int x, int y)
+{
+    if (x > y) return x;
+    return y;
+}
+
+int main()
+{
+    int x, y;
+    cin >> x >> y;
+
+    cout << max(x, y) << endl;
+
+    return 0;
+}
+
+
+```
+
+
+
+题目描述
+输入一个整数n，请你编写一个函数，int fact(int n)，计算并输出n的阶乘。
+
+输入格式
+共一行，包含一个整数n。
+
+输出格式
+共一行，包含一个整数表示n的阶乘的值。
+
+数据范围
+1≤n≤10
+
+样例
+输入样例：
+3
+输出样例：
+6
+算法1
+C++ 代码
+```
+#include<iostream>
+
+using namespace std;
+
+int f(int n)
+{
+    int r = 1;
+    for(int i = 1; i <= n; i ++) r *= i;
+    return r;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cout << f(n) << endl;
+    return 0;
+}
+```
+副：由Anjor dalao提供的递归做法
+```
+#include<iostream>
+using namespace std;
+
+int fact(int n){
+    if(n<=1)return n;
+    return n*fact(n-1);
+}
+
+int main(){
+    int n;
+    cin>>n;
+    cout<<fact(n);
+
+
+    return 0;
+}
+```
+垫底抽风提供主函数递归做法
+```
+#include <stdio.h>
+int main(int n,bool f=true)
+{
+    if(f)
+    {
+        scanf("%d",&n);
+        printf("%d",main(n,false));
+        return 0;
+    }
+    if(n)return main(n-1,false)*n;
+    return 1;
+}
+```
+作者：cht
+链接：https://www.acwing.com/solution/content/12856/
+。
+
+
+
+
+
+
+```
+#include <iostream>
+
+using namespace std;
+
+const int N = 200;
+
+int n;
+string str[N];
+
+int main()
+{
+    while (cin >> n, n)
+    {
+        int len = 1000;
+        for (int i = 0; i < n; i ++ )
+        {
+            cin >> str[i];
+            if (len > str[i].size()) len = str[i].size();
+        }
+
+        while (len)
+        {
+            bool success = true;
+            for (int i = 1; i < n; i ++ )
+            {
+                bool is_same = true;
+                for (int j = 1; j <= len; j ++ )
+                    if (str[0][str[0].size() - j] != str[i][str[i].size() - j])
+                    {
+                        is_same = false;
+                        break;
+                    }
+                if (!is_same)
+                {
+                    success = false;
+                    break;
+                }
+            }
+
+            if (success) break;
+            len -- ;
+        }
+
+        cout << str[0].substr(str[0].size() - len) << endl;
+    }
+
+    return 0;
+}
+```
