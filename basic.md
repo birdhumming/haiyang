@@ -463,3 +463,8 @@ for (iter = ans.begin(); iter != ans.end(); iter ++ ){}
 4. STL:vector 这里用了pair<int, pair<double, string >> 嵌套pair构成三元组
 
 https://www.acwing.com/solution/content/9475/
+
+leetcode 191, acwing 26 is better - casting of int to unsigned int;
+https://leetcode.com/problems/number-of-1-bits/
+leetcode 338 - not done
+https://leetcode.com/problems/counting-bits/
