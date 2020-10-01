@@ -291,3 +291,175 @@ public:
  */
 
 ```
+
+AcWing 53. 最小的k个数    原题链接    简单
+作者：    nihaotian ,  2019-09-23 21:37:04 ,  阅读 1384
+
+10
+
+
+2
+题目描述
+输入n个整数，找出其中最小的k个数。
+
+注意：
+
+数据保证k一定小于等于输入数组的长度;
+输出数组内元素请按从小到大顺序排序;
+
+样例
+输入：[1,2,3,4,5,6,7,8] , k=4
+
+输出：[1,2,3,4]
+算法1
+(快速选择) O(klogn)O(klogn)
+运用快速排序的思想，每次快速选择会将一个数放置到正确的位置（即满足左边的数都比它小，右边的数都比它大），因此我们可以对原数组做k次快速选择。
+
+时间复杂度分析：一次快速选择的时间复杂度是O(logn)O(logn)，进行k次，时间复杂度为O(klogn)O(klogn)
+C++ 代码
+```
+class Solution {
+public:
+    vector<int> getLeastNumbers_Solution(vector<int> input, int k) {
+        vector<int> res;
+        for(int i = 1;i <= k;i++)
+            res.push_back(quick_select(input,0,input.size()-1,i));
+        return res;
+    }
+
+    int quick_select(vector<int>& q,int l,int r,int k)
+    {
+        if(l >= r) return q[l];
+        int i = l-1,j = r+1,x = q[l+r >> 1];
+        while(i < j)
+        {
+            do i++;while(q[i] < x);
+            do j--;while(q[j] > x);
+            if(i < j) swap(q[i],q[j]);
+        }
+        if(k <= j-l+1) return quick_select(q,l,j,k);
+        else return quick_select(q,j+1,r,k-(j-l+1));
+    }
+
+};
+```
+算法2
+(堆排序) O(nlogk)O(nlogk)
+维护一个大小为k的大根堆，将数组元素都push进堆，当堆中的数大于k时弹出堆顶元素。注意弹出堆顶的顺序是从大到小的k个数，要进行逆序操作
+
+时间复杂度分析：建堆的时间复杂度是O(logk)O(logk)，要进行n次建堆的操作。
+
+C++ 代码 yxc idea
+```
+class Solution {
+public:
+    vector<int> getLeastNumbers_Solution(vector<int> input, int k) {
+        vector<int> res;
+        priority_queue<int> heap;
+        for(auto x : input)
+        {
+            heap.push(x);
+            if(heap.size() > k) heap.pop(); 
+        }
+        while(heap.size())
+        {
+            res.push_back(heap.top());
+            heap.pop();
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
+```
+
+AcWing 75. 和为S的两个数字    原题链接    简单
+作者：    yzm0211 ,  2019-04-04 22:16:12 ,  阅读 820
+
+1
+
+
+双指针
+C++ 代码
+```
+class Solution {
+public:
+
+    vector<int> findNumbersWithSum(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        for(int i = 0 ,j = nums.size() - 1; i <j;){
+            if(nums[i] +nums[j] == target)
+               return  vector<int>{nums[i],nums[j]};
+            else if(nums[i] + nums[j] < target)
+                i++;
+            else 
+                j--;
+        }
+    }
+};
+```
+blablabla
+哈希表
+C++ 代码
+blablabla
+
+作者：yzm0211
+链接：https://www.acwing.com/solution/content/1365/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+permuttions with and without repeating numbers
+https://www.acwing.com/solution/leetcode/content/124/
+https://www.acwing.com/solution/LeetCode/content/126/
+https://www.acwing.com/solution/content/776/
+https://www.acwing.com/solution/content/1155/
+
+AcWing 26. 二进制中1的个数    原题链接    简单
+作者：    yxc ,  2019-01-06 02:01:39 ,  阅读 3230
+
+19
+
+
+11
+算法
+(位运算) O(logn)O(logn)
+迭代进行如下两步，直到 nn 变成0为止：
+
+如果 nn 在二进制表示下末尾是1，则在答案中加1；
+将 nn 右移一位，也就是将 nn 在二进制表示下的最后一位删掉；
+这里有个难点是如何处理负数。
+在C++中如果我们右移一个负整数，系统会自动在最高位补1，这样会导致 nn 永远不为0，就死循环了。
+解决办法是把 nn 强制转化成无符号整型，这样 nn 的二进制表示不会发生改变，但在右移时系统会自动在最高位补0。
+
+时间复杂度
+每次会将 nn 除以2，最多会除 lognlogn 次，所以时间复杂度是 O(logn)O(logn)。
+
+C++ 代码
+```
+class Solution {
+public:
+    int NumberOf1(int n) {
+        int res = 0;
+        unsigned int un = n; 
+        while (un) res += un & 1, un >>= 1;
+        return res;
+    }
+};
+```
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/732/
+
+
+2.stl:map 不用auto的写法 (蓝桥杯不让写auto)
+
+Note:
+printf函数输出字符串是针对char *的，即printf只能输出c语言的内置数据类型，而string不是c语言的内置数据类型。如需输出string对象中的字符串，可以使用string的成员函数c_str()，该函数返回字符串的首字符的地址。
+
+map 正向迭代器
+
+map<int, PII>::iterator iter; //迭代器
+for (iter = ans.begin(); iter != ans.end(); iter ++ ){}
+4. STL:vector 这里用了pair<int, pair<double, string >> 嵌套pair构成三元组
+
+https://www.acwing.com/solution/content/9475/
