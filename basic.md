@@ -465,6 +465,8 @@ for (iter = ans.begin(); iter != ans.end(); iter ++ ){}
 https://www.acwing.com/solution/content/9475/
 
 leetcode 191, acwing 26 is better - casting of int to unsigned int;
+https://stackoverflow.com/questions/17358445/why-does-right-shifting-negative-numbers-in-c-bring-1-on-the-left-most-bits
+
 https://leetcode.com/problems/number-of-1-bits/
 leetcode 338 - not done
 https://leetcode.com/problems/counting-bits/
