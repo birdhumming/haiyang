@@ -2065,3 +2065,9 @@ int main()
     return 0;
 }
 ```
+section 5 on string backwards on problems;
+section 6 on function done
+section 7 on struct, class, pointer done
+section 8 on STL done
+
+兔子吃窝边草，一层一层吃 bfs
