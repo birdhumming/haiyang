@@ -6213,3 +6213,10 @@ int main()
 
 两个printf可以合并在一起hh
 
+
+c printf format specifiers - long float is doubledd
+http://www.cplusplus.com/reference/cstdio/printf/
+
+%f is same as %lf which is double!
+
+https://stackoverflow.com/questions/16863826/whats-the-difference-between-long-float-and-double-in-c
