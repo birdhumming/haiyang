@@ -2074,3 +2074,802 @@ section 8 on STL done
 
 树是无环联通图 -
 无向图是特殊的有向图 - 双向边，所以只需考虑有向图
+
+这道题我看了一下别人的题解，感觉都没我的容易理解。。哈哈哈。
+先不论时间复杂度谁的更低。
+我的大致思路如下：因为这道题是让求几次方，其实我们可以当成周期串来处理，输入一个字符串，找到他的最小周期，然后让字符串长度除以它的最小周期就是它的几次方了。
+代码如下：
+
+```
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string s;
+    while(cin>>s)
+    {
+        int flag;
+        if(s[0]=='.')   break;
+        int len=s.size();
+        for(int i=1;i<=len;i++)
+        {
+            flag=0;
+            if(len%i!=0)    continue;
+            for(int j=0;j<len;j++)
+                if(s[j]!=s[j%i])    {flag=1;break;}
+            if(!flag)   {cout<<len/i<<endl;break;}
+        }
+        if(flag)    cout<<"-1"<<endl;
+    }
+}
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string str;
+
+    while (cin >> str, str != ".")
+    {
+        int len = str.size();
+
+        for (int n = len; n; n -- )
+            if (len % n == 0)
+            {
+                int m = len / n;
+                string s = str.substr(0, m);
+                string r;
+                for (int i = 0; i < n; i ++ ) r += s;
+
+                if (r == str)
+                {
+                    cout << n << endl;
+                    break;
+                }
+            }
+    }
+
+    return 0;
+}
+
+
+```
+作者：给个选择
+链接：https://www.acwing.com/solution/content/7726/
+
+
+一次性将该字符串连接上去，复制字符串即可
+
+C++ 代码
+```
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+bool check(string a, string b)
+{
+    int len = a.size();
+    a += a; //复制字符串并连接
+    if (a.find(b) >= 0 && a.find(b) < len) return true; //判断是否包含
+    return false;
+}
+
+int main()
+{
+    string a, b;
+    cin >> a >> b;
+    if (check(a, b) || check(b, a)) cout << "true";
+    else cout << "false";
+    return 0;
+}
+```
+作者：Meet.
+链接：https://www.acwing.com/solution/content/9160/
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string s[10005];int i=1;
+    while(cin>>s[i]) i++;
+    for(int j=i-1;j>=1;j--) cout<<s[j]<<" ";
+    return 0;
+}
+
+#include<cstring>
+#include<iostream>
+using namespace std;
+string l,lm;
+int len,maxx,f;
+int main(){
+    while(cin>>l){
+        len=l.size();
+        if(l[len-1]=='.'){
+            len--;
+            l.erase(len,1);
+            f=1;
+        }
+        if(len>maxx){
+            lm=l;
+            maxx=len;
+        }
+        if(f) break;
+    }
+    cout<<lm;
+    return 0;
+}
+
+
+```
+
+题目描述
+求一个字符串中最长的连续出现的字符，输出该字符及其出现次数，字符串中无空白字符（空格、回车和tab），如果这样的字符不止一个，则输出第一个。
+
+输入格式
+第一行输入整数N，表示测试数据的组数。
+
+每组数据占一行，包含一个不含空白字符的字符串，字符串长度不超过200。
+
+输出格式
+共一行，输出最长的连续出现的字符及其出现次数，中间用空格隔开。
+
+输入样例：
+2
+aaaaabbbbbcccccccdddddddddd
+abcdefghigk
+输出样例：
+d 10
+a 1
+算法
+(双指针) O(n×T)O(n×T)
+使用双指针扫描每一个test case，并记录下最大长度与该长度下的字符即可。
+
+时间复杂度
+每个test case的字符串会被扫描一次，总共T个test case，所以总复杂度为O(n×T)O(n×T)。
+
+C++ 代码
+```
+#include <iostream>
+using namespace std;
+int main()
+{
+    int T;
+    cin >> T;
+    while(T --)
+    {
+        int maxn = -1;//maxn记录最大长度
+        string str, maxs;//maxs记录最大长度时的字符
+        cin >> str;
+        for(int i = 0; i < str.size(); i ++)
+        {
+            int j = i;
+            int cnt = 0;
+            while(str[j] == str[i] && j < str.size())//当指针j没有越界且与指针i的内容相同时移动
+                j ++, cnt ++;
+            if(cnt > maxn)//更新最大值
+                maxn = cnt, maxs = str[i];
+            i = j - 1;//移动指针i
+        }
+        cout << maxs << " " << maxn << endl;
+    }
+}
+```
+作者：P云
+链接：https://www.acwing.com/solution/content/8698/
+
+
+题目描述
+输入一个字符串，以回车结束（字符串长度不超过100）。
+该字符串由若干个单词组成，单词之间用一个空格隔开，所有单词区分大小写。
+现需要将其中的某个单词替换成另一个单词，并输出替换之后的字符串。
+输入格式
+输入共3行。
+第1行是包含多个单词的字符串 s;
+第2行是待替换的单词a(长度不超过100);
+第3行是a将被替换的单词b(长度不超过100)。
+输出格式
+共一行，输出将s中所有单词a替换成b之后的字符串。
+
+样例
+输入样例：
+You want someone to help you
+You
+I
+输出样例：
+I want someone to help you
+分析
+直接用正则表达式替换单词即可
+
+C++ 代码
+```
+#include <iostream>
+#include <string>
+#include <regex>
+using namespace std;
+int main(){
+    string s,s1,s2;
+    getline(cin,s);
+    cin>>s1>>s2;
+    cout<<regex_replace(s,regex("\\b" + s1 + "\\b"),s2)<<endl;
+    return 0;
+}
+
+#include <iostream>
+#include <sstream>
+
+using namespace std;
+
+int main()
+{
+    string s, a, b;
+
+    getline(cin, s);
+    cin >> a >> b;
+
+    stringstream ssin(s);
+    string str;
+    while (ssin >> str)
+        if (str == a) cout << b << ' ';
+        else cout << str << ' ';
+
+    return 0;
+}
+
+```
+作者：昂昂累世士
+链接：https://www.acwing.com/solution/content/2601/
+
+
+题目描述
+给定一个字符串a，请你按照下面的要求输出字符串b。
+
+给定字符串a的第一个字符的ASCII值加第二个字符的ASCII值，得到b的第一个字符；
+
+给定字符串a的第二个字符的ASCII值加第三个字符的ASCII值，得到b的第二个字符；
+
+…
+
+给定字符串a的倒数第二个字符的ASCII值加最后一个字符的ASCII值，得到b的倒数第二个字符；
+
+给定字符串a的最后一个字符的ASCII值加第一个字符的ASCII值，得到b的最后一个字符。
+
+输入格式
+输入共一行，包含字符串a。注意字符串中可能包含空格。
+
+数据保证字符串内的字符的ASCII值均不超过63。
+
+输出格式
+输出共一行，包含字符串b。
+
+数据范围
+2≤a的长度≤100
+
+样例
+输入样例：
+1 2 3
+输出样例：
+QRRSd
+算法1
+C++ 代码
+```
+#include<iostream>
+using namespace std;
+int main()
+{
+    string a;
+    getline(cin,a);
+    string b;
+    for(int i = 0; i + 1 < a.size(); i ++) b += (char)(a[i] + a[i + 1]);
+    b += (char)(a[0] + a.back());
+    cout << b;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string a, b;
+    getline(cin, a);
+
+    for (int i = 0; i < a.size(); i ++ ) b += a[i] + a[(i + 1) % a.size()];
+
+    cout << b << endl;
+
+    return 0;
+}
+
+```
+作者：cht
+链接：https://www.acwing.com/solution/content/12876/
+
+
+方法一：
+
+公式法：
+```
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string s;
+    getline(cin, s);
+    for (auto &c : s)
+        if (c >= 'a' && c <= 'z') c = (c - 'a' + 1) % 26 + 'a';
+        else if (c >= 'A' && c <= 'Z') c = (c - 'A' + 1) % 26 + 'A';
+    cout << s << endl;
+    return 0;
+}
+方法二：
+
+自动算空格法：
+注意:P用scanf不会过滤空格哦！
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    char ch;
+    while(scanf("%c",&ch)==1){
+        if(ch>='a'&&ch<='z')
+            ch=(ch+1-'a')%26+'a';
+        else if(ch>='A'&&ch<='Z')
+            ch=(ch+1-'A')%26+'A';
+    cout<<ch;
+    }
+    return 0;
+}
+
+方法三：
+
+不动脑子法
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    string a;
+    getline(cin,a);
+    for(int i=0;i<a.size();i++){
+        if(a[i]>='a'&&a[i]<'z'||a[i]>='A'&&a[i]<'Z')
+        a[i]++;
+        else if(a[i]=='z'||a[i]=='Z')a[i]-=25;
+    }
+    cout<<a<<endl;
+
+    return 0;
+}
+
+
+作者：wuzgnm
+链接：https://www.acwing.com/solution/content/9203/
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string s;
+
+    getline(cin, s);
+
+    for (auto &c : s)
+        if (c >= 'a' && c <= 'z') c = (c - 'a' + 1) % 26 + 'a';
+        else if (c >= 'A' && c <= 'Z') c = (c - 'A' + 1) % 26 + 'A';
+
+    cout << s << endl;
+
+    return 0;
+}
+
+```
+
+
+方法一：利用cin在输入时不会读入空格,tab,回车。
+```
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string s;
+    while(cin>>s)
+    {
+        cout<<s<<" ";
+    }
+    return 0;
+}
+```
+方法二：利用标识符flag来标记上一个输出字符是否为空格，如果是,那么本次字符如果还是空格的话不输出。
+```
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string s;
+    getline(cin,s);
+    int flag=0;
+    for(int i=0;i<s.size();i++)
+    {
+        if(s[i]!=' ')
+            { cout<<s[i];
+             flag=0;}
+        else if(flag==0)
+            {
+                cout<<" ";
+                flag=1;
+            }
+        else
+            continue;
+    }
+    return 0;
+}
+
+cin做法
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string s;
+    while (cin >> s) cout << s << ' ' ;
+
+    return 0;
+}
+第一类双指针算法
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string s;
+    getline(cin, s);
+
+    string r;
+    for (int i = 0; i < s.size(); i ++ )
+        if (s[i] != ' ') r += s[i];
+        else
+        {
+            r += ' ';
+            int j = i;
+            while (j < s.size() && s[j] == ' ') j ++ ;
+            i = j - 1;
+        }
+
+    cout << r << endl;
+
+    return 0;
+}
+局部性判断方法
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string s;
+    getline(cin, s);
+
+    string r;
+    for (int i = 0; i < s.size(); i ++ )
+        if (s[i] != ' ') r += s[i];
+        else
+        {
+            if (!i || s[i - 1] != ' ') r += ' ';
+        }
+
+    cout << r << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/255236/
+
+```
+
+作者：冰语晨星
+链接：https://www.acwing.com/solution/content/10733/
+
+(暴力枚举)
+
+```
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    string a, b;
+    getline(cin, a);
+    getline(cin, b);
+    int t = 0, m = a.size()>b.size() ? a.size():b.size();
+    for(int i = 0; i < m; i++)
+    {
+        if(a[i] >= 'a' && a[i] <= 'z') a[i] -= 32;
+        if(b[i] >= 'a' && b[i] <= 'z') b[i] -= 32;
+        if(a[i] == b[i])
+            t++;
+        else if(a[i] > b[i])
+        {
+            cout << ">" << endl;
+            break;
+        }
+        else if(a[i] < b[i])
+        {
+            cout << "<" << endl;
+            break;
+        }
+    }
+    if(t == m) cout << "=" << endl;
+    return 0;
+}
+
+#include <cstdio>
+#include <cstring>
+
+int main()
+{
+    char a[100], b[100];
+
+    fgets(a, 100, stdin);
+    fgets(b, 100, stdin);
+
+    if (a[strlen(a) - 1] == '\n') a[strlen(a) - 1] = 0;  // 去掉末尾回车
+    if (b[strlen(b) - 1] == '\n') b[strlen(b) - 1] = 0;  // 去掉末尾回车
+
+    for (int i = 0; a[i]; i ++ )
+        if (a[i] >= 'A' && a[i] <= 'Z')
+            a[i] += 32;
+
+    for (int i = 0; b[i]; i ++ )
+        if (b[i] >= 'A' && b[i] <= 'Z')
+            b[i] += 32;
+
+    int t = strcmp(a, b);
+    if (t == 0) puts("=");
+    else if (t < 0) puts("<");
+    else puts(">");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/247391/
+
+```
+作者：有毒的Time
+链接：https://www.acwing.com/solution/content/9327/
+
+超简单字符串
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    double cnt = 0;
+    double k;
+    string a,b;
+    cin>>k>>a>>b;
+    double len = a.size();
+    for(int i = 0;i<len;i++)
+    {
+        if(a[i] == b[i])
+            cnt++;
+    }
+    cnt = cnt/len;
+    if(k<=cnt)
+    {
+        cout<<"yes";
+        return 0;
+    }
+    else cout<<"no";
+    return 0;
+}
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    double k;
+    string a, b;
+    cin >> k >> a >> b;
+
+    int cnt = 0;
+    for (int i = 0; i < a.size(); i ++ )
+        if (a[i] == b[i])
+            cnt ++ ;
+
+    if ((double)cnt / a.size() >= k) puts("yes");
+    else puts("no");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/247373/
+
+```
+作者：sxc
+链接：https://www.acwing.com/solution/content/5104/
+
+
+题目描述
+给你一个只包含小写字母的字符串。
+
+请你判断是否存在只在字符串中出现过一次的字符。
+
+如果存在，则输出满足条件的字符中位置最靠前的那个。
+
+如果没有，输出”no”。
+输入格式
+共一行，包含一个由小写字母构成的字符串。
+
+数据保证字符串的长度不超过100000。
+
+输出格式
+输出满足条件的第一个字符。
+
+如果没有，则输出”no”。
+
+样例
+输入样例：
+abceabcd
+输出样例：
+e
+思路
+这道题的关键在于如何把字母出现的次数记下来，这里用到一个数组s[300]，来记录各个字母出现的次数；
+然后调用
+for(int i=0;i<str.length();i)
+{
+s[str[i];
+}，用数组s存储各个字母出现的次数。
+再次调用for循环遍历各个字符，
+if(s[str[i]]==1)
+{
+p=str[i];
+break;
+}如果遇到第一个字符出现次数为1.则把该字符赋值给c,break退出for循环。
+
+C++ 代码
+```
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int main()
+{
+    string str;
+    getline(cin,str);
+    int s[300]={0};
+    for(int i=0;i<str.length();i++)
+    {
+        s[str[i]]++;//统计各个字符出现的次数
+    }
+    char p=-1;
+    for(int i=0;i<str.length();i++)//如果遇到第一个字符出现次数为1.则把该字符赋值给c,break退出for循环。
+    {
+        if(s[str[i]]==1)
+        {
+            p=str[i];
+            break;
+        }
+    }
+    if(p==-1) puts("no");
+    else  printf("%c",p);
+    return 0;
+}
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int cnt[26];
+char str[100010];
+
+int main()
+{
+    cin >> str;
+
+    for (int i = 0; str[i]; i ++ ) cnt[str[i] - 'a'] ++ ;
+
+    for (int i = 0; str[i]; i ++ )
+        if (cnt[str[i] - 'a'] == 1)
+        {
+            cout << str[i] << endl;
+            return 0;
+        }
+
+    puts("no");
+
+    return 0;
+}
+
+作者：yxc
+
+```
+作者：白云苍狗
+链接：https://www.acwing.com/solution/content/7348/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+题目描述
+合并两个字符串，把第二个字符串放到第一个字符串中最大ASSIC码的字符的后面
+
+算法1
+(直接模拟) O(n)O(n)
+先找到第一个字符串中最大ASSIC码字符的位置，标记位置，然后输出第一个字符串前面的字符，输出第二个字符
+
+接着输出后面的剩下的字符
+
+注意题目有多组输入，只需要第一个最大的字符
+时间复杂度分析：
+
+C++ 代码
+```
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    char str[11], substr[4];
+
+    int n = 2;
+    while(scanf("%s %s", str, substr) != EOF){
+        int cnt = str[0], res = 0;
+        for(int i = 0; i < strlen(str); i++){
+            if(str[i] > cnt) cnt = str[i], res = i;
+            else if(str[i] == cnt) continue;
+        }
+        for(int i = 0; i <= res; i ++){
+            cout<< str[i];
+        }
+        for(int i = 0; i < strlen(substr); i++){
+            cout<< substr[i];
+        }
+        for(int i = res + 1; i < strlen(str); i++){
+            cout<< str[i];
+        }
+        puts("");
+    }
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string a, b;
+
+    while (cin >> a >> b)
+    {
+        int p = 0;
+        for (int i = 1; i < a.size(); i ++ )
+            if (a[i] > a[p])
+                p = i;
+
+        cout << a.substr(0, p + 1) + b + a.substr(p + 1) << endl;
+    }
+
+    return 0;
+}
+```
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/247367/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/2913/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
