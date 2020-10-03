@@ -2873,3 +2873,306 @@ int main()
 链接：https://www.acwing.com/solution/content/2913/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+```
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+    string a;
+    char s;
+    getline(cin,a);
+    cin>>s;
+    for(int i = 0;i < a.size();i ++)
+    {
+        if(a[i] == s) cout << "#";
+        else cout<<a[i];
+    }
+    return 0;
+}
+
+
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    char str[31];
+    scanf("%s", str);
+
+    char c;
+    scanf("\n%c", &c);
+
+    for (int i = 0; str[i]; i ++ )
+        if (str[i] == c)
+            str[i] = '#';
+
+    puts(str);
+
+    return 0;
+}
+给定一个字符串，在字符串的每个字符之间都加一个空格。
+
+输出修改后的新字符串。
+
+输入格式
+共一行，包含一个字符串。注意字符串中可能包含空格。
+
+输出格式
+输出增加空格后的字符串。
+
+数据范围
+1≤字符串长度≤100
+
+样例
+输入样例：
+test case
+输出样例：
+t e s t   c a s e
+算法1
+C++ 代码
+#include<iostream>
+using namespace std;
+int main()
+{
+    string a;
+    getline(cin, a);
+    for(char &c : a) cout << c << ' '; 
+}
+
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string a;
+    getline(cin, a);
+
+    string b;
+    for (auto c : a) b = b + c + ' ';
+
+    b.pop_back();  // 把最后一个字符删掉
+
+    cout << b << endl;
+
+    return 0;
+}
+
+用string的size之差表示player1赢的三种情况
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    string x, y;
+    while (n --)
+    {
+        cin >> x >> y;
+        int a = x.size(), b = y.size();
+        if (a - b == -1 || a - b == -2 || a - b == 3)
+            cout << "Player1" << endl;
+        else if (a == b)
+            cout << "Tie" << endl;
+        else cout << "Player2" << endl;
+    }
+
+    return 0;
+}
+
+作者：黄
+链接：https://www.acwing.com/solution/content/15253/
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    while (n -- )
+    {
+        string a, b;
+        cin >> a >> b;
+
+        int x, y;
+        if (a == "Hunter") x = 0;
+        else if (a == "Bear") x = 1;
+        else x = 2;
+
+        if (b == "Hunter") y = 0;
+        else if (b == "Bear") y = 1;
+        else y = 2;
+
+        if (x == y) puts("Tie");
+        else if (x == (y + 1) % 3) puts("Player1");
+        else puts("Player2");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/247346/
+
+输入一行字符，长度不超过100，请你统计一下其中的数字字符的个数。
+
+输入格式
+输入一行字符。注意其中可能包含空格。
+
+输出格式
+输出一个整数，表示字数字字符的个数。
+
+样例
+输入样例：
+I am 18 years old this year.
+输出样例：
+2
+算法1
+C++ 代码
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    string a;
+    getline(cin,a);
+    int ans = 0;
+    for(int i = 0; i < a.size(); i ++)
+    {
+        if(a[i] <= '9' && a[i] >= '0')
+        {
+            ans ++;
+        }
+    }
+
+    cout << ans << endl;
+
+    return 0;
+}
+
+作者：cht
+链接：https://www.acwing.com/solution/content/12875/
+
+#include <cstdio>
+
+int main()
+{
+    char str[101];
+
+    fgets(str, 101, stdin);
+
+    int cnt = 0;
+    for (int i = 0; str[i]; i ++ )
+        if (str[i] >= '0' && str[i] <= '9')
+            cnt ++ ;
+
+    printf("%d\n", cnt);
+
+    return 0;
+}
+
+题目描述
+给定一行长度不超过100的字符串，请你求出它的具体长度。
+
+输入格式
+输入一行，表示一个字符串。注意字符串中可能包含空格。
+
+输出格式
+输出一个整数，表示它的长度。
+
+样例
+输入样例：
+I love Beijing.
+输出样例：
+15
+算法1
+C语言代码
+#include<string.h>
+#include<stdio.h>
+
+int main()
+{
+    char s[105];
+    gets(s);
+    printf("%d",strlen(s));
+    return 0;
+}
+算法2
+C++ 代码
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int main()
+{
+    string a;
+    getline(cin,a);
+    cout<<a.size()<<endl;
+    return 0;
+}
+算法3
+C++ 代码
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int main()
+{
+    char a[105];
+    cin.get(a,105);//需要注意cin.get()不会把换行符取出删除，影响下一次读入！
+    cout<<strlen(a)<<endl;
+    return 0;
+}
+算法4
+C++ 代码
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int main()
+{
+    char a[105];
+    cin.getline(a,105);//需要注意cin.getline()会把换行符取出删除，不影响下一次读入！
+    cout<<strlen(a)<<endl;
+    return 0;
+}
+顺带一提 cin 和 scanf读入字符串时遇到空格就停止了。
+
+作者：Accepting
+链接：https://www.acwing.com/solution/content/10357/
+
+注意：fgets函数会把回车也读进来
+#include <cstdio>
+
+int main()
+{
+    char str[101];
+
+    fgets(str, 101, stdin);
+
+    int len = 0;
+    for (int i = 0; str[i] && str[i] != '\n'; i ++ ) len ++ ;
+
+    printf("%d\n", len);
+
+    return 0;
+}
+```
+
