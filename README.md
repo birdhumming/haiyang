@@ -11540,3 +11540,9 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1343169/
 https://www.acwing.com/file_system/file/content/whole/index/content/1343081/
 
 python里set就是value为空的哈希表。
+
+HTTP 的范围请求和相关头部 （计网系列文章）
+https://www.acwing.com/file_system/file/content/whole/index/content/1345993/
+
+AcWing 773. 字符串插入
+https://www.acwing.com/file_system/file/content/whole/index/content/1345796/
