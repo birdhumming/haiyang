@@ -3174,5 +3174,2594 @@ int main()
 
     return 0;
 }
-```
 
+
+利用 left right top bottom 四个变量 来表示 这个矩形的边界
+
+#include <iostream>
+
+using namespace std;
+const int N = 105;
+
+int a[N][N];
+int n, m;
+
+int main() {
+    cin >> n >> m;
+
+    int left = 0, right = m - 1, top = 0, bottom = n - 1;
+    int k = 1;
+    while (left <= right && top <= bottom) {
+        for (int i = left ; i <= right; i ++) {
+            a[top][i] = k ++;
+        }
+        for (int i = top + 1; i <= bottom; i ++) {
+            a[i][right] = k ++;
+        }
+        for (int i = right - 1; i >= left && top < bottom; i --) {
+            a[bottom][i] = k ++;
+        }
+        for (int i = bottom - 1; i > top && left < right; i --) {
+            a[i][left] = k ++;
+        }
+        left ++, right --, top ++, bottom --;
+    }
+    for (int i = 0; i < n; i ++) {
+        for (int j = 0; j < m; j ++) {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+作者：Yuerer
+链接：https://www.acwing.com/solution/content/8007/
+
+因为在main里面初始化的话二维数组的初始值不确定，在main外面初始化初值全部为0，和堆与栈的储存方式有关，y总上课讲过。另外需要初始化初值全部为0，因为if (a < 0 || a >= n || b < 0 || b >= m || res[a][b])，这句判断中res[a][b]在没有被填入值的时候是0（否），填入值之后才是非0（真）。如果在main里用int res[n][m]，还要加上memset(res, 0, sizeof res); 这个语句
+
+#include <iostream>
+
+using namespace std;
+
+int res[100][100];
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    int dx[] = {0, 1, 0, -1}, dy[] = {1, 0, -1, 0};
+
+    for (int x = 0, y = 0, d = 0, k = 1; k <= n * m; k ++ )
+    {
+        res[x][y] = k;
+        int a = x + dx[d], b = y + dy[d];
+        if (a < 0 || a >= n || b < 0 || b >= m || res[a][b])
+        {
+            d = (d + 1) % 4;
+            a = x + dx[d], b = y + dy[d];
+        }
+        x = a, y = b;
+    }
+
+    for (int i = 0; i < n; i ++ )
+    {
+        for (int j = 0; j < m; j ++ ) cout << res[i][j] << ' ';
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245992/
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    while(cin >> n,n)
+    {
+        for(int i = 0; i < n; i ++)
+        {
+            for(int j = 0; j < n; j ++)
+                cout << (1 << i) * (1 << j) << ' ';//两个乘数 后者控制基数 1 ~ 2^(n-1) ，前者控制倍数
+            cout << endl;
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+作者：XDDX
+链接：https://www.acwing.com/solution/content/7673/
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    while (cin >> n, n)
+    {
+        for (int i = 0; i < n; i ++ )
+        {
+            for (int j = 0; j < n; j ++ )
+            {
+                int v = 1;
+                for (int k = 0; k < i + j; k ++ ) v *= 2;
+                cout << v << ' ';
+            }
+            cout << endl;
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245977/
+
+如题看看就好....
+找了一个比较简单的规律....
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int a[100][100];
+int n;
+
+int main()
+{
+    while (cin >> n)
+    {
+        for (int i = 0; i < n; i ++ )
+            for(int j = 0; j < n; j ++ )
+                a[i][j] = abs(i - j) + 1;  // 规律
+
+        for (int i = 0; i < n; i ++ )
+        {
+            for (int j = 0; j < n; j ++ )
+                cout << a[i][j] << ' ';
+
+            cout << endl;
+        }
+
+        if (n)
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：ltk
+链接：https://www.acwing.com/solution/content/6638/
+
+#include <iostream>
+
+using namespace std;
+
+int q[100][100];
+
+int main()
+{
+    int n;
+    while (cin >> n, n)
+    {
+        for (int i = 0; i < n; i ++ )
+        {
+            q[i][i] = 1;
+            for (int j = i + 1, k = 2; j < n; j ++, k ++ ) q[i][j] = k;
+            for (int j = i + 1, k = 2; j < n; j ++, k ++ ) q[j][i] = k;
+        }
+
+        for (int i = 0; i < n; i ++ )
+        {
+            for (int j = 0; j < n; j ++ ) cout << q[i][j] << ' ';
+            cout << endl;
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245972/
+
+数组的右方区域：j>i&&i+j>11
+#include <iostream>
+using namespace std;
+int main()
+{
+    char c;
+    cin>>c;
+    double a,res=0;
+    for(int i=0;i<12;i++)
+        for(int j=0;j<12;j++)
+        {
+            cin>>a;
+            if(j>i&&i+j>11)res+=a;
+        }
+    printf("%.1lf",c=='S'?res:res/30);
+}
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    char t;
+    cin >> t;
+    double q[12][12];
+
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            cin >> q[i][j];
+
+    double s = 0, c = 0;
+    for (int i = 1; i <= 5; i ++ )
+        for (int j = 12 - i; j <= 11; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    for (int i = 6; i <= 10; i ++ )
+        for (int j = i + 1; j <= 11; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / c);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245957/
+
+。
+
+数组的下方区域：i>j&&i+j>11
+#include <iostream>
+using namespace std;
+int main()
+{
+    char c;
+    cin>>c;
+    double a,res=0;
+    for(int i=0;i<12;i++)
+        for(int j=0;j<12;j++)
+        {
+            cin>>a;
+            if(i>j&&i+j>11)res+=a;
+        }
+    printf("%.1lf",c=='S'?res:res/30);
+}
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main()
+{
+    char t;
+    cin >> t;
+
+    double q[12][12];
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            cin >> q[i][j];
+
+    double s = 0, c = 0;
+    for (int i = 7; i <= 11; i ++ )
+        for (int j = 12 - i; j <= i - 1; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / c);
+
+    return 0;
+
+}
+
+数组的左下半部分：j<i,总个数66
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    double s=0;
+    char op;
+    cin >> op;
+    for(int i=0;i<12;i++)
+    {
+        for(int j=0;j<12;j++)
+        {
+            double x;
+            cin >>x;
+            if(j<i) s+=x;
+        }
+    }
+    printf("%.1lf",op=='S' ? s : s/66);
+}
+
+作者：繁花似锦
+链接：https://www.acwing.com/solution/content/12432/
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main()
+{
+    char t;
+    cin >> t;
+
+    double q[12][12];
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            cin >> q[i][j];
+
+    double s = 0, c = 0;
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j <= i - 1; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / c);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245941/
+
+数组的右下半部分：i+j>=12
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    double s=0;
+    char op;
+    cin >> op;
+    for(int i=0;i<12;i++)
+    {
+        for(int j=0;j<12;j++)
+        {
+            double x;
+            cin >>x;
+            if(i+j>=12) s+=x;
+        }
+    }
+    printf("%.1lf",op=='S' ? s : s/66);
+}
+
+作者：繁花似锦
+链接：https://www.acwing.com/solution/content/12431/
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    char t;
+    cin >> t;
+    double q[12][12];
+
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            cin >> q[i][j];
+
+    double s = 0, c = 0;
+    for (int i = 1; i <= 11; i ++ )
+        for (int j = 12 - i; j <= 11; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / c);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245933/
+
+#include<iostream>
+#include<cstdio>
+using namespace std;
+double a[15][15];
+int main(){
+    int c;
+    cin>>c;
+    char flag;
+    cin>>flag;
+    for(int i=1;i<=12;i++){
+        for(int j=1;j<=12;j++){
+            cin>>a[i][j];
+        }
+    }
+    double sum = 0.0;
+    for(int i=1;i<=12;i++) sum += a[i][c + 1];
+    if(flag == 'S') printf("%.1lf",sum);
+    else printf("%.1lf",sum/12);
+}
+
+作者：HalfSummer
+链接：https://www.acwing.com/solution/content/12689/
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int c;
+    char t;
+    double q[12][12];
+
+    cin >> c >> t;
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            cin >> q[i][j];
+
+    double s = 0;
+    for (int i = 0; i < 12; i ++ ) s += q[i][c];
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / 12);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245928/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int n, res = 0, re = 0;
+    cin>> n;
+   // cout<< n <<endl;
+   int num[n];
+   cin>> num[0];
+    res = num[0];
+    for(int i = 1; i < n; i++){
+        cin>> num[i];
+
+       // cout<< res << endl;
+       // cout<< num[i]  << endl;
+        if(res > num[i]){
+            //int temp = res;
+            res = num[i];
+            //num[i] = temp;
+            re = i;
+             //cout<< num[i] << endl;
+             //cout<< res << endl;
+        }
+
+    }
+   cout<<"Minimum value: "<< res << endl;
+   cout<< "Position: "<< re << endl;
+    return 0;
+}
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/1894/
+
+
+minimum number and its position by yxc:
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int a[1001];
+    int n;
+
+    cin >> n;
+    for (int i = 0; i < n; i ++ ) cin >> a[i];
+
+    int p = 0;
+    for (int i = 1; i < n; i ++ )
+        if (a[i] < a[p])
+            p = i;
+
+    printf("Minimum value: %d\n", a[p]);
+    printf("Position: %d\n", p);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245921/
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+long long febo(int n)
+{
+    long long  a = 0;
+    long long b = 1;
+    long long c;
+    if(n == 0) c = a;
+    if(n == 1) c = b;
+
+    while (n >= 2)
+    {
+        c = a + b;//从第三个数开始，斐波那契数等于前两个数的和；
+        a = b;//将前一个数给到a，开始下一次求值
+        b = c;//将斐波那契数给b，开始下一次求值
+        n--;//每求一次，n都要减一
+    }
+    return c;
+}
+
+int main()
+{
+    int t, num = 0;
+    long long res = 0;
+    cin>> t;
+    while(t--){
+        cin>> num;
+        res = febo(num);
+        printf("Fib(%d) = %lld\n", num, res);
+    }
+    return 0;
+}
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/1892/
+
+fibonacci number: yxc
+
+注意：小心整数溢出。
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    long long f[61];
+    f[0] = 0, f[1] = 1;
+
+    for (int i = 2; i <= 60; i ++ ) f[i] = f[i - 1] + f[i - 2];
+
+    int n;
+    cin >> n;
+    while (n -- )
+    {
+        int x;
+        cin >> x;
+        printf("Fib(%d) = %lld\n", x, f[x]);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245910/
+
+//不是很难
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a[20];
+    for(int i=0;i<20;i++)
+    {
+        cin >> a[i];
+    }
+    for(int i=19;i>=0;i--)
+    {
+        printf("N[%d] = %d\n", abs(i-19), a[i]);
+    }
+    return 0;
+}
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int a[20], b[20];
+
+    for (int i = 0; i < 20; i ++ ) cin >> a[i];
+    for (int i = 19, j = 0; i >= 0; i --, j ++ ) b[j] = a[i];
+
+    for (int i = 0; i < 20; i ++ ) printf("N[%d] = %d\n", i, b[i]);
+
+    return 0;
+}
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+
+    int n;
+    int x; //当前数值
+    while(cin>>n && n!=0)
+    {
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=n;j++)
+            {
+                x=min(min(i,j),min(n-i+1,n-j+1));//判断当前数值   内层第一个min是判断正方形左上部分，第二个min判断正方形右下部分
+                cout<<x<<" ";
+            }
+            cout<<endl;
+        }
+        cout<<endl;
+    }
+
+    return 0;
+}
+
+作者：Honey
+链接：https://www.acwing.com/solution/content/6806/
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    while (cin >> n, n)
+    {
+        for (int i = 1; i <= n; i ++ )
+        {
+            for (int j = 1; j <= n; j ++ )
+            {
+                int up = i, down = n - i + 1, left = j, right = n - j + 1;
+                cout << min(min(up, down), min(left, right)) << ' ';
+            }
+            cout << endl;
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245898/
+
+数组的左方区域:(i+j)<=10&&i>j
+#include <iostream>
+using namespace std;
+int main()
+{
+    char a;
+    cin>>a;
+
+    double s=0;
+    for(int i=0;i<12;i++)
+    {
+        for(int j=0;j<12;j++)
+        {
+            double a;
+            cin>>a;
+            if((i+j)<=10&&i>j) // 规律
+            s+=a;
+        }
+    }
+    printf("%.1lf", a=='S' ? s : s/30);
+
+}
+
+作者：繁花似锦
+链接：https://www.acwing.com/solution/content/12426/
+
+#include <cstdio>
+
+int main()
+{
+    char t;
+    scanf("%c", &t);
+
+    double q[12][12];
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            scanf("%lf", &q[i][j]);
+
+    double s = 0, c = 0;
+    for (int i = 1; i <= 5; i ++ )
+        for (int j = 0; j <= i - 1; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    for (int i = 6; i <= 10; i ++ )
+        for (int j = 0; j <= 10 - i; j ++ )
+        {
+            s += q[i][j];
+            c += 1;
+        }
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / c);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/245893/
+
+
+数组的上方区域：j>i&&i+j<11
+#include <iostream>
+using namespace std;
+int main()
+{
+    char c;
+    cin>>c;
+    double a,res=0;
+    for(int i=0;i<12;i++)
+        for(int j=0;j<12;j++)
+        {
+            cin>>a;
+            if(j>i&&i+j<11)res+=a;
+        }
+    printf("%.1lf",c=='S'?res:res/30);
+}
+
+左上半部分规律：i+j<11
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    double s=0;
+    char op;
+    cin >> op;
+    for(int i=0;i<12;i++)
+    {
+        for(int j=0;j<12;j++)
+        {
+            double x;
+            cin >>x;
+            if(i+j<11) s+=x;
+        }
+    }
+    printf("%.1lf",op=='S' ? s : s/66);
+}
+
+作者：繁花似锦
+链接：https://www.acwing.com/solution/content/12455/
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+string DoubleToStringByStdToString(double value)
+ {
+
+ const std::string& new_val = std::to_string(value);
+return new_val;
+}
+int main()
+{
+    char str;
+    cin>> str;
+    int n = 12;
+    double m[n][n];
+    double res = 0.0;
+     double re = 0.0;
+     double count = 0;
+    for(int i =0; i < n; i++){
+        for(int j = 0; j < n; j++){
+                   cin >> m[i][j];
+        }
+    }
+    for(int i = 0; i < n; i++){
+        for(int j = i + 1; j < n; j++){
+                    //cout << m[i][j] << endl; 
+                    //cout<< m[i][j] << endl;
+                    re = re + m[i][j];
+                    res = re;
+
+
+        }
+    }
+    //cout << res << " " << count  << endl;
+     if(str == 'S') res = res;   
+     if(str == 'M') res = res / 66;
+     //cout<< res << endl;
+
+     //float ress = (float)(res);
+    // cout<< ress << endl;
+
+   // printf("%.1f\n", ress);
+    //cout.unsetf(ios::fixed);
+    // cout<< res << endl;
+    //  res = res - (abs)(res - (int)(res));
+    //   cout<<(abs)(res - (int)(res)) << endl;
+     //cout<< res <<endl;
+
+
+     //cout.setf(ios::fixed);
+       // cout<< res << endl;
+
+        printf("%.1lf", res);
+    return 0;
+}
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/1906/
+
+yxc
+
+
+
+#include <cstdio>
+
+int main()
+{
+    char t;
+    scanf("%c", &t);
+    double a[12][12];
+
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            scanf("%lf", &a[i][j]);
+
+    int c = 0;
+    double s = 0;
+
+    for (int i = 0; i < 12; i ++ )
+        for (int j = i + 1; j < 12; j ++ )
+        {
+            c ++ ;
+            s += a[i][j];
+        }
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / c);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/238587/
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int l;
+    char op;
+    cin >> l >> op;
+    double s=0;
+    for(int i=0;i<12;i++)
+    {
+        for(int j=0;j<12;j++)
+        {
+            double a;
+            cin >> a;
+            if(i==l) s+=a;
+        }
+    }
+
+    printf("%.1lf",op=='S' ? s : s/12);
+}
+
+作者：繁花似锦
+链接：https://www.acwing.com/solution/content/12452/
+
+#include <cstdio>
+
+int main()
+{
+    double a[12][12];
+
+    int l;
+    char t;
+    scanf("%d\n%c", &l, &t);
+
+    for (int i = 0; i < 12; i ++ )
+        for (int j = 0; j < 12; j ++ )
+            scanf("%lf", &a[i][j]);
+
+    double s = 0;
+    for (int i = 0; i < 12; i ++ ) s += a[l][i];
+
+    if (t == 'S') printf("%.1lf\n", s);
+    else printf("%.1lf\n", s / 12);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/238575/
+
+#include<iostream>
+using namespace std;
+int main(){
+    double x[100]={0};
+    for(int i=0;i<100;i++) 
+    {
+        cin>>x[i];
+        if(x[i]<=10) printf("A[%d] = %.1f\n",i,x[i]);
+    }
+    return 0;
+}
+
+#include<iostream>
+#include<cstdio>
+using namespace std;
+int main()
+{
+    int x,i,v;
+    cin>>v;
+    x=v;
+    for(i=0;i<=9;i++)
+    {
+        printf("N[%d] = %d\n",i,x);
+        x=x*2;
+    }
+    return 0;
+}
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int main(){
+    for(int i = 0; i < 10; i ++ ){
+        int x;  cin >> x;
+        printf("X[%d] = %d\n", i, x <= 0 ? 1 : x);
+    }
+    return 0;
+}
+
+y总优雅做法
+别着急做题！先去找图形特点！这其实是个正方形！
+abs(sx - i) + abs(sy - j) <= n / 2
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    int sx = n / 2, sy = n / 2;
+
+    for (int i = 0; i < n ; i ++ )
+    {
+        for (int j = 0; j < n; j ++ )
+        {
+            if ( abs(sx - i) + abs(sy - j) <= n / 2 ) cout << "*";
+            else cout << " ";
+        }
+        cout << endl;    
+    }
+
+    return 0;
+}
+
+第三次做法(依旧是陆同学的想法) 可以把上下三角形合并，直接出菱形
+int x = n / 2;
+for (int i = -x; i <= x; i ++ )
+    {
+        for (int j = 0; j < abs(i); j ++ ) cout <<' ';
+        for (int j = 0; j < n - abs(i) * 2; j ++ ) cout << '*';
+        puts("");
+    }
+第二次做法(陆同学的想法) 去找行号 和 空格&星号 的关系,输出上下三角形
+int x = n / 2;
+
+for (int i = 0; i < x; i ++)
+{
+    for (int j = 0; j < x - i; j ++ ) cout <<' ';
+    for (int j = 0; j < 2 * i + 1; j ++  ) cout << '*';
+    puts("");
+}
+
+for (int i = 0; i < n - x; i ++ )
+{
+    for (int j = 0; j < i; j ++ ) cout << ' ';
+    for (int j = 0; j < n - 2 * i; j ++ ) cout << '*';
+    puts("");
+}
+个人第一次做法，想老半天，我简直蠢到家了
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+    int x = n / 2;
+
+    char s[n][n];
+
+    // 输入空格
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j < n; j ++ )
+            s[i][j] = ' ' ;
+
+    // 上半部分
+    for (int i = 0; i < x; i ++ )
+        for (int j = x - i; j <= x + i; j ++ )
+            s[i][j] = '*';
+
+    // 中间一行  
+    for (int j = 0; j < n; j ++ )
+        s[x][j] = '*';
+
+    // 下半部分
+    for (int i = x + 1; i < n; i ++ )
+        for (int j = i - x; j < n - i + x; j ++ )
+            s[i][j] = '*';
+
+    // 输出
+    for (int i = 0; i < n; i ++ )
+    {
+        for (int j = 0; j < n; j ++ )
+            cout << s[i][j] ;
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：小张同学
+链接：https://www.acwing.com/solution/content/8774/
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long LL;
+bool complare(int a,int b)
+{
+    return a>b;
+}
+int main()
+{
+   int n;
+   cin>>n;
+   int x, res = 0;
+   while(n--){
+       cin>> x;
+       int k  = (int)(sqrt(x));
+        bool prime = true;
+       for(int i = 2; i <= k; i++){
+           if(x % i == 0){
+               prime = false;
+           }
+       }
+       if(prime == true)
+        cout<< x <<" is prime" << endl;
+      if(prime == false)
+          cout << x <<" is not prime" << endl;
+   }
+  return 0;
+}
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/1880/
+
+
+有点数学基础的人都应该知道100000000100000000内的完全数没有几个......
+
+数学部分
+100000000100000000内的完全数有6,28,496,8128,335503366,28,496,8128,33550336.所以说多背一点数字是很有用的
+
+既然这道题可以直接O(1)O(1)解决,我们不妨来说一下完全数的各种性质以备于各种毒瘤的算法竞赛.
+
+完全数比较重要的几个性质
+(也是我只知道的几个性质)
+
+所有完全数都是三角形数
+目前截止发现的所有完全数都以66或2828结尾
+到现在为止,数学家们一共发现了4848个完全数,且4848个完全数全部是偶数
+如果有人们没有找到的奇完全数,则它一定可以写成12p+112p+1或36p+936p+9的形式,而且pp是素数
+奇完全数一定大于1030010300
+完全数的约数的倒数之和为调和数
+完全数可以表示成连续奇数的立方和
+完全数可以表示成22的连续自然数的次幂之和,且这些自然数的数量必定是素数
+完全数计算法
+若2p−12p−1是素数(亦称其为梅森素数),则2p−1∗(2p−1)2p−1∗(2p−1)是完全数.
+
+时间复杂度
+这里数据小了一点,对于每个数据时间复杂度为O(1)O(1).
+数据再大我都不怕,反正现在找到48个不如列个map然后映射一个布尔类不就好了!
+假装你在屏幕前听到了bjq掌脸的声音
+
+C++ 代码
+其实这里用Python3比较好写
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int t, n;
+
+int main() {
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        if (n == 6 || n == 28 || n == 496 || n == 8128 || n == 33550336)  
+            cout << n << " is perfect" << endl;
+        else cout << n << " is not perfect" << endl;
+    }
+
+    return 0;
+}
+
+作者：bjq
+链接：https://www.acwing.com/solution/content/10289/
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    while (n -- )
+    {
+        int x;
+        cin >> x;
+
+        int s = 0;
+        for (int i = 1; i * i <= x; i ++ )
+            if (x % i == 0)
+            {
+                if (i < x) s += i;
+                if (i != x / i && x / i < x) s += x / i;
+            }
+
+        if (s == x) printf("%d is perfect\n", x);
+        else printf("%d is not perfect\n", x);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/237521/
+
+
+输入若干个整数对M,N，对于每个数对，输出以这两个数为最大值和最小值的公差为1的等差数列。
+
+注意，当输入整数对中，任意一个数为0或负整数时，立即停止输入，且该组数对无需作任何处理。
+
+样例
+数据范围
+M,N≤100M,N≤100
+输入样例：
+2 5
+6 3
+5 0
+输出样例：
+2 3 4 5 Sum=14
+3 4 5 6 Sum=18
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n, m;
+
+    while (cin >> n >> m, n > 0 && m > 0)
+    {
+
+        if (n > m) swap(n, m);
+
+        int s = 0;
+        for (int i = n; i <= m; i ++)
+        {
+            cout << i << ' ';
+
+            s += i;
+        }
+        printf ("Sum=%d\n", s);
+    }
+    return 0;
+}
+
+作者：小鑫鑫
+链接：https://www.acwing.com/solution/content/7983/
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int n, m;
+    while (cin >> n >> m, n > 0 && m > 0)
+    {
+        if (n > m) swap(n, m);
+
+        int sum = 0;
+        for (int i = n; i <= m; i ++ )
+        {
+            cout << i << ' ';
+            sum += i;
+        }
+
+        cout << "Sum=" << sum << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/237512/
+
+其实数组都不用开(炒鸡短)
+#include<stdio.h>
+long long n,a,b=1,c;
+int main(){
+    scanf("%d",&n);
+    while(n--){
+        printf("%d ",a);
+        c=a+b;
+        a=b,b=c;
+    }
+}
+附赠高精度版一份(求点赞)
+#include<stdio.h>
+#include<memory.h>
+#pragma GCC optimize(3)
+#define M 100001
+int n,a[M],b[M],c[M],la=1,lb=1;
+void add(){
+    memcpy(c,b,sizeof(b));
+    la=lb;
+    for(int i=1;i<=lb;i++){
+        b[i]+=a[i];
+        if(b[i]>9&&i<lb) b[i]-=10,b[i+1]++;
+    }
+    if(b[lb]>9) b[lb]-=10,b[++lb]++;
+    memcpy(a,c,sizeof(c));
+}
+int main(){
+    scanf("%d",&n),b[1]=1;
+    while(n--){
+        for(int i=la;i;i--) printf("%d",a[i]);
+        printf(" ");
+        add();
+    }
+}
+
+作者：第一WA者金银花
+链接：https://www.acwing.com/solution/content/3523/
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    int a = 0, b = 1;
+
+    for (int i = 0; i < n; i ++ )
+    {
+        cout << a << ' ';
+        int c = a + b;
+        a = b;
+        b = c;
+    }
+
+    cout << endl;
+
+    return 0;
+}
+
+#include<stdio.h>
+int x,y,ans,t;
+int main(){
+    scanf("%d",&t);
+    while(t--){
+        ans=0;
+        scanf("%d%d",&x,&y);
+        for(int i=(x<y?x:y)+1;i<(x>y?x:y);i++) if(i&1) ans+=i;
+        printf("%d\n",ans);
+    }
+}
+
+#include<iostream>
+using namespace std;
+int main()
+{
+
+    int N,X,count=0;
+    cin >> N;
+    for(int i=0;i<N;i++)
+    {
+        cin >> X;
+        if(X>=10&&X<=20) count++;
+    }
+    printf("%d in\n",count);
+    printf("%d out",N-count);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, x, cnt = 0;;
+    cin >> n;
+    for(int i = 1; i <= n; i++) {
+        cin >> x;
+        if(x < 10 || x > 20) continue;
+        cnt++;
+    }
+    cout << cnt << " in " << endl;
+    cout << n - cnt << " out " << endl;
+    return 0;
+}
+
+
+在天梯模式里我手写的输出，累死了也紧张死了，现在满身的荣誉感
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+typedef long long ll;
+ll n,a,c=0,r=0,f=0,s;
+char p;
+int main()
+{
+    scanf("%lld",&n);
+    for(;n--;)
+    {
+        scanf("%lld %c",&a,&p);
+        if(p=='C')c+=a;
+        else if(p=='R')r+=a;
+        else f+=a;
+    }s=c+r+f;
+    printf("Total: %lld animals\nTotal coneys: %lld\nTotal rats: %lld\nTotal frogs: %lld\nPercentage of coneys: %.2lf %\nPercentage of rats: %.2lf %\nPercentage of frogs: %.2lf %",s,c,r,f,c*100.0/s,r*100.0/s,f*100.0/s);
+    return 0;
+}
+
+作者：皮KA丘
+链接：https://www.acwing.com/solution/content/17796/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    int c = 0, r = 0, f = 0;
+    for (int i = 0; i < n; i ++ )
+    {
+        int k;
+        char t;
+        scanf("%d %c", &k, &t);  // scanf在读入字符时，不会自动过滤空格、回车、tab
+        if (t == 'C') c += k;
+        else if (t == 'R') r += k;
+        else f += k;
+    }
+
+    int s = c + r + f;
+    printf("Total: %d animals\n", s);
+    printf("Total coneys: %d\n", c);
+    printf("Total rats: %d\n", r);
+    printf("Total frogs: %d\n", f);
+    printf("Percentage of coneys: %.2lf %%\n", (double)c / s * 100);
+    printf("Percentage of rats: %.2lf %%\n", (double)r / s * 100);
+    printf("Percentage of frogs: %.2lf %%\n", (double)f / s * 100);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/237478/
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i=1;i<=10;i++)
+        cout<<i<<" x "<<n<<" = "<<i*n<<endl;
+    return 0;
+}
+
+
+
+题目描述
+读取一个整数X，输出X之后的6个奇数，如果X也是奇数，那么它也算作6个奇数之一。
+
+样例
+输入样例：
+9
+输出样例：
+9
+11
+13
+15
+17
+19
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    long long x;
+    cin >> x;
+    if (x % 2 == 0)
+    printf ("%d\n%d\n%d\n%d\n%d\n%d\n", x + 1, x + 3, x + 5, x + 7, x + 9, x + 11);
+    if (x % 2 == 1)
+    printf ("%d\n%d\n%d\n%d\n%d\n%d\n", x, x + 2, x + 4, x + 6, x + 8, x + 10);
+    return 0;    
+}
+算法2
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int x;
+    cin >> x;
+
+    for (int i = x, j = 0; j < 6; i ++ )
+        if (i % 2)
+        {
+            cout << i << endl;
+            j ++ ;
+        }
+
+    return 0;
+}
+
+作者：小鑫鑫
+链接：https://www.acwing.com/solution/content/6102/
+
+
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x;
+    cin >> x;
+    x % 2 ? x : x += 1;
+    for(int i = 1; i <= 6; i++) {
+        cout << x << endl;
+        x += 2;
+    }
+    return 0;
+}
+
+
+#include<stdio.h>
+int n,ans=2;
+int main(){
+    scanf("%d",&n);
+    while(ans<10000) printf("%d\n",ans),ans+=n;
+}
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int n, m, res  = 0, cnt = 0;
+    cin >>n >> m;
+    for(int i = 1; i <= n; i++){
+
+        for(int j = 1; j <= m; j++){
+            res++;
+
+
+            if(res % m == 0) cout<< "PUM" << endl;
+            if((res < n *m) && (res % m !=0)) cout<< res << " ";
+
+        }
+    }
+
+    return 0;
+}
+
+作者：zhiling
+链接：https://www.acwing.com/solution/content/1932/
+
+
+输入一个整数N，按照从小到大的顺序输出它的全部约数。
+
+样例
+输入样例：
+6
+输出样例：
+1
+2
+3
+6
+算法1
+C++ 代码
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int n;
+
+    cin >> n;
+
+    for (int i = 1; i <= n; i ++)
+    {
+        if (n % i == 0)
+
+            cout << i << endl;
+    }
+
+    return 0;
+}
+
+
+
+我刚开始居然没看懂题目，真是惭愧
+#include<stdio.h>
+int x,y,n;
+int main(){
+    while(~scanf("%d",&n)){
+        if(n<=0) continue;
+        if(!x) x=n;
+        else{
+            y=n;
+            break;
+        }
+    }
+    printf("%d",(2*x+y-1)*y/2);
+}
+
+
+#include<stdio.h>
+int main(int n){
+    while(~scanf("%d",&n),n){
+        for(int i=1;i<=n;i++) printf("%d ",i);
+        puts("");
+    }
+    return 0;
+}
+
+#include<stdio.h>
+int k,n,maxx,ma;
+int main(){
+    while(~scanf("%d",&k)){
+        n++;
+        if(k>maxx){
+            maxx=k;
+            ma=n;
+        }
+    }
+    printf("%d\n%d",maxx,ma);
+}
+
+#include<stdio.h>
+int main(int x,int y,int ans){
+    ans=0;
+    scanf("%d%d",&x,&y);
+    for(int i=(x<y?x:y)+1;i<(x>y?x:y);i++) if(i&1) ans+=i;
+    printf("%d",ans);
+}
+#include<iostream>
+using namespace std;
+int main()
+{
+    int n=6,x=0;
+    while(n--)
+    {
+        float c;
+        cin>>c;
+        if(c>0) x++;
+    }
+    cout<<x<<" positive numbers";
+    return 0;
+}
+#include<iostream>
+using namespace std;
+int main()
+{
+    int x;
+    cin>>x;
+    for(int i=1;i<=x;i+=2) cout<<i<<endl;
+    return 0;
+}
+#include<iostream>
+using namespace std;
+int main()
+{
+    for(int i=2;i<=100;i+=2) cout<<i<<endl;
+    return 0;
+}
+
+
+section 2
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    double N1,N2,N3,N4,media;
+    cin>>N1>>N2>>N3>>N4;
+    media=(N1*2+N2*3+N3*4+N4*1)/10;
+    printf("Media: %.1lf\n",media);
+    if(media>=7) cout<<"Aluno aprovado."<<endl;
+    else if(media<5) cout<<"Aluno reprovado."<<endl;
+    else
+    {
+        cout<<"Aluno em exame."<<endl;
+        double Y,Z;
+        cin>>Y;
+        printf("Nota do exame: %.1lf\n",Y);
+        Z=(media+Y)/2;
+        if(Z>=5) cout<<"Aluno aprovado."<<endl;
+        else cout<<"Aluno reprovado."<<endl;
+        printf("Media final: %.1lf",Z);
+    }
+    return 0;
+}
+
+作者：Struggle
+链接：https://www.acwing.com/solution/content/13564/
+
+#include <cstdio>
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+    double n1, n2, n3, n4;
+    scanf("%lf%lf%lf%lf", &n1, &n2, &n3, &n4);
+
+    double x = (n1 * 2 + n2 * 3 + n3 * 4 + n4) / 10;
+
+    printf("Media: %.1lf\n", x + 1e-8);  // 为了防止出现4.8499999999这种极端情况
+    if (x >= 7) printf("Aluno aprovado.\n");
+    else if (x < 5) printf("Aluno reprovado.\n");
+    else
+    {
+        printf("Aluno em exame.\n");
+        double y;
+        scanf("%lf", &y);
+        printf("Nota do exame: %.1lf\n", y + 1e-8);
+        double z = (x + y) / 2;
+        if (z >= 5) printf("Aluno aprovado.\n");
+        else printf("Aluno reprovado.\n");
+        printf("Media final: %.1lf\n", z + 1e-8);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/229374/
+
+#include <cstdio>
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+    double a, b, c;
+    cin >> a >> b >> c;
+
+    double delta = b * b - 4 * a * c;
+    if (delta < 0 || a == 0) printf("Impossivel calcular\n");
+    else
+    {
+        delta = sqrt(delta);
+        double x1 = (-b + delta) / (2 * a);
+        double x2 = (-b - delta) / (2 * a);
+
+        printf("R1 = %.5lf\n", x1);
+        printf("R2 = %.5lf\n", x2);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/229356/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+C++ 代码
+#include<cstdio>
+#include<iostream>
+#include<cmath>
+using namespace std;
+int main()
+{
+    double a,b,c;
+    cin>>a>>b>>c;
+    if(b*b-4*a*c<0||a==0)
+    {
+        cout<<"Impossivel calcular";
+        return 0;
+    }
+    else printf("R1 = %.5f\nR2 = %.5f\n",(-b+sqrt(b*b-4*a*c))/(2*a),(-b-sqrt(b*b-4*a*c))/(2*a));
+    return 0;
+}
+本题主要要注意的是运算符的优先级，输出格式的要求，
+以及对于一些特殊情况的判断
+
+作者：wkj
+链接：https://www.acwing.com/solution/content/2673/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include<cstdio>
+#include<iostream>
+using namespace std;
+int main()
+{
+    int a,b,c;
+    cin>>a>>b>>c;
+    int x,y,z;
+    x=max(a,max(b,c));
+    y=min(a,min(b,c));
+    z=a+b+c-x-y;
+    cout<<y<<endl;
+    cout<<z<<endl;
+    cout<<x<<endl;
+    cout<<endl;
+    cout<<a<<endl;
+    cout<<b<<endl;
+    cout<<c<<endl;
+    return 0;
+}
+
+作者：只要是你呀
+链接：https://www.acwing.com/solution/content/9383/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+最近刚学了sort函数，所以这题可以用sort函数写。
+上面的写法只适合数少的情况，当数多时就不再适用，
+所以用sort写比较好。
+sort函数在库
+
+<algorithm>中
+#include<iostream>
+#include<algorithm>
+using namespace std;
+bool comp(int a,int b)
+{
+    return a<b;//按升序排列
+}
+int main()
+{
+    int a[3];
+    int b[3];
+    for(int i=0;i<3;i++)
+    {
+        cin>>a[i];
+        b[i]=a[i];//方便原来的顺序输出
+    }
+    sort(a,a+3,comp);
+    for(int i=0;i<3;i++)
+        cout<<a[i]<<endl;
+    cout<<endl;
+    for(int i=0;i<3;i++)
+        cout<<b[i]<<endl;
+    return 0;
+}
+
+作者：只要是你呀
+链接：https://www.acwing.com/solution/content/9383/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int a, b, c;
+    cin >> a >> b >> c;
+
+    int x = a, y = b, z = c;
+
+    if (b < a)
+    {
+        int t = a;
+        a = b;
+        b = t;
+    }
+    if (c < a)
+    {
+        int t = a;
+        a = c;
+        c = t;
+    }
+    if (c < b)
+    {
+        int t = b;
+        b = c;
+        c = t;
+    }
+
+    cout << a << endl << b << endl << c << endl << endl;
+    cout << x << endl << y << endl << z << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/229340/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+读取一个保留两位小数的浮点数值，表示一个公民的工资。
+
+在公民交纳个人所得税时，不同收入部分需要交纳的税率也是不同的。
+
+请根据下表确定该公民需要交纳的个人所得税是多少。
+
+数据范围
+0≤公民工资≤5000
+
+样例
+输入样例1：
+3002.00
+输出样例1：
+R$ 80.36
+输入样例2：
+1700.00
+输出样例2：
+Isento
+输入样例3：
+4520.00
+输出样例3：
+R$ 355.60
+样例解释
+对于样例1，0~2000.00部分不用缴税，2000.01~3000.00部分按8%的税率缴税，共计1000 * 8% = 80，3000.01~3002.00部分按18%的税率缴税，共计2 * 18% = 0.36，合计80.36。
+
+对于样例2，公民收入未超过2000，所以输出Isento。
+
+对于样例3，0~2000.00部分不用缴税，2000.01~3000.00部分按8%的税率缴税，共计1000 * 8% = 80，3000.01~4500.00部分按18%的税率缴税，共计1500 * 18% = 270，4500.01~4520部分按28%的税率缴税，共计20 * 28% = 5.60，合计355.60。
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    double x;
+
+    cin >> x;
+
+    if(x <= 2000.00) printf("Isento");
+
+
+    else if(x <=3000.00) printf("R$ %.2lf\n", (x - 2000.00) * 0.08);
+
+    else if(x <= 4500.00) printf("R$ %.2lf\n", 80 + (x - 3000.00) * 0.18);
+
+    else if(x > 4500.00) printf("R$ %.2lf\n", 80 + 270 + (x - 4500.00) * 0.28);
+
+    return 0;
+}
+
+作者：小鑫鑫
+链接：https://www.acwing.com/solution/content/7980/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+
+int main()
+{
+    double x;
+    scanf("%lf", &x);
+
+    double sum = 0;
+    if (x > 2000)
+    {
+        double y = 3000;
+        if (x < 3000) y = x;
+        sum += (y - 2000) * 0.08;
+    }
+    if (x > 3000)
+    {
+        double y = 4500;
+        if (x < 4500) y = x;
+        sum += (y - 3000) * 0.18;
+    }
+    if (x > 4500) sum += (x - 4500) * 0.28;
+
+    if (sum == 0) printf("Isento");
+    else printf("R$ %.2lf\n", sum);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/229326/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 668. 游戏时间2    原题链接    中等
+作者：    Belous ,  2020-03-17 15:11:31 ,  阅读 371
+
+5
+
+
+4
+预先设定差一天后用余数处理，需要注意时间差为24小时的时候取余会变为0，需要特殊处理一下。
+#include<stdio.h>
+int main(void)
+{
+    int a,b,c,d;
+    scanf("%d%d%d%d",&a,&b,&c,&d);
+    b+=a*60,d+=c*60;
+    a=(d-b+24*60)%(24*60);
+    a=(a)?(a):(24*60);
+    printf("O JOGO DUROU %d HORA(S) E %d MINUTO(S)\n",a/60,a%60);
+    return 0;
+}
+
+作者：Belous
+链接：https://www.acwing.com/solution/content/10093/
+
+
+AcWing 666. 三角形类型    原题链接    简单
+作者：    ymy ,  2020-03-03 15:28:42 ,  阅读 516
+
+3
+
+
+1
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+    double a,b,c;
+    double d[3]={0};
+    for(int i=0;i<3;i++)  cin>>d[i];
+    sort(d,d+3);
+    a = d[2];
+    b = d[1];
+    c = d[0];
+
+    if(a >= b + c)  cout << "NAO FORMA TRIANGULO"<<endl;
+    else
+    {
+        if(a*a == b*b + c*c)  cout << "TRIANGULO RETANGULO"<<endl;
+        if(a*a > b*b + c*c)  cout << "TRIANGULO OBTUSANGULO"<<endl;
+        if(a*a < b*b + c*c)  cout << "TRIANGULO ACUTANGULO"<<endl;
+        if(a==b && b==c && a==c)  cout << "TRIANGULO EQUILATERO"<<endl;
+        if((a==b && a!=c && b!=c) || (a==c && a!=b && c!=b)||(b==c && b!=a && c!=a))   cout << "TRIANGULO ISOSCELES"<<endl;
+    }
+    return 0;
+}
+
+作者：ymy
+链接：https://www.acwing.com/solution/content/9460/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    double a, b, c;
+    cin >> a >> b >> c;
+
+    if (b > a)
+    {
+        double t = a;
+        a = b;
+        b = t;
+    }
+    if (c > a)
+    {
+        double t = a;
+        a = c;
+        c = t;
+    }
+    if (c > b)
+    {
+        double t = b;
+        b = c;
+        c = t;
+    }
+
+    if (a >= b + c) cout << "NAO FORMA TRIANGULO" << endl;
+    else
+    {
+        if (a * a == b * b + c * c) cout << "TRIANGULO RETANGULO" << endl;
+        if (a * a > b * b + c * c) cout << "TRIANGULO OBTUSANGULO" << endl;
+        if (a * a < b * b + c * c) cout << "TRIANGULO ACUTANGULO" << endl;
+        if (a == b && b == c) cout << "TRIANGULO EQUILATERO" << endl;
+        else if (a == b || b == c || a == c) cout << "TRIANGULO ISOSCELES" << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/229300/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 662. 点的坐标    原题链接    简单
+作者：    zyy1313 ,  2020-05-02 08:52:05 ,  阅读 185
+
+3
+
+
+#include<iostream>
+#include<cstdio>
+using namespace std;
+int main(){
+    double a,b;
+    cin>>a>>b;
+    if(a==0&&b==0) cout<<"Origem";
+    else if(a==0)  cout<<"Eixo Y";
+    else if(b==0)  cout<<"Eixo X";
+    else if(a>0&&b>0) cout<<"Q1";
+    else if(a<0&&b>0) cout<<"Q2";
+    else if(a<0&&b<0) cout<<"Q3";
+    else if(a>0&&b<0) cout<<"Q4";
+     return 0;
+}
+
+作者：zyy1313
+链接：https://www.acwing.com/solution/content/12534/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 671. DDD    原题链接    简单
+作者：    zyy1313 ,  2020-05-02 08:45:50 ,  阅读 193
+
+2
+
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int x;
+    cin >> x;
+    if (x == 61) cout << "Brasilia" << endl;
+    else if (x == 71) cout << "Salvador" << endl;
+    else if (x == 11) cout << "Sao Paulo" << endl;
+    else if (x == 21) cout << "Rio de Janeiro" << endl;
+    else if (x == 32) cout << "Juiz de Fora" << endl;
+    else if (x == 19) cout << "Campinas" << endl;
+    else if (x == 27) cout << "Vitoria" << endl;
+    else if (x == 31) cout << "Belo Horizonte" << endl;
+    else cout << "DDD nao cadastrado" << endl;
+
+    return 0;
+}
+
+作者：zyy1313
+链接：https://www.acwing.com/solution/content/12533/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+    if(b>c&&d>a&&c+d>a+b&&c>0&&d>0&&a%2==0) cout<<"Valores aceitos"<<endl;
+    else cout<<"Valores nao aceitos"<<endl;
+    return 0;
+}
+
+
+AcWing 669. 加薪    原题链接    简单
+作者：    高小呆 ,  2020-07-06 16:18:15 ,  阅读 147
+
+2
+
+
+1
+这道题虽然简单，但是有几个需要注意的地方：
+//1、对于不同的百分比设置一个参数y这样不用对每种情况总是printf;
+//2、注意在【0,400】区间，只写<=400即可，不用写>=0
+
+include[HTML_REMOVED]
+include[HTML_REMOVED]
+using namespace std;
+int main()
+{
+double x;
+cin>>x;
+double y;//涨的薪水
+if(x<=400.00) y=0.15;
+else if(x<=800.00) y=0.12;
+else if(x<=1200.00) y=0.1;
+else if(x<=2000.00) y=0.07;
+else if(x>2000.00) y=0.04;
+printf(“Novo salario: %.2f\n”,xy+x);
+printf(“Reajuste ganho: %.2f\n”,xy);
+printf(“Em percentual: %.0f %\n”,y*100);
+
+}
+
+作者：高小呆
+链接：https://www.acwing.com/solution/content/15810/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 670. 动物    原题链接    简单
+作者：    小鑫鑫 ,  2019-10-06 21:32:22 ,  阅读 615
+
+1
+
+
+题目描述
+给定你三个葡萄牙语单词，这些词将根据下表从左到右定义一个动物。
+
+请你确定并输出这个动物的名称。
+
+样例
+输入样例：
+vertebrado
+mamifero
+onivoro
+输出样例：
+homem
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string a, b, c;
+
+    cin >> a >> b >> c;
+
+    if (a == "vertebrado")
+    {
+        if (b == "ave")
+        {
+            if (c == "carnivoro") cout << "aguia" << endl;
+
+            else if(c == "onivoro") cout << "pomba" << endl;
+        }
+
+        if (b == "mamifero")
+        {
+            if (c == "onivoro") cout << "homem" << endl;
+            else if (c == "herbivoro") cout << "vaca" <<endl;
+        }
+    }
+    if (a == "invertebrado")
+    {
+        if (b == "inseto")
+        {
+            if (c == "hematofago") cout << "pulga" << endl;
+            else if (c == "herbivoro") cout <<"lagarta" << endl;
+        }
+        if (b == "anelideo")
+        {
+            if (c == "hematofago") cout << "sanguessuga" << endl;
+            else if (c == "onivoro") cout << "minhoca" << endl;
+        }
+    }
+    return 0;
+}
+
+作者：小鑫鑫
+链接：https://www.acwing.com/solution/content/5137/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 667. 游戏时间    原题链接    简单
+作者：    电光耗子王 ,  2020-05-31 20:23:46 ,  阅读 174
+
+3
+
+
+题目描述
+blablabla
+
+样例
+blablabla
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int a,b;
+    cin>>a>>b;
+    if(b<a) b+=24;
+    if(a==b) cout<<"O JOGO DUROU 24 HORA(S)"<<endl;
+    else if(a<b) cout<<"O JOGO DUROU "<<b-a<<" HORA(S)"<<endl;
+    return 0;
+}
+
+作者：电光耗子王
+链接：https://www.acwing.com/solution/content/14003/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+using namespace std;
+int main(){
+    double a;
+    cin>>a;
+    if (a>=0&&a<=25)
+    printf("Intervalo [%d,%d]",0,25);
+    else if (a>25&&a<=50)
+    printf("Intervalo (%d,%d]",25,50);
+    else if (a>50&&a<=75)
+    printf("Intervalo (%d,%d]",50,75);
+    else if (a>75&&a<=100)
+    printf("Intervalo (%d,%d]",75,100);
+    else 
+    printf("Fora de intervalo");
+    return 0;
+
+}
+
+作者：noobcoder
+链接：https://www.acwing.com/solution/content/9365/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 664. 三角形-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-24 09:22:53 ,  阅读 217
+
+2
+
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+int main()
+{
+    double a,b,c;
+    cin>>a>>b>>c;
+    //判断三边是否可构成三角形   两边之和>第三边 两边之差的绝对值<第三边
+    if(a+b>c && fabs(a-b)<c) printf("Perimetro = %.1lf",a+b+c);
+    else printf("Area = %.1lf",(a+b)*c/2);
+    return 0;
+}
+
+作者：Struggle
+链接：https://www.acwing.com/solution/content/13592/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 665. 倍数    原题链接    简单
+作者：    hevttccao ,  2020-03-01 18:58:07 ,  阅读 293
+
+3
+
+
+# include <iostream>
+
+using namespace std;
+
+int main ()
+{
+    int a,b;
+    cin>>a>>b;
+
+    if (a%b==0||b%a==0)
+    cout<<"Sao Multiplos"<<endl;
+    else
+    cout<<"Nao sao Multiplos"<<endl;
+    return 0;
+}
+
+AcWing 660. 零食    原题链接    简单
+作者：    小鑫鑫 ,  2019-10-20 20:43:13 ,  阅读 358
+
+1
+
+
+题目描述
+某商店出售5种零食，零食编号为1~5。
+
+5种零食的价目表如下所示：
+
+零食种类 价格
+零食 1 R4.00零食2R4.00零食2R 4.50
+零食 3 R5.00零食4R5.00零食4R 2.00
+零食 5 R$ 1.50
+现在给定某种零食的编号和数量，请你计算总价值是多少。
+
+样例
+输入样例：
+3 2
+输出样例：
+Total: R$ 10.00
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int x, y;
+    cin >> x >> y;
+    if (x == 1) printf ("Total: R$ %.2lf\n", y * 4.00);
+    else if (x == 2) printf ("Total: R$ %.2lf\n", y * 4.50);
+    else if (x == 3) printf ("Total: R$ %.2lf\n", y * 5.00);
+    else if (x == 4) printf ("Total: R$ %.2lf\n", y * 2.00);
+    else if (x == 5) printf ("Total: R$ %.2lf\n", y * 1.50);
+
+    return 0;
+}
+
+作者：小鑫鑫
+链接：https://www.acwing.com/solution/content/5263/
+
+
+AcWing 606. 平均数1--语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 10:31:08 ,  阅读 278
+
+3
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    double a,b;
+    cin>>a>>b;
+    printf("MEDIA = %.5lf",(a*3.5+b*7.5)/11);//11=3.5+7.5
+    return 0;
+}
+
+AcWing 655. 天数转换(与时间转换同理）    原题链接    简单
+作者：    noobcoder ,  2020-02-27 16:28:04 ,  阅读 274
+
+
+#include <iostream>
+using namespace std;
+int main(){
+    int x,y,m,d;
+    cin>>x;
+    y=x/365;
+    m=x%365/30;
+    d=x-y*365-m*30;//也可以写成d=x%365%30
+    cout<<y<<" ano(s)"<<endl;///注意格式
+    cout<<m<<" mes(es)"<<endl;
+    cout<<d<<" dia(s)"<<endl;
+    return 0;
+
+}
+
+作者：noobcoder
+链接：https://www.acwing.com/solution/content/9192/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+AcWing 656. 钞票和硬币    原题链接    中等
+作者：    optimjie ,  2020-02-26 18:04:51 ,  阅读 674
+
+15
+
+
+3
+刚才打saber被double精度坑了，所以直接 *100 变成int就能过了
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main()
+{
+    double n;
+    cin >> n;
+
+    int m = (int)(n * 100);
+
+    double a[12] = {10000, 5000, 2000, 1000, 500, 200, 100, 50, 25, 10, 5, 1};
+    int ans[12] = {0};
+
+    for (int i = 0; i < 12; i++)
+    {
+        int cnt = 0;
+        while (m >= a[i])
+        {
+            m -= a[i];
+            cnt++;
+        }
+        ans[i] = cnt;
+    }
+
+    puts("NOTAS:");
+    for (int i = 0; i < 6; i++)
+        printf("%d nota(s) de R$ %.2lf\n", ans[i], (double)a[i] / 100);
+    puts("MOEDAS:");
+    for (int i = 6; i < 12; i++)
+        printf("%d moeda(s) de R$ %.2lf\n", ans[i], (double)a[i] / 100);
+
+    return 0;
+}
+
+作者：optimjie
+链接：https://www.acwing.com/solution/content/9139/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 618. 燃料消耗（超简单做法，看这个就够了）    原题链接    简单
+作者：    noobcoder ,  2020-02-27 16:12:56 ,  阅读 312
+
+2
+
+
+问题分析
+本题数据量很大，需要考虑到路程由行驶速度与时间乘积得到
+时间和速度的上限均为10^9，那么得到的数据大小很可能特别大，因此此处应考虑到出现爆int的现象
+
+代码如下：
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;  
+
+int main(){
+    long long s,t;
+    cin>>s>>t;
+    cout<<fixed<<setprecision(3)<<s*t/12.0<<endl;
+    return 0;
+}
+总结：
+采用setprecision实现数据精度的控制
+因为数据很大，防止数据溢出，采用long long
+
+作者：noobcoder
+链接：https://www.acwing.com/solution/content/9190/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+
+int main()
+{
+    double s, t;
+    scanf("%lf%lf", &s, &t);
+    printf("%.3lf\n", s * t / 12);
+
+    return 0;
+}
+
+#include <cstdio>
+
+int main()
+{
+    double m;
+    scanf("%lf", &m);
+    int n = m * 100;
+
+    printf("NOTAS:\n");
+    printf("%d nota(s) de R$ 100.00\n", n / 10000); n %= 10000;
+    printf("%d nota(s) de R$ 50.00\n", n / 5000); n %= 5000;
+    printf("%d nota(s) de R$ 20.00\n", n / 2000); n %= 2000;
+    printf("%d nota(s) de R$ 10.00\n", n / 1000); n %= 1000;
+    printf("%d nota(s) de R$ 5.00\n", n / 500); n %= 500;
+    printf("%d nota(s) de R$ 2.00\n", n / 200); n %= 200;
+
+    printf("MOEDAS:\n");
+    printf("%d moeda(s) de R$ 1.00\n", n / 100); n %= 100;
+    printf("%d moeda(s) de R$ 0.50\n", n / 50); n %= 50;
+    printf("%d moeda(s) de R$ 0.25\n", n / 25); n %= 25;
+    printf("%d moeda(s) de R$ 0.10\n", n / 10); n %= 10;
+    printf("%d moeda(s) de R$ 0.05\n", n / 5); n %= 5;
+    printf("%d moeda(s) de R$ 0.01\n", n / 1); n %= 1;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/220639/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
