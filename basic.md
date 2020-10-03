@@ -5737,3 +5737,479 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/220639/
+
+AcWing 617. 距离    原题链接    简单
+作者：    hevttccao ,  2020-02-24 12:15:24 ,  阅读 234
+
+
+
+C++ 代码
+# include <cstdio>
+
+int main ()
+{
+    int i;
+    scanf("%d",&i);
+    printf("%d minutos",i*2);
+    return 0;
+}
+
+AcWing 614. 最大值 不用库函数    原题链接    中等
+作者：    Rex ,  2020-04-01 04:05:55 ,  阅读 212
+
+4
+
+
+题目描述
+给定三个整数，请你找出它们中的最大值。
+
+样例
+7 14 106
+输出
+
+106 eh o maior
+算法1
+时间复杂度
+O(1)
+
+C++ 代码
+#include <cstdio>
+#include <stdlib.h> //abs
+
+using namespace std;
+
+int max(int a, int b)
+{
+    return (a + b + abs(a - b)) / 2;
+}
+
+int main()
+{
+    int a, b, c;
+    scanf("%d%d%d", &a, &b, &c);
+    printf("%d eh o maior", max(max(a, b), c));
+}
+
+作者：Rex
+链接：https://www.acwing.com/solution/content/10314/
+
+
+AcWing 610. 工资和奖金    原题链接    简单
+作者：    writer ,  2020-02-23 22:46:44 ,  阅读 336
+
+C++ 代码
+#include <cstdio>
+
+using namespace std;
+
+int main()
+{
+    char a[10];
+    double b, c;
+
+    scanf("%s %lf %lf", a, &b, &c);
+    printf("TOTAL = R$ %.2lf", b + c * 0.15);
+    return 0;
+}
+
+AcWing 607. 平均数2-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 10:34:06 ,  阅读 147
+
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    double a,b,c;
+    cin>>a>>b>>c;
+    printf("MEDIA = %.1lf",(a*2+b*3+c*5)/10);
+    return 0;
+}
+
+cWing 613. 面积-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 15:27:37 ,  阅读 169
+
+3
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    double a,b,c;
+    cin>>a>>b>>c;
+    cout.setf(ios_base::fixed);
+    cout.precision(3);
+    cout<<"TRIANGULO: "<<a*c*0.5<<endl;
+    cout<<"CIRCULO: "<<3.14159*c*c<<endl;
+    cout<<"TRAPEZIO: "<<(a+b)*c/2<<endl;
+    cout<<"QUADRADO: "<<b*b<<endl;
+    cout<<"RETANGULO: "<<a*b;
+    return 0;
+}
+
+作者：Struggle
+链接：https://www.acwing.com/solution/content/13552/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 612. 球的体积-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 11:04:14 ,  阅读 166
+
+2
+
+
+#include<iostream>
+using namespace std;
+#define PI 3.14159
+int main()
+{
+    int R;
+    cin>>R;
+    printf("VOLUME = %.3lf",(4/3.0)*PI*R*R*R);
+    return 0;
+}
+
+AcWing 611. 简单计算-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 10:59:25 ,  阅读 207
+
+2
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int code,n;
+    double price,sum=0.0;
+    for(int i=1;i<=2;i++)
+        cin>>code>>n>>price,sum+=n*price;
+    printf("VALOR A PAGAR: R$ %.2lf",sum);
+    return 0;
+}
+
+作者：Struggle
+链接：https://www.acwing.com/solution/content/13540/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 605. 简单乘积恶搞    原题链接    简单
+作者：    cht ,  2020-04-14 19:02:59 ,  阅读 232
+
+3
+
+
+题目描述
+读取两个整数值。
+
+在此之后，计算它们的乘积并将结果存储在名为PROD的变量中。
+
+输出结果如下例所示。
+
+样例
+输入样例：
+3
+9
+输出样例：
+PROD = 27
+算法1
+(正常做法)
+直接a*b。
+时间复杂度
+O(1)O(1)
+C++ 代码
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+    cout << "PROD = " << a * b << endl;
+    return 0;
+}
+（此算法十分简单）
+算法2
+(二分)
+用二分处理，先把负数转换，然后二分。
+时间复杂度 #### 作者没算
+C++ 代码
+#include<iostream>
+
+using namespace std;
+
+int f = 0;//数的状态（0，-..,...）
+
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+
+    if(a == 0 || b == 0) f = 2;//处理状态
+    else if(a < 0 && b >= 0 || b < 0 && a >= 0)
+    {
+        f = 1;
+        if(a < 0) a = a * -1;
+        else b = b * -1;
+    }
+
+    int l = -100000000, r = 100000000;
+    while(r - l >= 1)
+    {
+        int mid = (l + r) / 2;//二分
+        if(mid >= a * b) r = mid;
+        else l = mid + 1;
+    }
+
+    if(f == 2) 
+    {
+        cout <<"PROD = "  << l;
+    }
+    else if(f == 0)
+    {
+        cout <<"PROD = "  << l;
+    }
+    else cout << "PROD = -" << l;
+}
+此算法较为简单
+算法3
+(高精度)
+（让我崩溃。。。）
+时间复杂度 没算
+C++ 代码(照着y总写的)
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> f(vector<int> &a, int b)//处理函数
+{
+    vector<int> c;//定义结果
+    int x = 0;
+    for (int i = 0; i < a.size() || x; i ++ )//一位一位运算
+    {
+        if (i < a.size()) x += a[i] * b;//每次把a【i】乘b
+        c.push_back(x % 10);
+        x = x / 10;
+    }
+    while (c.size() > 1 && c.back() == 0) c.pop_back();
+
+    return c;
+}
+
+
+int main()
+{
+    string a;
+    int b;
+    cin >> a >> b;
+    vector<int> a2;
+    for (int i = a.size() - 1; i >= 0; i -- ) a2.push_back(a[i] - '0');
+    auto c = f(a2, b);
+    for (int i = c.size() - 1; i >= 0; i -- ) printf("%d", c[i]);
+
+    return 0;
+}
+（此算法有一点点难）
+算法4
+(位运算)
+C++ 代码(由 抽风_1 提供)
+#include <stdio.h>
+
+int add(int a, int b)
+{
+    while (b)
+    {
+        int x = a ^ b;
+        int y = (a & b) << 1;
+        a = x;
+        b = y;
+    }
+    return a;
+}
+
+int main()
+{
+    int a, b;
+    int res = 0;
+    scanf("%d%d", &a, &b);
+    if (b < 0)
+    {
+        a = add(~a, 1);
+        b = add(~b, 1);
+    }
+    while (b)
+    {
+        if (b & 1) res = add(res, a);
+        a <<= 1;
+        b >>= 1;
+    }
+    printf("PROD = %d", res);
+    return 0;
+}
+
+作者：cht
+链接：https://www.acwing.com/solution/content/5246/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 654. 时间转换    原题链接    简单
+作者：    小鑫鑫 ,  2019-10-06 22:30:16 ,  阅读 478
+
+7
+
+
+题目描述
+读取一个整数值，它是工厂中某个事件的持续时间（以秒为单位），请你将其转换为小时：分钟：秒来表示。
+
+样例
+输入样例：
+556
+输出样例：
+0:9:16
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int t;
+    cin >> t;
+    int h = t / 3600;
+    int m = t % 3600 / 60;
+    int s = t % 60;
+    cout << h << ':' << m << ':' << s << endl;
+    return 0;
+}
+
+作者：小鑫鑫
+链接：https://www.acwing.com/solution/content/5141/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 653. 钞票    原题链接    中等
+作者：    cht ,  2020-05-07 17:05:10 ,  阅读 377
+
+11
+
+
+2
+题目描述
+在这个问题中，你需要读取一个整数值并将其分解为多张钞票的和，每种面值的钞票可以使用多张，并要求所用的钞票数量尽可能少。
+
+请你输出读取值和钞票清单。
+
+钞票的可能面值有100,50,20,10,5,2,1。
+
+输入格式
+输入一个整数N。
+
+输出格式
+参照输出样例，输出读取数值以及每种面值的钞票的需求数量。
+
+数据范围
+0<N<1000000
+
+样例
+输入样例：
+576
+输出样例：
+576
+5 nota(s) de R$ 100,00
+1 nota(s) de R$ 50,00
+1 nota(s) de R$ 20,00
+0 nota(s) de R$ 10,00
+1 nota(s) de R$ 5,00
+0 nota(s) de R$ 2,00
+1 nota(s) de R$ 1,00
+算法1
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int n, a[7] = {100, 50, 20, 10, 5, 2, 1};
+    cin >> n;
+    printf("%d\n", n);
+    for (int i = 0; i < 7; i ++ )
+    {
+        printf("%d nota(s) de R$ %d,00\n", n / a[i], a[i]);
+        n %= a[i];
+    }
+    return 0;
+}
+
+作者：cht
+链接：https://www.acwing.com/solution/content/12852/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 616. 两点间的距离(一定要写对头文件）    原题链接    简单
+作者：    noobcoder ,  2020-02-27 14:58:30 ,  阅读 386
+
+6
+
+
+#include <iostream>
+#include <cmath>///一定要写这个头文件，不然编译过不了哦
+using namespace std;
+int main(){
+    double x1,y1,x2,y2;
+    double ans;
+    cin>>x1>>y1>>x2>>y2;
+    ans =sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    printf("%.4lf",ans);
+    return 0;
+
+}
+
+作者：noobcoder
+链接：https://www.acwing.com/solution/content/9177/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 615. 油耗-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 15:49:21 ,  阅读 185
+
+2
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int X;
+    double Y;
+    cin>>X>>Y;
+    printf("%.3lf km/l",X/Y);
+    return 0;
+}
+
+AcWing 609. 工资-语法题-C++    原题链接    简单
+作者：    Struggle ,  2020-05-23 10:50:06 ,  阅读 204
+
+3
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    double wage;
+    int code,h;
+    cin>>code>>h>>wage;
+    printf("NUMBER = %d\n",code);
+    printf("SALARY = U$ %.2lf",h*wage);
+    return 0;
+}
+
+两个printf可以合并在一起hh
+
