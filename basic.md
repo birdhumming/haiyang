@@ -404,8 +404,7 @@ blablabla
 
 作者：yzm0211
 链接：https://www.acwing.com/solution/content/1365/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 
 permuttions with and without repeating numbers
@@ -2797,8 +2796,7 @@ int main()
 ```
 作者：白云苍狗
 链接：https://www.acwing.com/solution/content/7348/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 题目描述
 合并两个字符串，把第二个字符串放到第一个字符串中最大ASSIC码的字符的后面
@@ -2866,13 +2864,11 @@ int main()
 ```
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/247367/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 作者：zhiling
 链接：https://www.acwing.com/solution/content/2913/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 ```
 #include <iostream>
@@ -4590,8 +4586,7 @@ int main()
 
 作者：皮KA丘
 链接：https://www.acwing.com/solution/content/17796/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 #include <cstdio>
 #include <iostream>
@@ -4951,8 +4946,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/229356/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 C++ 代码
 #include<cstdio>
@@ -4976,8 +4970,7 @@ int main()
 
 作者：wkj
 链接：https://www.acwing.com/solution/content/2673/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 #include<cstdio>
 #include<iostream>
@@ -5002,8 +4995,7 @@ int main()
 
 作者：只要是你呀
 链接：https://www.acwing.com/solution/content/9383/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 
 最近刚学了sort函数，所以这题可以用sort函数写。
@@ -5039,8 +5031,7 @@ int main()
 
 作者：只要是你呀
 链接：https://www.acwing.com/solution/content/9383/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 #include <iostream>
 
@@ -5080,8 +5071,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/229340/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 读取一个保留两位小数的浮点数值，表示一个公民的工资。
 
@@ -5137,8 +5127,7 @@ int main()
 
 作者：小鑫鑫
 链接：https://www.acwing.com/solution/content/7980/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 #include <cstdio>
 
@@ -5170,8 +5159,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/229326/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 AcWing 668. 游戏时间2    原题链接    中等
 作者：    Belous ,  2020-03-17 15:11:31 ,  阅读 371
@@ -5232,8 +5220,7 @@ int main()
 
 作者：ymy
 链接：https://www.acwing.com/solution/content/9460/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 #include <iostream>
 
@@ -5278,8 +5265,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/229300/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 AcWing 662. 点的坐标    原题链接    简单
 作者：    zyy1313 ,  2020-05-02 08:52:05 ,  阅读 185
@@ -5305,8 +5291,7 @@ int main(){
 
 作者：zyy1313
 链接：https://www.acwing.com/solution/content/12534/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 AcWing 671. DDD    原题链接    简单
 作者：    zyy1313 ,  2020-05-02 08:45:50 ,  阅读 193
@@ -5340,8 +5325,7 @@ int main()
 
 作者：zyy1313
 链接：https://www.acwing.com/solution/content/12533/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 
 #include<bits/stdc++.h>
@@ -5387,8 +5371,7 @@ printf(“Em percentual: %.0f %\n”,y*100);
 
 作者：高小呆
 链接：https://www.acwing.com/solution/content/15810/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 670. 动物    原题链接    简单
 作者：    小鑫鑫 ,  2019-10-06 21:32:22 ,  阅读 615
@@ -5453,8 +5436,7 @@ int main()
 
 作者：小鑫鑫
 链接：https://www.acwing.com/solution/content/5137/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 667. 游戏时间    原题链接    简单
 作者：    电光耗子王 ,  2020-05-31 20:23:46 ,  阅读 174
@@ -5482,8 +5464,7 @@ int main()
 
 作者：电光耗子王
 链接：https://www.acwing.com/solution/content/14003/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 
 #include <iostream>
@@ -5507,8 +5488,7 @@ int main(){
 
 作者：noobcoder
 链接：https://www.acwing.com/solution/content/9365/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 AcWing 664. 三角形-语法题-C++    原题链接    简单
 作者：    Struggle ,  2020-05-24 09:22:53 ,  阅读 217
@@ -5531,8 +5511,7 @@ int main()
 
 作者：Struggle
 链接：https://www.acwing.com/solution/content/13592/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 AcWing 665. 倍数    原题链接    简单
 作者：    hevttccao ,  2020-03-01 18:58:07 ,  阅读 293
@@ -5638,8 +5617,7 @@ int main(){
 
 作者：noobcoder
 链接：https://www.acwing.com/solution/content/9192/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 
 
@@ -5690,8 +5668,7 @@ int main()
 
 作者：optimjie
 链接：https://www.acwing.com/solution/content/9139/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 AcWing 618. 燃料消耗（超简单做法，看这个就够了）    原题链接    简单
 作者：    noobcoder ,  2020-02-27 16:12:56 ,  阅读 312
@@ -5720,8 +5697,7 @@ int main(){
 
 作者：noobcoder
 链接：https://www.acwing.com/solution/content/9190/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 #include <cstdio>
 
@@ -5763,5 +5739,3 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/220639/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
