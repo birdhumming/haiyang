@@ -5851,8 +5851,8 @@ int main()
 
 作者：Struggle
 链接：https://www.acwing.com/solution/content/13552/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 
 AcWing 612. 球的体积-语法题-C++    原题链接    简单
@@ -5892,8 +5892,8 @@ int main()
 
 作者：Struggle
 链接：https://www.acwing.com/solution/content/13540/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 AcWing 605. 简单乘积恶搞    原题链接    简单
 作者：    cht ,  2020-04-14 19:02:59 ,  阅读 232
@@ -6053,8 +6053,8 @@ int main()
 
 作者：cht
 链接：https://www.acwing.com/solution/content/5246/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 
 AcWing 654. 时间转换    原题链接    简单
@@ -6090,8 +6090,8 @@ int main()
 
 作者：小鑫鑫
 链接：https://www.acwing.com/solution/content/5141/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+
 
 AcWing 653. 钞票    原题链接    中等
 作者：    cht ,  2020-05-07 17:05:10 ,  阅读 377
@@ -6149,8 +6149,8 @@ int main()
 
 作者：cht
 链接：https://www.acwing.com/solution/content/12852/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 AcWing 616. 两点间的距离(一定要写对头文件）    原题链接    简单
 作者：    noobcoder ,  2020-02-27 14:58:30 ,  阅读 386
@@ -6173,8 +6173,8 @@ int main(){
 
 作者：noobcoder
 链接：https://www.acwing.com/solution/content/9177/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 AcWing 615. 油耗-语法题-C++    原题链接    简单
 作者：    Struggle ,  2020-05-23 15:49:21 ,  阅读 185
