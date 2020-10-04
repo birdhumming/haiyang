@@ -1,10 +1,9 @@
+〔manim | 算法 | 数据结构〕 完全理解并深入应用树状数组 | 支持多种动态维护区间操作
+
+https://www.bilibili.com/video/BV1pE41197Qj
+
 AcWing 90. 64位整数乘法    原题链接    简单
-作者：    洛希krist ,  2019-01-23 11:41:20 ,  阅读 2426
 
-19
-
-
-4
 题目描述
 求 a 乘 b 对 p 取模的值。
 数据范围
@@ -10180,6 +10179,3 @@ int main()
 链接：https://www.acwing.com/solution/content/13818/
  
 
-〔manim | 算法 | 数据结构〕 完全理解并深入应用树状数组 | 支持多种动态维护区间操作
-
-https://www.bilibili.com/video/BV1pE41197Qj
