@@ -25567,5 +25567,3504 @@ int main()
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/155884/
 来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。11
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 368. 银河 SCC + 差分约束    原题链接    中等
+作者：    xxh ,  2020-02-13 13:32:05 ,  阅读 347
+
+2
+
+
+题解 ： https://xiaoxiaoh.blog.csdn.net/article/details/104294442
+
+一、内容
+银河中的恒星浩如烟海，但是我们只关注那些最亮的恒星。
+
+我们用一个正整数来表示恒星的亮度，数值越大则恒星就越亮，恒星的亮度最暗是 1。
+
+现在对于 N 颗我们关注的恒星，有 M 对亮度之间的相对关系已经判明。
+
+你的任务就是求出这 N 颗恒星的亮度值总和至少有多大。
+输入格式
+
+第一行给出两个整数 N 和 M。
+
+之后 M 行，每行三个整数 T, A, B，表示一对恒星(A, B)之间的亮度关系。恒星的编号从 1 开始。
+
+如果 T = 1，说明 A 和 B 亮度相等。
+如果 T = 2，说明 A 的亮度小于 B 的亮度。
+如果 T = 3，说明 A 的亮度不小于 B 的亮度。
+如果 T = 4，说明 A 的亮度大于 B 的亮度。
+如果 T = 5，说明 A 的亮度不大于 B 的亮度。
+输出格式
+
+输出一个整数表示结果。
+
+若无解，则输出 -1。
+数据范围
+
+N≤100000,M≤100000
+输入样例：
+
+5 7 
+1 1 2 
+2 3 2 
+4 4 1 
+3 4 5 
+5 4 5 
+2 3 5 
+4 5 1
+输出样例：
+
+11
+二、思路
+根据题目所给关系可以建立不等式：
+
+
+三、代码
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+using namespace std;
+typedef long long ll;
+const int N = 1e5 + 5, M = 6 * N;
+struct E {int v, w, next;} e[M];
+int n, m, a, b, x, len, h[N], sh[N], top, num, id[N], scc_cnt, stack[N], dfn[N], low[N], scc[N], d[N]; 
+bool in_st[N], vis[N];
+void add(int h[], int u, int v, int w) {
+    e[++len].v = v; e[len].next = h[u]; e[len].w = w; h[u] = len; 
+}
+void tarjan(int u) {
+    dfn[u] = low[u] = ++num;
+    stack[++top] = u; in_st[u] = true;
+    for (int j = h[u]; j; j = e[j].next) {
+        int v = e[j].v;
+        if (!dfn[v]) {
+            tarjan(v);
+            low[u] = min(low[u], low[v]);
+        } else if (in_st[v]) low[u] = min(low[u], dfn[v]);
+    } 
+    if (dfn[u] == low[u]) {
+        ++scc_cnt; int v;
+        do {
+            v = stack[top--]; in_st[v] = false;
+            scc[scc_cnt]++; id[v] = scc_cnt; 
+        } while (u != v); 
+    }
+}
+int dfs(int u) {
+    int ans = 0;
+    vis[u] = true;
+    for (int j = h[u]; j; j = e[j].next) {
+        int v = e[j].v;
+        if (id[u] == id[v]) ans += e[j].w;
+        if (vis[v] || id[u] != id[v]) continue;
+        ans += dfs(v);
+    }
+    return ans;
+}
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= m; i++) {
+        scanf("%d%d%d", &x, &a, &b);
+        if (x == 1) add(h, b, a, 0), add(h, a, b, 0); 
+        else if (x == 2) add(h, a, b, 1); 
+        else if (x == 3) add(h, b, a, 0);
+        else if (x == 4) add(h, b, a, 1);
+        else if (x == 5) add(h, a, b, 0);
+    }
+    //建立超级源点 
+    for (int i = 1; i <= n; i++) add(h, 0, i, 1);
+    tarjan(0);
+    //判断是否有强连通分量 边权大于0
+    bool ok = false;
+    for (int i = 0; i <= n; i++) {
+        if (dfs(i)) {
+            ok = true; 
+            break;
+        }
+    } 
+    if (ok) printf("-1");
+    else {
+        for (int u = 0; u <= n; u++) {
+            for (int j = h[u]; j; j = e[j].next) {
+                int v = e[j].v;
+                if (id[u] != id[v]) add(sh, id[u], id[v], e[j].w);
+            }
+        }
+        //根据拓扑图进行dp
+        for (int u = scc_cnt; u >= 1; u--) {
+            for (int j = sh[u]; j; j = e[j].next) {
+                int v = e[j].v;
+                if (d[v] < d[u] + e[j].w) d[v] = d[u] + e[j].w;
+            }
+        }
+        ll ans = 0;
+        for (int i = 1; i <= scc_cnt; i++) ans += d[i] * scc[i];
+        printf("%lld", ans); 
+    }
+    return 0; 
+} 
+
+作者：xxh
+链接：https://www.acwing.com/solution/content/8509/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 100010, M = 600010;
+
+int n, m;
+int h[N], hs[N], e[M], ne[M], w[M], idx;
+int dfn[N], low[N], timestamp;
+int stk[N], top;
+bool in_stk[N];
+int id[N], scc_cnt, size[N];
+int dist[N];
+
+void add(int h[], int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ timestamp;
+    stk[ ++ top] = u, in_stk[u] = true;
+
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        }
+        else if (in_stk[j]) low[u] = min(low[u], dfn[j]);
+    }
+
+    if (dfn[u] == low[u])
+    {
+        ++ scc_cnt;
+        int y;
+        do {
+            y = stk[top -- ];
+            in_stk[y] = false;
+            id[y] = scc_cnt;
+            size[scc_cnt] ++ ;
+        } while (y != u);
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    memset(hs, -1, sizeof hs);
+
+    for (int i = 1; i <= n; i ++ ) add(h, 0, i, 1);
+
+    while (m -- )
+    {
+        int t, a, b;
+        scanf("%d%d%d", &t, &a, &b);
+        if (t == 1) add(h, b, a, 0), add(h, a, b, 0);
+        else if (t == 2) add(h, a, b, 1);
+        else if (t == 3) add(h, b, a, 0);
+        else if (t == 4) add(h, b, a, 1);
+        else add(h, a, b, 0);
+    }
+
+    tarjan(0);
+
+    bool success = true;
+    for (int i = 0; i <= n; i ++ )
+    {
+        for (int j = h[i]; ~j; j = ne[j])
+        {
+            int k = e[j];
+            int a = id[i], b = id[k];
+            if (a == b)
+            {
+                if (w[j] > 0)
+                {
+                    success = false;
+                    break;
+                }
+            }
+            else add(hs, a, b, w[j]);
+        }
+        if (!success) break;
+    }
+
+    if (!success) puts("-1");
+    else
+    {
+        for (int i = scc_cnt; i; i -- )
+        {
+            for (int j = hs[i]; ~j; j = ne[j])
+            {
+                int k = e[j];
+                dist[k] = max(dist[k], dist[i] + w[j]);
+            }
+        }
+
+        LL res = 0;
+        for (int i = 1; i <= scc_cnt; i ++ ) res += (LL)dist[i] * size[i];
+
+        printf("%lld\n", res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/155909/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdlib>
+#include <complex>
+#include <climits>
+#include <utility>
+#include <sstream>
+#include <cctype>
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+
+const int N=100005;
+const int M=600005;
+
+int n,m;
+int w[M],e[M],ne[M],idx;
+int dfn[N],low[N],sz[N];
+int id[N],h[N],hs[N];
+int stk[N],tt;
+bool in_stk[N];
+int timestamp,scc_cnt;
+int dist[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    bool fx=false;
+    do ch=getchar();while(~ch&&ch!='-'&&(ch<'0'||ch>'9'));
+    if(ch=='-')fx=true,ch=getchar();
+    for(;ch>='0'&&ch<='9';ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return fx?-x:x;
+}
+
+inline void add(int h[],int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+void tarjan(int u)
+{
+    dfn[u]=low[u]=++timestamp;
+    stk[++tt]=u,in_stk[u]=true;
+    for(int i=h[u];i;i=ne[i])
+        if(!dfn[e[i]])
+        {
+            tarjan(e[i]);
+            low[u]=min(low[u],low[e[i]]);
+        }
+        else if(in_stk[e[i]])
+            low[u]=min(low[u],dfn[e[i]]);
+    if(low[u]==dfn[u])
+    {
+        int y;
+        scc_cnt++;
+        do
+        {
+            y=stk[tt--];
+            in_stk[y]=false;
+            id[y]=scc_cnt;
+            sz[scc_cnt]++;
+        }while(y!=u);
+    }
+}
+
+int main()
+{
+    n=read(),m=read();
+    for(int i=0;i<m;i++)
+    {
+        int a,b,t;
+        t=read(),a=read(),b=read();
+        if(t==1)add(h,a,b,0),add(h,b,a,0);
+        else if(t==2)add(h,a,b,1);
+        else if(t==3)add(h,b,a,0);
+        else if(t==4)add(h,b,a,1);
+        else add(h,a,b,0);
+    }
+    for(int i=1;i<=n;i++)
+        add(h,0,i,1);
+    tarjan(0);
+    bool success=true;
+    for(int i=0;i<=n&&success;i++)
+        for(int j=h[i];j&&success;j=ne[j])
+            if(id[i]!=id[e[j]])
+                add(hs,id[i],id[e[j]],w[j]);
+            else if(w[j]>0)
+                success=false;
+    if(!success)puts("-1");
+    else
+    {
+        for(int i=scc_cnt;i;i--)
+            for(int j=hs[i];j;j=ne[j])
+                dist[e[j]]=max(dist[e[j]],dist[i]+w[j]);
+        long long res=0;
+        for(int i=1;i<=scc_cnt;i++)
+            res+=dist[i]*1ll*sz[i];
+        printf("%lld",res);
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/326106/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 395. 冗余路径    原题链接    简单
+作者：    Jayfeather ,  2019-08-30 15:48:31 ,  阅读 395
+
+2
+
+
+1
+题目描述
+求一个图补成边双图的最少加边数。
+
+样例
+7 7
+1 2
+2 3
+3 4
+2 5
+4 5
+5 6
+5 7
+2
+算法1
+(Tarjan) O(n)O(n)
+TarjanTarjan e-DCC缩点，然后将叶子节点数+1后除2就是答案。
+
+因为我们只要把所有的叶子节点连起来，那么这些节点到其他点就有两种走法（原树上和新加的边上），其他点也是如此。
+
+C++ 代码
+#include <iostream>
+#include <cstdio>
+using namespace std;
+struct edge{
+    int to,next;
+}s[2][20200];
+int ls[2],head[2][10010];
+void link(int k,int a,int b){
+    s[k][ls[k]].to=b;
+    s[k][ls[k]].next=head[k][a];
+    head[k][a]=ls[k]++;
+}
+int pre[10010];
+int belong[10010];
+int getf(int u){
+    return belong[u];
+}
+int dfs(int k,int u,int f,int &endx){
+    int le=0;
+    endx=u;
+    pre[u]=f;
+    for(int i=head[k][u],y,tmp,tmp2;i;i=s[k][i].next)
+        if((y=s[k][i].to)!=f){
+            if((tmp=dfs(k,y,u,tmp2))>le){
+                le=tmp;
+                endx=tmp2;
+            }
+        }
+    return le+1;
+}
+int dfn[3010],low[3010],stamp;
+int sta[3010],top;
+int ins[3010];
+int ind[3010];
+int pc[3010][3010];
+int cnt;
+void tarjan(int u,int fa){
+    dfn[u]=low[u]=++stamp;
+    sta[++top]=u;ins[u]=1;
+    int y;
+    for(int i=head[0][u];i;i=s[0][i].next)
+        if((y=s[0][i].to)!=fa){
+            if(!dfn[y]){
+                tarjan(y,u);
+                low[u]=min(low[u],low[y]);
+            }
+            else
+            if(ins[y])
+                low[u]=min(low[u],dfn[y]);
+        }
+    if(low[u]==dfn[u]){
+        cnt++;
+        do{
+            y=sta[top--];
+            ins[y]=0;
+            belong[y]=cnt;
+        }while(y!=u);
+    }
+}
+int edk=0;
+int main(){
+    freopen("path.in","r",stdin);
+    freopen("path.out","w",stdout);
+    ls[0]=ls[1]=1;
+    int n,m,a,b;
+    cin>>n>>m;
+    for(int i=0;i<m;i++){
+        scanf("%d%d",&a,&b);
+        link(edk,a,b);link(edk,b,a);//连边
+    }
+    for(int i=1;i<=n;i++)
+        if(!dfn[i])
+            tarjan(i,0);//缩点
+    for(int i=1;i<=n;i++)
+        for(int j=head[edk][i],y;j;j=s[edk][j].next)
+            if(getf(i)!=getf(y=s[edk][j].to)&&!pc[getf(i)][getf(y)]){
+                pc[getf(i)][getf(y)]=1;
+                link(edk^1,getf(i),getf(y));
+                ind[getf(y)]++;//找叶子节点
+            }
+    int ans=1;
+    for(int i=1;i<=cnt;i++) ans+=ind[i]==1;//连接它的边只有1个即叶子
+    printf("%d",ans/2);
+    return 0;
+}
+
+作者：Jayfeather
+链接：https://www.acwing.com/solution/content/4248/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 5010, M = 20010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+int stk[N], top;
+int id[N], dcc_cnt;
+bool is_bridge[M];
+int d[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u, int from)
+{
+    dfn[u] = low[u] = ++ timestamp;
+    stk[ ++ top] = u;
+
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j, i);
+            low[u] = min(low[u], low[j]);
+            if (dfn[u] < low[j])
+                is_bridge[i] = is_bridge[i ^ 1] = true;
+        }
+        else if (i != (from ^ 1))
+            low[u] = min(low[u], dfn[j]);
+    }
+
+    if (dfn[u] == low[u])
+    {
+        ++ dcc_cnt;
+        int y;
+        do {
+            y = stk[top -- ];
+            id[y] = dcc_cnt;
+        } while (y != u);
+    }
+}
+
+int main()
+{
+    cin >> n >> m;
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b;
+        cin >> a >> b;
+        add(a, b), add(b, a);
+    }
+
+    tarjan(1, -1);
+
+    for (int i = 0; i < idx; i ++ )
+        if (is_bridge[i])
+            d[id[e[i]]] ++ ;
+
+    int cnt = 0;
+    for (int i = 1; i <= dcc_cnt; i ++ )
+        if (d[i] == 1)
+            cnt ++ ;
+
+    printf("%d\n", (cnt + 1) / 2);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/157010/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+算法思路
+根据题意 就是求删除图中的一个点使得图中的连通块数目最大，并求出这个最大值。
+如果这个图是一个树的话啊，那么可以用dfs求解O(N)但是是一个图可能存在环用dfs会相当麻烦，因此利用割点来求会方便很多。对于整个图来说假如有cnt个连通块，如果一个连通块i不存在割点，那么最大值就是cnt + 1, 如果连通块存在割点，那么最大值就是cnt - 1 + x(删除割点剩余的连通块数目 + x本身算一个点)；
+
+void tarjon(int u)
+{
+    dfn[u] = low[u] = ++ timestamp; //时间戳
+    int cnt = 0; // 记录u下面有几个连通块
+    for(int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if(!dfn[j])
+        {
+            tarjon(j);
+            low[u] = min(low[u], low[j]);
+            if(dfn[u] <= low[j])cnt ++; //如果满足条件那么u是割点，记录u下面连接几个连通块
+        }
+        else low[u] = min(low[u], dfn[j]); // 更新low[u];
+    }
+    if(root != u)cnt ++; // 如果u不是根节点 再把u的父节点的连通块加上
+    ans = max(ans, cnt); // 最后取一个最大值
+} 
+
+作者：AJ小公主
+链接：https://www.acwing.com/solution/content/15793/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010, M = 30010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+int root, ans;
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ timestamp;
+
+    int cnt = 0;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+            if (low[j] >= dfn[u]) cnt ++ ;
+        }
+        else low[u] = min(low[u], dfn[j]);
+    }
+
+    if (u != root) cnt ++ ;
+
+    ans = max(ans, cnt);
+}
+
+int main()
+{
+    while (scanf("%d%d", &n, &m), n || m)
+    {
+        memset(dfn, 0, sizeof dfn);
+        memset(h, -1, sizeof h);
+        idx = timestamp = 0;
+
+        while (m -- )
+        {
+            int a, b;
+            scanf("%d%d", &a, &b);
+            add(a, b), add(b, a);
+        }
+
+        ans = 0;
+        int cnt = 0;
+        for (root = 0; root < n; root ++ )
+            if (!dfn[root])
+            {
+                cnt ++ ;
+                tarjan(root);
+            }
+
+        printf("%d\n", ans + cnt - 1);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/157030/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 396. 矿场搭建    原题链接    简单
+作者：    夏日 ,  2019-11-07 20:23:14 ,  阅读 370
+
+3
+
+
+此题需要大力讨论，WA了三次
+首先，肯定要跑一遍缩点，缩完是一棵树
+发现只连了一个割点的dcc一定要有一个出口，不然割点断了就GG了，即使这个出口断了，也能找到“另一个”出口
+注意，这里推到的前提条件，“另一个出口”，如果这个出口不存在怎么办？即缩完就剩一个点了，这种情况待会再说，不妨先讨论至少有俩点
+回来，我们显然可以在每个只“连了一个割点的dcc”放一个出口，方案数用乘法原理一乘即可
+再次注意，这里怎么求“只连了一个割点的DCC”
+一种显然的思路是缩完点在遍历一次/缩点时存下每个强联通分量都有哪些点，这显然不方便
+我一开始考虑边缩点边求，最终又犯了一个错误，即“根节点”在没跑完缩点之前，我们不知道它是不是个割点，所以需要特判，如果它是割点，则累加正确，不是割点的话会在它所属的dcc（唯一），多累加一个割点数目，我们应该减去。
+然后考虑就缩成一个点怎么办，那必须要放俩出口，来防止单一出口爆炸的情况，注意这里的前提条件，“能放下两个出口么？即n=1时怎么办”，发现题目里没有直接给出n，而是通过边间接给出，那么n至少为2，不会有坑
+方案数显然为n选2的组合数
+到此已经可以AC，但仍没有结束
+题面并没有保证图是连通的，如果直接划分成多个dcc，很容易在特判“只有一个强联通分量”的情况出错，比较好的实现方法是在做之前直接划分出联通块，划归成子问题，最后乘法原理累加答案
+题面并没有保证点的编号的范围，也就是说需要离散化
+
+upd: 代码已更新，考虑了多个联通块的问题，去掉了离散化
+
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <cstring>
+
+#define rint register int
+#define lint long long
+#define isnum(x) ('0' <= (x) && (x) <= '9')
+template<typename tint>
+inline void readint(tint& x) {
+    int f = 1; char ch = getchar(); x = 0;
+    for(; !isnum(ch); ch = getchar()) if(ch == '-') f = -1;
+    for(; isnum(ch); ch = getchar()) x = x * 10 + ch - '0';
+    x *= f;
+}
+using namespace std;
+const int maxn = 100000 + 10;
+const int maxm = 2 * maxn;
+
+int n, m;
+int head[maxn], ev[maxm], nxt[maxm], totedge = 1;
+inline void addedge(int nu, int nv) {
+    ev[++totedge] = nv, nxt[totedge] = head[nu], head[nu] = totedge;
+}
+
+int dfn[maxn], low[maxn], totdfn = 0;
+int s[maxn], stop = 0;
+int cut[maxn], totdcc = 0;
+vector<int> dcc[maxn];
+// 点双联通分量不要在线！！
+
+void dfs(int x, int fa) {
+    dfn[x] = low[x] = ++totdfn, s[++stop] = x;
+    if(head[x] == 0) ++totdcc, dcc[totdcc].push_back(x); // 特判孤立点
+    for(rint i=head[x], y=ev[i]; i; i=nxt[i], y=ev[i]) {
+        if(dfn[y] == 0) dfs(y, x), low[x] = min(low[x], low[y]);
+        else low[x] = min(low[x], dfn[y]);
+    }
+    if(fa && low[x] >= dfn[fa]) { // 根节点不需要
+        ++totdcc, cut[fa]++;
+        do dcc[totdcc].push_back(s[stop]);
+        while(s[stop--] != x);
+        dcc[totdcc].push_back(fa);
+    }
+    if(fa == 0) cut[x] = cut[x] >= 2 ? cut[x] : 0;
+}
+
+void clear() {
+    int msize = sizeof(int) * (n + 1);
+    memset(head, 0, msize), totedge = 1;
+    memset(dfn, 0, msize), memset(low, 0, msize), totdfn = 0;
+    memset(cut, 0, msize);
+    for(rint i=1; i<=totdcc; i++) dcc[i].clear();
+    stop = totdcc = 0;
+    n = 0;
+}
+
+int main() {
+    int T = 0;
+    while(cin >> m && m) {
+        int nu, nv;
+        while(m--) {
+            readint(nu), readint(nv);
+            n = max(n, max(nu, nv));
+            addedge(nu, nv), addedge(nv, nu);
+        }
+        int ans_cnt = 0;
+        lint ans_det = 1;
+        for(rint x=1; x<=n; x++) {
+            if(dfn[x]) continue;
+            int pre = totdcc + 1;
+            dfs(x, 0);
+            if(pre == totdcc) {
+                if(dcc[totdcc].size() > 1)
+                    ans_cnt += 2, ans_det *= dcc[totdcc].size() * (dcc[totdcc].size() - 1) / 2;
+            } else {
+                for(rint i=pre; i<=totdcc; i++) {
+                    int now_cut = 0;
+                    for(rint j=0; j<dcc[i].size(); j++) {
+                        if(cut[dcc[i][j]]) now_cut++;
+                    }
+                    if(now_cut == 1) ans_cnt++, ans_det *= dcc[i].size() - 1;
+                }
+            }
+
+        }
+        printf("Case %d: %d %lld\n", ++T, ans_cnt, ans_det);
+        clear();
+    }
+    return 0;
+}
+
+作者：夏日
+链接：https://www.acwing.com/solution/content/5973/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+typedef unsigned long long ULL;
+
+const int N = 1010, M = 1010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+int stk[N], top;
+int dcc_cnt;
+vector<int> dcc[N];
+bool cut[N];
+int root;
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ timestamp;
+    stk[ ++ top] = u;
+
+    if (u == root && h[u] == -1)
+    {
+        dcc_cnt ++ ;
+        dcc[dcc_cnt].push_back(u);
+        return;
+    }
+
+    int cnt = 0;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+            if (dfn[u] <= low[j])
+            {
+                cnt ++ ;
+                if (u != root || cnt > 1) cut[u] = true;
+                ++ dcc_cnt;
+                int y;
+                do {
+                    y = stk[top -- ];
+                    dcc[dcc_cnt].push_back(y);
+                } while (y != j);
+                dcc[dcc_cnt].push_back(u);
+            }
+        }
+        else low[u] = min(low[u], dfn[j]);
+    }
+}
+
+int main()
+{
+    int T = 1;
+    while (cin >> m, m)
+    {
+        for (int i = 1; i <= dcc_cnt; i ++ ) dcc[i].clear();
+        idx = n = timestamp = top = dcc_cnt = 0;
+        memset(h, -1, sizeof h);
+        memset(dfn, 0, sizeof dfn);
+        memset(cut, 0, sizeof cut);
+
+        while (m -- )
+        {
+            int a, b;
+            cin >> a >> b;
+            n = max(n, a), n = max(n, b);
+            add(a, b), add(b, a);
+        }
+
+        for (root = 1; root <= n; root ++ )
+            if (!dfn[root])
+                tarjan(root);
+
+        int res = 0;
+        ULL num = 1;
+        for (int i = 1; i <= dcc_cnt; i ++ )
+        {
+            int cnt = 0;
+            for (int j = 0; j < dcc[i].size(); j ++ )
+                if (cut[dcc[i][j]])
+                    cnt ++ ;
+
+            if (cnt == 0)
+            {
+                if (dcc[i].size() > 1) res += 2, num *= dcc[i].size() * (dcc[i].size() - 1) / 2;
+                else res ++ ;
+            }
+            else if (cnt == 1) res ++, num *= dcc[i].size() - 1;
+        }
+
+        printf("Case %d: %d %llu\n", T ++, res, num);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/157068/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 257. 关押罪犯    原题链接    中等
+作者：    yxc ,  2019-07-23 23:26:45 ,  阅读 1113
+
+11
+
+
+4
+算法
+(二分，染色法判断二分图) O((N+M)logC)O((N+M)logC)
+将罪犯当做点，罪犯之间的仇恨关系当做点与点之间的无向边，边的权重是罪犯之间的仇恨值。
+那么原问题变成：将所有点分成两组，使得各组内边的权重的最大值尽可能小。
+
+我们在 [0,109][0,109] 之间枚举最大边权 limitlimit，当 limitlimit 固定之后，剩下的问题就是：
+
+判断能否将所有点分成两组，使得所有权值大于 limitlimit 的边都在组间，而不在组内。也就是判断由所有点以及所有权值大于 limitlimit 的边构成的新图是否是二分图。
+判断二分图可以用染色法，时间复杂度是 O(N+M)O(N+M)，其中 NN 是点数，MM 是边数，可以参考AcWing 860. 染色法判定二分图。
+
+为了加速算法，我们来考虑是否可以用二分枚举 limitlimit， 假定最终最大边权的最小值是 AnsAns:
+
+那么当 limit∈[ans,109]limit∈[ans,109] 时，所有边权大于 limitlimit 的边，必然是所有边权大于 AnsAns 的边的子集，因此由此构成的新图也是二分图。
+当 limit∈[0,ans−1]limit∈[0,ans−1] 时，由于 ansans 是新图可以构成二分图的最小值，因此由大于 limitlimit 的边构成的新图一定不是二分图。
+所以整个区间具有二段性，可以二分出分界点 ansans 的值。二分算法模板可以参考这篇。
+时间复杂度分析
+总共二分 logClogC 次，其中 CC 是边权的最大值，每次二分使用染色法判断二分图，时间复杂度是 O(N+M)O(N+M)，其中 NN 是点数，MM 是边数。因此总时间复杂度是 O((N+M)logC)O((N+M)logC)。
+
+C++ 代码
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 20010, M = 200010;
+
+int n, m;
+int h[N], e[M], w[M], ne[M], idx;
+int color[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool dfs(int u, int c, int limit)
+{
+    color[u] = c;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        if (w[i] <= limit) continue;
+        int j = e[i];
+        if (color[j])
+        {
+            if (color[j] == c) return false;
+        }
+        else if (!dfs(j, 3 - c, limit)) return false;
+    }
+
+    return true;
+}
+
+bool check(int limit)
+{
+    memset(color, 0, sizeof color);
+
+    for (int i = 1; i <= n; i ++ )
+        if (color[i] == 0)
+            if (!dfs(i, 1, limit))
+                return false;
+    return true;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+        add(b, a, c);
+    }
+
+    int l = 0, r = 1e9;
+    while (l < r)
+    {
+        int mid = l + r >> 1;
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+
+    printf("%d\n", l);
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/3042/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 20010, M = 200010;
+
+int n, m;
+int h[N], e[M], w[M], ne[M], idx;
+int color[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool dfs(int u, int c, int mid)
+{
+    color[u] = c;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (w[i] <= mid) continue;
+        if (color[j])
+        {
+            if (color[j] == c) return false;
+        }
+        else if (!dfs(j, 3 - c, mid)) return false;
+    }
+
+    return true;
+}
+
+bool check(int mid)
+{
+    memset(color, 0, sizeof color);
+    for (int i = 1; i <= n; i ++ )
+        if (!color[i])
+            if (!dfs(i, 1, mid))
+                return false;
+    return true;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+
+    while (m -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c), add(b, a, c);
+    }
+
+    int l = 0, r = 1e9;
+    while (l < r)
+    {
+        int mid = l + r >> 1;
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+
+    printf("%d\n", r);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/158085/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+AcWing 372. 棋盘覆盖    原题链接    中等
+作者：    whsstory ,  2020-01-13 11:05:00 ,  阅读 389
+
+7
+
+
+考虑一个格子(i,j)(i,j):
+
+i+ji+j为偶数:不妨记这样的格子为白格子.
+i+ji+j为奇数:不妨记这样的格子为黑格子.
+如果这个白格子没有被禁止,那么就让它向周围没有被禁止的黑格子连有向边,表示 如果选择这条边(在这两个格子上放骨牌)会对答案有1的贡献.显然白格子周围都是黑格子,所以白格子之间不会有边.那么这就是一个二分图最大匹配的模型,跑一下就好了.
+
+最多O(n2)O(n2)个点,O(n2)O(n2)条边,所以时间复杂度O(n4)O(n4)
+/**********/省略快读
+#define MAXN 20011
+struct Edge
+{
+    ll v,nxt;
+}e[MAXN<<2|1];
+ll cnt=0,last[MAXN];
+void adde(ll u,ll v)
+{
+    ++cnt;
+    e[cnt].v=v;
+    e[cnt].nxt=last[u],last[u]=cnt;
+}
+
+ll p[MAXN];
+bool vis[MAXN];
+bool dfs(ll u)//二分图最大匹配
+{
+    for(ll i=last[u];i;i=e[i].nxt)
+    {
+        ll v=e[i].v;
+        if(!vis[v])
+        {
+            vis[v]=1;
+            if(!p[v]||dfs(p[v]))
+            {
+                p[v]=u;
+                return 1;
+            }
+        }
+    }
+}
+bool a[111][111];
+const ll mx[4]={0,1,0,-1},my[4]={1,0,-1,0};
+int main()
+{
+    ll n=read(),t=read();
+    for(ll i=1;i<=t;++i)
+    {
+        ll x=read(),y=read();
+        a[x][y]=1;
+    }
+    for(ll i=1;i<=n;++i)
+        for(ll j=1;j<=n;++j)
+        {
+            if(((i+j)&1)||a[i][j])continue;//不是白色格子,或者被禁止了,就跳过
+            for(ll op=0;op<4;++op)
+            {
+                ll x=i+mx[op],y=j+my[op];
+                if(x>0&&x<=n&&y>0&&y<=n&&!a[x][y])adde((i-1)*n+j,(x-1)*n+y);//加边
+            }
+        }
+    ll ans=0;
+    for(ll i=1;i<=n;++i)
+        for(ll j=1;j<=n;++j)
+        {
+            if((i+j)&1)continue;
+            memset(vis,0,sizeof vis);
+            if(dfs((i-1)*n+j))++ans;
+        }
+    printf("%lld",ans);
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/7540/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+#define x first
+#define y second
+
+using namespace std;
+
+typedef pair<int, int> PII;
+
+const int N = 110;
+
+int n, m;
+PII match[N][N];
+bool g[N][N], st[N][N];
+int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
+
+bool find(int x, int y)
+{
+    for (int i = 0; i < 4; i ++ )
+    {
+        int a = x + dx[i], b = y + dy[i];
+        if (a && a <= n && b && b <= n && !g[a][b] && !st[a][b])
+        {
+            st[a][b] = true;
+            PII t = match[a][b];
+            if (t.x == -1 || find(t.x, t.y))
+            {
+                match[a][b] = {x, y};
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    while (m -- )
+    {
+        int x, y;
+        cin >> x >> y;
+        g[x][y] = true;
+    }
+
+    memset(match, -1, sizeof match);
+
+    int res = 0;
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= n; j ++ )
+            if ((i + j) % 2 && !g[i][j])
+            {
+                memset(st, 0, sizeof st);
+                if (find(i, j)) res ++ ;
+            }
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/158090/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 376. 机器任务 ===== 最小点覆盖    原题链接    简单
+作者：    xxh ,  2020-02-22 20:19:26 ,  阅读 345
+
+4
+
+
+1
+题解 ： https://xiaoxiaoh.blog.csdn.net/article/details/104449622
+
+一、内容
+As we all know, machine scheduling is a very classical problem in computer science and has been studied for a very long history. Scheduling problems differ widely in the nature of the constraints that must be satisfied and the type of schedule desired. Here we consider a 2-machine scheduling problem.
+
+There are two machines A and B. Machine A has n kinds of working modes, which is called mode_0, mode_1, ..., mode_n-1, likewise machine B has m kinds of working modes, mode_0, mode_1, ... , mode_m-1. At the beginning they are both work at mode_0.
+
+For k jobs given, each of them can be processed in either one of the two machines in particular mode. For example, job 0 can either be processed in machine A at mode_3 or in machine B at mode_4, job 1 can either be processed in machine A at mode_2 or in machine B at mode_4, and so on. Thus, for job i, the constraint can be represent as a triple (i, x, y), which means it can be processed either in machine A at mode_x, or in machine B at mode_y.
+
+Obviously, to accomplish all the jobs, we need to change the machine's working mode from time to time, but unfortunately, the machine's working mode can only be changed by restarting it manually. By changing the sequence of the jobs and assigning each job to a suitable machine, please write a program to minimize the times of restarting machines.
+Input
+
+The input file for this program consists of several configurations. The first line of one configuration contains three positive integers: n, m (n, m < 100) and k (k < 1000). The following k lines give the constrains of the k jobs, each line is a triple: i, x, y.
+
+The input will be terminated by a line containing a single zero.
+Output
+
+The output should be one integer per line, which means the minimal times of restarting machine.
+Sample Input
+
+5 5 10
+0 1 1
+1 1 2
+2 1 3
+3 1 4
+4 2 1
+5 2 2
+6 2 3
+7 2 4
+8 3 3
+9 4 3
+0
+Sample Output
+
+3
+二、思路
+
+
+三、代码
+#include <cstdio>
+#include <cstring>
+using namespace std;
+const int N = 105, M = 2e3 + 5;
+struct E{int v, next;} e[M];
+int n, m, k, no, u, v, len, h[N], mat[N];
+bool vis[N];
+void add(int u, int v) {e[++len].v = v; e[len].next = h[u]; h[u] = len;}
+bool dfs(int u) {
+    for (int j = h[u]; j; j = e[j].next) {
+        int v = e[j].v;
+        if (vis[v]) continue; vis[v] = true;
+        if (!mat[v] || dfs(mat[v])) {
+            mat[v] = u; return true;
+        }
+    } 
+    return false;
+}
+int main() {    
+    while (scanf("%d", &n), n) {
+        scanf("%d%d", &m, &k);
+        memset(h, 0, sizeof(h)); len = 0;
+        memset(mat, 0, sizeof(mat));
+        for (int i = 1; i <= k; i++) {
+            scanf("%d%d%d", &no, &u, &v);
+            if (!u || !v) continue;
+            add(u, v);  
+        } 
+        int ans = 0;
+        for (int i = 1; i < n; i++) {
+            memset(vis, false, sizeof(vis));
+            if (dfs(i)) ans++;
+        }
+        printf("%d\n", ans);
+    }
+    return 0;
+}
+
+作者：xxh
+链接：https://www.acwing.com/solution/content/8921/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110;
+
+int n, m, k;
+int match[N];
+bool g[N][N], st[N];
+
+bool find(int x)
+{
+    for (int i = 0; i < m; i ++ )
+        if (!st[i] && g[x][i])
+        {
+            st[i] = true;
+            if (match[i] == -1 || find(match[i]))
+            {
+                match[i] = x;
+                return true;
+            }
+        }
+
+    return false;
+}
+
+int main()
+{
+    while (cin >> n, n)
+    {
+        cin >> m >> k;
+        memset(g, 0, sizeof g);
+        memset(match, -1, sizeof match);
+
+        while (k -- )
+        {
+            int t, a, b;
+            cin >> t >> a >> b;
+            if (!a || !b) continue;
+            g[a][b] = true;
+        }
+
+        int res = 0;
+        for (int i = 0; i < n; i ++ )
+        {
+            memset(st, 0, sizeof st);
+            if (find(i)) res ++ ;
+        }
+
+        cout << res << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/158104/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 378. 骑士放置=====最大独立集    原题链接    简单
+作者：    xxh ,  2020-02-23 13:38:55 ,  阅读 316
+
+2
+
+
+1
+题解 ： https://xiaoxiaoh.blog.csdn.net/article/details/104458880
+
+一、内容
+给定一个 N*M 的棋盘，有一些格子禁止放棋子。
+
+问棋盘上最多能放多少个不能互相攻击的骑士（国际象棋的“骑士”，类似于中国象棋的“马”，按照“日”字攻击，但没有中国象棋“别马腿”的规则）。
+输入格式
+
+第一行包含三个整数N,M,T，其中T表示禁止放置的格子的数量。
+
+接下来T行每行包含两个整数x和y，表示位于第x行第y列的格子禁止放置，行列数从1开始。
+输出格式
+
+输出一个整数表示结果。
+数据范围
+
+1≤N,M≤100
+输入样例：
+
+2 3 0
+输出样例：
+
+4
+二、思路
+
+
+三、代码
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+const int N = 105;
+int dx[8] = {-2, -2, 2, 2, -1, -1, 1, 1};
+int dy[8] = {-1, 1, -1, 1, -2, 2, -2, 2};
+bool g[N][N], vis[N][N];
+int n, m, t, x, y;
+pair<int, int> mat[N][N];
+bool dfs(int x, int y) {
+    for (int i = 0; i < 8; i++) {
+        int fx = x + dx[i], fy = y + dy[i];
+        if (fx <= 0 || fy <= 0 || fx > n || fy > m || g[fx][fy] || vis[fx][fy]) continue; vis[fx][fy] = true; 
+        int px = mat[fx][fy].first, py = mat[fx][fy].second;
+        if ((!px && !py) || dfs(px, py)) {
+            mat[fx][fy] = make_pair(x, y); return true;
+        }
+    }
+    return false;
+}
+int main() {
+    scanf("%d%d%d", &n, &m, &t);
+    for (int i = 1; i <= t; i++) {
+        scanf("%d%d", &x, &y); g[x][y] = 1;
+    }
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (g[i][j] || ((i + j) & 1)) continue;
+            memset(vis, false, sizeof(vis));
+            if (dfs(i, j)) ans++;
+        }
+    }
+    printf("%d\n", n * m - t - ans);
+    return 0;
+}
+
+作者：xxh
+链接：https://www.acwing.com/solution/content/8945/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+#define x first
+#define y second
+
+using namespace std;
+
+typedef pair<int, int> PII;
+
+const int N = 110;
+
+int n, m, k;
+PII match[N][N];
+bool g[N][N], st[N][N];
+
+int dx[8] = {-2, -1, 1, 2, 2, 1, -1, -2};
+int dy[8] = {1, 2, 2, 1, -1, -2, -2, -1};
+
+bool find(int x, int y)
+{
+    for (int i = 0; i < 8; i ++ )
+    {
+        int a = x + dx[i], b = y + dy[i];
+        if (a < 1 || a > n || b < 1 || b > m) continue;
+        if (g[a][b]) continue;
+        if (st[a][b]) continue;
+
+        st[a][b] = true;
+
+        PII t = match[a][b];
+        if (t.x == 0 || find(t.x, t.y))
+        {
+            match[a][b] = {x, y};
+            return true;
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    cin >> n >> m >> k;
+
+    for (int i = 0; i < k; i ++ )
+    {
+        int x, y;
+        cin >> x >> y;
+        g[x][y] = true;
+    }
+
+    int res = 0;
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= m; j ++ )
+        {
+            if (g[i][j] || (i + j) % 2) continue;
+            memset(st, 0, sizeof st);
+            if (find(i, j)) res ++ ;
+        }
+
+    cout << n * m - k - res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/158111/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+    发现个有意思的现象，为什么本题中把 dx 和 dy 的方向定义相互交换一下，代码执行效率能立马提升四倍呢？
+
+
+AcWing 379. 捉迷藏    原题链接    中等
+作者：    Anoxia_3 ,  2020-06-23 11:50:21 ,  阅读 195
+
+8
+
+
+1
+最小路径覆盖：针对一个有向无环图(DAG),用最少条互不相交路径，覆盖所有点。（其中互不相交是指点不重复）
+
+结论：最小路径点覆盖（最小路径覆盖） = 总点数 - 最大匹配
+
+证明：
+1.建图
+求最小路径覆盖用到拆点，一个点分成两个点，分别表示出点和入点，
+那么从点i->j的一条边就用，从左边的出点i连到右边的入点j’表示，
+于是得到的图是一个二分图，因为所有的边都是在左部和右部之间的，内部没有点。
+
+2.转化
+此时将原图中的每一条路径转化到新图中，因为原图中的路径互不相交，所以每一个点最多只有一个出度和入度，
+这就意味着在新图中，左部每一个点最多只会向右部连一条边，右部的点最多只会有一条边连入，每个点最多只会属于一条边。
+①原图中的一条路径<=>新图中的一组匹配（新图中每一个点最多只会属于一条边）
+②原图中每一条路径的终点（没有出边）<=>新图左部的非匹配点
+
+3.推导
+求原图中互不相交路径数<=>求路径终点数最少<=>求左部非匹配点最少<=>求最大匹配
+
+拓展：
+最小路径重复点覆盖：在最小路径覆盖问题的基础上，去掉互不相交。
+
+结论：记原图G，求传递闭包后的图G’，则G的最小路径重复点覆盖=G’的最小路径覆盖
+
+在该题中，记最小路径重复点覆盖数为cnt，该题的答案就是cnt
+证明：
+①k<=cnt
+这cnt条路径覆盖了所有的点，所以所求的k个点一定要从这cnt条路径中的点选，
+并且每条路径上最多选一个点，所以k<=cnt
+②k>=cnt
+构造：将cnt条路径的终点都放到一个集合E中，记next(E)返回的是从E中的每个点出发能到的所有点的集合
+分类讨论：
+i)E ∩ next(E) = Ø ，此时E内的点不能相互到达，说明E中所有的点就是一种k=cnt的方案
+ii)E ∩ next(E) ≠ Ø ， 对于E中的任何一个点p，让这个点反向走，直到这个点走到一个不在next(E-p)中的点，可证当这个点走到起点时肯定不在next(E-p)中。
+反证法：如果这个点走到起点，仍在next(E-p)中，说明p所在的路径的起点可以被其他路径到达，那么这条路径就没有存在的意义可以省去，不满足最小路径重复点覆盖。
+所以此时同样可以在每一条路径中选出一个点，使得这些点之间两两不可到达，即k=cnt
+
+C++ 代码
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N = 210 , M = 30010;
+
+bool d[N][N];
+bool st[N];
+int n , m;
+int match[N];
+
+bool find(int x)
+{
+    for(int i = 1 ; i <= n ; i++)
+    {
+        if(d[x][i] && !st[i])
+        {
+            st[i] = true;
+            if(!match[i] || find(match[i]))
+            {
+                match[i] = x;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    while(m--)
+    {
+        int a , b;
+        cin >> a >> b;
+        d[a][b] = true;
+    }
+
+    for(int k = 1 ; k <= n ; k++)//求传递闭包
+        for(int i = 1 ; i <= n ; i++)
+            for(int j = 1 ; j <= n ; j++)
+                d[i][j] |= d[i][k] & d[k][j];
+
+    int res = 0;
+    for(int i = 1 ; i <= n ; i++)
+    {
+        memset(st , 0 , sizeof st);
+        if(find(i)) res++;
+    }
+
+    cout << n - res << endl;
+    return 0;
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/15162/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 210, M = 30010;
+
+int n, m;
+bool d[N][N], st[N];
+int match[N];
+
+bool find(int x)
+{
+    for (int i = 1; i <= n; i ++ )
+        if (d[x][i] && !st[i])
+        {
+            st[i] = true;
+            int t = match[i];
+            if (t == 0 || find(t))
+            {
+                match[i] = x;
+                return true;
+            }
+        }
+
+    return false;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    while (m -- )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        d[a][b] = true;
+    }
+
+    // 传递闭包
+    for (int k = 1; k <= n; k ++ )
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= n; j ++ )
+                d[i][j] |= d[i][k] & d[k][j];
+
+    int res = 0;
+    for (int i = 1; i <= n; i ++ )
+    {
+        memset(st, 0, sizeof st);
+        if (find(i)) res ++ ;
+    }
+
+    printf("%d\n", n - res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/158128/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1123. 铲雪车    原题链接    简单
+作者：    wuwendongxi ,  2019-11-13 11:02:28 ,  阅读 371
+
+1
+
+
+1
+题目描述
+随着白天越来越短夜晚越来越长，我们不得不考虑铲雪问题了。
+
+整个城市所有的道路都是双向车道,道路的两个方向均需要铲雪。因为城市预算的削减，整个城市只有 1 辆铲雪车。
+
+铲雪车只能把它开过的地方（车道）的雪铲干净，无论哪儿有雪，铲雪车都得从停放的地方出发，游历整个城市的街道。
+
+现在的问题是：最少要花多少时间去铲掉所有道路上的雪呢？
+
+输入格式
+输入数据的第 1 行表示铲雪车的停放坐标 (x,y)，x,y 为整数，单位为米。
+
+下面最多有4000行，每行给出了一条街道的起点坐标和终点坐标，坐标均为整数，所有街道都是笔直的，且都是双向车道。
+
+铲雪车可以在任意交叉口、或任何街道的末尾任意转向，包括转 U 型弯。
+
+铲雪车铲雪时前进速度为 20 千米/时，不铲雪时前进速度为 50 千米/时。
+
+保证：铲雪车从起点一定可以到达任何街道。
+
+输出格式
+输出铲掉所有街道上的雪并且返回出发点的最短时间，精确到分钟，四舍五入到整数。
+
+输出格式为”hours:minutes”，minutes不足两位数时需要补前导零。
+具体格式参照样例。
+
+数据范围
+−106≤x,y≤106
+所有位置坐标绝对值不超过 106。
+
+样例
+输入样例：
+
+0 0
+0 0 10000 10000
+5000 -10000 5000 10000
+5000 10000 10000 10000
+输出样例：
+
+3:55
+样例解释
+输出结果表示共需3小时55分钟。
+
+分析：
+明确：
+1. 道路是双车道（来去可回起点）
+2. 从停放的地方出发，游历整个城市的街道（与短路径无关）
+
+注意：单位（/1000)
+
+AC 代码
+#include <iostream>
+#include <cmath>
+using namespace std;
+long long m,n,x1,yy,x2,y2;
+double a1,b1,a2,b2,sum;
+double yunsuan(double t1,double t2,double t3,double t4)
+{
+    return (double)sqrt(abs(t3-t1)*abs(t3-t1)+abs(t4-t2)*abs(t4-t2));
+}
+int main()
+{
+    cin>>m>>n;
+    while(cin>>x1>>yy>>x2>>y2)
+    {
+        a1=(double)x1/1000*1.0;
+        b1=(double)yy/1000*1.0;
+        a2=(double)x2/1000*1.0;
+        b2=(double)y2/1000*1.0;
+        sum+=yunsuan(a1,b1,a2,b2);
+    }
+    m=(double)sum/10*1.0;
+    cout<<m<<':';
+    m=sum*6-m*60+0.5;
+    if(m<10) cout<<'0';
+    cout<<m<<endl;
+    return 0;
+}
+
+作者：wuwendongxi
+链接：https://www.acwing.com/solution/content/6192/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+    double x1, y1, x2, y2;
+    cin >> x1 >> y1;
+
+    double sum = 0;
+    while (cin >> x1 >> y1 >> x2 >> y2)
+    {
+        double dx = x1 - x2;
+        double dy = y1 - y2;
+        sum += sqrt(dx * dx + dy * dy) * 2;
+    }
+
+    int minutes = round(sum / 1000 / 20 * 60);
+    int hours = minutes / 60;
+    minutes %= 60;
+
+    printf("%d:%02d\n", hours, minutes);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/159766/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+    double x1,x2,y1,y2,sum;
+    cin>>x1>>y1;
+    while(cin>>x1>>y1>>x2>>y2)sum+=hypot(x1-x2,y1-y2);
+    int res=sum*0.006+0.5;
+    printf("%d:%.2d\n",res/60,res%60);
+    return 0;
+}
+
+AcWing 1184. 欧拉回路    原题链接    简单
+作者：    Overnoise ,  2020-02-10 12:43:55 ,  阅读 869
+
+2
+
+
+相信很多同学都卡在超时
+其他原理我就不阐述了
+就讲讲我是怎么克服超时的
+
+为什么会超时
+算法本身是线性的
+但在删边时由于我们只是标记一下
+就要重复遍历一个边好多遍
+
+怎么克服这个呢？
+就要在删边上做优化
+我用的是前向星存图
+类比链表的删点的方法
+直接把这个边从链上拆下来
+下次再遍历这个点的边时，这个边就不会被遍历
+
+程序如下：
+#include<bits/stdc++.h>
+using namespace std;
+int t,n,m,a,b;
+struct oppo{
+    int to,next;
+}rood[500005];
+int head[100005],tot=1;
+void add(int from,int to)
+{
+    rood[++tot].to=to;
+    rood[tot].next=head[from];
+    head[from]=tot;
+}
+stack< int > ans;
+bool flag[400005];
+int all;
+void dfs(int x)
+{
+    int tot=0;
+    for(int i=head[x];i;i=head[x]){
+        head[x]=rood[i].next;
+        if(flag[i/t-t%2])
+            continue;
+        flag[i/t-t%2]=1;
+        dfs(rood[i].to);
+        all++;
+        if(t==1)
+            ans.push(i/t-t%2);
+        else
+            ans.push((i/t-t%2)*pow(-1,i%2));
+    }
+}
+int pd[100005];
+int dp[100005];
+int main()
+{
+    cin>>t;
+    if(t==1)//我为什么要交换呢？？？
+        t=2;//因为代码打完了才发现 t的1,2 读题是理解反了
+    else
+        t=1;
+    cin>>n>>m;
+    if(t==1){
+        for(int i=1;i<=m;i++){
+            scanf("%d %d",&a,&b);
+            add(a,b);
+            pd[a]++;
+            dp[b]++;
+        }
+        for(int i=1;i<=n;i++)
+            if(pd[i]!=dp[i]){
+                puts("NO");
+                return 0;
+            }
+    }
+    else if(t==2){
+        for(int i=1;i<=m;i++){
+            scanf("%d %d",&a,&b);
+            add(a,b);add(b,a);
+            pd[a]++;
+            pd[b]++;
+        }
+        for(int i=1;i<=n;i++)
+            if(pd[i]%2){
+                puts("NO");
+                return 0;
+            }
+    }
+    for(int i=1;i<=n;i++)
+        if(head[i]){
+            dfs(i);
+            break;
+        }
+    if(all!=m){
+        puts("NO");
+        return 0;
+    }
+    puts("YES");
+    while(ans.size()){
+        printf("%d ",ans.top());
+        ans.pop();
+    }
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/8102/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, M = 400010;
+
+int type;
+int n, m;
+int h[N], e[M], ne[M], idx;
+bool used[M];
+int ans[M], cnt;
+int din[N], dout[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void dfs(int u)
+{
+    for (int &i = h[u]; ~i;)
+    {
+        if (used[i])
+        {
+            i = ne[i];
+            continue;
+        }
+
+        used[i] = true;
+        if (type == 1) used[i ^ 1] = true;
+
+        int t;
+
+        if (type == 1)
+        {
+            t = i / 2 + 1;
+            if (i & 1) t = -t;
+        }
+        else t = i + 1;
+
+        int j = e[i];
+        i = ne[i];
+        dfs(j);
+
+        ans[ ++ cnt] = t;
+    }
+}
+
+int main()
+{
+    scanf("%d", &type);
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b);
+        if (type == 1) add(b, a);
+        din[b] ++ , dout[a] ++ ;
+    }
+
+    if (type == 1)
+    {
+        for (int i = 1; i <= n; i ++ )
+            if (din[i] + dout[i] & 1)
+            {
+                puts("NO");
+                return 0;
+            }
+    }
+    else
+    {
+        for (int i = 1; i <= n; i ++ )
+            if (din[i] != dout[i])
+            {
+                puts("NO");
+                return 0;
+            }
+    }
+
+    for (int i = 1; i <= n; i ++ )
+        if (h[i] != -1)
+        {
+            dfs(i);
+            break;
+        }
+
+    if (cnt < m)
+    {
+        puts("NO");
+        return 0;
+    }
+
+    puts("YES");
+    for (int i = cnt; i; i -- ) printf("%d ", ans[i]);
+    puts("");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/159788/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1124. 骑马修栅栏    原题链接    中等
+作者：    皓首不倦 ,  2020-08-24 18:46:39 ,  阅读 88
+
+0
+
+
+···
+
+’‘’
+求解字典序最小的欧拉路径
+‘’‘
+
+from collections import Counter
+class MergeSetExt:
+def init(self, max_key_val = 0, trans_key_func=None):
+if trans_key_func is not None and max_key_val > 0:
+# 如果能够提供转换key的回调，并查集内部用线性表存储
+self.trans_key_callback = trans_key_func
+self.m = [-1 for _ in range(max_key_val+1)]
+self.__root2cluster_size = [0 for _ in range(max_key_val+1)]
+else:
+# 如果不能提供转换key的回调，并查集内部用hash表存储
+self.trans_key_callback = None
+self.m = {}
+self.__root2cluster_size = {}
+self.__root_cnt = 0
+
+def getRoot(self, node):
+    buf = []
+    root = self.trans_key_callback(node) if self.trans_key_callback else node
+    while self.m[root] != root:
+        buf.append(root)
+        root = self.m[root]
+    for key in buf:
+        self.m[key] = root
+
+    return root
+
+def merge(self, a, b):
+    orig_a, orig_b = a, b
+    if self.trans_key_callback:
+        a, b = self.trans_key_callback(a), self.trans_key_callback(b)
+
+    for node in [a, b]:
+        if (self.trans_key_callback is None and node not in self.m) or (self.trans_key_callback is not None and self.m[node] == -1):
+            self.m[node] = node
+            self.__root2cluster_size[node] = 1
+            self.__root_cnt += 1
+
+    root1 = self.getRoot(orig_a)
+    root2 = self.getRoot(orig_b)
+    if root1 != root2:
+        self.m[root1] = root2
+
+        self.__root2cluster_size[root2] += self.__root2cluster_size[root1]
+        if self.trans_key_callback:
+            self.__root2cluster_size[root1] = 0
+        else:
+            self.__root2cluster_size.pop(root1)
+        self.__root_cnt -= 1
+
+
+def getRootNum(self):
+    return self.__root_cnt
+class Hierholzer:
+# 点序号为1, 2, 3, … node_num
+def init(self, edges, node_num):
+self.edges = edges[::]
+self.node_num = node_num
+
+# 返回欧拉路径，loop_path为True时候返回欧拉回路, keep_min_order为True时候保持路径的字典序最小
+def getEulerPath(self, loop_path=False, keep_min_order=False):
+
+    # 判断是否有欧拉路径，返回可能的起点
+    def __get_start_nodes(edges):
+        if len(edges) == 0:
+            return True
+
+        node2degree = Counter()
+        merge_set = MergeSetExt(max_key_val=self.node_num, trans_key_func=lambda x : x)
+        for (a, b) in edges:
+            node2degree[a] += 1
+            node2degree[b] += 1
+            merge_set.merge(a, b)
+
+        if merge_set.getRootNum() != 1:
+            return False
+
+        odd_nodes = []
+        for node, degree in node2degree.items():
+            if degree & 1:
+                odd_nodes.append(node)
+
+        if len(odd_nodes) != 0 and len(odd_nodes) != 2:
+            return None
+
+        if loop_path:
+            return [node for node in node2degree.keys()] if len(odd_nodes) == 0 else None
+        else:
+            return odd_nodes if len(odd_nodes) == 2 else [node for node in node2degree.keys()]
+
+
+    start_nodes = __get_start_nodes(self.edges)
+    if start_nodes is None:
+        return None
+
+    if len(self.edges) == 0:
+        return []
+
+    curPath, loop = [], []
+    link = {}
+    for (a, b) in self.edges:
+        if a not in link:
+            link[a] = {}
+        if b not in link:
+            link[b] = {}
+
+        if b not in link[a]:
+            link[a][b] = 1
+        else:
+            link[a][b] += 1
+
+        if a not in link[b]:
+            link[b][a] = 1
+        else:
+            link[b][a] += 1
+
+    if len(link) == 1:
+        # 只有一个点的特殊情况，肯定全部都是自环，特殊处理
+        node = None
+        for key in link:
+            node = key
+            break
+
+        return [node] * (len(self.edges) + 1)
+
+    # 无向图不论是求欧拉路径还是欧拉回路，都可以随便选一个起点
+    curNode = start_nodes[0] if keep_min_order == False else min(start_nodes)
+    edge_cnt = -1  # 累计已经找的边的数量
+
+    visited = set()
+    while edge_cnt < len(self.edges):
+        curPath.append(curNode)
+
+        if curNode in visited:
+            # 找到新的环，进行退栈
+            while len(curPath):
+                node = curPath[-1]
+                if len(link[node]) > 0:
+                    if not keep_min_order:
+                        next = None
+                        for key in link[node].keys():
+                            next = key
+                            break
+                    else:
+                        next = min(link[node].keys())
+
+                    link[node][next] -= 1
+                    if link[node][next] == 0:
+                        link[node].pop(next)
+
+                    link[next][node] -= 1
+                    if link[next][node] == 0:
+                        link[next].pop(node)
+
+                    curNode = next
+                    break
+                else:
+                    curPath.pop(-1)
+                    loop.append(node)
+                    edge_cnt += 1
+        else:
+            visited.add(curNode)
+
+            if len(link[curNode]) > 0:
+                if not keep_min_order:
+                    next = None
+                    for key in link[curNode].keys():
+                        next = key
+                        break
+                else:
+                    next = min(link[curNode].keys())
+
+                link[curNode][next] -= 1
+                if link[curNode][next] == 0:
+                    link[curNode].pop(next)
+
+                link[next][curNode] -= 1
+                if link[next][curNode] == 0:
+                    link[next].pop(curNode)
+
+                curNode = next
+            else:
+                curPath.pop(-1)
+
+    return loop[::-1]
+import sys
+m = int(input())
+edges = []
+for i in range(m):
+s = sys.stdin.readline()
+a, b = map(int, s.split())
+edges.append((a, b))
+
+algo = Hierholzer(edges, node_num=500)
+path = algo.getEulerPath(loop_path=False, keep_min_order=True)
+for node in path:
+print(node)
+
+···
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/19197/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 510;
+
+int n = 500, m;
+int g[N][N];
+int ans[1100], cnt;
+int d[N];
+
+void dfs(int u)
+{
+    for (int i = 1; i <= n; i ++ )
+        if (g[u][i])
+        {
+            g[u][i] --, g[i][u] -- ;
+            dfs(i);
+        }
+    ans[ ++ cnt] = u;
+}
+
+int main()
+{
+    cin >> m;
+    while (m -- )
+    {
+        int a, b;
+        cin >> a >> b;
+        g[a][b] ++, g[b][a] ++ ;
+        d[a] ++, d[b] ++ ;
+    }
+
+    int start = 1;
+    while (!d[start]) start ++ ;
+    for (int i = 1; i <= n; i ++ )
+        if (d[i] % 2)
+        {
+            start = i;
+            break;
+        }
+
+    dfs(start);
+
+    for (int i = cnt; i; i -- ) printf("%d\n", ans[i]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/159798/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1185. 单词游戏    原题链接    简单
+作者：    minux ,  2020-07-07 11:17:29 ,  阅读 89
+
+2
+
+
+c++ Union Find判Euler Path
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N=30; // 26个字母的顶点
+int din[N], dout[N]; // 顶点的出度和入度
+bool vis[N]; // 记录使用到的字母
+int fa[N]; // union find set
+int T, n;
+
+inline int find(int x){return x==fa[x]?fa[x]:fa[x]=find(fa[x]);}
+inline void init(){for(int i=0; i<26; ++i) fa[i]=i;}
+
+int main(){
+    string word;
+    cin>>T;
+    while(T--){
+        cin>>n;
+        memset(din, 0x00, sizeof din);
+        memset(dout, 0x00, sizeof dout);
+        memset(vis, 0x00, sizeof vis);
+        init();
+        for(int i=0; i<n; ++i){
+            cin>>word;
+            int x=word[0]-'a';
+            int y=word.back()-'a';
+            vis[x]=vis[y]=true;
+            // 建立一条由x指向y的有向边
+            dout[x]++;
+            din[y]++;
+            // 设置在同一个连通分量中
+            fa[find(x)]=find(y);
+        }
+
+        // 判断度数
+        int s=0, e=0;
+        bool ok=true;
+        for(int i=0; i<26; ++i)
+            if(din[i]!=dout[i]){
+                if(din[i]==dout[i]+1) ++e;
+                else if(din[i]+1==dout[i]) ++s;
+                else {ok=false; break;}
+            }
+        // 有向图Euler path判定
+        // 或者起点和终点数量都是0(形成环)
+        // 或者起点和终点数量都是1
+        if(!(!s&&!e||s==1 && e==1)) ok=false;
+
+        // 判断连通性
+        int fv=-1;
+        for(int i=0; i<26; ++i){
+            if(vis[i]){
+                if(fv==-1) fv=find(i);
+                else if(fv!=find(i)){ok=false; break;}
+            }
+        }
+
+        if(ok) cout<<"Ordering is possible."<<endl;
+        else cout<<"The door cannot be opened."<<endl;
+    }
+
+    return 0;
+}
+c++ DFS判Euler Path
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N=30; // 26个字母的顶点
+int din[N], dout[N]; // 顶点的出度和入度
+int g[N][N];
+int T, n, cnt;
+
+void dfs(int u){
+    for(int i=0; i<26; ++i){
+        if(g[u][i]){
+            ++cnt;
+            --g[u][i];
+            dfs(i);
+        }
+    }
+}
+
+int main(){
+    string word;
+    cin>>T;
+    while(T--){
+        cnt=0;
+        cin>>n;
+        memset(din, 0x00, sizeof din);
+        memset(dout, 0x00, sizeof dout);
+        memset(g, 0x00, sizeof g);
+        for(int i=0; i<n; ++i){
+            cin>>word;
+            int x=word[0]-'a';
+            int y=word.back()-'a';
+            // 建立一条由x指向y的有向边
+            dout[x]++;
+            din[y]++;
+            g[x][y]++;
+        }
+
+        // 判断度数
+        int s=0, e=0;
+        bool ok=true;
+        for(int i=0; i<26; ++i)
+            if(din[i]!=dout[i]){
+                if(din[i]==dout[i]+1) ++e;
+                else if(din[i]+1==dout[i]) ++s;
+                else {ok=false; break;}
+            }
+        // 有向图Euler path判定
+        // 或者起点和终点数量都是0(形成环)
+        // 或者起点和终点数量都是1
+        if(!(!s&&!e||s==1 && e==1)) ok=false;
+
+        // 判断连通性
+        int start=0;
+        while(!dout[start]) ++start;
+        for(int i=start; i<26; ++i){
+            if(dout[i]==din[i]+1) {start=i; break;}
+        }
+        dfs(start);
+        if(cnt!=n) ok=false;
+        if(ok) cout<<"Ordering is possible."<<endl;
+        else cout<<"The door cannot be opened."<<endl;
+    }
+
+    return 0;
+}
+
+作者：minux
+链接：https://www.acwing.com/solution/content/15851/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 30;
+
+int n;
+int din[N], dout[N], p[N];
+bool st[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    char str[1010];
+
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        scanf("%d", &n);
+        memset(din, 0, sizeof din);
+        memset(dout, 0, sizeof dout);
+        memset(st, 0, sizeof st);
+        for (int i = 0; i < 26; i ++ ) p[i] = i;
+
+        for (int i = 0; i < n; i ++ )
+        {
+            scanf("%s", str);
+            int len = strlen(str);
+            int a = str[0] - 'a', b = str[len - 1] - 'a';
+            st[a] = st[b] = true;
+            dout[a] ++, din[b] ++ ;
+            p[find(a)] = find(b);
+        }
+
+        int start = 0, end = 0;
+        bool success = true;
+        for (int i = 0; i < 26; i ++ )
+            if (din[i] != dout[i])
+            {
+                if (din[i] == dout[i] + 1) end ++ ;
+                else if (din[i] + 1 == dout[i]) start ++ ;
+                else
+                {
+                    success = false;
+                    break;
+                }
+            }
+
+        if (success && !(!start && !end || start == 1 && end == 1)) success = false;
+
+        int rep = -1;
+        for (int i = 0; i < 26; i ++ )
+            if (st[i])
+            {
+                if (rep == -1) rep = find(i);
+                else if (rep != find(i))
+                {
+                    success = false;
+                    break;
+                }
+            }
+
+        if (success) puts("Ordering is possible.");
+        else puts("The door cannot be opened.");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/159803/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1191. 家谱树    原题链接    简单
+作者：    ABlyh ,  2020-07-31 15:18:19 ,  阅读 63
+
+2
+
+
+代码
+#include<bits/stdc++.h>
+using namespace std;
+const int N=100010;
+int ne[N],e[N],h[N],idx;
+int n,m;
+void add(int a,int b)
+{
+    e[idx]=b;
+    ne[idx]=h[a];
+    h[a]=idx++;
+}
+int q[N];
+int din[N];
+bool bfs()
+{
+    int hh=0,tt=-1;
+    for(int i=1;i<=n;i++)
+    {
+        if(din[i]==0) q[++tt]=i;
+    }
+    while(hh<=tt)
+    {
+        int u=q[hh++];
+        for(int i=h[u];~i;i=ne[i])
+        {
+            int v=e[i];
+            din[v]--;
+            if(din[v]==0)
+            {
+                q[++tt]=v;
+            }
+        }
+    }
+    return hh==n;
+}
+int main()
+{
+    memset(h,-1,sizeof(h));
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        int a;
+        while(cin>>a&&a!=0)
+        {
+            add(i,a);
+            din[a]++;
+        }
+    }
+    bfs();
+    for(int i=0;i<n;i++)
+    {
+        cout<<q[i]<<' ';
+    }
+    return 0;
+
+}
+核心
+拓扑排序
+
+作者：ABlyh
+链接：https://www.acwing.com/solution/content/17435/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110, M = N * N / 2;
+
+int n;
+int h[N], e[M], ne[M], idx;
+int q[N];
+int d[N];
+
+void add (int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void topsort()
+{
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= n; i ++ )
+        if (!d[i])
+            q[ ++ tt] = i;
+
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if ( -- d[j] == 0)
+                q[ ++ tt] = j;
+        }
+    }
+}
+
+int main()
+{
+    cin >> n;
+    memset(h, -1, sizeof h);
+
+    for (int i = 1; i <= n; i ++ )
+    {
+        int son;
+        while (cin >> son, son)
+        {
+            add(i, son);
+            d[son] ++ ;
+        }
+    }
+
+    topsort();
+
+    for (int i = 0; i < n; i ++ ) printf("%d ", q[i]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/160311/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1192. 奖金    原题链接    简单
+作者：    小呆呆 ,  2020-02-12 18:32:25 ,  阅读 219
+
+2
+
+
+算法分析
+跑一次拓扑排序整理出所有编号在图中的前后关系
+
+dist[i]：表示i点在拓扑图中离起点的最远距离(可能存在多起点)，dist[起点] == 100,边的权值为1
+
+时间复杂度 O(n+m)O(n+m)
+参考文献
+算法提高课
+
+Java 代码
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main {
+    static int N = 10010,M = 20010;
+    static int n;
+    static int m;
+    static int[] h = new int[N];
+    static int[] e = new int[M];
+    static int[] ne = new int[M];
+    static int idx = 0;
+    static int[] qv = new int[N];
+    static int qidx = 0;
+    static int[] d = new int[N];
+    static int[] dist = new int[N];
+    static void add(int a,int b)
+    {
+        e[idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx ++;
+    }
+    static boolean topsort()
+    {
+        Queue<Integer> q = new LinkedList<Integer>();
+        for(int i = 1;i <= n;i ++)
+        {
+            if(d[i] == 0)
+            {
+                q.add(i);
+                qv[qidx ++] = i;
+            }
+        }
+
+        while(!q.isEmpty())
+        {
+            int t = q.poll();
+
+            for(int i = h[t];i != -1;i = ne[i])
+            {
+                int j = e[i];
+                if(-- d[j] == 0)
+                {
+                    q.add(j);
+                    qv[qidx ++] = j;
+                }
+
+            }
+        }
+        return qidx == n;
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = br.readLine().split(" ");
+        n = Integer.parseInt(s1[0]);
+        m = Integer.parseInt(s1[1]);
+        Arrays.fill(h, -1);
+        while(m -- > 0)
+        {
+            String[] s2 = br.readLine().split(" ");
+            int a = Integer.parseInt(s2[0]);
+            int b = Integer.parseInt(s2[1]);
+            add(b,a);
+            d[a] ++;
+        }
+
+        if(!topsort()) System.out.println("Poor Xed");
+        else 
+        {
+            for(int i = 1;i <= n;i ++) dist[i] = 100;
+
+            for(int i = 0;i < qidx;i ++)
+            {
+                int j = qv[i];
+                for(int k = h[j];k != -1;k = ne[k])
+                {
+                    int x = e[k];
+                    dist[x] = Math.max(dist[x], dist[j] + 1);
+                }
+            }
+
+            int res = 0;
+            for(int i = 1;i <= n;i ++) res += dist[i];
+            System.out.println(res);
+        }
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/8485/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010, M = 20010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int q[N];
+int d[N];
+int dist[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool topsort()
+{
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= n; i ++ )
+        if (!d[i])
+            q[ ++ tt] = i;
+
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if ( -- d[j] == 0)
+                q[ ++ tt] = j;
+        }
+    }
+
+    return tt == n - 1;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(b, a);
+        d[a] ++ ;
+    }
+
+    if (!topsort()) puts("Poor Xed");
+    else
+    {
+        for (int i = 1; i <= n; i ++ ) dist[i] = 100;
+        for (int i = 0; i < n; i ++ )
+        {
+            int j = q[i];
+            for (int k = h[j]; ~k; k = ne[k])
+                dist[e[k]] = max(dist[e[k]], dist[j] + 1);
+        }
+
+        int res = 0;
+        for (int i = 1; i <= n; i ++ ) res += dist[i];
+
+        printf("%d\n", res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/160323/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 164. 可达性统计    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-03 15:36:41 ,  阅读 1759
+
+12
+
+
+2
+题目描述
+给定一张N个点M条边的有向无环图，分别统计从每个点出发能够到达的点的数量。
+
+输入格式
+第一行两个整数N,M，接下来M行每行两个整数x,y，表示从x到y的一条有向边。
+
+输出格式
+输出共N行，表示每个点能够到达的点的数量。
+
+数据范围
+
+1≤N,M≤300001≤N,M≤30000
+样例
+输入样例：
+10 10
+3 8
+2 3
+2 5
+5 9
+5 9
+2 3
+3 9
+4 8
+2 10
+4 9
+输出样例：
+1
+6
+3
+3
+2
+1
+1
+1
+1
+1
+拓扑排序+bitset二进制数组
+有向无环图是拓扑排序的必要条件,而且这道题目明确告诉我们统计从每个点出发能够到达的点的数量,也就是说统计这个点可以抵达的个数,这样的话我们只需要再开一个数组f.f[i]表示i这个点的可以抵达点的数量.我们很快就可以发现性质.
+f[i]=所有出边上点的交集.既然如此的话,我们不妨开一个二进制数组来进行并集|运算即可.
+感谢大佬@一苇指出问题
+
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+const int N=3e4+10;
+int net[N],head[N],ver[N],deg[N],tot,cnt,a[N],n,m;
+bitset<N> f[N];
+void add(int x,int y)//链式前向星加边
+{
+    ver[++tot]=y;
+    net[tot]=head[x];
+    head[x]=tot;
+    deg[y]++;//deg为入度
+}
+void topsort(void)
+{
+    queue<int> q;
+    for(int i=1;i<=n;i++)
+        if (deg[i]==0)
+            q.push(i);
+    while(q.size())
+    {
+        int x=q.front();
+        a[++cnt]=x;
+        q.pop();
+        for(int i=head[x];i;i=net[i])//链式前向星访问
+        {
+            int y=ver[i];
+            deg[y]--;
+            if (!deg[y])//入读为0,可以加入候选队列之中
+                q.push(y);
+        }
+    }
+
+}
+void calc()
+{
+    for (int j = cnt; j; j--)
+    {
+        int x=a[j];
+        f[x][x]=1;
+        for (int i=head[x];i;i=net[i])
+        {
+            int y=ver[i];
+            f[x]|=f[y];//求出集合
+        }
+    }
+}
+
+int main()
+{
+    cin>>n>>m;
+    for(int i=1;i<=m;i++)
+    {
+        int x,y;
+        cin>>x>>y;
+        add(x,y);
+    }
+    topsort();
+    calc();
+    for(int i=1;i<=n;i++)
+        cout<<f[i].count()<<endl;//统计1的个数,也就是到达了多少个点
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/949/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <bitset>
+
+using namespace std;
+
+const int N = 30010, M = 30010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int d[N], q[N];
+bitset<N> f[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void topsort()
+{
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= n; i ++ )
+        if (!d[i])
+            q[ ++ tt] = i;
+
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if ( -- d[j] == 0)
+                q[ ++ tt] = j;
+        }
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b);
+        d[b] ++ ;
+    }
+
+    topsort();
+
+    for (int i = n - 1; i >= 0; i -- )
+    {
+        int j = q[i];
+        f[j][j] = 1;
+        for (int k = h[j]; ~k; k = ne[k])
+            f[j] |= f[e[k]];
+    }
+
+    for (int i = 1; i <= n; i ++ ) printf("%d\n", f[i].count());
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/160335/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <complex>
+#include <climits>
+#include <cstdlib>
+#include <cctype>
+#include <cstdio>
+#include <vector>
+#include <bitset>
+
+using namespace std;
+
+const int N=30005;
+
+int n,m;
+int h[N],e[N],ne[N],idx;
+int d[N],q[N],hh=1,tt;
+bitset<N> f[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    bool fx=false;
+    do ch=getchar();while(~ch&&ch!='-'&&(ch<48||ch>57));
+    if(ch=='-')fx=true,ch=getchar();
+    for(;ch>47&&ch<58;ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return fx?-x:x;
+}
+
+inline void add(int a,int b)
+{
+    e[++idx]=b;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+int main()
+{
+    n=read(),m=read();
+    for(int i=0;i<m;i++)
+    {
+        int a,b;
+        a=read(),b=read();
+        add(a,b),d[b]++;
+    }
+    for(int i=1;i<=n;i++)
+        if(!d[i])
+            q[++tt]=i;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!--d[e[i]])
+                q[++tt]=e[i];
+    }
+    for(int i=n;i;i--)
+    {
+        f[q[i]][q[i]]=1;
+        for(int j=h[q[i]];j;j=ne[j])
+            f[q[i]]|=f[e[j]];
+    }
+    for(int i=1;i<=n;i++)printf("%d\n",f[i].count());
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/329131/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 456. 车站分级    原题链接    中等
+作者：    小呆呆 ,  2020-02-13 23:00:50 ,  阅读 353
+
+5
+
+
+1
+算法分析
+拓扑排序 + 虚拟点
+
+题目描述：如果这趟车次停靠了火车站x，则始发站、终点站之间所有级别大于等于火车站x的都必须停靠
+
+翻译过来：停靠过的车站的等级一定严格大于为停靠过的车站的等级，因此车站的等级均有严格的大小关系，则不存在环，因此可以用拓扑排序每个车站在图中的大小关系，使用动态规划求出车站等级最大的最小值(方法和 Acwing 1192奖金 类似)
+
+在建边的时候，最坏情况下是有1000趟火车，每趟有1000个点，每趟上限有500个点停站，则有(1000 - 500)个点不停站，不停站的点都向停站的点连有向边，则总共有500 * 500 * 1000 = 2.5 * 10^8,则会超内存，如果用邻接矩阵存储，需要遍历所有的边，遍历的次数也是2.5 * 10^8，因此会超时，所以在每趟火车所有不停站的点向所有停站的点连有向边时，中间添加一个ver辅助结点，如下图连接方式
+
+
+
+dist[i]：表示i点在拓扑图中离起点的最远距离(可能存在多起点)，dist[起点] == 1,边的权值为1
+
+时间复杂度 O(n+m)O(n+m)
+参考文献
+算法提高课
+
+Java 代码
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    static int N = 2010,M = 1000010;
+    static int n;
+    static int m;
+    static int[] h = new int[N];
+    static int[] e = new int[M];
+    static int[] w = new int[M];
+    static int[] ne = new int[M];
+    static int idx = 0;
+    static int[] d = new int[N];
+    static int[] qv = new int[N];
+    static int qidx = 0;
+    static boolean[] st = new boolean[N];
+    static int[] dist = new int[N];
+    static void add(int a,int b,int c)
+    {
+        e[idx] = b;
+        w[idx] = c;
+        ne[idx] = h[a];
+        h[a] = idx ++;
+    }
+    static void topsort()
+    {
+        Queue<Integer> q = new LinkedList<Integer>();
+        for(int i = 1;i <= n + m;i ++)
+        {
+            if(d[i] == 0)
+            {
+                q.add(i);
+                qv[qidx ++] = i;
+            }
+        }
+
+        while(!q.isEmpty())
+        {
+            int t = q.poll();
+            for(int i = h[t];i != -1;i = ne[i])
+            {
+                int j = e[i];
+                if(-- d[j] == 0)
+                {
+                    q.add(j);
+                    qv[qidx ++] = j;
+                }
+            }
+        }
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = br.readLine().split(" ");
+        n = Integer.parseInt(s1[0]);
+        m = Integer.parseInt(s1[1]);
+        Arrays.fill(h, -1);
+        for(int i = 1;i <= m;i ++)
+        {
+            String[] s2 = br.readLine().split(" ");
+            Arrays.fill(st, false);
+            int start = n,end = 1;
+            for(int j = 1;j < s2.length;j ++)
+            {
+                int x = Integer.parseInt(s2[j]); 
+                start = Math.min(start, x); 
+                end = Math.max(end, x); 
+                st[x] = true;
+            }
+            int ver = n + i;//虚拟结点
+            for(int j = start;j <= end;j ++)
+            {
+                if(!st[j]) 
+                {
+                    add(j,ver,0);//该点向虚拟结点连一条权值为0的边
+                    d[ver] ++;
+                }
+                else 
+                {
+                    add(ver,j,1);//虚拟结点向该点连一条权值为1的边
+                    d[j] ++;
+                }
+            }
+        }
+
+        topsort();
+        for(int i = 1;i <= n;i ++) dist[i] = 1;
+        for(int i = 0;i < n + m;i ++)
+        {
+            int j = qv[i];
+            for(int k = h[j];k != -1;k = ne[k])
+            {
+                int x = e[k];
+                dist[x] = Math.max(dist[x], dist[j] + w[k]);
+            }
+        }
+        int res = 0;
+        for(int i = 1;i <= n;i ++) res = Math.max(res, dist[i]);
+        System.out.println(res);
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/8537/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 2010, M = 1000010;
+
+int n, m;
+int h[N], e[M], ne[M], w[M], idx;
+int q[N], d[N];
+int dist[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    d[b] ++ ;
+}
+
+void topsort()
+{
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= n + m; i ++ )
+        if (!d[i])
+            q[ ++ tt] = i;
+
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if ( -- d[j] == 0)
+                q[ ++ tt] = j;
+        }
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    for (int i = 1; i <= m; i ++ )
+    {
+        memset(st, 0, sizeof st);
+        int cnt;
+        scanf("%d", &cnt);
+        int start = n, end = 1;
+        while (cnt -- )
+        {
+            int stop;
+            scanf("%d", &stop);
+            start = min(start, stop);
+            end = max(end, stop);
+            st[stop] = true;
+        }
+
+        int ver = n + i;
+        for (int j = start; j <= end; j ++ )
+            if (!st[j]) add(j, ver, 0);
+            else add(ver, j, 1);
+    }
+
+    topsort();
+
+    for (int i = 1; i <= n; i ++ ) dist[i] = 1;
+    for (int i = 0; i < n + m; i ++ )
+    {
+        int j = q[i];
+        for (int k = h[j]; ~k; k = ne[k])
+            dist[e[k]] = max(dist[e[k]], dist[j] + w[k]);
+    }
+
+    int res = 0;
+    for (int i = 1; i <= n; i ++ ) res = max(res, dist[i]);
+
+    printf("%d\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/160360/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+1
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <complex>
+#include <climits>
+#include <cstdlib>
+#include <sstream>
+#include <utility>
+#include <cctype>
+#include <cstdio>
+
+using namespace std;
+
+const int N=2005;
+const int M=2000005;
+
+int n,m;
+int h[N],e[M],ne[M],idx;
+int d[N],q[N],hh,tt=-1;
+int dist[N],w[M];
+bool st[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    bool fx=false;
+    do ch=getchar();while(~ch&&ch!='-'&&(ch<48||ch>57));
+    if(ch=='-')fx=true,ch=getchar();
+    for(;ch>47&&ch<58;ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return fx?-x:x;
+}
+
+inline void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx++;
+    d[b]++;
+}
+
+int main()
+{
+    n=read(),m=read();
+    for(int i=1;i<=m;i++)
+    {
+        memset(st,false,sizeof st);
+        int start=n,end=1;
+        for(int T=read(),stop;T--;)
+        {
+            stop=read();
+            start=min(start,stop);
+            end=max(end,stop);
+            st[stop]=true;
+        }
+        int ver=n+i;
+        for(int j=start;j<=end;j++)
+            if(st[j])add(ver,j,1);
+            else    add(j,ver,0);
+    }
+    for(int i=1;i<=n+m;i++)
+        if(!d[i])
+            q[++tt]=i;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!--d[e[i]])
+                q[++tt]=e[i];
+    }
+    for(int i=1;i<=n;i++)dist[i]=1;
+    for(int i=0;i<n+m;i++)
+        for(int j=h[q[i]];j;j=ne[j])
+            dist[e[j]]=max(dist[e[j]],dist[q[i]]+w[j]);
+    int res=0;
+    for(int i=1;i<=n;i++)
+        res=max(res,dist[i]);
+    printf("%d\n",res);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/329163/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
