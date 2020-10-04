@@ -10030,3 +10030,787 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/45313/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 840. 模拟散列表（我jio得我这个菜鸡尽力写了）    原题链接    简单
+作者：    高数 ,  2020-03-05 20:39:57 ,  阅读 758
+
+6
+
+
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+int const maxn=100003;
+
+int h[maxn],e[maxn],ne[maxn],idx;
+////h[]是哈希函数的一维数组//e[]是链表中存的值//ne[]是指针存的指向的地址//idx是当前指针
+void insert(int x)
+{
+    int k=(x%maxn + maxn)%maxn; ////对负数的处理,k是哈希值
+
+    e[idx]=x;ne[idx]=h[k];h[k]=idx++;    //如果不同单链表的idx都是从0开始单独计数，
+                                            //那么不同链表之间可能会产生冲突。
+                                            //这里的模型是这样的：e[]和ne[]相当于一个大池子，里面是单链表中的节点，会被所有单点表共用，idx相当于挨个分配池子中的节点的指针。
+                                            //比如如果第0个节点被分配给了第一个单链表，那么所有单链表就只能从下一个节点开始分配，所以所有单链表需要共用一个idx。
+}
+bool find(int x)
+{
+    int k= (x%maxn+ maxn) %maxn;  ///为了让负数在整数有映射,负数的取模还是负数,加上maxn后为正,再%即可
+    for(int i=h[k];i!=-1;i=ne[i])
+        if(e[i]==x)
+            return true;
+
+
+return false;
+}
+int main(void)
+{
+   cin.tie(0);
+   int n;
+   cin>>n;
+   memset(h,-1,sizeof(h));  ///所有槽都清空,对应的是单链表的头(head)[注:head存的是地址,详见单链表的课]指针为-1
+   while(n--)
+   {
+       char op[2];
+       int x;
+       scanf("%s%d", op, &x);
+    if(op[0]=='I') insert(x);
+       else 
+       {
+
+           if(find(x)) cout<<"Yes"<<endl;
+           else cout<<"No"<<endl;
+       }
+   }
+return 0;    
+}
+
+
+作者：高数
+链接：https://www.acwing.com/solution/content/9568/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+开放寻址法
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+const int N = 200003, null = 0x3f3f3f3f;
+
+int h[N];
+
+int find(int x)
+{
+    int t = (x % N + N) % N;
+    while (h[t] != null && h[t] != x)
+    {
+        t ++ ;
+        if (t == N) t = 0;
+    }
+    return t;
+}
+
+int main()
+{
+    memset(h, 0x3f, sizeof h);
+
+    int n;
+    scanf("%d", &n);
+
+    while (n -- )
+    {
+        char op[2];
+        int x;
+        scanf("%s%d", op, &x);
+        if (*op == 'I') h[find(x)] = x;
+        else
+        {
+            if (h[find(x)] == null) puts("No");
+            else puts("Yes");
+        }
+    }
+
+    return 0;
+}
+拉链法
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+const int N = 100003;
+
+int h[N], e[N], ne[N], idx;
+
+void insert(int x)
+{
+    int k = (x % N + N) % N;
+    e[idx] = x;
+    ne[idx] = h[k];
+    h[k] = idx ++ ;
+}
+
+bool find(int x)
+{
+    int k = (x % N + N) % N;
+    for (int i = h[k]; i != -1; i = ne[i])
+        if (e[i] == x)
+            return true;
+
+    return false;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+
+    memset(h, -1, sizeof h);
+
+    while (n -- )
+    {
+        char op[2];
+        int x;
+        scanf("%s%d", op, &x);
+
+        if (*op == 'I') insert(x);
+        else
+        {
+            if (find(x)) puts("Yes");
+            else puts("No");
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/45308/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 839. 模拟堆    原题链接    简单
+作者：    Ni ,  2019-10-24 15:44:06 ,  阅读 1169
+
+18
+
+
+6
+模拟堆的原理虽然挺简单 但有很多需要注意的细节
+要写完全写对 还应该把映射关系理清楚才行
+
+感谢评论区同学的提醒 由于编译器更新的原因 size已经是关键字 已经将size 均修改为cur_size
+
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+const int N=1e5+10;
+int h[N];   //堆
+int ph[N];  //存放第k个插入点的下标
+int hp[N];  //存放堆中点的插入次序
+int cur_size;   //size 记录的是堆当前的数据多少
+
+//这个交换过程其实有那么些绕 但关键是理解 如果hp[u]=k 则ph[k]=u 的映射关系
+//之所以要进行这样的操作是因为 经过一系列操作 堆中的元素并不会保持原有的插入顺序
+//从而我们需要对应到原先第K个堆中元素
+//如果理解这个原理 那么就能明白其实三步交换的顺序是可以互换 
+//h,hp,ph之间两两存在映射关系 所以交换顺序的不同对结果并不会产生影响
+void heap_swap(int u,int v)
+{   
+    swap(h[u],h[v]); 
+     swap(hp[u],hp[v]);     
+     swap(ph[hp[u]],ph[hp[v]]);            
+
+}
+
+void down(int u)
+{
+    int t=u;
+    if(u*2<=cur_size&&h[t]>h[u*2]) t=u*2;
+    if(u*2+1<=cur_size&&h[t]>h[u*2+1])  t=u*2+1;
+    if(u!=t)
+    {
+        heap_swap(u,t);
+        down(t);
+    }
+}
+void up(int u)
+{
+    if(u/2>0&&h[u]<h[u/2]) 
+    {
+        heap_swap(u,u/2);
+        up(u>>1);
+    }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int m=0;      //m用来记录插入的数的个数
+                //注意m的意义与cur_size是不同的 cur_size是记录堆中当前数据的多少
+                //对应上文 m即是hp中应该存的值
+    while(n--)
+    {
+        string op;
+        int k,x;
+        cin>>op;
+        if(op=="I")
+        {
+            cin>>x;
+            m++;
+            h[++cur_size]=x;
+            ph[m]=cur_size;
+            hp[cur_size]=m;
+            //down(size);
+            up(cur_size);
+        }
+        else if(op=="PM")    cout<<h[1]<<endl;
+        else if(op=="DM")
+        {
+            heap_swap(1,cur_size);
+            cur_size--;
+            down(1);
+        }
+        else if(op=="D")
+        {
+            cin>>k;
+            int u=ph[k];                //这里一定要用u=ph[k]保存第k个插入点的下标
+            heap_swap(u,cur_size);          //因为在此处heap_swap操作后ph[k]的值已经发生 
+            cur_size--;                    //如果在up,down操作中仍然使用ph[k]作为参数就会发生错误
+            up(u);
+           down(u);
+        }
+        else if(op=="C")
+        {
+            cin>>k>>x;
+            h[ph[k]]=x;                 //此处由于未涉及heap_swap操作且下面的up、down操作只会发生一个所以
+            down(ph[k]);                //所以可直接传入ph[k]作为参数
+            up(ph[k]);
+        }
+
+    }
+    return 0;
+}
+
+作者：Ni
+链接：https://www.acwing.com/solution/content/5541/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <string.h>
+
+using namespace std;
+
+const int N = 100010;
+
+int h[N], ph[N], hp[N], cnt;
+
+void heap_swap(int a, int b)
+{
+    swap(ph[hp[a]],ph[hp[b]]);
+    swap(hp[a], hp[b]);
+    swap(h[a], h[b]);
+}
+
+void down(int u)
+{
+    int t = u;
+    if (u * 2 <= cnt && h[u * 2] < h[t]) t = u * 2;
+    if (u * 2 + 1 <= cnt && h[u * 2 + 1] < h[t]) t = u * 2 + 1;
+    if (u != t)
+    {
+        heap_swap(u, t);
+        down(t);
+    }
+}
+
+void up(int u)
+{
+    while (u / 2 && h[u] < h[u / 2])
+    {
+        heap_swap(u, u / 2);
+        u >>= 1;
+    }
+}
+
+int main()
+{
+    int n, m = 0;
+    scanf("%d", &n);
+    while (n -- )
+    {
+        char op[5];
+        int k, x;
+        scanf("%s", op);
+        if (!strcmp(op, "I"))
+        {
+            scanf("%d", &x);
+            cnt ++ ;
+            m ++ ;
+            ph[m] = cnt, hp[cnt] = m;
+            h[cnt] = x;
+            up(cnt);
+        }
+        else if (!strcmp(op, "PM")) printf("%d\n", h[1]);
+        else if (!strcmp(op, "DM"))
+        {
+            heap_swap(1, cnt);
+            cnt -- ;
+            down(1);
+        }
+        else if (!strcmp(op, "D"))
+        {
+            scanf("%d", &k);
+            k = ph[k];
+            heap_swap(k, cnt);
+            cnt -- ;
+            up(k);
+            down(k);
+        }
+        else
+        {
+            scanf("%d%d", &k, &x);
+            k = ph[k];
+            h[k] = x;
+            up(k);
+            down(k);
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/45305/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+AcWing 838. 堆排序 分析i=n/2    原题链接    简单
+作者：    optimjie ,  2019-11-18 16:43:48 ,  阅读 1352
+
+14
+
+
+3
+分析
+i为什么从n/2开始down？
+
+首先要明确要进行down操作时必须满足左儿子和右儿子已经是个堆。
+
+开始创建堆的时候，元素是随机插入的，所以不能从根节点开始down，而是要找到满足下面三个性质的结点：
+
+1.左右儿子满足堆的性质。
+
+2.下标最大（因为要往上遍历）
+
+3.不是叶结点（叶节点一定满足堆的性质）
+
+那这个点为什么时n/2？看图。
+
+
+C++ 代码
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int h[N], mySize;
+
+int n, m;
+
+void down(int u)
+{
+    int t = u;
+    if (2 * u <= mySize && h[t] > h[2 * u])
+        t = 2 * u;
+    if (2 * u + 1 <= mySize && h[t] > h[2 * u + 1])
+        t = 2 * u + 1;
+    if (u != t)
+    {
+        swap(h[u], h[t]);
+        down(t);
+    }
+}
+
+int main()
+{
+    cin >> n >> m;
+    mySize = n;
+    for (int i = 1; i <= n; i++)
+        scanf("%d", &h[i]);
+    for (int i = n / 2; i; i--)
+        down(i);
+
+    while (m--)
+    {
+        cout << h[1] << " ";
+        h[1] = h[mySize--];
+        down(1);
+    }
+
+    return 0;
+}
+
+作者：optimjie
+链接：https://www.acwing.com/solution/content/6362/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+int h[N], cnt;
+
+void down(int u)
+{
+    int t = u;
+    if (u * 2 <= cnt && h[u * 2] < h[t]) t = u * 2;
+    if (u * 2 + 1 <= cnt && h[u * 2 + 1] < h[t]) t = u * 2 + 1;
+    if (u != t)
+    {
+        swap(h[u], h[t]);
+        down(t);
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &h[i]);
+    cnt = n;
+
+    for (int i = n / 2; i; i -- ) down(i);
+
+    while (m -- )
+    {
+        printf("%d ", h[1]);
+        h[1] = h[cnt -- ];
+        down(1);
+    }
+
+    puts("");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/45296/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 240. 食物链(带权并查集)    原题链接    中等
+作者：    这个显卡不太冷 ,  2019-04-03 22:59:26 ,  阅读 2116
+
+35
+
+
+13
+另一个题解写了拆点并查集的做法，我这里再写一下带权并查集的做法
+
+本题的关系有三层 -> a -> b -> c -> ，但不同的是本题的关系是有向的，也就是说a和b如果是敌对关系，那么b和a就不是敌对关系。
+
+关系传递的本质实际上是向量的运算。
+还是设 d[x] 表示 x 与 fa[x] 的关系，0 代表是同类，1 代表是x吃fa[x], 根据关系图自然2就代表x被fa[x]吃。
+
+下面假设a的祖先是x，b的祖先是y，为简化书写，设他们的向量关系为
+
+a⃗ =(a,x)b⃗ =(b,y)a→=(a,x)b→=(b,y)
+给出的关系设为rel=ab→rel=ab→
+以下的向量关系均用以上符号代替，实际运算时自行带入二元组运算即可
+
+若x=yx=y
+想要知道 ab→ab→ ，则需要 a⃗ −b⃗ a→−b→ 然后对3取模并移动到正整数
+此时得到的关系0代表ab是同类，1代表a吃b，2代表a被b吃。直接与rel进行比较即可。
+
+如果x和y不等，那么这个给出的关系肯定是合法的
+合并的时候同样fa[x] = y，x⃗ =b⃗ +ab→−a⃗ x→=b→+ab→−a→
+
+然后就可以愉快的搞了
+
+#include<bits/stdc++.h>
+using namespace std;
+const int maxn = 5e4 + 233;
+int fa[maxn], d[maxn];
+int ff(int x)
+{
+    if(fa[x] == x) return x;
+    int r = ff(fa[x]);
+    d[x] += d[fa[x]];
+    return fa[x] = r;
+}
+int main()
+{
+    int n,k; cin >> n >> k;
+    for(int i = 0; i <= n; i++) fa[i] = i;
+    int ans = 0;
+    for(int i = 1; i <= k; i++)
+    {
+        int t, a, b;
+        scanf("%d%d%d", &t, &a, &b);
+        if(a > n || b > n) {ans ++; continue;}
+        else if(t == 2 && a == b) {ans++; continue;}
+        else
+        {
+            int rel;
+            if(t == 2) rel = 1;
+            else rel = 0;
+            int x = ff(a), y = ff(b);
+            if(x == y) 
+            {
+                if((((d[a] - d[b]) % 3) + 3) % 3 != rel)
+                ans++;
+            }
+            else
+            {
+                fa[x] = y;
+                d[x] = d[b] - (d[a] - rel);
+            }
+        }
+    }
+    cout<< ans;
+}
+
+作者：这个显卡不太冷
+链接：https://www.acwing.com/solution/content/1357/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+
+using namespace std;
+
+const int N = 50010;
+
+int n, m;
+int p[N], d[N];
+
+int find(int x)
+{
+    if (p[x] != x)
+    {
+        int t = find(p[x]);
+        d[x] += d[p[x]];
+        p[x] = t;
+    }
+    return p[x];
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+    int res = 0;
+    while (m -- )
+    {
+        int t, x, y;
+        scanf("%d%d%d", &t, &x, &y);
+
+        if (x > n || y > n) res ++ ;
+        else
+        {
+            int px = find(x), py = find(y);
+            if (t == 1)
+            {
+                if (px == py && (d[x] - d[y]) % 3) res ++ ;
+                else if (px != py)
+                {
+                    p[px] = py;
+                    d[px] = d[y] - d[x];
+                }
+            }
+            else
+            {
+                if (px == py && (d[x] - d[y] - 1) % 3) res ++ ;
+                else if (px != py)
+                {
+                    p[px] = py;
+                    d[px] = d[y] + 1 - d[x];
+                }
+            }
+        }
+    }
+
+    printf("%d\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/45325/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 837. 连通块中点的数量    原题链接    简单
+作者：    Shadow ,  2019-10-30 21:54:22 ,  阅读 743
+
+16
+
+
+9
+为什么这个题题解这么少啊
+是不是大家都太强不屑于做板子题啊
+//来自算法基础课
+
+维护连通块size的并查集
+一、初始化
+void init() {
+    for (int i=1; i<=n; i++) {
+        fa[i] = i;
+        size[i] = 1;
+    }
+}
+二、找祖源
+int find(int x) {
+    if(fa[x]==x) return x;
+    else return fa[x] = find(fa[x]);
+}
+三、合并连通块
+void merge(int a,int b) {
+    int x = find(a);
+    int y = find(b);
+    fa[x] = y;
+    size[y] += size[x];
+}
+四、询问是否连通
+bool ask(int a,int b) {
+    return find(a)==find(b);
+}
+特别注意：
+size只有祖节点的有意义
+要特别注意所有处理size的地方，都要“归根结底”
+
+完整CODE
+#include<bits/stdc++.h>
+#define read(x) scanf("%d",&x)
+using namespace std;
+const int N = 1e5+5;
+int n,m,a,b,fa[N], size[N];
+string act;
+
+void init() {
+    for (int i=1; i<=n; i++) {
+        fa[i] = i;
+        size[i] = 1;
+    }
+}
+
+int find(int x) {
+    if(fa[x]==x) return x;
+    else return fa[x] = find(fa[x]);
+}
+
+void merge(int a,int b) {
+    int x = find(a);
+    int y = find(b);
+    fa[x] = y;
+    size[y] += size[x];
+}
+
+bool ask(int a,int b) {
+    return find(a)==find(b);
+}
+
+int main() {
+    read(n),read(m);
+    init();
+    while(m--) {
+        cin>>act;
+        if(act=="C") {
+            read(a),read(b);
+            if(!ask(a,b)) merge(a,b);
+        } else if(act=="Q1") {
+            read(a),read(b);
+            ask(a,b) ? printf("Yes\n") : printf("No\n");
+        } else {
+            read(a);
+            printf("%d\n",size[find(a)]);
+        }
+    }   
+    return 0;
+}
+
+作者：Shadow
+链接：https://www.acwing.com/solution/content/5707/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+17
+
+
+#include <iostream>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+int p[N], cnt[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    for (int i = 1; i <= n; i ++ )
+    {
+        p[i] = i;
+        cnt[i] = 1;
+    }
+
+    while (m -- )
+    {
+        string op;
+        int a, b;
+        cin >> op;
+
+        if (op == "C")
+        {
+            cin >> a >> b;
+            a = find(a), b = find(b);
+            if (a != b)
+            {
+                p[a] = b;
+                cnt[b] += cnt[a];
+            }
+        }
+        else if (op == "Q1")
+        {
+            cin >> a >> b;
+            if (find(a) == find(b)) puts("Yes");
+            else puts("No");
+        }
+        else
+        {
+            cin >> a;
+            cout << cnt[find(a)] << endl;
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/45295/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
