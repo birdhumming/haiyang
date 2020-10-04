@@ -10307,16 +10307,11 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/164715/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 242. 一个简单的整数问题    原题链接    简单
 作者：    秦淮岸灯火阑珊 ,  2019-02-13 20:05:25 ,  阅读 977
 
-6
-
-
-4
 原题链接
 更好的阅读体验
 
@@ -10411,8 +10406,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/1010/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -10474,8 +10468,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/164726/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 243. 一个简单的整数问题2    原题链接    困难
@@ -10591,8 +10584,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/1011/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -10669,8 +10661,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/164758/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 244. 谜一样的牛    原题链接    简单
 作者：    秦淮岸灯火阑珊 ,  2019-02-13 20:57:20 ,  阅读 1198
@@ -10766,8 +10757,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/1012/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -10828,8 +10818,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/164773/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1275. 最大数    原题链接    中等
 作者：    辰风 ,  2020-03-03 11:17:39 ,  阅读 300
@@ -10899,8 +10888,7 @@ int main(){
 
 作者：辰风
 链接：https://www.acwing.com/solution/content/9453/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -10984,8 +10972,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/167554/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 245. 你能回答这些问题吗    原题链接    简单
 作者：    秦淮岸灯火阑珊 ,  2019-02-14 21:29:09 ,  阅读 2225
@@ -11134,8 +11121,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/1016/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -11234,8 +11220,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/167568/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 246. 区间最大公约数    原题链接    困难
@@ -11365,8 +11350,7 @@ int main()
 
 作者：这个显卡不太冷
 链接：https://www.acwing.com/solution/content/1047/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -11487,8 +11471,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/167582/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 243. 一个简单的整数问题2    原题链接    困难
@@ -11579,8 +11562,7 @@ int main()
 
 作者：Anoxia_3
 链接：https://www.acwing.com/solution/content/16803/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 c++代码
@@ -11702,8 +11684,7 @@ int main() {
 
 作者：心里没有一点AC数
 链接：https://www.acwing.com/solution/content/4652/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 247. 亚特兰蒂斯    原题链接    困难
 作者：    秦淮岸灯火阑珊 ,  2019-02-15 20:33:08 ,  阅读 1636
 
@@ -11904,8 +11885,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/1027/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -12015,8 +11995,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/167934/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1277. 维护序列    原题链接    困难
 作者：    QWQjuruo ,  2019-12-15 14:27:09 ,  阅读 357
@@ -12209,8 +12188,7 @@ int main(){
 
 作者：QWQjuruo
 链接：https://www.acwing.com/solution/content/7040/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -12316,8 +12294,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/167944/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 256. 最大异或和    原题链接    中等
 作者：    福如东海 ,  2020-01-01 02:49:54 ,  阅读 719
@@ -12447,8 +12424,7 @@ int main() {
 
 作者：福如东海
 链接：https://www.acwing.com/solution/content/7314/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -12532,8 +12508,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/168518/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -12583,8 +12558,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/activity/content/code/content/168504/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 255. 第K个数 可持久化线段树（主席树）算法    原题链接    简单
 作者：    墨染空 ,  2019-08-29 16:53:20 ,  阅读 885
@@ -12701,8 +12675,7 @@ int main(){
 
 作者：墨染空
 链接：https://www.acwing.com/solution/content/4224/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -12795,8 +12768,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/168534/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -13028,8 +13000,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/1055/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -13183,8 +13154,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/168876/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 树 状 数 组
@@ -13358,8 +13328,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/activity/content/code/content/168849/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 聚聚，在哪看替罪羊树和fhq树？
 滑稽_ωﾉ   2个月前     回复
@@ -13837,8 +13806,7 @@ int main()
 
 作者：滑稽_ωﾉ
 链接：https://www.acwing.com/activity/content/code/content/198217/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 265. 营业额统计    原题链接    简单
 作者：    雪为谁落 ,  2020-02-13 17:27:45 ,  阅读 200
@@ -13928,8 +13896,7 @@ int main()
 
 作者：雪为谁落
 链接：https://www.acwing.com/solution/content/8520/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -14030,8 +13997,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/168882/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 原来AC自动机就是KMP+TRIE啊！！！tqltql
 
@@ -14115,8 +14081,7 @@ for(int i = 0; i < 26; i ++)
 
 作者：AJ小公主
 链接：https://www.acwing.com/solution/content/14882/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -14214,8 +14179,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/169821/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 y总你这个方法会被形如aaaaaaaaaaaaa的字符串卡成o(n∗n)o(n∗n)
 
@@ -14240,8 +14204,7 @@ yxc   5天前    回复了 jcsxky 的评论     回复
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/169821/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1285. 单词    原题链接    中等
@@ -14360,8 +14323,7 @@ class Main{
 
 作者：FfFJ
 链接：https://www.acwing.com/solution/content/7760/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -14436,8 +14398,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/169866/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 第三章 图论完成情况：0/58
 包括单源最短路的建图方式、单源最短路的综合应用、单源最短路的扩展应用、Floyd算法、最小生成树、最小生成树的扩展应用、负环、差分约束、最近公共祖先、强连通分量、双连通分量、二分图、欧拉回路和欧拉路径、拓扑排序等内容
@@ -14504,8 +14465,7 @@ int main()
 
 作者：qym2008
 链接：https://www.acwing.com/solution/content/8682/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -14578,8 +14538,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140736/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 可以直接用模拟队列(普通队列) 不写成循环队列的形式吗？
@@ -14617,8 +14576,7 @@ yxc   6个月前    回复了 orzorz 的评论     回复
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140736/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -14842,8 +14800,7 @@ int main()
 
 作者：马丁
 链接：https://www.acwing.com/solution/content/5091/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -14890,8 +14847,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140746/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -15027,8 +14983,7 @@ int main()
 
 作者：1e9+7
 链接：https://www.acwing.com/solution/content/11172/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -15112,8 +15067,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140759/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 Dijkstra Spfa
 #include<iostream>
@@ -15242,8 +15196,7 @@ int main()
 
 作者：滑稽_ωﾉ
 链接：https://www.acwing.com/activity/content/code/content/142364/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 题目描述
@@ -15345,8 +15298,7 @@ int main()
 
 作者：季科
 链接：https://www.acwing.com/solution/content/6599/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1126. 最小花费    原题链接    简单
@@ -15422,8 +15374,7 @@ int main()
 
 作者：mlxg
 链接：https://www.acwing.com/solution/content/8010/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -15479,8 +15430,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140777/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 920. 最优乘车--优化    原题链接    中等
 作者：    李乾 ,  2020-07-16 22:28:23 ,  阅读 134
@@ -15643,8 +15593,7 @@ int main()
 
 作者：李乾
 链接：https://www.acwing.com/solution/content/15594/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -15709,8 +15658,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140786/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 y总
 
@@ -15790,8 +15738,7 @@ int main() {
 
 作者：叁秋.
 链接：https://www.acwing.com/solution/content/6152/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 903. 昂贵的聘礼 简洁题解    原题链接    中等
@@ -15890,8 +15837,7 @@ int main() {
 
 作者：xxh
 链接：https://www.acwing.com/solution/content/8233/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -15960,8 +15906,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/140807/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1135. 新年好    原题链接    简单
@@ -16062,8 +16007,7 @@ int main()
 
 作者：Vicolor
 链接：https://www.acwing.com/solution/content/6199/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -16160,8 +16104,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/141215/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 340. 通信线路    原题链接    中等
@@ -16307,8 +16250,7 @@ int main()
 
 作者：銘权
 链接：https://www.acwing.com/solution/content/2757/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 题目描述
@@ -16452,8 +16394,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/2425/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -16534,8 +16475,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/141217/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 342. 道路与航线    原题链接    中等
@@ -16695,8 +16635,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/2427/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
     1: 题意关键点解析
@@ -16916,8 +16855,7 @@ int main ()
 
 作者：swust-zyh
 链接：https://www.acwing.com/activity/content/code/content/272668/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -17045,8 +16983,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/141218/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 https://www.acwing.com/activity/content/code/content/272668/
@@ -17159,8 +17096,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/3709/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
     AcWing 1137. 选择最佳线路    原题链接    简单
@@ -17288,8 +17224,7 @@ public class Main{
 
 作者：小呆呆
 链接：https://www.acwing.com/solution/content/8386/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -17375,8 +17310,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/143197/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1131. 拯救大兵瑞恩    原题链接    中等
@@ -17525,8 +17459,7 @@ int main() {
 
 作者：xnuohz
 链接：https://www.acwing.com/solution/content/14096/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -17651,8 +17584,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/143196/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1134. 最短路计数    原题链接    中等
@@ -17675,8 +17607,7 @@ bellman_ford算法 spfa 本身不具备拓扑序，因为更新它的点不一�
 
 作者：AJ小公主
 链接：https://www.acwing.com/solution/content/6867/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -17751,8 +17682,7 @@ int main() {
 
 作者：Sean今天AC了吗
 链接：https://www.acwing.com/solution/content/20097/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -17825,8 +17755,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/143195/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 BFS
 #include<iostream>
@@ -17897,8 +17826,7 @@ int main()
 
 作者：滑稽_ωﾉ
 链接：https://www.acwing.com/activity/content/code/content/146686/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 383. 观光    原题链接    中等
@@ -18007,8 +17935,7 @@ int main()
 
 作者：whsstory
 链接：https://www.acwing.com/solution/content/6853/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -18112,8 +18039,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/143194/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -18293,8 +18219,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/316145/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -18374,8 +18299,7 @@ int main()
 
 作者：yingzhaoyang
 链接：https://www.acwing.com/solution/content/6512/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -18444,8 +18368,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/145996/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 343. 排序    原题链接    简单
@@ -18539,8 +18462,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6508/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 传递闭包 O(mn3)O(mn3)
@@ -18726,8 +18648,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/145995/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 344. 观光之旅    原题链接    中等
 作者：    麻烦写注释 ,  2020-02-28 15:57:09 ,  阅读 362
@@ -18848,8 +18769,7 @@ int main()
 
 作者：麻烦写注释
 链接：https://www.acwing.com/solution/content/9256/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -18927,8 +18847,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/146018/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -19082,8 +19001,7 @@ int main(){
 
 作者：墨染空
 链接：https://www.acwing.com/solution/content/6111/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -19153,8 +19071,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/146113/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -19220,8 +19137,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6497/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -19273,8 +19189,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/148031/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1141. 局域网 prim算法    原题链接    简单
@@ -19406,8 +19321,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/solution/content/15172/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -19464,8 +19378,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/148059/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1142. 繁忙的都市    原题链接    简单
@@ -19566,8 +19479,7 @@ class Edge implements Comparable<Edge>
 
 作者：小呆呆
 链接：https://www.acwing.com/solution/content/8683/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
     #include <cstring>
@@ -19625,8 +19537,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/148078/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1143. 联络员    原题链接    简单
 作者：    yingzhaoyang ,  2019-11-24 20:03:49 ,  阅读 201
@@ -19699,8 +19610,7 @@ int main()
 
 作者：yingzhaoyang
 链接：https://www.acwing.com/solution/content/6531/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -19764,8 +19674,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/148113/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1144. 连接格点    原题链接    简单
 作者：    yingzhaoyang ,  2019-11-24 21:38:56 ,  阅读 313
@@ -19847,8 +19756,7 @@ int main()
 
 作者：yingzhaoyang
 链接：https://www.acwing.com/solution/content/6541/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -19929,8 +19837,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/148150/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -19970,8 +19877,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/activity/content/code/content/148232/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1146. 新的开始    原题链接    中等
@@ -20044,8 +19950,7 @@ int main()
 
 作者：yingzhaoyang
 链接：https://www.acwing.com/solution/content/6568/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -20103,8 +20008,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/151256/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1145. 北极通讯网络    原题链接    中等
 作者：    术皓 ,  2019-11-22 14:43:14 ,  阅读 315
@@ -20191,8 +20095,7 @@ int main()
 
 作者：术皓
 链接：https://www.acwing.com/solution/content/6438/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -20269,8 +20172,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/151271/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 346. 走廊泼水节    原题链接    中等
 作者：    Overnoise ,  2019-11-26 08:46:54 ,  阅读 870
@@ -20321,8 +20223,7 @@ int main() {
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6567/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 346. 走廊泼水节    原题链接    简单
@@ -20463,8 +20364,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/2456/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -20530,8 +20430,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/151283/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1148. 秘密的牛奶运输=====    原题链接    中等
@@ -20663,8 +20562,7 @@ int main() {
 
 作者：xxh
 链接：https://www.acwing.com/solution/content/8300/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -20768,8 +20666,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/151327/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 904. 虫洞    原题链接    简单
@@ -20983,8 +20880,7 @@ int main() {
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6869/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -21078,8 +20974,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/152739/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 #include <algorithm>
@@ -21177,8 +21072,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/318962/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 USACO 2006 December Gold
 
@@ -21342,8 +21236,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/solution/content/6472/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -21434,8 +21327,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/152741/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1165. 单词环    原题链接    中等
@@ -21553,8 +21445,7 @@ int main() {
 
 作者：lew2018
 链接：https://www.acwing.com/solution/content/17712/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -21657,8 +21548,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/152738/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1169. 糖果(spfa负环做差分约束问题)    原题链接    中等
@@ -21908,8 +21798,7 @@ int main()
 
 作者：仅存老实人
 链接：https://www.acwing.com/solution/content/20514/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -21996,8 +21885,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/153383/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 #include <algorithm>
@@ -22082,8 +21970,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/321388/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 362. 区间 贪心 + 数据结构做法    原题链接    中等
 作者：    墨染空 ,  2019-11-24 19:00:15 ,  阅读 412
 
@@ -22202,8 +22089,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/solution/content/6528/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -22284,8 +22170,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/153384/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 1
@@ -22378,8 +22263,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/321468/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 1170. 排队布局（差分约束）    原题链接    中等
 作者：    Overnoise ,  2019-12-08 20:57:10 ,  阅读 798
 
@@ -22464,8 +22348,7 @@ int main() {
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6879/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -22562,8 +22445,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/153492/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <iostream>
@@ -22668,8 +22550,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/321556/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 393. 雇佣收银员    原题链接    中等
@@ -22862,8 +22743,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/solution/content/6563/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -22974,8 +22854,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/153547/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -23071,8 +22950,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6576/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -23172,8 +23050,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/154772/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -23229,8 +23106,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/activity/content/code/content/154791/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -23326,8 +23202,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/321841/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1171. 距离    原题链接    中等
@@ -23484,8 +23359,7 @@ class Pair
 
 作者：小呆呆
 链接：https://www.acwing.com/solution/content/9034/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -23589,8 +23463,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/154795/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 356. 次小生成树    原题链接    困难
 作者：    秦淮岸灯火阑珊 ,  2019-07-17 20:53:49 ,  阅读 1116
@@ -23931,8 +23804,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/2884/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 356. 次小生成树(LCT)    原题链接    困难
 作者：    whsstory ,  2020-05-21 11:03:03 ,  阅读 266
@@ -24081,8 +23953,7 @@ int main()
 
 作者：whsstory
 链接：https://www.acwing.com/solution/content/13453/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -24255,8 +24126,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/154825/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 严格次小生成树
 #include<iostream>
@@ -24429,8 +24299,7 @@ int main()
 
 作者：滑稽_ωﾉ
 链接：https://www.acwing.com/activity/content/code/content/157441/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 #include <algorithm>
@@ -24612,8 +24481,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/321944/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 352. 闇の連鎖    原题链接    困难
 作者：    秦淮岸灯火阑珊 ,  2019-07-14 21:43:58 ,  阅读 745
@@ -24815,8 +24683,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/2830/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -24926,8 +24793,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/154841/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1174. 受欢迎的牛    原题链接    中等
@@ -25012,8 +24878,7 @@ int main() {
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/7566/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -25109,8 +24974,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/155842/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 367. 学校网络    原题链接    中等
 作者：    番茄酱 ,  2020-01-26 19:33:49 ,  阅读 411
@@ -25225,8 +25089,7 @@ int main() {
 
 作者：番茄酱
 链接：https://www.acwing.com/solution/content/4663/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -25321,8 +25184,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/155866/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1175. 最大半连通子图 缩点+dp    原题链接    中等
@@ -25441,8 +25303,7 @@ int main() {
 
 作者：xxh
 链接：https://www.acwing.com/solution/content/8495/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -25566,8 +25427,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/155884/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 368. 银河 SCC + 差分约束    原题链接    中等
 作者：    xxh ,  2020-02-13 13:32:05 ,  阅读 347
@@ -25709,8 +25569,7 @@ int main() {
 
 作者：xxh
 链接：https://www.acwing.com/solution/content/8509/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -25830,8 +25689,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/155909/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <iostream>
@@ -25945,8 +25803,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/326106/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 395. 冗余路径    原题链接    简单
 作者：    Jayfeather ,  2019-08-30 15:48:31 ,  阅读 395
@@ -26063,8 +25920,7 @@ int main(){
 
 作者：Jayfeather
 链接：https://www.acwing.com/solution/content/4248/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -26147,8 +26003,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/157010/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 算法思路
@@ -26176,8 +26031,7 @@ void tarjon(int u)
 
 作者：AJ小公主
 链接：https://www.acwing.com/solution/content/15793/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -26252,8 +26106,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/157030/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 396. 矿场搭建    原题链接    简单
@@ -26372,8 +26225,7 @@ int main() {
 
 作者：夏日
 链接：https://www.acwing.com/solution/content/5973/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -26485,8 +26337,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/157068/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 257. 关押罪犯    原题链接    中等
@@ -26588,8 +26439,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/3042/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -26664,8 +26514,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/158085/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 372. 棋盘覆盖    原题链接    中等
 作者：    whsstory ,  2020-01-13 11:05:00 ,  阅读 389
 
@@ -26745,8 +26594,7 @@ int main()
 
 作者：whsstory
 链接：https://www.acwing.com/solution/content/7540/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -26815,8 +26663,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/158090/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 376. 机器任务 ===== 最小点覆盖    原题链接    简单
@@ -26905,8 +26752,7 @@ int main() {
 
 作者：xxh
 链接：https://www.acwing.com/solution/content/8921/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -26968,8 +26814,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/158104/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 378. 骑士放置=====最大独立集    原题链接    简单
 作者：    xxh ,  2020-02-23 13:38:55 ,  阅读 316
@@ -27045,8 +26890,7 @@ int main() {
 
 作者：xxh
 链接：https://www.acwing.com/solution/content/8945/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -27118,8 +26962,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/158111/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
     发现个有意思的现象，为什么本题中把 dx 和 dy 的方向定义相互交换一下，代码执行效率能立马提升四倍呢？
 
@@ -27228,8 +27071,7 @@ int main()
 
 作者：Anoxia_3
 链接：https://www.acwing.com/solution/content/15162/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -27292,8 +27134,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/158128/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1123. 铲雪车    原题链接    简单
@@ -27384,8 +27225,7 @@ int main()
 
 作者：wuwendongxi
 链接：https://www.acwing.com/solution/content/6192/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -27419,8 +27259,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/159766/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <iostream>
 #include <cmath>
 
@@ -27546,8 +27385,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/8102/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -27657,8 +27495,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/159788/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1124. 骑马修栅栏    原题链接    中等
 作者：    皓首不倦 ,  2020-08-24 18:46:39 ,  阅读 88
@@ -27873,8 +27710,7 @@ print(node)
 
 作者：皓首不倦
 链接：https://www.acwing.com/solution/content/19197/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -27929,8 +27765,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/159798/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1185. 单词游戏    原题链接    简单
 作者：    minux ,  2020-07-07 11:17:29 ,  阅读 89
@@ -28074,8 +27909,7 @@ int main(){
 
 作者：minux
 链接：https://www.acwing.com/solution/content/15851/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -28157,8 +27991,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/159803/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1191. 家谱树    原题链接    简单
@@ -28229,8 +28062,7 @@ int main()
 
 作者：ABlyh
 链接：https://www.acwing.com/solution/content/17435/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -28295,8 +28127,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/160311/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1192. 奖金    原题链接    简单
@@ -28409,8 +28240,7 @@ public class Main {
 
 作者：小呆呆
 链接：https://www.acwing.com/solution/content/8485/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -28488,8 +28318,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/160323/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 164. 可达性统计    原题链接    简单
@@ -28606,8 +28435,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/949/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstdio>
@@ -28678,8 +28506,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/160335/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <iostream>
 #include <algorithm>
 #include <cstring>
@@ -28750,8 +28577,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/329131/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 456. 车站分级    原题链接    中等
 作者：    小呆呆 ,  2020-02-13 23:00:50 ,  阅读 353
@@ -28885,8 +28711,7 @@ public class Main {
 
 作者：小呆呆
 链接：https://www.acwing.com/solution/content/8537/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstdio>
 #include <cstring>
@@ -28973,8 +28798,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/160360/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 1
@@ -29065,8 +28889,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/329163/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1097. 池塘计数    原题链接    简单
@@ -29148,8 +28971,7 @@ int main()
 
 作者：yingzhaoyang
 链接：https://www.acwing.com/solution/content/5859/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -29214,8 +29036,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/130752/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1098. 城堡问题    原题链接    简单
 作者：    烛之武 ,  2020-01-21 10:43:58 ,  阅读 441
@@ -29286,8 +29107,7 @@ int main(){
 
 作者：烛之武
 链接：https://www.acwing.com/solution/content/7771/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -29363,8 +29183,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/130772/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1106. 山峰和山谷    原题链接    中等
@@ -29438,8 +29257,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6004/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -29516,8 +29334,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/130795/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -29600,8 +29417,7 @@ int main()
 
 作者：AJ小公主
 链接：https://www.acwing.com/solution/content/6596/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1076. 迷宫问题
@@ -29679,8 +29495,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/130866/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 188. 武士风度的牛    原题链接    简单
@@ -29834,8 +29649,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/976/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -29906,8 +29720,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/130867/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1100. 抓住那头牛（玄学优化）    原题链接    简单
@@ -30012,8 +29825,7 @@ int main()
 
 作者：hyc_noi
 链接：https://www.acwing.com/solution/content/11117/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -30073,8 +29885,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/130865/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -30176,8 +29987,7 @@ class PIIs
 
 作者：小呆呆
 链接：https://www.acwing.com/solution/content/8019/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -30285,8 +30095,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/970/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -30357,8 +30166,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/131617/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1107. 魔板    原题链接    简单
@@ -30537,8 +30345,7 @@ int main()
 
 作者：Dear_You
 链接：https://www.acwing.com/solution/content/6011/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -30662,8 +30469,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/131637/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -30803,8 +30609,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/971/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -30887,8 +30692,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/132139/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 190. 字串变换    原题链接    中等
@@ -30984,8 +30788,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/5434/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 178. 第K短路    原题链接    困难
@@ -31242,8 +31045,7 @@ int main() {
 
 作者：叶枫
 链接：https://www.acwing.com/solution/content/4903/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -31349,8 +31151,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/132735/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 179. 八数码    原题链接    中等
@@ -31480,8 +31281,7 @@ int main()
 
 作者：庶
 链接：https://www.acwing.com/solution/content/4212/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
     #include <cstring>
@@ -31585,8 +31385,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/132758/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1112. 迷宫    原题链接    简单
@@ -31663,8 +31462,7 @@ int main()
 
 作者：AJ小公主
 链接：https://www.acwing.com/solution/content/6616/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -31719,8 +31517,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/134071/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 1113. 红与黑    原题链接    简单
@@ -31798,8 +31595,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6031/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 include <iostream>
@@ -31857,8 +31653,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/134130/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 
@@ -31902,8 +31697,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/306291/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #pragma GCC optimize(2)//吸口氧气
 #pragma GCC optimize(3)//吸口臭氧
@@ -31953,8 +31747,7 @@ int main()
 
 作者：Overnoise
 链接：https://www.acwing.com/solution/content/6010/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 include <cstring>
 #include <iostream>
 #include <algorithm>
@@ -32010,8 +31803,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/134135/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1117. 单词接龙    原题链接    简单
 作者：    叁秋. ,  2019-11-09 15:40:52 ,  阅读 471
@@ -32073,8 +31865,7 @@ int main() {
 
 作者：叁秋.
 链接：https://www.acwing.com/solution/content/6069/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -32133,8 +31924,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/134145/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1118. 分成互质组    原题链接    简单
 作者：    orzorz ,  2020-03-23 21:14:05 ,  阅读 485
@@ -32270,8 +32060,7 @@ int main(){
 
 作者：orzorz
 链接：https://www.acwing.com/solution/content/10364/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 按顺序考虑每一个数，考虑把他放在哪个组里面。
 40ms40ms
@@ -32315,8 +32104,7 @@ int main() {
 
 作者：墨染空
 链接：https://www.acwing.com/activity/content/code/content/137029/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 include <cstring>
@@ -32380,8 +32168,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/134221/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 165. 小猫爬山    原题链接    简单
 作者：    秦淮岸灯火阑珊 ,  2019-02-03 18:34:00 ,  阅读 1891
 
@@ -32468,8 +32255,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/951/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 include <iostream>
@@ -32526,8 +32312,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/136433/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 166. 数独    原题链接    中等
 作者：    秦淮岸灯火阑珊 ,  2019-02-04 15:42:48 ,  阅读 2324
@@ -32658,8 +32443,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/956/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 #include <cstring>
@@ -32768,8 +32552,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/136449/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <iostream>
 #include <algorithm>
 #include <cstring>
@@ -32868,8 +32651,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/307225/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 167. 木棒    原题链接    中等
 作者：    秦淮岸灯火阑珊 ,  2019-02-04 15:55:48 ,  阅读 1637
 
@@ -32978,8 +32760,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/957/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <cstring>
 #include <iostream>
 #include <algorithm>
@@ -33049,8 +32830,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/136462/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
@@ -33114,8 +32894,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/307246/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 168. 生日蛋糕    原题链接    中等
 作者：    melody ,  2019-08-27 09:26:26 ,  阅读 766
@@ -33308,8 +33087,7 @@ int main()
 
 作者：melody
 链接：https://www.acwing.com/solution/content/4187/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <cstring>
 #include <iostream>
 #include <algorithm>
@@ -33368,8 +33146,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/136866/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 170. 加成序列(ida*)    原题链接    简单
 作者：    hyc_noi ,  2020-02-29 12:18:30 ,  阅读 423
@@ -33484,8 +33261,7 @@ int main()
 
 作者：hyc_noi
 链接：https://www.acwing.com/solution/content/6859/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -33533,8 +33309,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/136954/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 171. 送礼物    原题链接    简单
 作者：    秦淮岸灯火阑珊 ,  2019-02-07 08:37:49 ,  阅读 1041
@@ -33641,8 +33416,7 @@ int main()
 
 作者：秦淮岸灯火阑珊
 链接：https://www.acwing.com/solution/content/968/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <cstring>
 #include <iostream>
@@ -33713,8 +33487,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/136981/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 AcWing 180. 排书    原题链接    中等
@@ -33816,8 +33589,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/4050/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
     AStar 最坏情况O(log25604)O(log25604)
@@ -33924,8 +33696,7 @@ int main(){
 
 作者：墨染空
 链接：https://www.acwing.com/solution/content/4073/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 181. 回转游戏    原题链接    简单
 作者：    yxc ,  2019-08-22 15:06:53 ,  阅读 605
 
@@ -34051,8 +33822,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/4056/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 /*
 
@@ -34211,8 +33981,7 @@ int main()
 
 作者：垫底抽风
 链接：https://www.acwing.com/activity/content/code/content/311616/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1015. 摘花生：DP与空间复杂度的优化    原题链接    简单
 作者：    dasongshu ,  2020-02-11 11:31:03 ,  阅读 448
@@ -34358,8 +34127,7 @@ int main()
 
 作者：dasongshu
 链接：https://www.acwing.com/solution/content/8422/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 include <iostream>
 #include <algorithm>
@@ -34395,8 +34163,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/112796/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -34437,8 +34204,7 @@ int main()
 
 作者：呼和
 链接：https://www.acwing.com/solution/content/4532/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 #include <algorithm>
@@ -34476,8 +34242,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/112797/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1027. 方格取数    原题链接    简单
 作者：    清南 ,  2019-09-15 13:44:27 ,  阅读 1269
@@ -34549,8 +34314,7 @@ int main(){
 
 作者：清南
 链接：https://www.acwing.com/solution/content/4578/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 #include <algorithm>
@@ -34593,8 +34357,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/112798/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 275. 传纸条    原题链接    简单
 作者：    yxc ,  2019-08-18 23:02:48 ,  阅读 1680
 
@@ -34662,8 +34425,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/3954/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 1017. 怪盗基德的滑翔翼    原题链接    简单
 作者：    TaoZex ,  2019-09-16 13:27:12 ,  阅读 624
 
@@ -34755,8 +34517,7 @@ int main(){
 
 作者：TaoZex
 链接：https://www.acwing.com/solution/content/4599/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 #include <iostream>
 #include <algorithm>
 
@@ -34805,8 +34566,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/112799/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 1017. 怪盗基德的滑翔翼    原题链接    简单
 作者：    P云 ,  2020-02-19 05:46:52 ,  阅读 272
 
@@ -34893,8 +34653,7 @@ int main()
 
 作者：P云
 链接：https://www.acwing.com/solution/content/8755/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 1014. 登山-另一个双dp数组的思路    原题链接    简单
 作者：    houghstc ,  2019-09-16 04:57:02 ,  阅读 658
 
@@ -34963,8 +34722,7 @@ int main()
 
 作者：houghstc
 链接：https://www.acwing.com/solution/content/4590/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 #include <iostream>
 #include <algorithm>
@@ -35008,8 +34766,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/112800/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 AcWing 482. 合唱队形    原题链接    中等
 作者：    yxc ,  2019-08-14 00:18:33 ,  阅读 614
 
@@ -35076,8 +34833,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/3805/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 AcWing 1012. 友好城市    原题链接    简单
 作者：    P云 ,  2020-02-19 07:17:51 ,  阅读 195
@@ -35157,8 +34913,7 @@ int main()
 
 作者：P云
 链接：https://www.acwing.com/solution/content/8756/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 
 
@@ -35199,5 +34954,4 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/112802/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
