@@ -18446,3 +18446,6669 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/145996/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 343. 排序    原题链接    简单
+作者：    Overnoise ,  2019-11-24 15:59:39 ,  阅读 1151
+
+6
+
+
+没有看Y总视频
+在长时间思考过程中
+
+
+终于yy出了一种方法
+floyd求最长路
+首先，我来重复一下题目描述的坑爹之处
+1.如果在矛盾之前可以成功判断顺序，那么算是成功
+2.矛盾和不确定，优先判断是否矛盾
+注意一下第1点，就能轻松A题辣
+
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+char a,b;
+int rood[30][30];
+int MAX;
+void flyd()//floyd求最长路 
+{
+    for(int k=0;k<n;k++)
+        for(int i=0;i<n;i++)
+            for(int j=0;j<n;j++)
+                if(rood[i][k]&&rood[k][j])
+                {
+                    rood[i][j]=max(rood[i][j],rood[i][k]+rood[k][j]);
+                    MAX=max(MAX,rood[i][j]);//如果 MAX==n-1 那么就排序成功辣（自己想想） 
+                }
+}
+int main()
+{
+    while(1)
+    {
+        memset(rood,0,sizeof(rood));
+        cin>>n>>m;
+        if(!n&&!m)
+            break;//嗯，退出 
+        int flag=1;//十分普通的标记 
+        MAX=0;//见flyd函数注释 
+        for(int i=1;i<=m;i++)
+        {
+            scanf(" %c<%c",&a,&b);//输入 
+            int from=b-'A';//强制类型转换 
+            int to=a-'A';//同上 
+            if(rood[to][from])//判断是否矛盾 
+            {
+                printf("Inconsistency found after %d relations.\n",i);
+                for(int j=i+1;j<=m;j++)//吸收下面的输入 
+                    scanf(" %c<%c",&a,&b);
+                flag=0;//标记 
+                break;//退出 
+            }
+            rood[from][to]=1;//标记 
+            flyd();
+            int head=-1;//最大的数 
+            for(int i=0;i<n;i++)
+            {
+                int f=1;
+                for(int j=0;j<n&&f;j++)
+                    if(rood[j][i])
+                        f=0;
+                if(f)
+                    head=head==-1?i:233;//如果head==-1则赋值为i，如果head！=-1，说明最大值有两个了，赋为特殊值 
+            }
+            if(head!=-1&&head!=233&&MAX==n-1)//判断是否合法 
+            {
+                for(int j=i+1;j<=m;j++)//吸收下面的输入 
+                    scanf(" %c<%c",&a,&b);
+                cout<<"Sorted sequence determined after "<<i<<" relations: ";
+                for(int i=n-1;i>0;i--)//挨个输出 
+                    for(int j=0;j<n;j++)
+                        if(rood[head][j]==i)
+                            cout<<char(j+'A');
+                cout<<char(head+'A')<<".\n";
+                flag=0;
+                break;//退出 
+            }
+        }
+        if(flag)//上面两种情况都不满足 
+            puts("Sorted sequence cannot be determined.");
+    }
+    return 0;//Bye~Bye~ 
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/6508/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+传递闭包 O(mn3)O(mn3)
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 26;
+
+int n, m;
+bool g[N][N], d[N][N];
+bool st[N];
+
+void floyd()
+{
+    memcpy(d, g, sizeof d);
+
+    for (int k = 0; k < n; k ++ )
+        for (int i = 0; i < n; i ++ )
+            for (int j = 0; j < n; j ++ )
+                d[i][j] |= d[i][k] && d[k][j];
+}
+
+int check()
+{
+    for (int i = 0; i < n; i ++ )
+        if (d[i][i])
+            return 2;
+
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j < i; j ++ )
+            if (!d[i][j] && !d[j][i])
+                return 0;
+
+    return 1;
+}
+
+char get_min()
+{
+    for (int i = 0; i < n; i ++ )
+        if (!st[i])
+        {
+            bool flag = true;
+            for (int j = 0; j < n; j ++ )
+                if (!st[j] && d[j][i])
+                {
+                    flag = false;
+                    break;
+                }
+            if (flag)
+            {
+                st[i] = true;
+                return 'A' + i;
+            }
+        }
+}
+
+int main()
+{
+    while (cin >> n >> m, n || m)
+    {
+        memset(g, 0, sizeof g);
+        int type = 0, t;
+        for (int i = 1; i <= m; i ++ )
+        {
+            char str[5];
+            cin >> str;
+            int a = str[0] - 'A', b = str[2] - 'A';
+
+            if (!type)
+            {
+                g[a][b] = 1;
+                floyd();
+                type = check();
+                if (type) t = i;
+            }
+        }
+
+        if (!type) puts("Sorted sequence cannot be determined.");
+        else if (type == 2) printf("Inconsistency found after %d relations.\n", t);
+        else
+        {
+            memset(st, 0, sizeof st);
+            printf("Sorted sequence determined after %d relations: ", t);
+            for (int i = 0; i < n; i ++ ) printf("%c", get_min());
+            printf(".\n");
+        }
+    }
+
+    return 0;
+}
+增量算法 O(mn2)O(mn2)
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 26;
+
+int n, m;
+bool d[N][N];
+bool st[N];
+
+int check()
+{
+    for (int i = 0; i < n; i ++ )
+        if (d[i][i])
+            return 2;
+
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j < i; j ++ )
+            if (!d[i][j] && !d[j][i])
+                return 0;
+
+    return 1;
+}
+
+char get_min()
+{
+    for (int i = 0; i < n; i ++ )
+        if (!st[i])
+        {
+            bool flag = true;
+            for (int j = 0; j < n; j ++ )
+                if (!st[j] && d[j][i])
+                {
+                    flag = false;
+                    break;
+                }
+            if (flag)
+            {
+                st[i] = true;
+                return 'A' + i;
+            }
+        }
+}
+
+int main()
+{
+    while (cin >> n >> m, n || m)
+    {
+        memset(d, 0, sizeof d);
+
+        int type = 0, t;
+        for (int i = 1; i <= m; i ++ )
+        {
+            char str[5];
+            cin >> str;
+            int a = str[0] - 'A', b = str[2] - 'A';
+
+            if (!type)
+            {
+                d[a][b] = 1;
+                for (int x = 0; x < n; x ++ )
+                {
+                    if (d[x][a]) d[x][b] = 1;
+                    if (d[b][x]) d[a][x] = 1;
+                    for (int y = 0; y < n; y ++ )
+                        if (d[x][a] && d[b][y])
+                            d[x][y] = 1;
+                }
+                type = check();
+                if (type) t = i;
+            }
+        }
+
+        if (!type) puts("Sorted sequence cannot be determined.");
+        else if (type == 2) printf("Inconsistency found after %d relations.\n", t);
+        else
+        {
+            memset(st, 0, sizeof st);
+            printf("Sorted sequence determined after %d relations: ", t);
+            for (int i = 0; i < n; i ++ ) printf("%c", get_min());
+            printf(".\n");
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/145995/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 344. 观光之旅    原题链接    中等
+作者：    麻烦写注释 ,  2020-02-28 15:57:09 ,  阅读 362
+
+7
+
+
+3
+算法
+(Floyd) O(n3)O(n3)
+设环的形式是：i<->k<->j , i<–>j （i,j,k不同）
+floyd是典型的插点算法，每次插入点k，为此，在点k被[插入前]可计算i-j-k这个环
+即此时中间节点为：1~k-1，即我们已经算出了任意i<->j的最短道路，中间经过的节点可以为 (1,2,3,…,k-1)
+我们只需枚举所有以k为环中最大节点的环即可。
+
+pos[i][j]:i~j的最短路中经过的点是k(即由这个状态转移过来)，且这个k是此路径中编号最大的点(除i,j)//根据Floyd算法实质决定
+这条道路存在以下两条性质
+1.在i~j的最短道路中，一定没有环(显然)
+2.设i,j之间的最短道路经过点k(不同于i,j)，则i~k , k~j之间必然没有交集
+
+2证：
+如果有交集,设交点为k’(k’ < k,根据Floyd算法实质相关)，则存在道路：
+i<->k’<->j , 由于[i<->k’] < [i<->k] , [j->k’] < [j->k]
+显然这条道路更小，和假设矛盾所以一定没有交集
+
+对于pos[i][j]，如果pos[i][j] == 0 : 说明i~j的最短路没有经过其他节点
+
+因此借用性质2来求解道路，注意书写顺序，确保最后输出顺序正确
+每次把i <-> j 之间划分成 i<->k , k<->j
+
+C++ 代码
+#include <iostream>
+#include <cstring>
+#include <string>
+#include <vector>
+
+using namespace std ;
+
+const int N = 110 , M = 10010 , INF = 0x3f3f3f3f ;
+
+
+typedef long long LL ;
+int g[N][N] , d[N][N] ;
+int pos[N][N] ; //记录当前状态由哪个点转移过来
+vector<int> path ;
+int n , m ;
+
+//确保顺序正确
+void dfs(int i , int j )    //i->j之间的路，输出i到j之间不包括i和j的道路
+{
+    int k = pos[i][j] ;
+
+    if( k == 0 )    return ;    //如果是0，说明i,j之间不经过除i，j之外的其他点
+
+    dfs(i , k); //i->newk
+    path.push_back(k);  //k
+    dfs(k , j); //newk->j
+
+}
+
+void get_path(int i , int j , int k )
+{
+    path.clear() ;
+    path.push_back(k);  //边界
+    path.push_back(i);
+    dfs(i , j) ;    //k->i->j->k
+    path.push_back(j);
+}
+
+int main()
+{
+    cin >> n >> m ; 
+
+    memset(g , 0x3f ,sizeof g) ;
+    for(int i = 0 ; i <= n ; i++ )  g[i][i] = 0 ;
+
+    int a , b , c ;
+    for(int i = 0 ; i < m ; i++ )
+    {
+        cin >> a >> b >> c ;
+        g[a][b] = g[b][a] = min(g[a][b] , c) ;
+    }
+
+    memcpy(d , g , sizeof d );  //原图
+    long long res = INF ;
+
+    for(int k = 1 ; k <= n ; k++ )
+    {
+        //至少包含三个点的环所经过的点的最大编号是k
+        for(int i = 1 ; i < k ; i++ )  //至少包含三个点，i，j，k不重合
+            for(int j = i + 1 ; j < k ; j ++ )
+            if(res > (LL)g[i][j] + d[i][k] + d[k][j] )
+            {
+                res = g[i][j] + d[i][k] + d[k][j] ;
+                get_path(i , j , k) ;
+            }
+
+        for(int i = 1 ; i <= n ; i++ )
+            for(int j = 1 ; j <= n ; j++ )
+                if(g[i][j] > g[i][k] + g[k][j])
+                {
+                    g[i][j] = g[i][k] + g[k][j] ;
+                    pos[i][j] = k ; 
+                }
+    }
+
+    if(res == INF)  
+        cout << "No solution." << endl;
+    else
+    {
+        for(auto x : path)
+            cout << x << ' ' ;
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：麻烦写注释
+链接：https://www.acwing.com/solution/content/9256/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110, INF = 0x3f3f3f3f;
+
+int n, m;
+int d[N][N], g[N][N];
+int pos[N][N];
+int path[N], cnt;
+
+void get_path(int i, int j)
+{
+    if (pos[i][j] == 0) return;
+
+    int k = pos[i][j];
+    get_path(i, k);
+    path[cnt ++ ] = k;
+    get_path(k, j);
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    memset(g, 0x3f, sizeof g);
+    for (int i = 1; i <= n; i ++ ) g[i][i] = 0;
+
+    while (m -- )
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+
+    int res = INF;
+    memcpy(d, g, sizeof d);
+    for (int k = 1; k <= n; k ++ )
+    {
+        for (int i = 1; i < k; i ++ )
+            for (int j = i + 1; j < k; j ++ )
+                if ((long long)d[i][j] + g[j][k] + g[k][i] < res)
+                {
+                    res = d[i][j] + g[j][k] + g[k][i];
+                    cnt = 0;
+                    path[cnt ++ ] = k;
+                    path[cnt ++ ] = i;
+                    get_path(i, j);
+                    path[cnt ++ ] = j;
+                }
+
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= n; j ++ )
+                if (d[i][j] > d[i][k] + d[k][j])
+                {
+                    d[i][j] = d[i][k] + d[k][j];
+                    pos[i][j] = k;
+                }
+    }
+
+    if (res == INF) puts("No solution.");
+    else
+    {
+        for (int i = 0; i < cnt; i ++ ) cout << path[i] << ' ';
+        cout << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/146018/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+AcWing 345. 牛站 非矩阵乘法做法大杂烩    原题链接    中等
+作者：    墨染空 ,  2019-11-10 20:05:08 ,  阅读 852
+
+16
+
+
+4
+由于我太菜了，不会矩阵乘法，所以给同样不会矩阵乘法同学的福利
+
+首先发现这题点很多边很少，实际上有用的点 <=2∗T<=2∗T（因为每条边会触及两个点嘛）
+
+所以我们可以把点的范围缩到 2∗T2∗T来，然后…
+
+算法1 Bellman - Ford O(NT)O(NT)
+什么，限制边数？那不就是可爱的 BellmanFordBellmanFord吗？
+
+看看复杂度，嗯嗯 108108 海星，常数超小的我肯定不用吸氧的
+
+#pragma GCC optimize(2)
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+using namespace std;
+const int N = 205, M = 105;
+struct Edge{
+    int u, v, w;
+}e[M];
+int m, n, s, t, adj[N], dis[N], bDis[N], tot;
+void inline read(int &x) {
+    x = 0;
+    char s = getchar();
+    while(s > '9' || s < '0') s = getchar();
+    while(s <= '9' && s >= '0') x = x * 10 + s - '0', s = getchar();
+}
+int inline get(int &x) {
+    return lower_bound(adj + 1, adj + 1 + tot, x) - adj;
+}
+
+int inline bellmanFord(){
+    memset(dis, 0x3f, sizeof dis);
+    dis[s] = 0;
+    for(register int i = 1; i <= n; i++){
+        memcpy(bDis, dis, sizeof dis);
+        memset(dis, 0x3f, sizeof dis);
+        for(register int j = 1; j <= m; j++){
+            dis[e[j].v] = min(dis[e[j].v], bDis[e[j].u] + e[j].w);
+            dis[e[j].u] = min(dis[e[j].u], bDis[e[j].v] + e[j].w);
+        }
+    }
+    return dis[t];
+}
+
+
+
+int main(){
+    read(n); read(m); read(s); read(t);
+    for (register int i = 1; i <= m; i++) {
+        read(e[i].w); read(e[i].u); read(e[i].v);
+        adj[++tot] = e[i].u;
+        adj[++tot] = e[i].v;
+    }
+    sort(adj + 1, adj + 1 + tot);
+    tot = unique(adj + 1, adj + 1 + tot) - adj - 1;
+    for (register int i = 1; i <= m; i++) {
+        e[i].u = get(e[i].u), e[i].v = get(e[i].v);
+    }
+    s = get(s), t = get(t);
+    printf("%d\n", bellmanFord());
+    return 0;
+}
+真香
+
+算法2 倍增 + Floyd O(T3∗log2N)O(T3∗log2N)
+据说这题正解要用矩阵乘法，可我不会，咋办呢？
+
+不如用倍增的思想，把NN拆成二进制下的多个11，我们把每个‘1′‘1′最短路搞出来，然后拼出来最终的最短路，先预处理：
+
+d[i][j][l]d[i][j][l] 表示从 ii 到 jj 恰好经过 2l2l 条边的最短路。
+
+初始化 d[i][j][0]=w[i][j]d[i][j][0]=w[i][j]，剩下为正无穷（注意是恰好 NN 条边，所以 d[i][i][0]d[i][i][0] 也是非法状态）
+
+转移也很好想：
+
+d[i][j][l]=min(d[i][k][l−1]+d[k][j][l−1])d[i][j][l]=min(d[i][k][l−1]+d[k][j][l−1])，对于一个状态 d[i][j][l]d[i][j][l]，枚举中间点 kk 即可，所以预处理复杂度 O(T3∗log2N)O(T3∗log2N)
+接下来用二进制拼起来就行辣~，设 g[i]g[i] 为这前几部走完后，从 ss 到 ii 的最短路， f[i]f[i] 为当前到 ii 的最短路，与保卫王国的拼凑法思想差不多，即：
+
+f[i]=min(g[j]+d[j][i][c])f[i]=min(g[j]+d[j][i][c]) 若 NN 的二进制第 cc 位为 11。
+
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+using namespace std;
+const int N = 205, M = 105;
+struct Edge{
+    int u, v, w;
+}e[M];
+int m, n, s, t, adj[N], tot, d[N][N][20], f[N], g[N];
+int L;
+
+int inline get(int x) {
+    return lower_bound(adj + 1, adj + 1 + tot, x) - adj;
+}
+int main(){
+    memset(d, 0x3f, sizeof d);
+    scanf("%d%d%d%d", &n, &m, &s, &t);
+    L = log2(n);
+    for (int i = 1; i <= m; i++) {
+        scanf("%d%d%d", &e[i].w, &e[i].u, &e[i].v);
+        adj[++tot] = e[i].u;
+        adj[++tot] = e[i].v;
+    }
+    sort(adj + 1, adj + 1 + tot);
+    tot = unique(adj + 1, adj + 1 + tot) - adj - 1;
+    for (int i = 1; i <= m; i++) {
+        int u = get(e[i].u), v = get(e[i].v), w = e[i].w;
+        d[u][v][0] = d[v][u][0] = min(d[u][v][0], w);
+    }
+    s = get(s), t = get(t);
+
+    for (int c = 1; c <= L; c++) {
+        for (int i = 1; i <= tot; i++) {
+            for (int j = 1; j <= tot; j++) {
+                for (int k = 1; k <= tot; k++) {
+                    d[i][j][c] = min(d[i][j][c], d[i][k][c - 1] + d[k][j][c - 1]);
+                }
+            }
+        }
+    }
+
+    memset(g, 0x3f, sizeof g);
+    g[s] = 0;
+    for (int c = 0; c <= L; c++) {
+        if(n >> c & 1) {
+            memset(f, 0x3f, sizeof f);
+            for (int i = 1; i <= tot; i++) 
+                for (int j = 1; j <= tot; j++)
+                    f[i] = min(f[i], g[j] + d[j][i][c]);
+            memcpy(g, f, sizeof g);
+        }
+    }
+    printf("%d\n", f[t]);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/solution/content/6111/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <map>
+
+using namespace std;
+
+const int N = 210;
+
+int k, n, m, S, E;
+int g[N][N];
+int res[N][N];
+
+void mul(int c[][N], int a[][N], int b[][N])
+{
+    static int temp[N][N];
+    memset(temp, 0x3f, sizeof temp);
+    for (int k = 1; k <= n; k ++ )
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= n; j ++ )
+                temp[i][j] = min(temp[i][j], a[i][k] + b[k][j]);
+    memcpy(c, temp, sizeof temp);
+}
+
+void qmi()
+{
+    memset(res, 0x3f, sizeof res);
+    for (int i = 1; i <= n; i ++ ) res[i][i] = 0;
+
+    while (k)
+    {
+        if (k & 1) mul(res, res, g);    // res = res * g
+        mul(g, g, g);   // g = g * g
+        k >>= 1;
+    }
+}
+
+int main()
+{
+    cin >> k >> m >> S >> E;
+
+    memset(g, 0x3f, sizeof g);
+    map<int, int> ids;
+    if (!ids.count(S)) ids[S] = ++ n;
+    if (!ids.count(E)) ids[E] = ++ n;
+    S = ids[S], E = ids[E];
+
+    while (m -- )
+    {
+        int a, b, c;
+        cin >> c >> a >> b;
+        if (!ids.count(a)) ids[a] = ++ n;
+        if (!ids.count(b)) ids[b] = ++ n;
+        a = ids[a], b = ids[b];
+
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+
+    qmi();
+
+    cout << res[S][E] << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/146113/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+AcWing 1140. 最短网络    原题链接    简单
+作者：    Overnoise ,  2019-11-24 13:42:49 ,  阅读 727
+
+3
+
+
+就是一个最小生成树模板
+我使用的是并查集来建立最小生成树
+按距离排序之后就使用并查集判断是否填入此边
+具体看代码
+
+#include<bits/stdc++.h>
+using namespace std;
+struct oppo{
+    int from,to,s;
+}rood[100000];//存边 
+int tot;//记录边的个数 
+bool rule(oppo a,oppo b)
+{
+    return a.s<b.s;
+}
+int n;//农场的个数 
+int x;//en。。。   输入用 
+int fa[105];//并查集 
+int ans;
+int find(int x)//并查集 
+{
+    return fa[x]==x?x:fa[x]=find(fa[x]);//返回和路径压缩 
+}
+int main()
+{
+    cin>>n;
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+        {
+            scanf("%d",&x);
+            if(i>j)//防止重复建边，i到j相当于j到i 
+            {
+                rood[++tot].from=i;
+                rood[tot].to=j;
+                rood[tot].s=x;      
+            }   
+        }
+    sort(rood+1,rood+tot+1,rule);//c++ 的快乐库函数
+    for(int i=1;i<=n;i++)//初始化并查集 
+        fa[i]=i;
+    for(int i=1;i<=tot;i++)
+    {
+        int a=find(rood[i].from);
+        int b=find(rood[i].to);
+        if(a!=b)
+        {
+            ans+=rood[i].s;
+            fa[a]=b;
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/6497/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110;
+
+int n;
+int w[N][N];
+int dist[N];
+bool st[N];
+
+int prim()
+{
+    int res = 0;
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int t = -1;
+        for (int j = 1; j <= n; j ++ )
+            if (!st[j] && (t == -1 || dist[t] > dist[j]))
+                t = j;
+
+        res += dist[t];
+        st[t] = true;
+
+        for (int j = 1; j <= n; j ++ ) dist[j] = min(dist[j], w[t][j]);
+    }
+
+    return res;
+}
+
+int main()
+{
+    cin >> n;
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= n; j ++ )
+            cin >> w[i][j];
+
+    cout << prim() << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/148031/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1141. 局域网 prim算法    原题链接    简单
+作者：    垫底抽风 ,  2020-06-23 16:33:32 ,  阅读 201
+
+17
+
+
+1
+题目描述
+某个局域网内有 nn 台计算机和 kk 条 双向 网线，计算机的编号是 1∼n1∼n。由于搭建局域网时工作人员的疏忽，现在局域网内的连接形成了回路，我们知道如果局域网形成回路那么数据将不停的在回路内传输，造成网络卡的现象。
+
+注意：
+
+对于某一个连接，虽然它是双向的，但我们不将其当做回路。本题中所描述的回路至少要包含两条不同的连接。
+两台计算机之间最多只会存在一条连接。
+不存在一条连接，它所连接的两端是同一台计算机。
+因为连接计算机的网线本身不同，所以有一些连线不是很畅通，我们用 f(i,j)f(i,j) 表示 i,ji,j 之间连接的畅通程度，f(i,j)f(i,j) 值越小表示 i,ji,j 之间连接越通畅。
+
+现在我们需要解决回路问题，我们将除去一些连线，使得网络中没有回路且不影响连通性（即如果之前某两个点是连通的，去完之后也必须是连通的），并且被除去网线的 ∑f(i,j)∑f(i,j) 最大，请求出这个最大值。
+
+输入格式
+第一行两个正整数 n,kn,k。
+
+接下来的 kk 行每行三个正整数 i,j,mi,j,m 表示 i,ji,j 两台计算机之间有网线联通，通畅程度为 mm。
+
+输出格式
+一个正整数，表示被除去网线的 ∑f(i,j)∑f(i,j) 的最大值。
+
+数据范围
+1≤n≤1001≤n≤100
+0≤k≤2000≤k≤200
+1≤f(i,j)≤10001≤f(i,j)≤1000
+输入样例：
+5 5
+1 2 8
+1 3 1
+1 5 3
+2 4 5
+3 4 2
+输出样例：
+8
+算法1
+(prim) (n2)O(n2)
+题意：给定一张有 nn 个点，kk 条边的无向有环图。要求删掉其中部分边，且不改变图的连通性的情况下，使图中无环且所删边和最大，输出最大的所删边边权权和。
+
+删边权和最大 →→ 剩下边权和最小 →→ 求最小生成树
+
+但是题中并没有说图一定联通，这让这道题恶心了很多。
+
+图不连通，就要先求出连通块，然后对每个连通块，求出其最小生成树。
+
+当然，更巧妙的算法是用 kruskalkruskal，但是用 kruskalkruskal 的题解太多了，这里给出 primprim 的代码。
+
+C++ 代码
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+const int N = 205;
+
+int n, k;           // n 为图中点数，k 为图中边数
+int total;          // 存图上所有边的权值总和
+int g[N][N];        // prim 存图用的邻接矩阵
+vector<int> dcc[N]; // 存所有的连通块
+int dcc_cnt;        // 存连通块的数量
+int dist[N];        // prim 存到每个点最近的距离用的 dist
+bool st[N];         // 一个 st 两用，先用于求连通块，再在 prim 里面每个点是否在生成树中
+
+void dfs(int u)     // dfs 求出所有的连通块
+{
+    st[u] = true;   // 先将 u 制成 true，表示已经加入已有连通块中了
+    dcc[dcc_cnt].push_back(u); // 将点 u 放入该连通块
+    for (int i = 1; i <= n; i ++ ) // 从 1 到 n 枚举所有点
+        if (g[u][i] < 0x3f3f3f3f && !st[i]) // 如果该点 i 能从 u 走过去，且没加入已有连通块中
+            dfs(i); // 那么搜索点 i
+}
+
+int prim(int u)     // prim 求连通块 u 中的最小生成树
+{
+    int res = 0;    // res 记录生成树的大小
+    memset(dist, 0x3f, sizeof dist); // 将 dist 制为正无穷
+    memset(st, false, sizeof st);    // 由于要多次使用 st，所以每次要先将 st 制成 false
+    for (int i = 0; i < dcc[u].size(); i ++ ) // 扩展 dcc[u].size() 次
+    {
+        int t = -1;
+        for (int j = 0; j < dcc[u].size(); j ++ ) // 枚举一下当前连通块 u 中所有点
+        {
+            int ver = dcc[u][j];                  // 将该点取出
+            if (!st[ver] && (t == -1 || dist[t] > dist[ver])) // 如果该点不在生成树中且到该点的距离大于到点 t 的距离
+                t = ver;                          // 那么让将 t 改为该点
+        }
+        if (i) res += dist[t];                    // res 加上到已有生成树中距离最近的点到已有生成树的距离
+        st[t] = true;                             // 将该点 t 加入已有生成树
+        for (int j = 0; j < dcc[u].size(); j ++ ) // 更新当前连通块中所有点
+        {
+            int ver = dcc[u][j];                  // 将该点取出
+            dist[ver] = min(dist[ver], g[t][ver]);// 更新该点距离
+        }
+    }
+    return res;     // 返回该生成树的大小
+}
+
+int main()
+{
+    scanf("%d%d", &n, &k);
+    memset(g, 0x3f, sizeof g); // 将图中所有边的距离初始化为正无穷
+    for (int i = 0; i < k; i ++ ) // 读入图
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        g[a][b] = g[b][a] = min(g[a][b], c);
+        total += c;
+    }
+    for (int i = 1; i <= n; i ++ ) // 枚举所有点，求连通块
+        if (!st[i])                // 如果该点没有加入已有的任何联通块
+        {
+            dcc_cnt ++ ;           // 那么建立一个新的连通块
+            dfs(i);                // 将该点及该点能到的所有点加入新建的连通块
+        }
+    for (int i = 1; i <= dcc_cnt; i ++ ) // 枚举所有连通块，求出所有连通块的最小生成树
+        total -= prim(i);          // 总权值和减去该最小生成树的大小
+    printf("%d\n", total);         // 输出剩下的权值和
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/15172/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110, M = 210;
+
+int n, m;
+struct Edge
+{
+    int a, b, w;
+    bool operator< (const Edge &t)const
+    {
+        return w < t.w;
+    }
+}e[M];
+int p[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, w;
+        cin >> a >> b >> w;
+        e[i] = {a, b, w};
+    }
+
+    sort(e, e + m);
+
+    int res = 0;
+    for (int i = 0; i < m; i ++ )
+    {
+        int a = find(e[i].a), b = find(e[i].b), w = e[i].w;
+        if (a != b) p[a] = b;
+        else res += w;
+    }
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/148059/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1142. 繁忙的都市    原题链接    简单
+作者：    小呆呆 ,  2020-02-17 18:25:19 ,  阅读 154
+
+5
+
+
+算法分析
+普通的最小生成树：所有边权之和最小
+
+本题的最小生成树：最大的边权最小
+
+在这里我深刻的意识到kruskal本质是让点按照某个规律进行连通，res是特有的属性
+
+做法：kruskal
+
+1、将所有边从小到大排序
+
+2、枚举每条边a,b,权值是w
+
+if a和b不连通，将a，b加进集合，且更新res
+时间复杂度 O(mlogm)O(mlogm)
+参考文献
+算法提高课
+
+Java 代码
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
+public class Main {
+    static int N = 310, M = 10010;
+    static int n,m;
+    static Edge[] edge = new Edge[M];
+    static int[] p = new int[N];
+    static int find(int x)
+    {
+        if(p[x] != x) p[x] = find(p[x]);
+        return p[x];
+    }
+    static int kruskal()
+    {
+        int res = 0;
+        Arrays.sort(edge,0,m);
+
+        for(int i = 0;i < m;i ++)
+        {
+            int a = edge[i].a;
+            int b = edge[i].b;
+            int w = edge[i].w;
+            a = find(a);
+            b = find(b);
+            if(a != b)
+            {
+                p[a] = b;
+                res = w;
+            }
+        }
+        return res;
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = br.readLine().split(" ");
+        n = Integer.parseInt(s1[0]);
+        m = Integer.parseInt(s1[1]);
+        for(int i = 0;i < m;i ++)
+        {
+            String[] s2 = br.readLine().split(" ");
+            int a = Integer.parseInt(s2[0]);
+            int b = Integer.parseInt(s2[1]);
+            int w = Integer.parseInt(s2[2]);
+            edge[i] = new Edge(a,b,w);
+        }
+
+        for(int i = 1;i <= n;i ++) p[i] = i;
+
+        System.out.println(n - 1 + " " + kruskal());
+
+    }
+}
+class Edge implements Comparable<Edge>
+{
+    int a,b,w;
+    Edge(int a,int b,int w)
+    {
+        this.a = a;
+        this.b = b;
+        this.w = w;
+    }
+    @Override
+    public int compareTo(Edge o) {
+        // TODO 自动生成的方法存根
+        return Integer.compare(w, o.w);
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/8683/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+    #include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 310, M = 10010;
+
+int n, m;
+struct Edge
+{
+    int a, b, w;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}e[M];
+int p[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, w;
+        cin >> a >> b >> w;
+        e[i] = {a, b, w};
+    }
+    sort(e, e + m);
+
+    int res = 0;
+    for (int i = 0; i < m; i ++ )
+    {
+        int a = find(e[i].a), b = find(e[i].b), w = e[i].w;
+        if (a != b)
+        {
+            p[a] = b;
+            res = w;
+        }
+    }
+
+    cout << n - 1 << ' ' << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/148078/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1143. 联络员    原题链接    简单
+作者：    yingzhaoyang ,  2019-11-24 20:03:49 ,  阅读 201
+
+3
+
+
+克鲁斯卡尔算法求最小生成树
+这道题的难度不大,主要是因为有必选边.
+其实可以在输入时就优先处理必选边.
+剩下的就是常规的最小生成树了.
+具体看代码注释.
+
+时间复杂度 O(nlogn)O(nlogn)
+C++ 代码
+#include<bits/stdc++.h>
+#define N 2010
+#define M 10010
+using namespace std;
+struct node{
+    int type,from,to,dis;//type记录当前边的类型,from记录当前边的起点,to记录当前边的终点,dis记录当前边的权值
+}e[M];
+int n,m,fa[N],k,tot;//k记录当前已选择了几条边,tot记录最终的权值
+int find(int x)//并查集基本操作
+{
+    if(fa[x]==x)
+        return x;
+    return fa[x]=find(fa[x]);
+}
+inline void merge(int x,int y)//并查集基本操作
+{
+    fa[find(y)]=find(x);
+}
+bool rule(const node &x,const node &y)//按边权从小到大排序
+{
+    return x.dis<y.dis;
+}
+int main()
+{
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=n;i++)//并查集初始化
+        fa[i]=i;
+    for(int i=1;i<=m;i++){
+        scanf("%d %d %d %d",&e[i].type,&e[i].from,&e[i].to,&e[i].dis);
+        int type=e[i].type,u=e[i].from,v=e[i].to,d=e[i].dis;
+        if(type==1){//如果是必选边
+            tot+=d;//注意题目要求要加入所有的从u到v的必选边
+            if(find(u)!=find(v)){//当前两点不连通
+                merge(u,v);//合并
+                k++;//边数加一
+            }
+        }
+    }
+    sort(e+1,e+1+m,rule);
+    for(int i=1;i<=m;i++){//克鲁斯卡尔算法求最小生成树
+        if(k==n-1)
+            break;
+        int type=e[i].type,u=e[i].from,v=e[i].to,d=e[i].dis;
+        if(type==1)//必选边已经处理了,直接跳过
+            continue;
+        if(find(u)!=find(v)){
+            merge(u,v);
+            tot+=d;
+            k++;
+        }
+    }
+    printf("%d\n",tot);
+    return 0;//完结撒花
+}
+
+作者：yingzhaoyang
+链接：https://www.acwing.com/solution/content/6531/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 2010, M = 10010;
+
+int n, m;
+struct Edge
+{
+    int a, b, w;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}e[M];
+int p[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+    int res = 0, k = 0;
+    for (int i = 0; i < m; i ++ )
+    {
+        int t, a, b, w;
+        cin >> t >> a >> b >> w;
+        if (t == 1)
+        {
+            res += w;
+            p[find(a)] = find(b);
+        }
+        else e[k ++ ] = {a, b, w};
+    }
+
+    sort(e, e + k);
+
+    for (int i = 0; i < k; i ++ )
+    {
+        int a = find(e[i].a), b = find(e[i].b), w = e[i].w;
+        if (a != b)
+        {
+            p[a] = b;
+            res += w;
+        }
+    }
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/148113/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1144. 连接格点    原题链接    简单
+作者：    yingzhaoyang ,  2019-11-24 21:38:56 ,  阅读 313
+
+10
+
+
+自己yy的算法
+自己yy一波....
+我们其实可以将每一个点看做一个数.
+然后再用类似求最小生成树的方法分别从横向和纵向分别依次合并相邻两点.
+如果当前相邻的两点没有连接,就将其合并,边合并边记录答案.
+
+(注意下文中的坐标均指在C++二维数组表示下的坐标)
+接下来说一下将坐标转化为数字,其实就相当于给每一个坐标一个编号,那么
+我们就将每一个坐标通过一个特定的规则转换为其对应的编号.
+
+具体怎么做,
+在此举一个例子:(以n=3,m=5为例)
+1 2 3 4 5
+6 7 8 9 10
+11 12 13 14 15
+通过这个矩阵,我们顺利的将每一个坐标编上了序号.
+例如:坐标(1,1)的编号为1,坐标(1,2)的编号为2,
+坐标(2,2)的编号为7,坐标(2,1)的编号为6,以此类推.
+
+容易看出:如果当前的坐标为(x,y),那么他对应的编号就是(x-1)*m+y.
+
+解决了这个问题,剩下的简直就是小儿科了…
+
+时间复杂度 应该是O(nlogn)O(nlogn)吧....
+C++ 代码
+#include<bits/stdc++.h>
+#define N 1010
+using namespace std;
+int n,m;
+int fa[N*N],tot;
+int find(int x)//并查集基本操作
+{
+    if(fa[x]==x)
+        return x;
+    return fa[x]=find(fa[x]);
+}
+inline int merge(int x,int y)//并查集基本操作
+{
+    int fa_x=find(x);
+    int fa_y=find(y);
+    if(fa_x!=fa_y){
+        fa[fa_y]=fa_x;
+        return 1;//已经连了一条边
+    }
+    return 0;
+}
+int main()
+{
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=n*m;i++)//并查集初始化
+       fa[i]=i;
+    int x1,y1,x2,y2;
+    while(~scanf("%d %d %d %d",&x1,&y1,&x2,&y2)){
+        int u=(x1-1)*m+y1,v=(x2-1)*m+y2;//转换为对应的编号
+        merge(u,v);//合并
+    }
+    for(int i=1;i<=m;i++)//竖向合并一遍
+        for(int j=1;j<n;j++){
+            int u=(j-1)*m+i,v=j*m+i;//坐标转换
+            if(merge(u,v))//当前两点有一条边连接
+                tot++;//竖向答案+1
+        }
+    for(int i=1;i<=n;i++)//横向合并一遍
+        for(int j=1;j<m;j++){
+            int u=(i-1)*m+j,v=(i-1)*m+j+1;//坐标转换
+            if(merge(u,v))//当前两点有一条边连接
+                tot+=2;//横向答案+2
+        }
+    printf("%d\n",tot);
+    return 0;
+}
+
+作者：yingzhaoyang
+链接：https://www.acwing.com/solution/content/6541/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1010, M = N * N, K = 2 * N * N;
+
+int n, m, k;
+int ids[N][N];
+struct Edge
+{
+    int a, b, w;
+}e[K];
+int p[M];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+void get_edges()
+{
+    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1}, dw[4] = {1, 2, 1, 2};
+
+    for (int z = 0; z < 2; z ++ )
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= m; j ++ )
+                for (int u = 0; u < 4; u ++ )
+                    if (u % 2 == z)
+                    {
+                        int x = i + dx[u], y = j + dy[u], w = dw[u];
+                        if (x && x <= n && y && y <= m)
+                        {
+                            int a = ids[i][j], b = ids[x][y];
+                            if (a < b) e[k ++ ] = {a, b, w};
+                        }
+                    }
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    for (int i = 1, t = 1; i <= n; i ++ )
+        for (int j = 1; j <= m; j ++, t ++ )
+            ids[i][j] = t;
+
+    for (int i = 1; i <= n * m; i ++ ) p[i] = i;
+
+    int x1, y1, x2, y2;
+    while (cin >> x1 >> y1 >> x2 >> y2)
+    {
+        int a = ids[x1][y1], b = ids[x2][y2];
+        p[find(a)] = find(b);
+    }
+
+    get_edges();
+
+    int res = 0;
+    for (int i = 0; i < k; i ++ )
+    {
+        int a = find(e[i].a), b = find(e[i].b), w = e[i].w;
+        if (a != b)
+        {
+            p[a] = b;
+            res += w;
+        }
+    }
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/148150/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+const int N = 1005;
+int n, m, f[N * N], res = 0;
+int get(int x) {
+    return x == f[x] ? x : f[x] = get(f[x]);
+}
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n * m; i++) f[i] = i;
+    int x1, y1, x2, y2;
+    while(~scanf("%d%d%d%d", &x1, &y1, &x2, &y2)) {
+        int a = (x1 - 1) * m + y1, b = (x2 - 1) * m + y2;
+        f[get(a)] = get(b);
+    }
+
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j <= m; j++) {
+            int a = (i - 1) * m + j, b = i * m + j;
+            a = get(a), b = get(b);
+            if(a != b) res++, f[a] = b;
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j < m; j++) {
+            int a = (i - 1) * m + j, b = (i - 1) * m + j + 1;
+            a = get(a), b = get(b);
+            if(a != b) res += 2, f[a] = b;
+        }
+    }
+    printf("%d\n", res);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/activity/content/code/content/148232/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1146. 新的开始    原题链接    中等
+作者：    yingzhaoyang ,  2019-11-26 08:53:15 ,  阅读 279
+
+6
+
+
+最小生成树的扩展应用
+对于这道题,我们可以假设一个虚拟的”超级发电站”.
+而在每一个矿井修建发电站就相当于是从超级发电站向其连一条权值为v[i]的边.
+之后我们惊奇的发现这就是一道最小生成树的模板题.
+直接上克鲁斯卡尔算法即可..
+
+时间复杂度 O(nlogn)O(nlogn)
+C++ 代码
+#include<bits/stdc++.h>
+#define N 310
+using namespace std;
+struct node{
+    int from,to,dis;
+}e[N*N];
+int n,v,p[N][N];
+int fa[N],tot,cnt,ans;
+bool rule(const node &x,const node &y)//按边权从小到大排序
+{
+    return x.dis<y.dis;
+}
+int find(int x)//并查集基本操作
+{
+    if(fa[x]==x)
+        return x;
+    return fa[x]=find(fa[x]);
+}
+inline void merge(int x,int y)//并查集基本操作
+{
+    fa[find(y)]=find(x);
+}
+int main()
+{
+    scanf("%d",&n);
+    for(int i=1;i<=n+1;i++)//并查集初始化
+        fa[i]=i;
+    for(int i=1;i<=n;i++){
+        scanf("%d",&v);
+        e[++tot].from=n+1;//从"超级发电站"向该点连一条权值为v的边
+        e[tot].to=i;
+        e[tot].dis=v;
+    }
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=n;j++)
+            scanf("%d",&p[i][j]);
+    for(int i=1;i<n;i++)
+        for(int j=i+1;j<=n;j++){
+            e[++tot].from=i;
+            e[tot].to=j;
+            e[tot].dis=p[i][j];
+        }
+    sort(e+1,e+1+tot,rule);
+    for(int i=1;i<=tot;i++){//标准克鲁斯卡尔算法
+        int u=e[i].from,v=e[i].to;
+        if(find(u)!=find(v)){
+            merge(u,v);
+            ans+=e[i].dis;
+        }
+    }
+    printf("%d\n",ans);
+    return 0;
+}
+
+作者：yingzhaoyang
+链接：https://www.acwing.com/solution/content/6568/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 310;
+
+int n;
+int w[N][N];
+int dist[N];
+bool st[N];
+
+int prim()
+{
+    memset(dist, 0x3f, sizeof dist);
+    dist[0] = 0;
+
+    int res = 0;
+    for (int i = 0; i < n + 1; i ++ )
+    {
+        int t = -1;
+        for (int j = 0; j <= n; j ++ )
+            if (!st[j] && (t == -1 || dist[t] > dist[j]))
+                t = j;
+        st[t] = true;
+        res += dist[t];
+
+        for (int j = 0; j <= n; j ++ ) dist[j] = min(dist[j], w[t][j]);
+    }
+
+    return res;
+}
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i ++ )
+    {
+        scanf("%d", &w[0][i]);
+        w[i][0] = w[0][i];
+    }
+
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= n; j ++ )
+            scanf("%d", &w[i][j]);
+
+    printf("%d\n", prim());
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/151256/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1145. 北极通讯网络    原题链接    中等
+作者：    术皓 ,  2019-11-22 14:43:14 ,  阅读 315
+
+9
+
+
+养成先点赞后阅读的好习惯
+逃
+
+题目描述
+这道题用贪心的思想想一下
+就是叫我们先跑一遍最小生成树，然后再删除前k大的边，再输出最大的那条边。（蒟蒻一枚，勿喷）
+
+最小生成树
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+const int N=555;
+
+template<class T>void read(T &x)//快读
+{
+    x=0;bool f=0;char ch=getchar();
+    while(ch<'0'||ch>'9') {f|=(ch=='-');ch=getchar();}
+    while(ch>='0'&&ch<='9') {x=(x<<1)+(x<<3)+(ch^48);ch=getchar();}
+    x=f?-x:x;
+    return;
+}
+
+struct stt
+{
+    int x,y;
+}a[555];
+struct st
+{
+    int s,e;
+    double d;
+}b[555*400];
+
+bool cap(st a,st b)
+{
+    return a.d<b.d;
+}
+
+double js(stt a,stt b)
+{
+    return sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
+}//求距离
+
+int f[N];
+int n,k;
+int cnt;//记录共有多少条边
+int get(int x)
+{
+    if(x==f[x]) return x;
+    return f[x]=get(f[x]);
+}
+
+int nn;
+int main()
+{
+    read(n),read(k);
+    for(int i=1;i<=n;i++)
+        read(a[i].x),read(a[i].y),f[i]=i;
+    for(int i=1;i<n;i++)
+    for(int j=i+1;j<=n;j++)
+        b[++cnt].s=i,b[cnt].e=j,b[cnt].d=js(a[i],a[j]);//加入每条边
+    //Kruskal算法
+    sort(b+1,b+cnt+1,cap);
+    for(int i=1;i<=cnt;i++)
+    {
+        int a=get(b[i].s),bbb=get(b[i].e);
+        if(a==bbb) continue;
+        nn++;//记录已经加入了多少边
+        f[a]=bbb;
+        if(nn==n-k)//还剩k条边，即这条边是第k+1大的
+        {
+            printf("%.2lf",b[i].d);
+            return 0;
+        }
+    }
+    return 0;
+}
+
+作者：术皓
+链接：https://www.acwing.com/solution/content/6438/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+
+#define x first
+#define y second
+
+using namespace std;
+
+typedef pair<int, int> PII;
+
+const int N = 510, M = N * N / 2;
+
+int n, k, m;
+struct Edge
+{
+    int a, b;
+    double w;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}e[M];
+PII q[M];
+int p[N];
+
+double get_dist(PII a, PII b)
+{
+    int dx = a.x - b.x;
+    int dy = a.y - b.y;
+    return sqrt(dx * dx + dy * dy);
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> k;
+    for (int i = 0; i < n; i ++ ) cin >> q[i].x >> q[i].y;
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j < i; j ++ )
+            e[m ++ ] = {i, j, get_dist(q[i], q[j])};
+
+    sort(e, e + m);
+    for (int i = 0; i < n; i ++ ) p[i] = i;
+
+    int cnt = n;
+    double res = 0;
+    for (int i = 0; i < m; i ++ )
+    {
+        if (cnt <= k) break;
+
+        int a = find(e[i].a), b = find(e[i].b);
+        double w = e[i].w;
+        if (a != b)
+        {
+            p[a] = b;
+            cnt -- ;
+            res = w;
+        }
+    }
+
+    printf("%.2lf\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/151271/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 346. 走廊泼水节    原题链接    中等
+作者：    Overnoise ,  2019-11-26 08:46:54 ,  阅读 870
+
+3
+
+
+改一下最小生成树模板就能过辣
+在并查集求最小生成树模板上加一个tot数组存这个并查集内节点的个数，再跑最小生成树模板统计答案就AC辣
+#include<bits/stdc++.h>
+using namespace std;
+struct oppo {
+    int from,to,s;
+} rood[9000000];
+int fa[7000];
+int tot[7000];
+int find(int x) {
+    return fa[x]==x?x:fa[x]=find(fa[x]);
+}
+bool rule(oppo a,oppo b) {
+    return a.s<b.s;
+}
+int n,T;
+int ans;
+int main() {
+    cin>>T;
+    while(T--) {
+        cin>>n;
+        ans=0;
+        for(int i=1; i<n; i++)
+            scanf("%d%d%d",&rood[i].from,&rood[i].to,&rood[i].s);
+        for(int i=1; i<=n; i++) {
+            fa[i]=i;
+            tot[i]=1;
+        }
+        sort(rood+1,rood+n,rule);
+        for(int i=1; i<n; i++) {
+            int a=find(rood[i].from);
+            int b=find(rood[i].to);
+            fa[b]=a;
+            ans+=(rood[i].s+1)*(tot[a]*tot[b]-1);
+            tot[a]+=tot[b];
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/6567/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 346. 走廊泼水节    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-06-12 22:10:06 ,  阅读 1058
+
+13
+
+
+5
+更好的阅读体验
+
+题目描述
+给定一棵N个节点的树，要求增加若干条边，把这棵树扩充为完全图，并满足图的唯一最小生成树仍然是这棵树。
+
+求增加的边的权值总和最小是多少。
+
+输入格式
+第一行包含整数t，表示共有t组测试数据。
+
+对于每组测试数据，第一行包含整数N。
+
+接下来N-1行，每行三个整数X,Y,Z，表示X节点与Y节点之间存在一条边，长度为Z。
+
+输出格式
+每组数据输出一个整数，表示权值总和最小值。
+
+每个结果占一行。
+
+数据范围
+N≤6000,Z≤100N≤6000,Z≤100
+输入样例：
+2
+3
+1 2 2
+1 3 3
+4
+1 2 3
+2 3 4
+3 4 5 
+输出样例：
+4
+17 
+解题报告
+题意理解
+这道题目说的很清楚,就是让我们将一个最小生成树的图,添加一些边,使得这张图成为一个完全图.
+
+但是我们这张图的最小生成树,必须还是原来那张图的最小生成树.
+
+也就是说两张图的最小生成树表示是一模一样的.
+
+算法解析
+根据上面的信息,我们不难发现这道题目和最小生成树算法联系紧密,那么现在我们的主要问题就在于如何去构造最小生成树.
+
+我们可以考虑最小生成树算法中的Kruskal算法.
+
+首先将所有的边按照从小到大的顺序排序.
+此时我们保证了是最小生成树的完美生成法则.
+
+对于每一条边(x,y,w)(x,y,w)而言,他们之间有某种关系.
+假如说xx和yy不在同一个连通块(集合)之中,也就是他们之间没有边相连
+
+那么我们相连之后,现在这两个点,各自所在的连通块(集合),都拥有了一个最短边,也就是(x,y,w)(x,y,w).
+
+最小生成树是已经确定了,但是对于这原来两个连通块的其他点怎么办?
+首先我们设Sx表示为x之前所在的连通块 那么Sy表示为y之前所在的连通块.
+首先我们设Sx表示为x之前所在的连通块 那么Sy表示为y之前所在的连通块.
+
+因为我们不能破坏这个最小生成树,所以我们这原来的两个连通块中的点就必须有如下性质.
+假如说点A属于Sx这个集合之中 点B属于Sy这个集合之中.
+假如说点A属于Sx这个集合之中 点B属于Sy这个集合之中.
+
+那么点AA与点BB之间的距离,必须要大于之前的ww,否则就会破坏之前的最小生成树
+所以说(A,B)之间的距离最小为w+1
+所以说(A,B)之间的距离最小为w+1
+假如说我们知道
+Sx有p个元素,然后Sy有q个元素.
+Sx有p个元素,然后Sy有q个元素.
+
+那么将
+Sx与Sy连通块的所有点相连.
+Sx与Sy连通块的所有点相连.
+
+显然这个两个连通块会增加.
+p×q−1条边
+p×q−1条边
+
+然后每一条边的最小长度为
+w+1
+w+1
+
+所以我们会得出
+(w+1)×(p∗q−1)为两个连通块成为完全图的最小代价
+(w+1)×(p∗q−1)为两个连通块成为完全图的最小代价
+代码解析
+#include <bits/stdc++.h>
+using namespace std;
+const int N=1e4+100;
+int fa[N],n,m,i,j,k,t,s[N];
+long long ans;
+struct node
+{
+    int x,y,w;
+} edge[N];
+bool cmp(node a,node b)
+{
+    return a.w<b.w;//排序
+}
+int find(int x)
+{
+    return fa[x]==x?x:fa[x]=find(fa[x]);//并查集
+}
+int main()
+{
+    scanf("%d",&t);
+    while(t--)
+    {
+        scanf("%d",&n);
+        for(int i=1;i<n;i++)
+            scanf("%d%d%d",&edge[i].x,&edge[i].y,&edge[i].w);
+        for(int i=1;i<=n;i++)
+            fa[i]=i,s[i]=1;
+        sort(edge+1,edge+n,cmp);
+        ans=0;
+        for(int i=1;i<n;i++)
+        {
+            int x=find(edge[i].x),y=find(edge[i].y),w=edge[i].w;
+            if (x==y)//在同一个连通块之间了
+                continue;
+            ans+=(long long)(s[x]*s[y]-1)*(w+1);//计算最少路径
+            fa[x]=y;//合并
+            s[y]+=s[x];//计算连通块大小.
+        }
+        printf("%lld\n",ans);//输出答案
+    }
+    return 0;
+}
+一张NN个节点的图,要求其中每两个节点之间必须有一条边 ↩
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/2456/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 6010;
+
+int n;
+struct Edge
+{
+    int a, b, w;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}e[N];
+int p[N], size[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    int T;
+    cin >> T;
+    while (T -- )
+    {
+        cin >> n;
+        for (int i = 0; i < n - 1; i ++ )
+        {
+            int a, b, w;
+            cin >> a >> b >> w;
+            e[i] = {a, b, w};
+        }
+
+        sort(e, e + n - 1);
+        for (int i = 1; i <= n; i ++ ) p[i] = i, size[i] = 1;
+
+        int res = 0;
+        for (int i = 0; i < n - 1; i ++ )
+        {
+            int a = find(e[i].a), b = find(e[i].b), w = e[i].w;
+            if (a != b)
+            {
+                res += (size[a] * size[b] - 1) * (w + 1);
+                size[b] += size[a];
+                p[a] = b;
+            }
+        }
+
+        cout << res << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/151283/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1148. 秘密的牛奶运输=====    原题链接    中等
+作者：    xxh ,  2020-02-08 20:34:27 ,  阅读 269
+
+3
+
+
+题解 ： https://xiaoxiaoh.blog.csdn.net/article/details/104227780
+
+一、内容
+秘密的牛奶运输
+
+农夫约翰要把他的牛奶运输到各个销售点。
+
+运输过程中，可以先把牛奶运输到一些销售点，再由这些销售点分别运输到其他销售点。
+
+运输的总距离越小，运输的成本也就越低。
+
+低成本的运输是农夫约翰所希望的。
+
+不过，他并不想让他的竞争对手知道他具体的运输方案，所以他希望采用费用第二小的运输方案而不是最小的。
+
+现在请你帮忙找到该运输方案。
+
+注意：：
+
+如果两个方案至少有一条边不同，则我们认为是不同方案；
+费用第二小的方案在数值上一定要严格小于费用最小的方案；
+答案保证一定有解；
+输入格式
+第一行是两个整数 N,M，表示销售点数和交通线路数；
+
+接下来 M 行每行 3 个整数 x,y,z，表示销售点 x 和销售点 y 之间存在线路，长度为 z。
+输出格式
+
+输出费用第二小的运输方案的运输总距离。
+数据范围
+
+1≤N≤500,
+1≤M≤104,
+1≤z≤109,
+数据中可能包含重边。
+输入样例：
+
+4 4
+1 2 100
+2 4 200
+2 3 250
+3 4 100
+输出样例：
+
+450
+二、思路
+根据存在次小生成树与最小生成树只差一条边。
+我们可以先通过kruskal求出最小生成树 O(mlogm)
+通过这个树初始化某点到其他点的路径中最大边、次大边。 O(n^2^)
+遍历所有未在树中的边（u–>v）， 看是否大于u到v的边的最大值， 若大于那么可以替换这条边，若不大于那就再判断是否大于次值，若大于同理进行替换。
+
+三、代码
+#include <cstdio>
+#include <algorithm> 
+typedef long long ll; 
+using namespace std;
+const int N = 505, M = 1e4 + 5;
+struct Edge {
+    int u, v, w;
+    bool in; //in代表这条边是否在树中 
+    bool operator < (const Edge&o) const {
+        return w < o.w;
+    } 
+} edge[M]; 
+struct E {
+    int v, w, next;
+} e[N * 2]; //树的边有N-1条*双向
+int n, m, len, h[N], md1[N][N], md2[N][N], p[N]; //md[i][j] 代表i到j点的路径上最大的一条边 
+int find(int x) { return x == p[x] ? x : (p[x] = find(p[x]));}
+void add(int u, int v, int w) {
+    e[++len].v = v; e[len].w = w; e[len].next = h[u]; h[u] = len;
+}
+void dfs(int s, int u, int fa, int mw1, int mw2) {
+    //从s起点出发到其他点 
+    md1[s][u] = mw1; md2[s][u] = mw2;
+    for (int j = h[u]; j; j = e[j].next) {
+        int v = e[j].v; 
+        int w = e[j].w;
+        if (v != fa) {
+            int t1, t2; 
+            if (w > mw1) t1 = w, t2 = mw1;
+            //这里不能相等 
+            else if (w < mw1 && w > mw2) t1 = mw1, t2 = w; 
+            dfs(s, v, u, t1, t2);
+        }
+    }
+}
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i++) p[i] = i; 
+    for (int i = 0; i < m; i++) scanf("%d%d%d", &edge[i].u, &edge[i].v, &edge[i].w);
+    sort(edge, edge + m);
+    //求出最小生成树 
+    ll sum = 0; //求出最小生成树的边权和 
+    for (int i = 0; i < m; i++) {
+        int u = edge[i].u, v = edge[i].v , w = edge[i].w;
+        int fu = find(u), fv = find(v);
+        if (fu != fv) {
+            sum += w;
+            add(u, v, w); add(v, u, w); //构成树
+            edge[i].in = true; //代表在树中 
+            p[fu] = fv;
+        }
+    }  
+    //通过树 求出i到其他点的路径中的最大边
+    for (int i = 1; i <= n; i++) dfs(i, i, -1, 0, 0); 
+    ll ans = 1e18;
+    for (int i = 0; i < m; i++) {
+        if (!edge[i].in) {
+            //如果这条边不在最小生成树中 考虑替换
+            int w = edge[i].w, u = edge[i].u, v = edge[i].v;
+            //如果这条边比u到v的路径中的最大边还大 那么可以替换 不然替换了反而变小 
+            if (w > md1[u][v]) ans = min(ans, sum + w - md1[u][v]);
+            //如果和最大的边相等 那么判断是否大于次大边 
+            else if (w > md2[u][v]) ans = min(ans, sum + w - md2[u][v]);
+        } 
+    }
+    printf("%lld", ans);
+    return 0;
+} 
+
+作者：xxh
+链接：https://www.acwing.com/solution/content/8300/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 510, M = 10010;
+
+int n, m;
+struct Edge
+{
+    int a, b, w;
+    bool f;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}edge[M];
+int p[N];
+int dist1[N][N], dist2[N][N];
+int h[N], e[N * 2], w[N * 2], ne[N * 2], idx;
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+void dfs(int u, int fa, int maxd1, int maxd2, int d1[], int d2[])
+{
+    d1[u] = maxd1, d2[u] = maxd2;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (j != fa)
+        {
+            int td1 = maxd1, td2 = maxd2;
+            if (w[i] > td1) td2 = td1, td1 = w[i];
+            else if (w[i] < td1 && w[i] > td2) td2 = w[i];
+            dfs(j, u, td1, td2, d1, d2);
+        }
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, w;
+        scanf("%d%d%d", &a, &b, &w);
+        edge[i] = {a, b, w};
+    }
+
+    sort(edge, edge + m);
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+    LL sum = 0;
+    for (int i = 0; i < m; i ++ )
+    {
+        int a = edge[i].a, b = edge[i].b, w = edge[i].w;
+        int pa = find(a), pb = find(b);
+        if (pa != pb)
+        {
+            p[pa] = pb;
+            sum += w;
+            add(a, b, w), add(b, a, w);
+            edge[i].f = true;
+        }
+    }
+
+    for (int i = 1; i <= n; i ++ ) dfs(i, -1, -1e9, -1e9, dist1[i], dist2[i]);
+
+    LL res = 1e18;
+    for (int i = 0; i < m; i ++ )
+        if (!edge[i].f)
+        {
+            int a = edge[i].a, b = edge[i].b, w = edge[i].w;
+            LL t;
+            if (w > dist1[a][b])
+                t = sum + w - dist1[a][b];
+            else if (w > dist2[a][b])
+                t = sum + w - dist2[a][b];
+            res = min(res, t);
+        }
+
+    printf("%lld\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/151327/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 904. 虫洞    原题链接    简单
+作者：    Overnoise ,  2019-12-08 17:04:42 ,  阅读 792
+
+3
+
+
+我没有心态辣！！！
+这道题卡了我很久。。。。。
+首先说说我哪里被坑了吧
+1.普通道路双向，虫洞单向（没有读清楚题的悲伤）
+2.没有看y总视频就开始自己yy
+
+一看到题，我就想的一个好方法
+1.预处理边，把虫洞当成负边处理存入数组（不建图）
+2.枚举起点
+3.建反图
+4.dfs确定起点在反图上可以到达那些点（相当于在正图上，这些点可以到达起点）
+5.建正图，如果边的终点不能到达 第2步枚举的起点（参考第4步）就不加入边（避免不必要的边）
+6.spfa一波，如果有负换，输出YES，如果没有负环，那么换个起点继续搜
+
+不出我所料，他超时了 ╮(╯﹏╰）╭
+我洋洋洒洒102代码啊啊啊啊！！！
+
+
+超时代码
+#pragma GCC optimize(2)
+#pragma GCC optimize(3)
+#include<bits/stdc++.h>
+using namespace std;
+struct oppo {
+    int to,s,nest;
+} rood[6005];
+int head[600],tot;
+int n,m,w,a,b,c;
+void add(int from,int to,int s) {
+    rood[++tot].s=s;
+    rood[tot].to=to;
+    rood[tot].nest=head[from];
+    head[from]=tot;
+}
+int vis[600];
+int f[600];
+int all[600];
+stack< int > v;
+bool spfa(int x) {
+    memset(all,0,sizeof(all));
+    memset(vis,10,sizeof(vis));
+    memset(f,0,sizeof(f));
+    vis[x]=0;
+    v.push(x);
+    while(v.size()) {
+        int lxl=v.top();
+        f[lxl]=0;
+        v.pop();
+        for(int i=head[lxl]; i; i=rood[i].nest) {
+            if(vis[lxl]+rood[i].s<vis[rood[i].to]) {
+                vis[rood[i].to]=vis[lxl]+rood[i].s;
+                all[rood[i].to]=all[lxl]+1;
+                if(all[rood[i].to]>n||vis[x]<0) {
+                    puts("YES");
+                    return 0;
+                }
+                if(!f[rood[i].to]) {
+                    f[rood[i].to]=1;
+                    v.push(rood[i].to);
+                }
+            }
+        }
+    }
+    return 1;
+}
+int from[6005],to[6005],s[6005];
+bool h[600];
+void dfs(int x) {
+    h[x]=1;
+    for(int i=head[x]; i; i=rood[i].nest)
+        if(!h[rood[i].to])
+            dfs(rood[i].to);
+}
+int main() {
+    int T;
+    cin>>T;
+    while(T--) {
+        memset(h,0,sizeof(h));
+        tot=0;
+        memset(head,0,sizeof(head));
+        cin>>n>>m>>w;
+        for(int i=1; i<=m; i++) {
+            scanf("%d %d %d",&a,&b,&c);
+            from[i]=a;
+            to[i]=b;
+            s[i]=c;
+        }
+        for(int i=1; i<=w; i++) {
+            scanf("%d %d %d",&a,&b,&c);
+            from[m+i]=a;
+            to[m+i]=b;
+            s[m+i]=-c;
+        }
+        bool flag=1;
+        for(int i=1; i<=n&&flag; i++)
+        {
+            tot=0;
+            memset(head,0,sizeof(head));
+            for(int j=1;j<=m+w;j++)
+            {
+                add(to[j],from[j],s[j]);
+                if(i<=m)
+                    add(from[j],to[j],s[j]);
+            }
+            memset(h,0,sizeof(h));
+            dfs(i);
+            tot=0;
+            memset(head,0,sizeof(head));
+            for(int j=1; j<=m+w; j++)
+                if(h[to[j]]) {
+                    add(from[j],to[j],s[j]);
+                    if(j<=m)
+                        add(to[j],from[j],s[j]);
+                }
+            flag=spfa(i);
+        }
+        if(flag)
+            puts("NO");
+    }
+    return 0;
+}
+改代码的途中，我陷入了对信息学的沉思
+为什么！！！！
+然后我发现，我为什么要枚举起点呢？？？
+直接建图，如果有原图有负环，那么起点就在负环上呀！
+
+我靠（小声BB）
+就变成简单的判负环辣！！！
+代码如下
+
+#include<bits/stdc++.h>
+using namespace std;
+struct oppo {
+    int to,s,nest;
+} rood[6005];
+int head[600],tot;
+int n,m,w,a,b,c;
+void add(int from,int to,int s) {
+    rood[++tot].s=s;
+    rood[tot].to=to;
+    rood[tot].nest=head[from];
+    head[from]=tot;
+}
+int vis[600];
+int f[600];
+int all[600];
+stack< int > v;
+bool flag[600];
+bool spfa(int x) {
+    memset(all,0,sizeof(all));
+    memset(vis,10,sizeof(vis));
+    memset(f,0,sizeof(f));
+    vis[x]=0;
+    v.push(x);
+    while(v.size()) {
+        int lxl=v.top();
+        flag[lxl]=1;
+        f[lxl]=0;
+        v.pop();
+        for(int i=head[lxl]; i; i=rood[i].nest) {
+            if(vis[lxl]+rood[i].s<vis[rood[i].to]) {
+                vis[rood[i].to]=vis[lxl]+rood[i].s;
+                all[rood[i].to]=all[lxl]+1;
+                if(all[rood[i].to]>n) {
+                    puts("YES");
+                    return 0;
+                }
+                if(!f[rood[i].to]) {
+                    f[rood[i].to]=1;
+                    v.push(rood[i].to);
+                }
+            }
+        }
+    }
+    return 1;
+}
+int main() {
+    int T;
+    cin>>T;
+    while(T--) {
+        memset(flag,0,sizeof(flag));
+        tot=0;
+        memset(head,0,sizeof(head));
+        cin>>n>>m>>w;
+        for(int i=1; i<=m; i++) {
+            scanf("%d %d %d",&a,&b,&c);
+            add(a,b,c);
+            add(b,a,c);
+        }
+        for(int i=1; i<=w; i++) {
+            scanf("%d %d %d",&a,&b,&c);
+            add(a,b,-c);
+        }
+        bool fff=1;
+        for(int i=1;i<=n&&fff;i++)
+            if(!flag[i])
+                fff=fff&&spfa(i);
+        if(fff)
+            puts("NO");
+    }
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/6869/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 510, M = 5210;
+
+int n, m1, m2;
+int h[N], e[M], w[M], ne[M], idx;
+int dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool spfa()
+{
+    memset(dist, 0, sizeof dist);
+    memset(cnt, 0, sizeof cnt);
+    memset(st, 0, sizeof st);
+
+    int hh = 0, tt = 0;
+    for (int i = 1; i <= n; i ++ )
+    {
+        q[tt ++ ] = i;
+        st[i] = true;
+    }
+
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] > dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] >= n) return true;
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    if (tt == N) tt = 0;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        scanf("%d%d%d", &n, &m1, &m2);
+        memset(h, -1, sizeof h);
+        idx = 0;
+        for (int i = 0; i < m1; i ++ )
+        {
+            int a, b, c;
+            scanf("%d%d%d", &a, &b, &c);
+            add(a, b, c), add(b, a, c);
+        }
+        for (int i = 0; i < m2; i ++ )
+        {
+            int a, b, c;
+            scanf("%d%d%d", &a, &b, &c);
+            add(a, b, -c);
+        }
+
+        if (spfa()) puts("YES");
+        else puts("NO");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/152739/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <complex>
+#include <sstream>
+#include <utility>
+#include <cctype>
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+
+const int N=505;
+const int M=5205;
+
+int n,m,k;
+int h[N],e[M],ne[M],idx;
+int dist[N],w[M],cnt[N];
+int q[N],hh,tt;
+bool st[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    do ch=getchar();
+    while(ch==' '||ch=='\n'||ch=='\r');
+    while(ch^' '&&ch^'\n'&&ch^'\r'&&~ch)
+        x=(x<<1)+(x<<3)+(ch^48),ch=getchar();
+    return x;
+}
+
+inline void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+inline bool spfa()
+{
+    memset(cnt,0,sizeof cnt);
+    memset(dist,0,sizeof dist);
+    hh=tt=0;
+    for(int i=1;i<=n;i++)
+        q[tt++]=i,st[i]=true;
+    while(hh!=tt)
+    {
+        int t=q[hh++];
+        if(hh==N)hh=0;
+        st[t]=false;
+        for(int i=h[t];i;i=ne[i])
+            if(dist[e[i]]>dist[t]+w[i])
+            {
+                dist[e[i]]=dist[t]+w[i];
+                cnt[e[i]]=cnt[t]+1;
+                if(cnt[e[i]]>n-1)return true;
+                if(!st[e[i]])
+                {
+                    st[e[i]]=true;
+                    q[tt++]=e[i];
+                    if(tt==N)tt=0;
+                }
+            }
+    }
+    return false;
+}
+
+int main()
+{
+    for(int T=read();T--;)
+    {
+        n=read(),m=read(),k=read();
+        memset(h,0,sizeof h);
+        idx=0;
+        for(int i=0;i<m;i++)
+        {
+            int a,b,c;
+            a=read(),b=read(),c=read();
+            add(a,b,c),add(b,a,c);
+        }
+        for(int i=0;i<k;i++)
+        {
+            int a,b,c;
+            a=read(),b=read(),c=read();
+            add(a,b,-c);
+        }
+        if(spfa())puts("YES");
+        else    puts("NO");
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/318962/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+USACO 2006 December Gold
+
+
+
+AcWing 361. 观光奶牛    原题链接    中等
+作者：    墨染空 ,  2019-11-23 18:32:57 ,  阅读 527
+
+10
+
+
+3
+01规划
+设答案为 ansans。
+
+二分答案，设当前二分值为 midmid。
+
+设一个环 SS 的边权为 t1,t2,t3…t1,t2,t3…，点权为 f1,f2,f3…f1,f2,f3…
+若 mid<=ansmid<=ans，即存在一个环SS使得 mid<=∑fi∑timid<=∑fi∑ti，变换一下：∑(mid∗ti−fi)<=0∑(mid∗ti−fi)<=0
+
+否则，则 mid>ansmid>ans
+每次 checkcheck 的时候，一条 uu 指向 vv，边权为 ww 的边权变为：
+
+w∗mid−fuw∗mid−fu。我们只需检查这个图是否存在负环即可。
+
+时间复杂度
+最坏情况存在长度为 LL 的环， ∑ti=L,∑fi=1000L∑ti=L,∑fi=1000L。故答案最大可能是 10001000。
+
+Log2107≈24Log2107≈24
+O(24∗LP)O(24∗LP)。判负环的时间一般情况下低于 O(LP)O(LP)。
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+const int N = 1005, M = 5005;
+int n, q[N * M], m, f[N], cnt[N];
+int head[N], numE = 0;
+double dis[N];
+bool vis[N];
+struct E{
+    int next, v, w;
+}e[M];
+void add(int u, int v, int w) {
+    e[++numE] = (E) { head[u], v, w };
+    head[u] = numE;
+}
+bool inline check(double mid) {
+    int hh = 0, tt = -1;
+    for (int i = 1; i <= n; i++)
+        vis[i] = true, dis[i] = cnt[i] = 0, q[++tt] = i;
+    while(hh <= tt) {
+        int u = q[hh++];
+        vis[u] = false;
+        for (int i = head[u]; i; i = e[i].next) {
+            int v = e[i].v;
+            double w = e[i].w * mid - f[u];
+            if(dis[u] + w < dis[v]) {
+                dis[v] = dis[u] + w;
+                cnt[v] = cnt[u] + 1;
+                if(cnt[v] >= n) return true;
+                if(!vis[v]) q[++tt] = v;
+            }
+        }
+    }
+    return false;
+}
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i++) scanf("%d", f + i);
+    for (int i = 1, u, v, w; i <= m; i++) {
+        scanf("%d%d%d", &u, &v, &w);
+        add(u, v, w);
+    }
+
+    double l = 0, r = 1000, eps = 1e-4;
+    while(r - l > eps) {
+        double mid = (l + r) / 2;
+        if(check(mid)) l = mid;
+        else r = mid;
+    }
+    printf("%.2lf\n", r);
+    return 0;
+}
+10 评论
+
+提交评论
+
+锤子科技未来产品经理   2个月前     回复
+我没有用结构体，直接用的链式存储，把代码改写了一下就超时了，大佬知道为什么吗?
+
+#include <cstring>
+#include <cstdio>
+#include <iostream>
+#include <queue>
+using namespace std;
+const int N = 1005;
+int h[N], e[N], ne[N], w[N], cnt[N], f[N];
+int n, m;
+int idx = 0;
+double dis[N];
+bool vis[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b;
+    w[idx] = c;
+    ne[idx] = h[a];
+    h[a] = idx++;
+}
+
+bool inline check(double mid) {
+    queue<int> q;
+    for (int i = 1; i <= n; i++)
+        vis[i] = true, dis[i] = cnt[i] = 0, q.push(i);
+    while(q.size()) {
+        int u = q.front();
+        q.pop();
+        vis[u] = false;
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int v = e[i];
+            double k = w[i] * mid - f[u];
+            if(dis[u] + k < dis[v]) {
+                dis[v] = dis[u] + k;
+                cnt[v] = cnt[u] + 1;
+                if(cnt[v] >= n) return true;
+                if(!vis[v]) 
+                {
+                   q.push(v);
+                   vis[v] = true;
+                }
+            }
+        }
+    }
+    return false;
+}
+int main() {
+    memset(h, -1, sizeof h);
+    cin >> n >> m;
+
+    for(int i = 1; i <= n; i++)
+    {
+        int d;
+        cin >> d;
+        f[i] = d;
+    }
+
+    for (int i = 1, u, v, w; i <= m; i++) {
+        scanf("%d%d%d", &u, &v, &w);
+        add(u, v, w);
+    }
+
+    double l = 0, r = 1000, eps = 1e-4;
+    while(r - l > eps) {
+        double mid = (l + r) / 2;
+        if(check(mid)) l = mid;
+        else r = mid;
+    }
+    printf("%.2lf\n", r);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/solution/content/6472/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1010, M = 5010;
+
+int n, m;
+int wf[N];
+int h[N], e[M], wt[M], ne[M], idx;
+double dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, wt[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool check(double mid)
+{
+    memset(dist, 0, sizeof dist);
+    memset(st, 0, sizeof st);
+    memset(cnt, 0, sizeof cnt);
+
+    int hh = 0, tt = 0;
+    for (int i = 1; i <= n; i ++ )
+    {
+        q[tt ++ ] = i;
+        st[i] = true;
+    }
+
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + wf[t] - mid * wt[i])
+            {
+                dist[j] = dist[t] + wf[t] - mid * wt[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] >= n) return true;
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    if (tt == N) tt = 0;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i ++ ) cin >> wf[i];
+
+    memset(h, -1, sizeof h);
+    for (int j = 0; j < m; j ++ )
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a, b, c);
+    }
+
+    double l = 0, r = 1e6;
+    while (r - l > 1e-4)
+    {
+        double mid = (l + r) / 2;
+        if (check(mid)) l = mid;
+        else r = mid;
+    }
+
+    printf("%.2lf\n", l);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/152741/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1165. 单词环    原题链接    中等
+作者：    lew2018 ,  2020-08-05 12:26:30 ,  阅读 60
+
+2
+
+
+题目大意
+我们有 nn 个字符串，每个字符串都是由 a∼za∼z 的小写英文字母组成的。
+
+如果字符串 AA 的结尾两个字符刚好与字符串 BB 的开头两个字符相匹配，那么我们称 AA 与 BB 能够相连（注意：AA 能与 BB 相连不代表 BB 能与 AA 相连）。
+
+我们希望从给定的字符串中找出一些，使得它们首尾相连形成一个环串（一个串首尾相连也算），我们想要使这个环串的平均长度最大。
+
+如下例：
+
+ababc
+bckjaca
+caahoynaab
+第一个串能与第二个串相连，第二个串能与第三个串相连，第三个串能与第一个串相连，我们按照此顺序相连，便形成了一个环串，长度为 5+7+10=225+7+10=22（重复部分算两次），总共使用了 33 个串，所以平均长度是 223≈7.33223≈7.33
+分析
+1.建图:
+一个比较直观的建图方式是将每个单词作为一个节点,如果这两个单词能够相连,则在这两个单词之间连接一条有向边,此时最多有105105个点,10101010条边,不能接受.
+考虑一个对偶的建图方式,将每一个单词看作一条边,其开头两个字符和结尾两个字符为它两边的点.
+这样建图的话,节点数就缩小到了675675个(26∗26−126∗26−1),边数为105105条.
+
+2.0/10/1分数规划
+我们所要求的答案为∑lens∑lens的最大值,其中ss表示单词个数,lenlen表示每个单词的长度.
+可以发现所求问题具有单调性,可以使用二分来求解.
+设左端点为ll,右端点为rr,中点为midmid,则当∑lens>mid∑lens>mid时, ∑len−s×mid>0∑len−s×mid>0,则可以将图中的边权设成len[i]−midlen[i]−mid(len[i]len[i]表示当前单词的长度).
+在此基础上,原问题可以转化为求当前图中有无正环.
+
+3.优化
+在用SPFA求正环的过程中,可以采取一种比较取巧的方法:当求最长路时,经过的点大于某一个数时,我们就可以武断地认为当前图中存在一个正环.
+
+代码
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+const int N = 700, M = 100010;
+
+int n;
+int h[N], e[M], w[M], ne[M], idx;
+double dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+bool check(double mid) {
+    memset(st, 0, sizeof(st));
+    memset(cnt, 0, sizeof(cnt));
+    int hh = 0, tt = 0;
+    for (int i = 0; i < 676; i++) {
+        q[tt++] = i;
+        st[i] = true;
+    }
+    int count = 0;
+    while (hh != tt) {
+        int t = q[hh++];
+        if (hh == N) hh = 0;
+        st[t] = false;
+        for (int i = h[t]; i != -1; i = ne[i]) {
+            int j = e[i];
+             if (dist[j] < dist[t] + w[i] - mid) {
+                 dist[j] = dist[t] + w[i] - mid;
+                 cnt[j] = cnt[t] + 1;
+                 if (++count > 10000) return true;
+                 if (cnt[j] >= N) return true;
+                 if (!st[j]) {
+                     q[tt++] = j;
+                     if (tt == N) tt = 0;
+                     st[j] = true;
+                 }
+             }
+        }
+    }
+    return false;
+}
+
+int main() {
+    char str[1010];
+    while (scanf("%d", &n)) {
+        if (n == 0) break;
+        memset(h, -1, sizeof(h));
+        idx = 0;
+        for (int i = 0; i < n; i++) {
+            scanf("%s", str);
+            int len = strlen(str);
+            if (len >= 2) {
+                int left = (str[0] - 'a') * 26 + str[1] - 'a',
+                    right = (str[len - 2] - 'a') * 26 + str[len - 1] - 'a';
+                add(left, right, len);
+            }
+        }
+        if (!check(0)) puts("No solution");
+        else {
+            double l = 0, r = 1000;
+            while (r - l > 1e-4) {
+                double mid = (l + r) / 2;
+                if (check(mid)) l = mid;
+                else r = mid;
+            }
+            printf("%lf\n", r);
+        }
+    }
+    return 0;
+}
+
+作者：lew2018
+链接：https://www.acwing.com/solution/content/17712/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 700, M = 100010;
+
+int n;
+int h[N], e[M], w[M], ne[M], idx;
+double dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool check(double mid)
+{
+    memset(st, 0, sizeof st);
+    memset(cnt, 0, sizeof cnt);
+
+    int hh = 0, tt = 0;
+    for (int i = 0; i < 676; i ++ )
+    {
+        q[tt ++ ] = i;
+        st[i] = true;
+    }
+
+    int count = 0;
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i] - mid)
+            {
+                dist[j] = dist[t] + w[i] - mid;
+                cnt[j] = cnt[t] + 1;
+                if ( ++ count > 10000) return true; // 经验上的trick
+                if (cnt[j] >= N) return true;
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    if (tt == N) tt = 0;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    char str[1010];
+    while (scanf("%d", &n), n)
+    {
+        memset(h, -1, sizeof h);
+        idx = 0;
+        for (int i = 0; i < n; i ++ )
+        {
+            scanf("%s", str);
+            int len = strlen(str);
+            if (len >= 2)
+            {
+                int left = (str[0] - 'a') * 26 + str[1] - 'a';
+                int right = (str[len - 2] - 'a') * 26 + str[len - 1] - 'a';
+                add(left, right, len);
+            }
+        }
+
+        if (!check(0)) puts("No solution");
+        else
+        {
+            double l = 0, r = 1000;
+            while (r - l > 1e-4)
+            {
+                double mid = (l + r) / 2;
+                if (check(mid)) l = mid;
+                else r = mid;
+            }
+
+            printf("%lf\n", r);
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/152738/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1169. 糖果(spfa负环做差分约束问题)    原题链接    中等
+作者：    仅存老实人 ,  2020-09-11 16:50:40 ,  阅读 49
+
+4
+
+
+/*
+差分约束两大应用
+
+1 求不等式组的可行解
+   ⭐源点需要满足的条件: 从源点出发,一定可以走到所有的边
+   否则 用单源最短路做的话 有一条边走不到 则该边对应的不等式就无法满足
+   某一个点x[i]走不到无所谓(某个点走不到代表它不受限制,x[i]取任意数都可以)
+过程:
+1 把每个x[i] ≤ x[j] + C[k]不等式转化为一条从x[j]走到x[i]长度为C[k]的边
+2 然后在这个图上找一个超级源点,使得该源点一定可以遍历到所有边 
+3 从源点求一遍 单源最短路
+  3.1 假如存在负环
+      x[1]→x[2]→x[3]→x[k]
+        ↑ c1   c2   c3 ↓
+          ← ← ← ← ← ← 
+              ck
+    x[2]≤ x[1]+c[1]
+         ...
+    x[k]≤ x[k-1]+c[k-1]
+    x[1]≤ x[k]+c[k]
+    对第一个不等式用后面的不等式一直做松弛
+    x[2] ≤ x[1]+c[1]
+         ≤ x[k]+c[k]+c[1]
+         ≤ x[k-1]+c[k-1]+c[k]+c[1]
+         ...
+         ≤ x[2]+c[2]+...+c[k-1]+c[k]+c[1]
+         ≤ x[2]+(小于零的Σc[i])
+    x[2] < x[2]
+    即矛盾
+    得出结论:不等式无解 <=> 存在负环
+
+4 求完单源最短路之后
+4.1 存在负环 => 不等式无解
+4.2 没有负环 => 求完之后一定是满足这个不等式的 <=> 即一个可行解
+
+x[i] ≤ x[j] + C[k]
+  x1 ≤ x2+1
+{ x2 ≤ x3+2
+  x3 ≤ x1-5
+ x1 =  0
+ x2 = -1
+ x3 = -2
+
+类比最短路
+  i→j   求之前 d[j] > d[i]+c 
+   c    求完后 d[j] ≤ d[i]+c 
+一个图里每个点求完最短距离后每个点的最短距离都有第二个不等式满足
+即  任何一个最短路问题 可以 转化为一个差分约束问题
+同理  一个差分约束问题 可以 转化为一个单源最短路问题
+
+最长路
+   i→j   求之前 d[j] < d[i]+c 
+   c     求完后 d[j] ≥ d[i]+c  
+
+2 如何求最大值或者最小值(x[i] for i in range(1,n))
+    结论1:如果求的是最小值,则应该求最长路,如果求的是最大值,则应该求最短路
+    问题1:如何转化x[i] ≤ c 其中c是一个常数 这类的不等式
+    方法:建立一个超级源点,0号点x[0],然后建立0→i 长度是c的边即可
+         x[i] ≤ c
+            <=>
+         x[i] ≤ x[0] + c = 0 + c   
+
+    以求x[i]的最大值为例:所有从x[i]出发,构成的不等式链     
+    x[i] ≤ x[j] + c[j] 
+         ≤ x[k] + c[k] + c[j]
+         ≤ x[0] + c[1]+ c[2]+... + c[j] 
+         =   0  + c[1]+ ... + c[j] 
+    所计算出的上界,
+    最终x[i]的最大值
+    =所有上界的最小值
+    举例 x[i] ≤ 5
+         x[i] ≤ 2
+         x[i] ≤ 3
+         max(x[i]) = min(5,2,3) = 2
+    0 → 1 → 3 → 5 → ... → i
+      c1  c3  c5       ci-1
+    x[1] ≤ x[0] + c[1] 
+    x[3] ≤ x[1] + c[3] 
+    x[5] ≤ x[3] + c[5]
+    ...
+    x[i] ≤ x[i-1] + c[i-1]
+    则
+    x[i] ≤ x[i-1] + c[i] 
+         ≤ x[i-3] + c[i-3] + c[i]
+         ...
+         ≤ x[0] + c[1] + c[3] + c[i-3] + c[i-1]
+    ⭐可以发现Σc[i]就是从0→i的一条路径的长度
+
+    那么
+        求x[i]最大值
+            <=>
+        求所有上界的最小值
+            <=>
+        求所有从0→i的路径和的最小值
+            <=>
+        最短路求dist[i]
+
+    同理 求x[i]最小值
+            <=>
+        求所有下界的最大值
+            <=>
+        求所有从0→i的路径和的最大值
+            <=>
+        最长路求dist[i]
+*/
+/*
+本题
+1 A = B  <=> A≥B B≥A
+2 A < B  <=> B≥A+1
+3 A≥B    <=> A≥B
+4 A > B  <=> A≥B+1
+5 B≥A    <=> B≥A
+x≥1  
+    } x≥x0+1(超级源点x0=0)
+x0=1
+
+举例  x[i] ≥ 5
+      x[i] ≥ 2
+      x[i] ≥ 3
+      min(x[i]) = 5
+
+总共最小值 = min(x[i]最小值) for i in range(n)
+           = 求x[i]所有下界的最大值
+           = 求所有从0→i的路径和的最大值
+           = 最长路求dist[i]
+0 → 1 → 3 → 5 → ... → i
+c1  c3  c5       ci-1
+    x[1] ≥ x[0] + c[1] 
+    x[3] ≥ x[1] + c[3] 
+    x[5] ≥ x[3] + c[5]
+    ...
+    x[i] ≥ x[i-1] + c[i-1]
+    则
+    x[i] ≥ x[i-1] + c[i] 
+         ≥ x[i-3] + c[i-3] + c[i]
+         ...
+         ≥ x[0] + c[1] + c[3] + c[i-3] + c[i-1]
+ ⭐可以发现Σc[i]就是从0→i的一条路径的长度
+
+    那么 求x[i]最小值
+            <=>
+        求所有下界的最大值
+            <=>
+        求所有从0→i的路径和的最大值
+            <=>
+        最长路求dist[i]
+    即：
+    if(d[j]<d[i]+w[i][j])
+        d[j] = d[i] + w[i][j]
+        建立边数
+        最坏情况A = B  <=> A≥B B≥A 2条
+             +超级源点和所有点xi建边
+             =3*n
+*/
+#include<cstdio>
+#include<cstring>
+#include<iostream>
+#include<algorithm>
+#include<queue>
+using namespace std;
+
+typedef long long LL;
+
+const int N = 100010, M = 300010;
+int n, m;
+int h[N], e[M], w[M], ne[M], idx;
+LL dist[N];
+int cnt[N];//统计到当前点总共有多少条边了
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b;
+    w[idx] = c;
+    ne[idx] = h[a];
+    h[a] = idx ++;
+}
+
+bool spfa()
+{
+    deque<int> q;
+    q.push_back(0);
+    st[0] = true;
+    //最长路 dist[j] < dist[t] + w[i] 初始化为-INF
+    memset(dist,-0x3f,sizeof dist);
+    dist[0] = 0;//错因:在memset前初始化0
+
+    while(q.size())
+    {
+        int t = q.back();
+        q.pop_back();
+        st[t] = false;//不在栈中 状态=false
+        for (int i = h[t]; i!=-1; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] >= n + 1) return false;//有负环 无解
+                if (!st[j])
+                {
+                    q.push_back(j);
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    cin >> n >> m;
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int x, a, b;
+        cin >> x >> a >> b;
+        if (x == 1) add(b, a, 0), add(a, b, 0);//A=B
+        else if (x == 2) add(a, b, 1);//B≥A+1
+        else if (x == 3) add(b, a, 0);//A≥B
+        else if (x == 4) add(b, a, 1);//A≥B+1
+        else add(a, b, 0);//B≥A
+    }
+    //每个同学都要分到糖果 x[i]≥1
+    //超级源点0 x[i] ≥ x[0]+1 <=> x[i] ≥ 1 
+    for (int i = 1; i <= n; i ++ ) add(0, i, 1);
+
+    if (!spfa()) cout << "-1" << endl;
+    else
+    {
+        LL res = 0;
+        for (int i = 1; i <= n; i ++ ) res += dist[i];
+        cout << res << endl;
+    }
+    return 0;
+}
+
+作者：仅存老实人
+链接：https://www.acwing.com/solution/content/20514/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 100010, M = 300010;
+
+int n, m;
+int h[N], e[M], w[M], ne[M], idx;
+LL dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++;
+}
+
+bool spfa()
+{
+    int hh = 0, tt = 1;
+    memset(dist, -0x3f, sizeof dist);
+    dist[0] = 0;
+    q[0] = 0;
+    st[0] = true;
+
+    while (hh != tt)
+    {
+        int t = q[ -- tt];
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] >= n + 1) return false;
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int x, a, b;
+        scanf("%d%d%d", &x, &a, &b);
+        if (x == 1) add(b, a, 0), add(a, b, 0);
+        else if (x == 2) add(a, b, 1);
+        else if (x == 3) add(b, a, 0);
+        else if (x == 4) add(b, a, 1);
+        else add(a, b, 0);
+    }
+
+    for (int i = 1; i <= n; i ++ ) add(0, i, 1);
+
+    if (!spfa()) puts("-1");
+    else
+    {
+        LL res = 0;
+        for (int i = 1; i <= n; i ++ ) res += dist[i];
+        printf("%lld\n", res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/153383/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+
+using namespace std;
+
+const int N=100010;
+const int M=300010;
+
+int n,m;
+int h[N],e[M],ne[M],idx;
+int dist[N],cnt[N],w[M];
+int stk[N],tt;
+bool st[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    do ch=getchar();while(~ch&&(ch<'0'||ch>'9'));
+    for(;ch>='0'&&ch<='9';ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return x;
+}
+
+inline void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+inline long long spfa()
+{
+    stk[0]=tt=0;
+    memset(dist,0xcf,sizeof dist);
+    dist[0]=0;
+    while(~tt)
+    {
+        int t=stk[tt--];
+        st[t]=false;
+        for(int i=h[t];i;i=ne[i])
+            if(dist[e[i]]<dist[t]+w[i])
+            {
+                dist[e[i]]=dist[t]+w[i];
+                cnt[e[i]]=cnt[t]+1;
+                if(cnt[e[i]]>n)return -1;
+                if(!st[e[i]])
+                {
+                    st[e[i]]=true;
+                    stk[++tt]=e[i];
+                }
+            }
+    }
+    long long res=0;
+    for(int i=1;i<=n;i++)
+        res+=dist[i];
+    return res;
+}
+
+int main()
+{
+    n=read();
+    m=read();
+    for(int i=0;i<m;i++)
+    {
+        int a,b,x;
+        x=read(),a=read(),b=read();
+        if(x==1)add(b,a,0),add(a,b,0);
+        else if(x==2)add(a,b,1);
+        else if(x==3)add(b,a,0);
+        else if(x==4)add(b,a,1);
+        else if(x==5)add(a,b,0);
+    }
+    for(int i=1;i<=n;i++)
+        add(0,i,1);
+    printf("%lld",spfa());
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/321388/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+AcWing 362. 区间 贪心 + 数据结构做法    原题链接    中等
+作者：    墨染空 ,  2019-11-24 19:00:15 ,  阅读 412
+
+5
+
+
+听书上说有贪心 + 数据结构的做法，研究了一下。
+
+朴素贪心
+考虑把所有线段按照右端点 bb 从小到大排序，依次考虑每一条线段的要求：
+
+如果已经满足要求则跳过
+否则尽量选择靠后的数（因为之后的线段的右端点都在这条线段的右边，这样容错更高）
+所以，我们可以建一个数组，d[i]d[i] 表示 ii 数字是否选择（填11或00），扫一遍 [l,r][l,r] 区间求和，然后从后往前贪心放数即可。
+
+对于每条线段需要 O(r−l+1)O(r−l+1)。所以最坏情况下 O(n2)O(n2)。但是轻松 52ms52ms 过了。
+
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 50005;
+int n, d[N], c[N];
+struct Seg{
+    int a, b, c;
+    bool operator < (const Seg &x) const {
+        return b < x.b;
+    }
+}e[N];
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++)
+        scanf("%d%d%d", &e[i].a, &e[i].b, &e[i].c);
+    sort(e + 1, e + 1 + n);
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        int l = e[i].a, r = e[i].b, cnt = e[i].c;
+        for (int j = l; j <= r; j++)
+            cnt -= d[j];
+        if(cnt > 0) {
+            for (int j = r; j >= l && cnt; j--)
+                if(!d[j]) cnt--, ans++, d[j] = 1;
+        }
+    }
+    printf("%d\n", ans);
+    return 0;
+}
+优化
+考虑用数据结构优化。
+
+发现我们需要三个操作：
+
+询问 [l,r][l,r] 区间的数字个数
+将值为 xx 的位置 +1+1
+从后往前，找到比当前位置靠前的下一个 00 的位置。
+
+前两个就是 “区间求和，单调修改”，典型的树状数组。O(nlog250000)O(nlog250000)
+第三种操作，可以用并查集优化。为什么可以确保时间复杂度呢？对于每一条线段，最多只有一次会枚举到 11 （即开始的那一次），之后每次枚举都会枚举到 00 的位置，即d[i]=0d[i]=0，然后把它变成 11，而以后就不会访问到了。而一共有 5000050000 个值，所以复杂度是 O(50000logn)O(50000logn)
+33ms33ms
+
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 50001;
+int n, d[N], c[N], f[N];
+struct Seg{
+    int a, b, c;
+    bool operator < (const Seg &x) const {
+        return b < x.b;
+    }
+}e[N];
+// 树状数组
+int inline ask(int x) {
+    int res = 0;
+    for (; x; x -= x & -x) res += c[x];
+    return res;
+}
+
+void inline add(int x) {
+    for (; x < N; x += x & -x) c[x]++;
+}
+// 并茶集：find(x) 表示找到 <= x 中最大的一个是 0 的数
+int find(int x) {
+    return x == f[x] ? x : f[x] = find(f[x]);
+}
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < N; i++) f[i] = i;
+    for (int i = 1; i <= n; i++) 
+        scanf("%d%d%d", &e[i].a, &e[i].b, &e[i].c);
+    sort(e + 1, e + 1 + n);
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        int l = e[i].a, r = e[i].b, cnt = e[i].c;
+        // 取 [l, r] 选了多少个数
+        cnt -= ask(r) - ask(l - 1);
+        if(cnt > 0) {
+            for (int j = r; j >= l && cnt; ) {
+                // d[j] == 1 的情况每条线段至多出现一次
+                if(!d[j]) {
+                    cnt--, ans++, d[j] = 1;
+                    // j 被标记成 1 了，要指向 find(j - 1)
+                    f[j] = j - 1;
+                    // 维护树状数组
+                    add(j);
+                };
+                if(find(j) != j) j = f[j];
+                else j--;
+            }
+        }
+    }
+    printf("%d\n", ans);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/solution/content/6528/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 50010, M = 150010;
+
+int n;
+int h[N], e[M], w[M], ne[M], idx;
+int dist[N];
+int q[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void spfa()
+{
+    memset(dist, -0x3f, sizeof dist);
+    dist[0] = 0;
+    st[0] = true;
+    int hh = 0, tt = 1;
+    q[0] = 0;
+
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    if (tt == N) tt = 0;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    scanf("%d", &n);
+
+    memset(h, -1, sizeof h);
+    for (int i = 1; i < N; i ++ )
+    {
+        add(i - 1, i, 0);
+        add(i, i - 1, -1);
+    }
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        a ++, b ++ ;
+        add(a - 1, b, c);
+    }
+
+    spfa();
+
+    printf("%d\n", dist[50001]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/153384/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+1
+
+
+/*
+
+s[i] >= s[i - 1];
+s[i - 1] >= s[i] - 1
+s[b] >= c + s[a - 1]
+
+*/
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdlib>
+
+using namespace std;
+
+const int N=50010;
+const int M=150010;
+
+int n;
+int h[N],e[M],ne[M],idx;
+int dist[N],cnt[M],w[M];
+int q[N],hh,tt;
+bool st[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    do ch=getchar();while(~ch&&(ch<'0'||ch>'9'));
+    for(;ch>='0'&&ch<='9';ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return x;
+}
+
+inline int spfa()
+{
+    memset(dist,0xcf,sizeof dist);
+    dist[1]=0;
+    hh=0,tt=1;
+    q[0]=1;
+    while(hh!=tt)
+    {
+        int t=q[hh++];
+        if(hh==N)hh=0;
+        st[t]=false;
+        for(int i=h[t];i;i=ne[i])
+            if(dist[e[i]]<dist[t]+w[i])
+            {
+                dist[e[i]]=dist[t]+w[i];
+                if(!st[e[i]])
+                {
+                    st[e[i]]=true;
+                    q[tt++]=e[i];
+                    if(tt==N)tt=0;
+                }
+            }
+    }
+    return dist[50001];
+}
+
+inline int add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+int main()
+{
+    n=read();
+    for(int i=1;i<=50001;i++)
+        add(i-1,i,0),add(i,i-1,-1);
+    for(int i=1;i<=n;i++)
+    {
+        int a=read();
+        e[++idx]=1+read();
+        w[idx]=read();
+        ne[idx]=h[a];
+        h[a]=idx;
+    }
+    printf("%d\n",spfa());
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/321468/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+AcWing 1170. 排队布局（差分约束）    原题链接    中等
+作者：    Overnoise ,  2019-12-08 20:57:10 ,  阅读 798
+
+1
+
+
+差分约束模板
+一道差分约束的吼题
+对于此题，状态无非两种：基友与敌人
+那么，就有u-v≤c 或者 u-v≥c
+对于u-v≤c，可以用求最短路中的vis[v]=vis[u]+rood[i].s
+我们对u−v≥c 转换成 v-u≤−c
+这样，我们就可以很愉快的跑路啦
+那么建图就酱：
+
+#include<bits/stdc++.h>
+using namespace std;
+long long n,m,w;
+long long a,b,c;
+struct oppo {
+    long long to,s,next;
+} rood[20004];
+long long head[1005],tot;
+void add(long long from,long long to,long long s) {
+    rood[++tot].s=s;
+    rood[tot].to=to;
+    rood[tot].next=head[from];
+    head[from]=tot;
+}
+long long vis[1004];
+long long all[1004];
+long long f[1004];
+bool flag[1004];
+stack< long long > v;
+long long spfa(int x) {
+    memset(vis,10,sizeof(vis));
+    vis[x]=0;
+    v.push(x);
+    while(v.size()) {
+        long long lxl=v.top();
+        f[lxl]=0;
+        flag[lxl]=1;
+        v.pop();
+        for(long long i=head[lxl]; i; i=rood[i].next) {
+            if(vis[rood[i].to]>vis[lxl]+rood[i].s) {
+                vis[rood[i].to]=vis[lxl]+rood[i].s;
+                all[rood[i].to]=all[lxl]+1;
+                if(all[rood[i].to]>n)
+                    return -1;
+                if(!f[rood[i].to]) {
+                    f[rood[i].to]=1;
+                    v.push(rood[i].to);
+                }
+            }
+        }
+    }
+    return vis[n]==vis[0]?-2:vis[n];
+}
+int main() {
+    cin>>n>>m>>w;
+    for(long long i=1; i<n; i++)
+        add(i+1,i,0);
+    for(long long i=1; i<=m; i++) {
+        scanf("%lld%lld%lld",&a,&b,&c);
+        add(a,b,c);
+    }
+    for(long long i=1; i<=w; i++) {
+        scanf("%lld%lld%lld",&a,&b,&c);
+        add(b,a,-c);
+    }
+    int ans,fff=0;
+    for(int i=1; i<=n; i++)
+        if(!flag[i]) {
+            ans=spfa(i);
+            if(fff) ans=ans==-1?-1:-2;
+            if(ans!=-2) break;
+            else fff=1;
+        }
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/6879/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1010, M = 10000 + 10000 + 1000 + 10, INF = 0x3f3f3f3f;
+
+int n, m1, m2;
+int h[N], e[M], w[M], ne[M], idx;
+int dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+bool spfa(int size)
+{
+    int hh = 0, tt = 0;
+    memset(dist, 0x3f, sizeof dist);
+    memset(st, 0, sizeof st);
+    memset(cnt, 0, sizeof cnt);
+
+    for (int i = 1; i <= size; i ++ )
+    {
+        q[tt ++ ] = i;
+        dist[i] = 0;
+        st[i] = true;
+    }
+
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] > dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] >= n) return true;
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    if (tt == N) tt = 0;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    scanf("%d%d%d", &n, &m1, &m2);
+    memset(h, -1, sizeof h);
+
+    for (int i = 1; i < n; i ++ ) add(i + 1, i, 0);
+    while (m1 -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        if (a > b) swap(a, b);
+        add(a, b, c);
+    }
+    while (m2 -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        if (a > b) swap(a, b);
+        add(b, a, -c);
+    }
+
+    if (spfa(n)) puts("-1");
+    else
+    {
+        spfa(1);
+        if (dist[n] == INF) puts("-2");
+        else printf("%d\n", dist[n]);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/153492/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <complex>
+#include <utility>
+#include <cstdio>
+#include <cctype>
+#include <vector>
+
+using namespace std;
+
+const int N=1005;
+const int M=21005;
+
+int n,m1,m2;
+int h[N],e[M],ne[M],idx;
+int dist[N],w[M],cnt[N];
+int q[N],hh,tt;
+bool st[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    do ch=getchar();while(~ch&&(ch<'0'||ch>'9'));
+    for(;ch>='0'&&ch<='9';ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return x;
+}
+
+inline bool spfa(int size)
+{
+    memset(dist,0x3f,sizeof dist);
+    memset(cnt,0,sizeof cnt);
+    hh=tt=0;
+    for(int i=1;i<=size;i++)
+    {
+        dist[i]=0;
+        q[tt++]=i;
+        st[i]=true;
+    }
+    while(hh!=tt)
+    {
+        int t=q[hh++];
+        if(hh==N)hh=0;
+        st[t]=false;
+        for(int i=h[t];i;i=ne[i])
+            if(dist[e[i]]>dist[t]+w[i])
+            {
+                dist[e[i]]=dist[t]+w[i];
+                cnt[e[i]]=cnt[t]+1;
+                if(cnt[e[i]]>=n)return false;
+                if(!st[e[i]])
+                {
+                    st[e[i]]=true;
+                    q[tt++]=e[i];
+                    if(tt==N)tt=0;
+                }
+            }
+    }
+    return true;
+}
+
+int main()
+{
+    n=read(),m1=read(),m2=read();
+    for(int i=1;i<n;i++)
+    {
+        e[++idx]=i;
+        ne[idx]=h[i+1];
+        h[i+1]=idx;
+    }
+    for(int i=0;i<m1;i++)
+    {
+        int a=read();
+        e[++idx]=read();
+        if(e[idx]<a)swap(a,e[idx]);
+        w[idx]=read();
+        ne[idx]=h[a];
+        h[a]=idx;
+    }
+    for(int i=0;i<m2;i++)
+    {
+        e[++idx]=read();
+        int a=read();
+        if(a<e[idx])swap(a,e[idx]);
+        w[idx]=-read();
+        ne[idx]=h[a];
+        h[a]=idx;
+    }
+    if(!spfa(n))puts("-1");
+    else
+    {
+        spfa(1);
+        if(dist[n]==0x3f3f3f3f)puts("-2");
+        else    printf("%d\n",dist[n]);
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/321556/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 393. 雇佣收银员    原题链接    中等
+作者：    墨染空 ,  2019-11-25 22:22:44 ,  阅读 588
+
+11
+
+
+1
+算法1： 差分约束 + 枚举 O(Tn2028)
+由于牵扯到 [i−8+1,i][i−8+1,i] 这段区间的和的约束，所以用前缀和更好表达一些。
+
+设 num[i]num[i]表示 ii 时刻有多少人申请上岗， x[i]x[i] 为 ii 时刻实际上岗的人数 ，ss 为 xx 的前缀和数组。
+
+则应该满足的约束条件是：
+
+上岗人数不能负数，即 s[i]−s[i−1]>=0s[i]−s[i−1]>=0
+实际上岗人数不能超过申请人数，即 s[i]−s[i−1]<=num[i]s[i]−s[i−1]<=num[i]
+ii 时刻所在人数，即 [i−7,i][i−7,i] 区间内的上岗人数要大于等于最小需求 RR
+由于存在环，即 2323 到 2424，再到 00 时刻，所以要分类讨论：
+
+当 i>=8i>=8 时，s[i]−s[i−8]>=R[i]s[i]−s[i−8]>=R[i]
+当 i<=7i<=7 时，s[i]+s[24]−s[16+i]>=R[i]s[i]+s[24]−s[16+i]>=R[i]
+显然这是一个明显的差分约束问题，由于求最小人数，所以用最长路转化：
+
+s[i]>=s[i−1]s[i]>=s[i−1] 即 add(i−1,i,0)add(i−1,i,0)
+s[i]−num[i]<=s[i−1]s[i]−num[i]<=s[i−1] 即 add(i,i−1,−num[i])add(i,i−1,−num[i])
+s[i−8]+R[i]<=s[i]s[i−8]+R[i]<=s[i] 即 add(i−8,i,R[i])add(i−8,i,R[i])
+s[16+i]+R[i]−s[24]<=s[i]s[16+i]+R[i]−s[24]<=s[i]，不会连边了hhhh
+最后一种约束关系我们不会连边的原因无非是出现了三个变量，但我们可以发现：
+
+所有最后一种约束关系都有 s[24]s[24] 变量，其实这个东西就是我们求的答案，所以我们可以枚举 s[24]s[24] 的值，把它变成常量就行啦！然后就可以 add(16+i,i,R[i]−s[24])add(16+i,i,R[i]−s[24])
+Tips：Tips：
+关于建图，其实可以在线建图，不用僵化建边了嘿嘿。
+发现 00 肯定所有点，所以不用创造超级源点了，只需从 00 点出发跑最短路即可。
+不要忘了 s[24]=s[24]= 我们枚举的数 cc（要严格等于，实现是 大于等于 + 小于等于）：
+s[24]<=cs[24]<=c 即 add(24,0,−c)add(24,0,−c)
+s[24]>=cs[24]>=c 即 add(0,24,c)add(0,24,c)
+时间复杂度
+这个题中的点数 <=26<=26，边数 <=26∗3=78<=26∗3=78，
+
+所以时间复杂度 O(Tn2028)O(Tn2028)，足以 ACAC
+5ms5ms 可还行
+
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+using namespace std;
+const int N = 25;
+int n, ans, cnt[N], dis[N], R[N], num[N];
+int tt, q[N];
+bool st[N];
+/*
+最长路
+0 <= Si - S(i - 1)
+*/
+//把边 (u, v, w) 松弛
+bool inline upd(int u, int v, int w) {
+    if(dis[u] + w > dis[v]) {
+        dis[v] = dis[u] + w;
+        cnt[v] = cnt[u] + 1;
+        if(cnt[v] >= 25) return false; 
+        if(!st[v]) q[++tt] = v, st[v] = true;
+    }
+    return true;
+}
+
+// 返回是否存在可行解
+bool spfa() {
+    memset(dis, -0x3f, sizeof dis);
+    memset(st, false, sizeof st);
+    memset(cnt, 0, sizeof cnt);
+    // 数组模拟栈 更容易找到环
+    tt = 0;
+    q[++tt] = 0; dis[0] = 0;
+    while(tt) {
+        int u = q[tt--];
+        st[u] = false;
+        // 严格保证 s[24] = ans
+        if(u == 0 && !upd(0, 24, ans)) return false;
+        if(u == 24 && !upd(24, 0, -ans)) return false;
+        // s[i] - s[i - 1] >= 0
+        if(u < 24 && !upd(u, u + 1, 0)) return false;
+        // s[i] - s[i - 1] <= num[i]
+        if(u > 0 && !upd(u, u - 1, -num[u])) return false;
+        //s[i] - s[i - 8] >= R[i]
+        if(u <= 16 && !upd(u, u + 8, R[u + 8])) return false;
+        // s[i] + s[24] - s[24 - i] >= R[i]
+        if(u >= 17 && !upd(u, u - 16, R[u - 16] - ans)) return false;
+    }
+    return true;
+}
+int main() {
+    int T; scanf("%d", &T);
+    while(T--) {
+        memset(num, 0, sizeof num);
+        for (int i = 1; i < N; i++) scanf("%d", R + i);
+        scanf("%d", &n);
+        for (int i = 1, x; i <= n; i++) 
+            scanf("%d", &x), x++, num[x]++;
+
+        bool ok = false;
+        // 枚举 s24, s24 就是 答案
+        for (ans = 0; ans <= n; ans++) {
+            if(spfa()) {
+                printf("%d\n", ans);
+                ok = true;
+                break;
+            }
+        }
+        if(!ok) puts("No Solution");
+    }
+    return 0;
+}
+算法2： 差分约束 + 二分 O(T2028logN)
+显然，答案具有单调性（若允许上岗的人越多，越容易满足条件）。
+
+所以可以二分答案 LOLLOL。
+
+3ms3ms 可还行
+
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+using namespace std;
+const int N = 25;
+int n, cnt[N], dis[N], R[N], num[N];
+int tt, q[N];
+bool st[N];
+/*
+最长路
+0 <= Si - S(i - 1)
+*/
+//把边 (u, v, w) 松弛
+bool inline upd(int u, int v, int w) {
+    if(dis[u] + w > dis[v]) {
+        dis[v] = dis[u] + w;
+        cnt[v] = cnt[u] + 1;
+        if(cnt[v] >= 25) return false; 
+        if(!st[v]) q[++tt] = v, st[v] = true;
+    }
+    return true;
+}
+
+// 返回是否存在可行解
+bool spfa(int s24) {
+    memset(dis, -0x3f, sizeof dis);
+    memset(st, false, sizeof st);
+    memset(cnt, 0, sizeof cnt);
+    // 数组模拟栈 更容易找到环
+    tt = 0;
+    q[++tt] = 0; dis[0] = 0;
+    while(tt) {
+        int u = q[tt--];
+        st[u] = false;
+        // 严格保证 s[24] = s24
+        if(u == 0 && !upd(0, 24, s24)) return false;
+        if(u == 24 && !upd(24, 0, -s24)) return false;
+        // s[i] - s[i - 1] >= 0
+        if(u < 24 && !upd(u, u + 1, 0)) return false;
+        // s[i] - s[i - 1] <= num[i]
+        if(u > 0 && !upd(u, u - 1, -num[u])) return false;
+        //s[i] - s[i - 8] >= R[i]
+        if(u <= 16 && !upd(u, u + 8, R[u + 8])) return false;
+        // s[i] + s[24] - s[24 - i] >= R[i]
+        if(u >= 17 && !upd(u, u - 16, R[u - 16] - s24)) return false;
+    }
+    return true;
+}
+int main() {
+    int T; scanf("%d", &T);
+    while(T--) {
+        memset(num, 0, sizeof num);
+        for (int i = 1; i < N; i++) scanf("%d", R + i);
+        scanf("%d", &n);
+        for (int i = 1, x; i <= n; i++) 
+            scanf("%d", &x), x++, num[x]++;
+
+        int l = 0, r = n;
+        while(l < r) {
+            int mid = (l + r) >> 1;
+            if(spfa(mid)) r = mid;
+            else l = mid + 1;
+        }
+        if(spfa(r)) printf("%d\n", r);
+        else puts("No Solution");
+    }
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/solution/content/6563/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 30, M = 100, INF = 0x3f3f3f3f;
+
+int n;
+int h[N], e[M], w[M], ne[M], idx;
+int r[N], num[N];
+int dist[N];
+int q[N], cnt[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void build(int c)
+{
+    memset(h, -1, sizeof h);
+    idx = 0;
+    add(0, 24, c), add(24, 0, -c);
+    for (int i = 1; i <= 7; i ++ ) add(i + 16, i, r[i] - c);
+    for (int i = 8; i <= 24; i ++ ) add(i - 8, i, r[i]);
+    for (int i = 1; i <= 24; i ++ )
+    {
+        add(i, i - 1, -num[i]);
+        add(i - 1, i, 0);
+    }
+}
+
+bool spfa(int c)
+{
+    build(c);
+
+    memset(dist, -0x3f, sizeof dist);
+    memset(cnt, 0, sizeof cnt);
+    memset(st, 0, sizeof st);
+
+    int hh = 0, tt = 1;
+    dist[0] = 0;
+    q[0] = 0;
+    st[0] = true;
+
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (dist[j] < dist[t] + w[i])
+            {
+                dist[j] = dist[t] + w[i];
+                cnt[j] = cnt[t] + 1;
+                if (cnt[j] >= 25) return false;
+                if (!st[j])
+                {
+                    q[tt ++ ] = j;
+                    if (tt == N) tt = 0;
+                    st[j] = true;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+int main()
+{
+    int T;
+    cin >> T;
+    while (T -- )
+    {
+        for (int i = 1; i <= 24; i ++ ) cin >> r[i];
+        cin >> n;
+        memset(num, 0, sizeof num);
+        for (int i = 0; i < n; i ++ )
+        {
+            int t;
+            cin >> t;
+            num[t + 1] ++ ;
+        }
+
+        bool success = false;
+        for (int i = 0; i <= 1000; i ++ )
+            if (spfa(i))
+            {
+                cout << i << endl;
+                success = true;
+                break;
+            }
+
+        if (!success) puts("No Solution");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/153547/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+AcWing 1172. 祖孙询问    原题链接    中等
+作者：    Overnoise ,  2019-11-28 16:30:38 ,  阅读 968
+
+5
+
+
+我发现我在另一个oj上做过，直接发手题解
+lca模板
+利用dfs找到每个点的父亲和每个点的深度
+利用一个循环初始化一个点上面第(1<<i)个父亲是什么
+对于每个询问在线跑一遍 倍增求lca
+不理解倍增思路看这里
+设两点 a,b（a的深度大于b）
+首先让a倍增跳到于b同深度
+如果此时a,b相等，返回
+如果不相等，那么同时向上跳
+一个大佬更详细的讲解
+
+#include<bits/stdc++.h>
+using namespace std;
+int n,q;
+int head[100005];
+struct oppo{
+    int to,next;
+}rood[200005];
+int tot,start;
+void add(int from,int to)
+{
+    rood[++tot].to=to;
+    rood[tot].next=head[from];
+    head[from]=tot;
+}
+int deep[100005];
+int fa[100005][25];
+void dfs(int x)
+{
+    for(int i=head[x];i;i=rood[i].next)
+        if(!deep[rood[i].to])
+        {
+            deep[rood[i].to]=deep[x]+1;
+            fa[rood[i].to][0]=x;
+            dfs(rood[i].to);
+        }
+}
+int lca(int x,int y)
+{
+    int fff=1;
+    if(deep[x]>deep[y])
+    {
+        swap(x,y);
+        fff=2;
+    }
+    for(int i=20;i>=0;i--)
+        if(deep[fa[y][i]]>=deep[x])
+            y=fa[y][i];
+    if(x==y)
+        return fff;
+    else
+        return 0;
+}
+int main()
+{
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        int a,b;
+        scanf("%d %d",&a,&b);
+        if(b==-1)
+            start=a;
+        else
+        {
+            add(a,b);
+            add(b,a);
+        }
+    }
+    deep[start]=1;
+    dfs(start);
+    for(int i=1;i<=20;i++)
+        for(int j=1;j<=40000;j++)
+            fa[j][i]=fa[fa[j][i-1]][i-1];
+    cin>>q;
+    for(int i=1;i<=q;i++)
+    {
+        int x,y;
+        scanf("%d %d",&x,&y);
+        printf("%d\n",lca(x,y));
+    }
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/6576/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+
+5
+
+
+1
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 40010, M = N * 2;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int depth[N], fa[N][16];
+int q[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void bfs(int root)
+{
+    memset(depth, 0x3f, sizeof depth);
+    depth[0] = 0, depth[root] = 1;
+    int hh = 0, tt = 0;
+    q[0] = root;
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (depth[j] > depth[t] + 1)
+            {
+                depth[j] = depth[t] + 1;
+                q[ ++ tt] = j;
+                fa[j][0] = t;
+                for (int k = 1; k <= 15; k ++ )
+                    fa[j][k] = fa[fa[j][k - 1]][k - 1];
+            }
+        }
+    }
+}
+
+int lca(int a, int b)
+{
+    if (depth[a] < depth[b]) swap(a, b);
+    for (int k = 15; k >= 0; k -- )
+        if (depth[fa[a][k]] >= depth[b])
+            a = fa[a][k];
+    if (a == b) return a;
+    for (int k = 15; k >= 0; k -- )
+        if (fa[a][k] != fa[b][k])
+        {
+            a = fa[a][k];
+            b = fa[b][k];
+        }
+    return fa[a][0];
+}
+
+int main()
+{
+    scanf("%d", &n);
+    int root = 0;
+    memset(h, -1, sizeof h);
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        if (b == -1) root = a;
+        else add(a, b), add(b, a);
+    }
+
+    bfs(root);
+
+    scanf("%d", &m);
+    while (m -- )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        int p = lca(a, b);
+        if (p == a) puts("1");
+        else if (p == b) puts("2");
+        else puts("0");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/154772/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+const int N = 40005, L = 16;
+int n, m, rt, fa[N][L], dep[N];
+int head[N], numE = 0;
+struct E{
+    int next, v;
+}e[N << 1];
+inline void add(int u, int v) {
+    e[++numE] = (E) { head[u], v };
+    head[u] = numE;
+}
+void dfs(int u) {
+    for (int i = 1; i < L && fa[u][i - 1]; i++)
+        fa[u][i] = fa[fa[u][i - 1]][i - 1];
+    for (int i = head[u]; i; i = e[i].next) {
+        int v = e[i].v;
+        if(v == fa[u][0]) continue;
+        fa[v][0] = u;
+        dep[v] = dep[u] + 1;
+        dfs(v);
+    }
+}
+int lca(int x, int y) {
+    if(dep[x] < dep[y]) swap(x, y);
+    for (int i = L - 1; ~i; i--) 
+        if(dep[x] - (1 << i) >= dep[y]) x = fa[x][i];
+    if(x == y) return x;
+    for (int i = L - 1; ~i; i--)
+        if(fa[x][i] != fa[y][i]) x = fa[x][i], y = fa[y][i];
+    return fa[x][0];
+}
+int main() {
+    scanf("%d", &n);
+    for (int i = 1, a, b; i <= n; i++) {
+        scanf("%d%d", &a, &b);
+        if(b == -1) rt = a;
+        else add(a, b), add(b, a);
+    }
+    dfs(rt);
+    scanf("%d", &m);
+    while(m--) {
+        int x, y; scanf("%d%d", &x, &y);
+        int p = lca(x, y);
+        puts( p == x ? "1" : p == y ? "2" : "0");
+    }
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/activity/content/code/content/154791/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <complex>
+
+using namespace std;
+
+const int N=40005;
+const int M=80005;
+
+int n,root;
+int h[N],e[M],ne[M],idx;
+int depth[N],fa[N][20];
+int q[N],hh,tt;
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    do ch=getchar();while(ch^'-'&&(ch<'0'||ch>'9'));
+    if(ch=='-')return getchar(),-1;
+    for(;ch>='0'&&ch<='9';ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return x;
+}
+
+inline void add(int a,int b)
+{
+    e[++idx]=b;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+inline void bfs(int root)
+{
+    memset(depth,0x3f,sizeof depth);
+    depth[0]=0,depth[root]=1;
+    q[0]=root;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(depth[e[i]]>depth[t]+1)
+            {
+                depth[e[i]]=depth[t]+1;
+                q[++tt]=e[i];
+                fa[e[i]][0]=t;
+                for(int k=1;k<16;k++)
+                    fa[e[i]][k]=fa[fa[e[i]][k-1]][k-1];
+            }
+    }
+}
+
+int lca(int a,int b)
+{
+    if(depth[a]<depth[b])swap(a,b);
+    for(int k=15;~k;k--)
+        if(depth[fa[a][k]]>=depth[b])
+            a=fa[a][k];
+    if(a==b)return a;
+    for(int k=15;~k;k--)
+        if(fa[a][k]!=fa[b][k])
+            a=fa[a][k],b=fa[b][k];
+    return fa[a][0];
+}
+
+int main()
+{
+    n=read();
+    for(int i=1;i<=n;i++)
+    {
+        int a,b;
+        a=read(),b=read();
+        if(~b)add(a,b),add(b,a);
+        else    root=a;
+    }
+    bfs(root);
+    for(int q=read();q--;putchar('\n'))
+    {
+        int a,b;
+        a=read();
+        b=read();
+        int p=lca(a,b);
+        if(p==a)putchar(49);
+        else if(p==b)putchar(50);
+        else putchar(48);
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/321841/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1171. 距离    原题链接    中等
+作者：    小呆呆 ,  2020-02-25 20:55:05 ,  阅读 351
+
+3
+
+
+算法分析
+Tarjan – 离线求LCA
+在线做法：读一个询问，处理一个，输出一个
+离线做法：读完全部询问，再全部处理完，再全部输出
+
+在深度优先遍历时，将所有点分成三大类
+
+2号点：代表已经访问并结束回溯
+
+1号点：代表正在访问
+
+0号点：代表还没有访问过
+
+其中所有2号点和正在搜索的1号点路径中已经通过并查集合并成一个集合
+
+
+
+1、先求出所有点到根结点的距离depth[]，设x号点和y号点的最近公共祖先是p,则x和y的最近距离等于depth[x] + depth[y] - 2 * depth[p]
+
+2、在深度优先遍历1号点中的u点的时候，需要把u的查询的另外一个点的最短距离进行计算并存储，最后把u点合并到上一结点的集合
+
+时间复杂度 O(n+m)O(n+m)
+参考文献
+算法提高课
+
+Java 代码
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main{
+    static int N = 10010, M = N * 2;
+    static int[] h = new int[N];
+    static int[] e = new int[M];
+    static int[] w = new int[M];
+    static int[] ne = new int[M];
+    static int idx = 0;
+    static Map<Integer,List<Pair>> query = new HashMap<Integer,List<Pair>>();
+    static int[] dist = new int[N];
+    static int[] st = new int[N];
+    static int[] p = new int[N];
+    static int[] res = new int[M * 2];
+    static int find(int x)
+    {
+        if(p[x] != x) p[x] = find(p[x]);
+        return p[x];
+    }
+    static void add(int a,int b,int c)
+    {
+        e[idx] = b;
+        w[idx] = c;
+        ne[idx] = h[a];
+        h[a] = idx ++;
+    }
+    static void dfs(int u,int father)
+    {
+        for(int i = h[u];i != -1;i = ne[i])
+        {
+            int j = e[i];
+            if(j == father) continue;
+            dist[j] = dist[u] + 1;
+            dfs(j,u);
+        }
+    }
+    //所有节点分为三种状态
+    //2 代表已经访问并结束回溯
+    //1 代表正在访问
+    //0 代表还没有访问到
+    static void tarjan(int u)
+    {
+        st[u] = 1;
+        for(int i = h[u];i != -1;i = ne[i])
+        {
+            int j = e[i];
+            if(st[j] == 0)
+            {
+                tarjan(j);
+                p[j] = u;
+            }
+        }
+        if(query.containsKey(u))
+        {
+            for(Pair pair : query.get(u))
+            {
+                int y = pair.first;
+                int id = pair.id;
+                //已经回溯结束
+                if(st[y] == 2)
+                {
+                    int anc = find(y);
+                    res[id] = dist[u] + dist[y] - dist[anc] * 2;
+                }
+            }
+        }
+
+        st[u] = 2;
+    }
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int m = scan.nextInt();
+
+        for(int i = 1;i <= n;i ++) p[i] = i;
+
+        Arrays.fill(h, -1);
+        for(int i = 0;i < n - 1;i ++)
+        {
+            int a = scan.nextInt();
+            int b = scan.nextInt();
+            int c = scan.nextInt();
+            add(a,b,c);
+            add(b,a,c);
+        }
+        for(int i = 0;i < m;i ++)
+        {
+            int a = scan.nextInt();
+            int b = scan.nextInt();
+            if(a != b)
+            {
+                if(!query.containsKey(a)) query.put(a,new LinkedList<Pair>());
+                query.get(a).add(new Pair(b,i));
+                if(!query.containsKey(b)) query.put(b,new LinkedList<Pair>());
+                query.get(b).add(new Pair(a,i));
+            }
+        }
+        //计算每个点到根结点的距离
+        dfs(1,-1);
+        tarjan(1);
+
+        for(int i = 0;i < m;i ++) System.out.println(res[i]);
+    }
+}
+class Pair
+{
+    //first存查询的另外一个点，id存查询编号
+    int first,id;
+    Pair(int first,int id)
+    {
+        this.first = first;
+        this.id = id;
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/9034/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+typedef pair<int, int> PII;
+
+const int N = 10010, M = N * 2;
+
+int n, m;
+int h[N], e[M], w[M], ne[M], idx;
+int dist[N];
+int p[N];
+int res[M];
+int st[N];
+vector<PII> query[N];   // first存查询的另外一个点，second存查询编号
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void dfs(int u, int fa)
+{
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (j == fa) continue;
+        dist[j] = dist[u] + w[i];
+        dfs(j, u);
+    }
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+void tarjan(int u)
+{
+    st[u] = 1;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!st[j])
+        {
+            tarjan(j);
+            p[j] = u;
+        }
+    }
+
+    for (auto item : query[u])
+    {
+        int y = item.first, id = item.second;
+        if (st[y] == 2)
+        {
+            int anc = find(y);
+            res[id] = dist[u] + dist[y] - dist[anc] * 2;
+        }
+    }
+
+    st[u] = 2;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < n - 1; i ++ )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c), add(b, a, c);
+    }
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        if (a != b)
+        {
+            query[a].push_back({b, i});
+            query[b].push_back({a, i});
+        }
+    }
+
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+    dfs(1, -1);
+    tarjan(1);
+
+    for (int i = 0; i < m; i ++ ) printf("%d\n", res[i]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/154795/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 356. 次小生成树    原题链接    困难
+作者：    秦淮岸灯火阑珊 ,  2019-07-17 20:53:49 ,  阅读 1116
+
+8
+
+
+1
+优秀的博客体验,点开有惊喜
+原题链接
+
+题目描述
+给定一张NN 个点MM条边的无向图，求无向图的严格次小生成树。
+
+设最小生成树的边权之和为sumsum，严格次小生成树就是指边权之和大于sumsum的生成树中最小的一个。
+
+输入格式
+第一行包含两个整数NN和MM。
+
+接下来MM行，每行包含三个整数x，y，zx，y，z，表示点xx和点yy之前存在一条边，边的权值为zz。
+
+输出格式
+包含一行，仅一个数，表示严格次小生成树的边权和。(数据保证必定存在严格次小生成树)
+
+数据范围
+N≤105M≤3∗105
+N≤105M≤3∗105
+输入样例：
+5 6 
+1 2 1 
+1 3 2 
+2 4 3 
+3 5 4 
+3 4 3 
+4 5 6 
+输出样例：
+11
+解题报告
+题意理解
+要你构造一棵nn个节点的严格次小生成树.
+
+算法解析
+分析条件
+题目中给出的关键点,就是严格和次小.
+
+什么是严格
+就是题目强制要求严格单调性,不可以有==号的出现.
+
+什么是次小
+我们应该都知道,最小生成树,它要求边集合的边总和最小,那么次小生成树,要求边集合的边总和只比最小生成树边集合权值大.
+
+总结性质
+有至少一个（严格）次小生成树，和最小生成树之间只有一条边的差异。和真理只有一点差异,那就是出题人毒瘤
+
+我们来粗略证明一下.(强行伪证)
+
+我们知道最小生成树,是由n−1n−1条构成的.
+
+那么其他的M−N+1M−N+1就是多余边.
+
+假如说我们把一条多余边(x,y,z)(x,y,z),加入到了最小生成树中,那么一定会在(x,y)(x,y)之间的路径上形成一个环.
+
+那么这个环上面,最大的边称之为
+Val1
+Val1
+
+次大的边,称之为
+Val2
+Val2
+
+而且为了保证严格这个单调性质,我们必须设
+Val1>Val2最大的边一定大于次大的边
+Val1>Val2最大的边一定大于次大的边
+
+接下来,我们就需要好好分析一下这条多余边了.
+
+我们知道多余边,替换任何一条树上的一条边,都会使得最小生成树,不再最小
+
+为什么?
+
+因为最小生成树上的每一条边,一定是满足贪心性质下的最小的边.为什么啊?相信你的直觉啊
+
+这个证明,我们使用的克鲁斯卡尔算法,已经告诉我们为什么.真相只有一个,我懒了
+
+总而言之,言而总之,我们现在知道了这条多余边的加入.,一定会产生非最小生成树.
+
+我们不妨令
+ans=最小生成树边权之和
+ans=最小生成树边权之和
+
+假如说我们将多余边,替换掉最大权值边.
+Val1==>z此时我们发现当前生成树W=ans+z−Val1W=最小生成边权之和+加上多余边−最大权值边
+Val1==>z此时我们发现当前生成树W=ans+z−Val1W=最小生成边权之和+加上多余边−最大权值边
+
+这一轮替换,我们可以认为这棵生成树有潜力成为次小生成树.
+
+然后,我们发现,换一换次大边,也是可以的.
+
+我们将多余边,强行替换掉次大权值边.
+Val2==>z此时当前生成树W=ans+z−Val2W=最小生成树之和+加入多余边−次大权值边
+Val2==>z此时当前生成树W=ans+z−Val2W=最小生成树之和+加入多余边−次大权值边
+
+现在所有的候选生成树都出来了,但是我们面临一个非常严重的问题.
+
+我们如何快速计算,一条路径上的最大边,和次大边.
+
+动态规划
+我们可以当前需要知道的状态,无非就是两个.
+
+一条路径上的最大边
+一条路径上的严格次大边
+所以说,我们不妨就按照倍增数组的思路,去制造两个新数组.
+
+最大边数组
+严格次大边数组
+f[x][k]=f[fa[x][k−1]][k−1]
+f[x][k]=f[fa[x][k−1]][k−1]
+这是我们非常熟悉的Lca倍增数组.
+
+然后咱们现在其实,手上掌握的最有力的性质,就是最值性质.
+
+我们假设一条路径是由三段构造而成.
+
+是三段,不是就三个点.
+a=>c,c=>b,b=>a
+a=>c,c=>b,b=>a
+
+
+我们发现
+A=>B的最大值其实等于max(A=>C最大值,B=>C最大值)
+A=>B的最大值其实等于max(A=>C最大值,B=>C最大值)
+
+这就是区间最值性质.
+
+不过严格次大边,就比较麻烦了,不慌,咱们慢慢画图来.
+
+为了下面简述方面,我们设置一下变量.
+A=>C上最大边权为ValA,C次大边权为VA,CC=>B上最大边权为ValB,C次大边权为VB,CA=>B上最大边权为ValA,B次大边权为VA,B
+A=>C上最大边权为ValA,C次大边权为VA,CC=>B上最大边权为ValB,C次大边权为VB,CA=>B上最大边权为ValA,B次大边权为VA,B
+
+巧计一下,Val字母多,所以是最大边权,V字母少,所以是次大边权.
+
+我们分类讨论一下,三种情况.
+
+①第一段最大值=第二段最大值
+ValA,C=ValB,C
+ValA,C=ValB,C
+
+我们发现两段居然最大值一样.
+
+次大边权就只能
+VA,B=max(VA,C,VB,C)
+VA,B=max(VA,C,VB,C)
+
+②第一段最大值<第二段最大值.
+
+那么此时,次大边权是可以取第一段最大值.
+
+因为此时总段的最大值,一定是第二段最大值.
+ValA,B=ValB,C因此VA,B可以=ValA,C
+ValA,B=ValB,C因此VA,B可以=ValA,C
+
+综上所述,我们总结下来就是.
+VA,B=max(ValA,C,VB,C)
+VA,B=max(ValA,C,VB,C)
+
+③第一段最大值>第二段最大值.
+
+那么此时,次大边权是可以取第二段最大值.
+
+因为此时总段的最大值,一定是第一段最大值.
+ValA,B=ValA,C因此VA,B可以=ValB,C
+ValA,B=ValA,C因此VA,B可以=ValB,C
+
+同样,总结一下.
+VA,B=max(ValB,C,vA,B)
+VA,B=max(ValB,C,vA,B)
+
+然后我们将A,B,CA,B,C具体化一下.
+
+A其实就是起始节点.
+
+C其实就是A跳跃了2i−12i−1格节点.
+
+B其实就是A跳跃了2i2i格节点.
+
+广告时间:发现还是有点模糊,咱们的直播课会讲解的非常清晰,画图肯定少不了.
+
+代码解析
+#include <bits/stdc++.h>
+using namespace std;
+#define INF 1e16
+const int N=1e5+200;
+const int M=6*1e5+300;
+int head[M],edge[M],Next[M],ver[M],tot,fa[M],n,m,father[N][32],deep[N];
+long long dp[2][N][32],val1,val2,ans_max,ans;
+struct node
+{
+    int x,y,z,vis;
+} s[M];
+int cmp(node a,node b)
+{
+    return a.z<b.z;
+}
+struct Edge
+{
+    void init2()
+    {
+        memset(head,0,sizeof(head));
+        tot=0;
+    }
+    void add_edge(int a,int b,int c)
+    {
+        edge[++tot]=b;
+        ver[tot]=c;
+        Next[tot]=head[a];
+        head[a]=tot;
+    }
+    int find(int x)
+    {
+        return x==fa[x]?x:fa[x]=find(fa[x]);
+    }
+    void Kruskal()
+    {
+        sort(s+1,s+1+m,cmp);
+        for(int i=1; i<=m; i++)
+        {
+            int a=find(s[i].x),b=find(s[i].y);
+            if (a==b)
+                continue;
+            s[i].vis=1;
+            fa[a]=b;
+            ans+=s[i].z;
+            add_edge(s[i].x,s[i].y,s[i].z);
+            add_edge(s[i].y,s[i].x,s[i].z);
+        }
+    }
+    void bfs(int root)
+    {
+        deep[root]=0;
+        queue<int> q;
+        q.push(root);
+        while(q.size())
+        {
+            int x=q.front(),len=(int)log2(deep[x]+1);
+            q.pop();
+            for(int i=head[x]; i; i=Next[i])
+            {
+                int y=edge[i];
+                if(y==father[x][0])
+                    continue;
+                deep[y]=deep[x]+1;
+                father[y][0]=x,dp[0][y][0]=ver[i],dp[1][y][0]=-INF;
+                q.push(y);
+                for(int t=1; t<=len; t++)
+                {
+                    father[y][t]=father[father[y][t-1]][t-1];
+                    if(dp[0][y][t-1]!=dp[0][father[y][t-1]][t-1])
+                    {
+                        dp[0][y][t]=max(dp[0][y][t-1],dp[0][father[y][t-1]][t-1]);
+                        dp[1][y][t]=min(dp[0][y][t-1],dp[0][father[y][t-1]][t-1]);
+                    }
+                    else
+                    {
+                        dp[0][y][t]=dp[0][y][t-1];
+                        dp[1][y][t]=max(dp[1][y][t-1],dp[1][father[y][t-1]][t-1]);
+                    }
+                }
+            }
+        }
+    }
+    inline void update2(int x)
+    {
+        if(x>val1)
+            val2=val1,val1=x;
+        else if(x>val2 && x!=val1)
+            val2=x;
+    }
+    inline void update(int x, int t)
+    {
+        update2(dp[0][x][t]);
+        update2(dp[1][x][t]);
+    }
+    inline void Lca(int x, int y)
+    {
+        val1=val2=-INF;
+        if(deep[x]<deep[y])
+            swap(x,y);
+        while(deep[x]>deep[y])
+        {
+            int t=(int)log2(deep[x]-deep[y]);
+            update(x,t),x=father[x][t];
+        }
+        if(x==y)
+            return;
+        for(int t=(int)log2(deep[x]); t>=0; t--)
+        {
+            if(father[x][t]!=father[y][t])
+            {
+                update(x,t),update(y,t);
+                x=father[x][t];
+                y=father[y][t];
+            }
+        }
+        update(x,0),update(y,0);
+    }
+} g1;
+int main()
+{
+//  freopen("stdin.in","r",stdin);
+//  freopen("stdout.out","w",stdout);
+    scanf("%d%d",&n,&m);
+    g1.init2();
+    for(int i=1; i<=m; i++)
+    {
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        s[i].x=a,s[i].y=b,s[i].z=c;
+        fa[i]=i;
+    }
+    g1.Kruskal();
+    g1.bfs(1);
+    ans_max=INF;
+    for(int i=1; i<=m; i++)
+    {
+        if(!s[i].vis)
+        {
+            g1.Lca(s[i].x,s[i].y);
+            if(val1!=s[i].z)
+                ans_max=min(ans_max,ans-val1+s[i].z);
+            else
+                ans_max=min(ans_max,ans-val2+s[i].z);
+        }
+    }
+    printf("%lld\n",ans_max);
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/2884/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 356. 次小生成树(LCT)    原题链接    困难
+作者：    whsstory ,  2020-05-21 11:03:03 ,  阅读 266
+
+3
+
+
+1
+考虑先求出一棵最小生成树,边权之和为sumsum.
+
+考虑加入一条非树边(u,v,w)(u,v,w).显然用它替换掉树上u→vu→v路径中的某一条边,得到的新生成树权值和必然不小于sumsum(否则与最小生成树的定义违背).因此替换多条边是不优的.
+显然用这条边替换掉边权尽量大的边(但要边权之和必须小于sumsum) 更优.记u→vu→v路径上的最大边权是mxmx,严格次大边权是secsec.若mx<wmx<w,则可以替换掉mxmx,新生成树权值和为sum−mx+wsum−mx+w.否则mx=wmx=w(注意不会有非树边满足w<mxw<mx,否则替换会得到更小的最小生成树,与定义违背),只能替换secsec,新生成树权值和为sum−sec+wsum−sec+w
+需要一个数据结构支持查询链上最大边权,次大边权的操作.树剖+线段树/ST表,LCT均可.这里我采用了LCT,时间复杂度为(mlogn)O(mlog⁡n),空间线性.
+由于LCT常数较大而本题时限较短,需要卡常.我卡了50min,你呢
+若使用LCT,有个细节是LCT无法直接维护边权,可以用边权转点权的技巧常数更大了
+
+/**********/
+#define MAXN 300011
+struct DSU//并查集,用于求最小生成树
+{
+    ll fa[MAXN];
+    void build(ll n){for(ll i=1;i<=n;++i)fa[i]=i;}
+    ll find(ll x)
+    {
+        if(fa[x]==x)return x;
+        return fa[x]=find(fa[x]);
+    }
+    bool uni(ll u,ll v)
+    {
+        u=find(u),v=find(v);
+        if(u==v)return 0;
+        fa[u]=v;return 1;
+    }
+}s;
+struct edge
+{
+    ll u,v,w;
+    bool operator <(const edge& t)const{return w<t.w;}
+}e[MAXN];
+std::vector<ll>g[MAXN];
+bool used[MAXN];
+ll Kru(ll n,ll m)
+{
+    std::sort(e+1,e+m+1);
+    s.build(n);
+    ll ans=0;
+    for(ll i=1;i<=m;++i)
+        if(s.uni(e[i].u,e[i].v))
+        {
+            ans+=e[i].w;
+            g[e[i].u].push_back(e[i].v),g[e[i].v].push_back(e[i].u);
+            used[i]=1;
+        }
+    return ans;
+}
+struct LCT//LCT,维护链上最大边权和严格次大边权
+{
+    ll fa[MAXN],son[MAXN][2],val[MAXN], maxv[MAXN],sec[MAXN],tag[MAXN], tot;
+    void init(ll n){tot=n;}
+    void pushup(ll x)//卡常过的pushup
+    {
+        ll l=son[x][0],r=son[x][1];
+        maxv[x]=max(max(maxv[l],maxv[r]),val[x]);
+        sec[x]=0;
+        if(maxv[l]<maxv[x])umax(sec[x],maxv[l]);
+        else umax(sec[x],sec[l]);
+        if(val[x]<maxv[x])umax(sec[x],val[x]);
+        if(maxv[r]<maxv[x])umax(sec[x],maxv[r]);
+        else umax(sec[x],sec[r]); 
+    }
+    void pushdown(ll x)
+    {
+        if(tag[x])
+        {
+            std::swap(son[x][0],son[x][1]);
+            tag[son[x][0]]^=1,tag[son[x][1]]^=1;
+            tag[x]=0;
+        }
+    }
+    bool not_root(ll x){return son[fa[x]][0]==x||son[fa[x]][1]==x;}
+    void rotate(ll x)
+    {
+        ll y=fa[x],z=fa[y],k=(son[y][1]==x);
+        if(not_root(y))son[z][son[z][1]==y]=x;
+        fa[x]=z;
+        son[y][k]=son[x][!k],fa[son[x][!k]]=y;
+        son[x][!k]=y,fa[y]=x;
+        pushup(y);//再pushu(x)就会TLE
+    }
+    ll s[MAXN];
+    void splay(ll x)
+    {
+        ll top=0;
+        s[++top]=x;
+        for(ll y=x;not_root(y);y=fa[y])s[++top]=fa[y];
+        while(top)pushdown(s[top--]);
+        while (not_root(x))
+        {
+            ll y=fa[x];
+            if(not_root(y))rotate((son[y][1]==x)==(son[fa[y]][1]==y)?y:x);
+            rotate(x);
+        }
+        pushup(x);        
+    }
+    void access(ll x)
+    {
+        for(ll y=0;x;y=x,x=fa[x])
+            splay(x),son[x][1]=y;
+    }
+    void make_root(ll x){access(x),splay(x),tag[x]^=1;}
+    void link(ll x,ll y)
+    {
+        make_root(x);
+        fa[x]=y;
+    }
+    void merge(ll x,ll y,ll v)
+    {
+        val[++tot]=v;
+        link(x,tot),link(y,tot);
+    }
+    pll split(ll x,ll y)//求链上最大边权和严格次大边权
+    {
+        make_root(x),access(y),splay(y);
+        return pll(maxv[y],sec[y]);
+    }
+}lct;
+int main()
+{
+    ll n=read(),m=read();
+    for(ll i=1;i<=m;++i)e[i].u=read(),e[i].v=read(),e[i].w=read();
+    ll sum=Kru(n,m);
+    lct.init(n);
+    for(ll i=1;i<=m;++i)
+        if(used[i])lct.merge(e[i].u,e[i].v,e[i].w);
+    ll ans=INF;
+    for(ll i=1;i<=m;++i)
+    {
+        if(used[i])continue;
+        pll mx=lct.split(e[i].u,e[i].v);
+        if(mx.first<e[i].w)umin(ans,sum-mx.first+e[i].w);
+        else umin(ans,sum-mx.second+e[i].w);
+    }
+    printf("%lld",ans);
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/13453/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 100010, M = 300010, INF = 0x3f3f3f3f;
+
+int n, m;
+struct Edge
+{
+    int a, b, w;
+    bool used;
+    bool operator< (const Edge &t) const
+    {
+        return w < t.w;
+    }
+}edge[M];
+int p[N];
+int h[N], e[M], w[M], ne[M], idx;
+int depth[N], fa[N][17], d1[N][17], d2[N][17];
+int q[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+LL kruskal()
+{
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+    sort(edge, edge + m);
+    LL res = 0;
+    for (int i = 0; i < m; i ++ )
+    {
+        int a = find(edge[i].a), b = find(edge[i].b), w = edge[i].w;
+        if (a != b)
+        {
+            p[a] = b;
+            res += w;
+            edge[i].used = true;
+        }
+    }
+
+    return res;
+}
+
+void build()
+{
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < m; i ++ )
+        if (edge[i].used)
+        {
+            int a = edge[i].a, b = edge[i].b, w = edge[i].w;
+            add(a, b, w), add(b, a, w);
+        }
+}
+
+void bfs()
+{
+    memset(depth, 0x3f, sizeof depth);
+    depth[0] = 0, depth[1] = 1;
+    q[0] = 1;
+    int hh = 0, tt = 0;
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (depth[j] > depth[t] + 1)
+            {
+                depth[j] = depth[t] + 1;
+                q[ ++ tt] = j;
+                fa[j][0] = t;
+                d1[j][0] = w[i], d2[j][0] = -INF;
+                for (int k = 1; k <= 16; k ++ )
+                {
+                    int anc = fa[j][k - 1];
+                    fa[j][k] = fa[anc][k - 1];
+                    int distance[4] = {d1[j][k - 1], d2[j][k - 1], d1[anc][k - 1], d2[anc][k - 1]};
+                    d1[j][k] = d2[j][k] = -INF;
+                    for (int u = 0; u < 4; u ++ )
+                    {
+                        int d = distance[u];
+                        if (d > d1[j][k]) d2[j][k] = d1[j][k], d1[j][k] = d;
+                        else if (d != d1[j][k] && d > d2[j][k]) d2[j][k] = d;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int lca(int a, int b, int w)
+{
+    static int distance[N * 2];
+    int cnt = 0;
+    if (depth[a] < depth[b]) swap(a, b);
+    for (int k = 16; k >= 0; k -- )
+        if (depth[fa[a][k]] >= depth[b])
+        {
+            distance[cnt ++ ] = d1[a][k];
+            distance[cnt ++ ] = d2[a][k];
+            a = fa[a][k];
+        }
+    if (a != b)
+    {
+        for (int k = 16; k >= 0; k -- )
+            if (fa[a][k] != fa[b][k])
+            {
+                distance[cnt ++ ] = d1[a][k];
+                distance[cnt ++ ] = d2[a][k];
+                distance[cnt ++ ] = d1[b][k];
+                distance[cnt ++ ] = d2[b][k];
+                a = fa[a][k], b = fa[b][k];
+            }
+        distance[cnt ++ ] = d1[a][0];
+        distance[cnt ++ ] = d1[b][0];
+    }
+
+    int dist1 = -INF, dist2 = -INF;
+    for (int i = 0; i < cnt; i ++ )
+    {
+        int d = distance[i];
+        if (d > dist1) dist2 = dist1, dist1 = d;
+        else if (d != dist1 && d > dist2) dist2 = d;
+    }
+
+    if (w > dist1) return w - dist1;
+    if (w > dist2) return w - dist2;
+    return INF;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        edge[i] = {a, b, c};
+    }
+
+    LL sum = kruskal();
+    build();
+    bfs();
+
+    LL res = 1e18;
+    for (int i = 0; i < m; i ++ )
+        if (!edge[i].used)
+        {
+            int a = edge[i].a, b = edge[i].b, w = edge[i].w;
+            res = min(res, sum + lca(a, b, w));
+        }
+    printf("%lld\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/154825/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+严格次小生成树
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+#include<queue>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 100010, M = 600010, INF = 0x3f3f3f3f;
+
+struct Edges{
+    int a, b, w;
+    bool used;
+    bool operator< (const struct Edges &W) const{
+        return w < W.w;
+    }
+}edges[M];
+
+int n, m;
+int f[N];
+
+int find(int x)
+{
+    if(f[x] != x)  f[x] = find(f[x]);
+    return f[x];
+}
+
+LL kruskal()
+{
+    for(int i = 1; i <= n; i ++)  f[i] = i;
+
+    LL res = 0;
+    for(int i = 0; i < m; i ++)
+    {
+        int a = find(edges[i].a), b = find(edges[i].b), w = edges[i].w;
+        if(a != b)
+        {
+            f[a] = b;
+            res += w;
+            edges[i].used = true;
+        }
+    }
+    return res;
+}
+
+int h[N], e[N * 2], w[N * 2], ne[N * 2], idx;
+void add(int a, int b, int c)
+{
+    e[idx] = b;
+    w[idx] = c;
+    ne[idx] = h[a];
+    h[a] = idx ++;
+}
+
+void build()
+{
+    memset(h, -1, sizeof h);
+    for(int i = 0; i < m; i ++)
+        if(edges[i].used)
+        {
+            int a = edges[i].a, b = edges[i].b, c = edges[i].w;
+            add(a, b, c);
+            add(b, a, c);
+        }
+}
+
+int depth[N];
+int fa[N][17];                  //fa[u][i]为点u向上跳2^i步的位置
+int d1[N][17], d2[N][17];       //d1,d2[u][i]分别为点u向上条2^i步的最大边和[严格]次大边（小于最大边的最大边）的边权
+
+void bfs()
+{
+    depth[1] = 1;
+
+    queue<int> q;
+    q.push(1);
+
+    while(!q.empty())
+    {
+        int u = q.front();  q.pop();
+
+        for(int i = h[u]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if(!depth[j])
+            {
+                depth[j] = depth[u] + 1;
+                q.push(j);
+
+                fa[j][0] = u;
+                d1[j][0] = w[i], d2[j][0] = -INF;
+
+                for(int k = 1; k < 17; k ++)
+                {
+                    int t = fa[j][k - 1];
+                    fa[j][k] = fa[t][k - 1];
+
+                    int dist[4] = {d1[j][k - 1], d2[j][k - 1], d1[t][k - 1], d2[t][k - 1]};
+
+                    d1[j][k] = d2[j][k] = -INF;
+                    for(int l = 0; l < 4; l ++)
+                    {
+                        int d = dist[l];
+                        if(d > d1[j][k])  d2[j][k] = d1[j][k], d1[j][k] = d;        //d严格>d1, d2 = d1, d1 = d, d1严格>d2
+                        else if(d < d1[j][k] && d > d2[j][k])  d2[j][k] = d;        //d2 < d < d1, d2 = d, d1严格>d2
+                    }
+                }
+            }
+        }
+    }
+}
+
+int lca(int a, int b, int w)            //返回a到b路径上小于w的最大边权
+{
+    int res = 0;
+
+    if(depth[a] < depth[b])  swap(a, b);
+
+    for(int i = 16; i >= 0; i --)
+        if(depth[fa[a][i]] >= depth[b])
+        {
+            if(d1[a][i] < w)  res = max(res, d1[a][i]);
+            else  res = max(res, d2[a][i]);
+            a = fa[a][i];
+        }
+
+    if(a == b)  return res;
+
+    for(int i = 16; i >= 0; i --)
+        if(fa[a][i] != fa[b][i])
+        {
+            if(d1[a][i] < w)  res = max(res, d1[a][i]);
+            else  res = max(res, d2[a][i]);
+            if(d1[b][i] < w)  res = max(res, d1[b][i]);
+            else  res = max(res, d2[b][i]);
+            a = fa[a][i];
+            b = fa[b][i];
+        }
+    if(d1[a][0] < w)  res = max(res, d1[a][0]);
+    else  res = max(res, d2[a][0]);
+    if(d1[b][0] < w)  res = max(res, d1[b][0]);
+    else  res = max(res, d2[b][0]);
+
+    return res;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for(int i = 0; i < m; i ++)  scanf("%d%d%d", &edges[i].a, &edges[i].b, &edges[i].w);
+    sort(edges, edges + m);
+
+    LL sum = kruskal();
+    build();
+    bfs();
+
+    LL res = 1e18;
+    for(int i = 0; i < m; i ++)
+        if(!edges[i].used)
+        {
+            int a = edges[i].a, b = edges[i].b, w = edges[i].w;
+            res = min(res, sum + w - lca(a, b, w));
+        }
+    printf("%lld", res);
+    return 0;
+}
+
+作者：滑稽_ωﾉ
+链接：https://www.acwing.com/activity/content/code/content/157441/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <complex>
+#include <utility>
+#include <sstream>
+
+using namespace std;
+
+typedef long long ll;
+
+const int N=100010;
+const int M=300010;
+const int K=17;
+const int INF=0x3f3f3f3f;
+
+struct Edge
+{
+    int a,b,w;
+    bool used;
+    bool operator<(const Edge x)const
+    {
+        return w<x.w;
+    }
+}edges[M];
+
+int n,m;
+int h[N],e[M],w[M],ne[M],idx;
+int fa[N][K],depth[N];
+int d1[N][K],d2[N][K],p[N];
+int q[N],hh,tt;
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    bool fx=false;
+    do ch=getchar();while(~ch&&ch!='-'&&(ch<'0'||ch>'9'));
+    for(;ch>='0'&&ch<='9';ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return fx?-x:x;
+}
+
+int find(int x)
+{
+    if(p[x]!=x)p[x]=find(p[x]);
+    return p[x];
+}
+
+ll kruskal()
+{
+    for(int i=1;i<=n;i++)
+        p[i]=i;
+    sort(edges,edges+m);
+    ll res=0;
+    for(int i=0;i<m;i++)
+    {
+        int a=find(edges[i].a);
+        int b=find(edges[i].b);
+        if(a!=b)
+        {
+            p[a]=b;
+            res+=edges[i].w;
+            edges[i].used=true;
+        }
+    }
+    return res;
+}
+
+inline void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+inline void build()
+{
+    for(int i=0;i<m;i++)
+        if(edges[i].used)
+        {
+            add(edges[i].a,edges[i].b,edges[i].w);
+            add(edges[i].b,edges[i].a,edges[i].w);
+        }
+}
+
+inline void bfs()
+{
+    memset(depth,0x3f,sizeof depth);
+    depth[0]=0,depth[1]=1,q[0]=1;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(depth[e[i]]>depth[t]+1)
+            {
+                depth[e[i]]=depth[t]+1;
+                q[++tt]=e[i];
+                fa[e[i]][0]=t;
+                d1[e[i]][0]=w[i],d2[e[i]][0]=-INF;
+                for(int k=1;k<17;k++)
+                {
+                    fa[e[i]][k]=fa[fa[e[i]][k-1]][k-1];
+                    int distance[4]={d1[e[i]][k-1],d2[e[i]][k-1],d1[fa[e[i]][k-1]][k-1],d2[fa[e[i]][k-1]][k-1]};
+                    d1[e[i]][k]=d2[e[i]][k]=-INF;
+                    for(int d=0;d<4;d++)
+                    {
+                        int dist=distance[d];
+                        if(dist>d1[e[i]][k])d2[e[i]][k]=d1[e[i]][k],d1[e[i]][k]=dist;
+                        else if(dist!=d1[e[i]][k]&&dist>d2[e[i]][k])d2[e[i]][k]=dist;
+                    }
+                }
+            }
+    }
+}
+
+int lca(int a,int b,int w)
+{
+    static int distance[N*2];
+    int cnt=0;
+    if(depth[a]<depth[b])swap(a,b);
+    for(int k=16;~k;k--)
+        if(depth[fa[a][k]]>=depth[b])
+        {
+            distance[cnt++]=d1[a][k];
+            distance[cnt++]=d2[a][k];
+            a=fa[a][k];
+        }
+    if(a!=b)
+    {
+        for(int k=16;~k;k--)
+            if(fa[a][k]!=fa[b][k])
+            {
+                distance[cnt++]=d1[a][k];
+                distance[cnt++]=d2[a][k];
+                distance[cnt++]=d1[b][k];
+                distance[cnt++]=d2[b][k];
+                a=fa[a][k],b=fa[b][k];
+            }
+        distance[cnt++]=d1[a][0];
+        distance[cnt++]=d1[b][0];
+    }
+    int dist1=-INF,dist2=-INF;
+    for(int i=0;i<cnt;i++)
+    {
+        int d=distance[i];
+        if(d>dist1)dist2=dist1,dist1=d;
+        else if(d!=dist1&&d>dist2)dist2=d;
+    }
+    if(w>dist1)return w-dist1;
+    if(w>dist2)return w-dist2;
+    return INF;
+}
+
+int main()
+{
+    n=read(),m=read();
+    for(int i=0;i<m;i++)
+    {
+        edges[i].a=read();
+        edges[i].b=read();
+        edges[i].w=read();
+        edges[i].used=false;
+    }
+    ll sum=kruskal();
+    build();
+    bfs();
+    ll res=1e18;
+    for(int i=0;i<m;i++)
+        if(!edges[i].used)
+        {
+            res=min(res,sum+lca(edges[i].a,edges[i].b,edges[i].w));
+        }
+    cout<<res;
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/321944/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 352. 闇の連鎖    原题链接    困难
+作者：    秦淮岸灯火阑珊 ,  2019-07-14 21:43:58 ,  阅读 745
+
+13
+
+
+3
+题目描述
+传说中的暗之连锁被人们称为 Dark。
+
+Dark 是人类内心的黑暗的产物，古今中外的勇者们都试图打倒它。
+
+经过研究，你发现 Dark 呈现无向图的结构，图中有 N 个节点和两类边，一类边被称为主要边，而另一类被称为附加边。
+
+Dark 有 N – 1 条主要边，并且 Dark 的任意两个节点之间都存在一条只由主要边构成的路径。
+
+另外，Dark 还有 M 条附加边。
+
+你的任务是把 Dark 斩为不连通的两部分。
+
+一开始 Dark 的附加边都处于无敌状态，你只能选择一条主要边切断。
+
+一旦你切断了一条主要边，Dark 就会进入防御模式，主要边会变为无敌的而附加边可以被切断。
+
+但是你的能力只能再切断 Dark 的一条附加边。
+
+现在你想要知道，一共有多少种方案可以击败 Dark。
+
+注意，就算你第一步切断主要边之后就已经把 Dark 斩为两截，你也需要切断一条附加边才算击败了 Dark。
+
+输入格式
+第一行包含两个整数 N 和 M。
+
+之后 N – 1 行，每行包括两个整数 A 和 B，表示 A 和 B 之间有一条主要边。
+
+之后 M 行以同样的格式给出附加边。
+
+输出格式
+输出一个整数表示答案。
+
+数据范围
+N≤100000M≤200000,数据保证答案不超过231−1
+N≤100000M≤200000,数据保证答案不超过231−1
+输入样例：
+4 1 
+1 2 
+2 3 
+1 4 
+3 4 
+输出样例：
+3
+解题报告
+题意理解
+这道题目题意比较绕,我们来一步步剖解这道题目.题目解剖学,人体解剖学
+
+一颗n−1n−1条主要边的树,然后增加了mm条附加边.
+我们只能删除一条主要边,一条附加边,一种边叫做主要边,一种边叫做附加边.
+要求删除两条边后,这棵树不再是连通的.
+我们需要统计,有多少种方案可以使得不连通,输出方案数.
+算法解析
+附加边到底有什么用处?
+对于每一条连接x,y节点的(x,y),其实我们都可以认为这条边,连接了(x,y)这条路径上的所有点.
+对于每一条连接x,y节点的(x,y),其实我们都可以认为这条边,连接了(x,y)这条路径上的所有点.
+
+当没有了主要边的时候,其实附加边就是我们的主要边.
+所以说,附加边(x,y),就是将树上x,y之间的路径上的每条主要边,都覆盖了一次.
+所以说,附加边(x,y),就是将树上x,y之间的路径上的每条主要边,都覆盖了一次.
+
+因为当(x,y)(x,y)路径上的任意一条主要边消失后,他都可以成为主要边,去维护连通性.
+
+因此现在我们的问题模型转化了.
+
+给定一个n−1n−1条边的树,求每一条树边,被非树边覆盖了多少次
+
+树边也就是主要边
+非树边也就是附加边
+那么这就是一个树上差分统计覆盖次数问题了.
+每一条附加边,使得(x,y)节点的路径上,每一个节点的权值+1.
+每一条附加边,使得(x,y)节点的路径上,每一个节点的权值+1.
+此时我们的问题,变成了如何统计方案数.
+
+我们来好好地分类讨论一下主要边,身上的附加边.
+1.主要边被覆盖了0次,即上面只有0条附加边.
+1.主要边被覆盖了0次,即上面只有0条附加边.
+
+我们发现删除完这条主要边后,随意删除一条附加边,我们都可以让树不连通.也就是mm种方案.
+
+
+
+只要删除(2,4)(2,4)这条红边,那么随意一条附加边,都可以满足条件.
+2.主要边覆盖1次,即上面只有一条附加边
+2.主要边覆盖1次,即上面只有一条附加边
+
+我们发现删除完这条主要边后,我们只能删除这条主要边的附加边.也就是11种方案.
+
+也就是删除咱们图上面的(3,7)(3,7)红边,然后我们只能删除那条上面的紫色边.
+3.主要边覆盖大于1次,即上面有多条附加边
+3.主要边覆盖大于1次,即上面有多条附加边
+
+我们发现,怎么删除,总能连通.于是00种方案.
+
+代码解析
+#include <bits/stdc++.h>
+using namespace std;
+const int N=100000+200;
+int n,m,ans;
+struct LCA
+{
+    int head[N<<1],Next[N<<1],edge[N<<1],ver[N<<1],tot;
+    int deep[N],fa[N][22],lg[N],date[N];
+    inline void init()
+    {
+        memset(head,0,sizeof(head));
+        memset(deep,0,sizeof(deep));
+        tot=0;
+    }
+    inline void add_edge(int a,int b,int c)
+    {
+        edge[++tot]=b;
+        ver[tot]=a;
+        Next[tot]=head[a];
+        head[a]=tot;
+    }
+    inline void dfs(int x,int y)
+    {
+        deep[x]=deep[y]+1;//深度是父亲节点+1
+        fa[x][0]=y;//2^0=1,也就是父亲节点
+        for(int i=1; (1<<i)<=deep[x]; i++) //2^i<=deep[x]也就是别跳出根节点了
+            fa[x][i]=fa[fa[x][i-1]][i-1];
+        for(int i=head[x]; i; i=Next[i]) //遍历所有的出边
+            if (edge[i]!=y)//避免回到父亲节点
+                dfs(edge[i],x);//自己的儿子节点, 自己是父亲节点
+        return ;
+    }
+    inline int Lca(int x,int y)//Lca过程
+    {
+        if (deep[x]<deep[y])//x节点默认深度深一些,在下面
+            swap(x,y);//交换
+        while(deep[x]>deep[y])//还没有同一高度
+            x=fa[x][lg[deep[x]-deep[y]]-1];//往上面跳跃,deep[x]-deep[y]是高度差.-1是为了防止deep[x]<deep[y]
+        if(x==y)//意外发现,y就是(x,y)的Lca
+            return x;
+        for(int i=lg[deep[x]]; i>=0; i--)
+            if (fa[x][i]!=fa[y][i])//没有跳到Lca
+            {
+                x=fa[x][i];//旋转跳跃
+                y=fa[y][i];//我闭着眼
+            }
+        return fa[x][0];//父亲节点就是Lca,因为本身是离着Lca节点最近的节点,也就是Lca的儿子节点.
+    }
+    inline int query(int x,int f)//f是x节点的父亲节点
+    {
+        for(int i=head[x]; i; i=Next[i]) //所有出边
+        {
+            int j=edge[i];//出边
+            if (j!=f)//不是父亲节点
+            {
+                query(j,x);//访问儿子节点
+                date[x]+=date[j];//累加子树节点的值
+                if(date[j]==0)
+                    ans+=m;
+                else if(date[j]==1)
+                    ans++;
+            }
+        }
+    }
+    inline int update(int x,int y)//修改操作,x,y节点构成的路径统一+1
+    {
+        date[x]++;
+        date[y]++;
+        date[Lca(x,y)]-=2;
+    }
+} g1;
+int main()
+{
+    scanf("%d%d",&n,&m);
+    g1.init();
+    for(int i=1; i<n; i++)
+    {
+        int a,b;
+        scanf("%d%d",&a,&b);
+        g1.add_edge(a,b,0);//加边
+        g1.add_edge(b,a,0);//无向图
+    }
+    for(int i=1; i<=n; i++)
+        g1.lg[i]=g1.lg[i-1]+(1<<g1.lg[i-1]==i);//处理log数组的关系
+    g1.dfs(1,0);
+    for(int i=1; i<=m; i++)
+    {
+        int a,b;
+        scanf("%d%d",&a,&b);
+        g1.update(a,b);//附加边
+    }
+    g1.query(1,0);
+    printf("%d\n",ans);
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/2830/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, M = N * 2;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int depth[N], fa[N][17];
+int d[N];
+int q[N];
+int ans;
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void bfs()
+{
+    memset(depth, 0x3f, sizeof depth);
+    depth[0] = 0, depth[1] = 1;
+    int hh = 0, tt = 0;
+    q[0] = 1;
+
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (depth[j] > depth[t] + 1)
+            {
+                depth[j] = depth[t] + 1;
+                q[ ++ tt] = j;
+                fa[j][0] = t;
+                for (int k = 1; k <= 16; k ++ )
+                    fa[j][k] = fa[fa[j][k - 1]][k - 1];
+            }
+        }
+    }
+}
+
+int lca(int a, int b)
+{
+    if (depth[a] < depth[b]) swap(a, b);
+    for (int k = 16; k >= 0; k -- )
+        if (depth[fa[a][k]] >= depth[b])
+            a = fa[a][k];
+    if (a == b) return a;
+    for (int k = 16; k >= 0; k -- )
+        if (fa[a][k] != fa[b][k])
+        {
+            a = fa[a][k];
+            b = fa[b][k];
+        }
+    return fa[a][0];
+}
+
+int dfs(int u, int father)
+{
+    int res = d[u];
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (j != father)
+        {
+            int s = dfs(j, u);
+            if (s == 0) ans += m;
+            else if (s == 1) ans ++ ;
+            res += s;
+        }
+    }
+
+    return res;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < n - 1; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b), add(b, a);
+    }
+
+    bfs();
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        int p = lca(a, b);
+        d[a] ++, d[b] ++, d[p] -= 2;
+    }
+    dfs(1, -1);
+    printf("%d\n", ans);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/154841/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1174. 受欢迎的牛    原题链接    中等
+作者：    Overnoise ,  2020-01-15 09:52:49 ,  阅读 780
+
+6
+
+
+1
+请不要在意不忍直视的函数名
+分析来自： https://www.luogu.com.cn/blog/zyb2624936151/tarjan
+注：明星==最受欢迎的牛
+首先，不难发现，如果这所有的牛都存在同一个强联通分量里。那么它们一定互相受欢迎。
+
+那么，我们怎么来找明星呢。
+
+很简单，找出度为00的强联通分量中的点。这样可以保证所有的人都喜欢它，但是它不喜欢任何人，所以说不存在还有人事明星。
+
+此题还有一个特殊情况：
+
+如果有两个点分别满足出度为零的条件，则没有明星，这样无法满足所有的牛喜欢他。
+
+有了上边的解释，题目就不是那么难了，代码如下
+
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,a,b;
+struct oppo {
+    int to,next;
+} rood[50004];
+bool f[10004];
+int head[10004],tot,t[10004],ans;
+int dfn[10004],low[10004],time_,vis[10004],all,belong[10004];
+void add(int from,int to) {
+    rood[++tot].to=to;
+    rood[tot].next=head[from];
+    head[from]=tot;
+}
+stack< int > v;
+void Tarjan(int x) {
+    dfn[x]=low[x]=++time_;
+    v.push(x);
+    vis[x]=1;
+    for(int i=head[x]; i; i=rood[i].next) {
+        if(!dfn[rood[i].to])
+            Tarjan(rood[i].to);
+        low[x]=min(low[x],low[rood[i].to]);
+    }
+    if(dfn[x]==low[x]) {
+        belong[x]=++all;
+        int y;
+        do {
+            y=v.top();
+            v.pop();
+            belong[y]=all;
+            t[all]++;
+        } while(y!=x);
+    }
+}
+int main() {
+    cin>>n>>m;
+    for(int i=1; i<=m; i++) {
+        scanf("%d %d",&a,&b);
+        add(a,b);
+    }
+    for(int i=1; i<=n; i++)
+        if(!dfn[i]) Tarjan(i);
+    for(int i=1; i<=n; i++)
+        for(int j=head[i]; j; j=rood[j].next)
+            if(belong[i]!=belong[rood[j].to])
+                f[belong[i]]=1;
+    for(int i=1; i<=all; i++)
+        if(!f[i])
+            if(ans) {
+                puts("0");
+                return 0;
+            } else
+                ans=t[i];
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：Overnoise
+链接：https://www.acwing.com/solution/content/7566/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010, M = 50010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], timestamp;
+int stk[N], top;
+bool in_stk[N];
+int id[N], scc_cnt, Size[N];
+int dout[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ timestamp;
+    stk[ ++ top] = u, in_stk[u] = true;
+    for (int i = h[u]; i != -1; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        }
+        else if (in_stk[j]) low[u] = min(low[u], dfn[j]);
+    }
+
+    if (dfn[u] == low[u])
+    {
+        ++ scc_cnt;
+        int y;
+        do {
+            y = stk[top -- ];
+            in_stk[y] = false;
+            id[y] = scc_cnt;
+            Size[scc_cnt] ++ ;
+        } while (y != u);
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b);
+    }
+
+    for (int i = 1; i <= n; i ++ )
+        if (!dfn[i])
+            tarjan(i);
+
+    for (int i = 1; i <= n; i ++ )
+        for (int j = h[i]; ~j; j = ne[j])
+        {
+            int k = e[j];
+            int a = id[i], b = id[k];
+            if (a != b) dout[a] ++ ;
+        }
+
+    int zeros = 0, sum = 0;
+    for (int i = 1; i <= scc_cnt; i ++ )
+        if (!dout[i])
+        {
+            zeros ++ ;
+            sum += Size[i];
+            if (zeros > 1)
+            {
+                sum = 0;
+                break;
+            }
+        }
+
+    printf("%d\n", sum);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/155842/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
