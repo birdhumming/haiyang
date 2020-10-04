@@ -12050,3 +12050,17 @@ map.erase(p);
 map.find(p);
 bitset
 压位，在空间上是有优势的。
+
+To expand, it's these 7 lines. (Actually 12)
+    <form action="/your-server-side-code" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+        data-amount="999"
+        data-name="Stripe.com"
+        data-description="Widget"
+        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-locale="auto"
+        data-zip-code="true">
+      </script>
+    </form>
