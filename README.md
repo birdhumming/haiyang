@@ -11790,3 +11790,102 @@ pop() 弹出栈顶元素
 
 https://www.acwing.com/file_system/file/content/whole/index/content/1346206/
 
+
+AcWing 34. 链表中环的入口结点
+机械佬也想学编程的头像机械佬也想学编程
+10小时前
+34.链表中环的入口节点
+题目描述：
+
+给定一个链表，若其中包含环，则输出环的入口节点。若其中不包含环，则输出null。
+
+思路：
+
+快慢指针，快指针和慢指针同时从起点开始走，其中快指针每次走两步，慢指针每次走一步。
+
+首先判断链表中有没有环存在，若链表中存在环，那么快指针不会走到终点，反过来也就是说，若快指针走到了终点，则链表中不存在环。
+
+若链表中存在环，那么快指针总会与慢指针在环内相遇。假设起点到环的入口点的距离为x，当慢指针恰好走好环的入口点时，此时快指针已在环内走了x步，假设此时快指针距离环的入口点的距离为y，那么当慢指针再走y步时，快指针与慢指针便会相遇。（此时快指针会再走2y步，走y步到环的入口点，再走y步与慢指针相遇）
+
+由环（圆）的对称性不难推导出，当快慢指针相遇时，相遇点距离环的入口点的距离为x。这时，只需将慢指针至于链表的起点，让慢指针和快指针每次走一步，当慢指针和快指针再次相遇时，此时的节点就是环的入口点
+
+代码如下：
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def entryNodeOfLoop(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        slow = head
+        fast = head
+
+        while True:
+            if fast and fast.next:
+                fast = fast.next.next
+                slow = slow.next
+                if slow == fast:
+                    slow = head
+                    while slow != fast:
+                        fast = fast.next
+                        slow = slow.next
+                    return slow
+            else:
+                return None
+
+
+动态链表
+Kue的头像Kue
+11小时前
+练习结构体指针
+主要用malloc 和 new两种创建指针方式
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N = 100010;
+
+struct node{
+    int data;
+    node* next;
+};
+int main()
+{
+    node* head = (node*)malloc(sizeof(node));
+    head->next = NULL;
+    node* r = head;
+    for(int i = 1; i < 10; i ++)
+    {
+        node* p = new node;
+        p->next = r->next;
+        p->data = i;
+        r->next = p;
+        r = p;
+    }
+    node* begin = head->next;
+    while (begin)
+    {
+        if (begin->data % 2 != 0 && begin->next != NULL)
+        {
+            node* s = begin->next;
+            begin->next = begin->next->next;
+            free(s);
+        }
+        begin = begin->next;
+    }
+    begin = head->next;
+    while (begin)
+    {
+        printf("%d ", begin->data);
+
+        begin = begin->next;
+    }
+}
