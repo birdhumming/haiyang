@@ -11889,3 +11889,164 @@ int main()
         begin = begin->next;
     }
 }
+
+https://www.bilibili.com/video/BV1bp4y1S7bW?from=search&seid=17657829880983501165
+
+扩展欧几里得算法求系数x，y
+
+AcWing 000. STL 常用容器使用
+Fool_one的头像Fool_one
+4小时前
+STL 笔记（算法基础课）
+1、vector
+2、string
+3、queue、priority_queue
+4、stack
+5、deque
+6、set、map、multiset、multimap
+7、unordered_set、unordered_map、unordered_multiset、unordered_multimap
+8、bitset
+vector
+vector为可变数组，采用倍增的思想。
+倍增思想：即在对数组扩展空间时，将其原来的空间再扩大一倍，对空间为n的大小只需扩展log(n)次即可，对每一次的扩展可只用O(1)来实现。
+//定义一个vector
+vector <int> a;
+//定义一个vector，指定长度为100，先初始化为1
+vector <int> a(100, 1);
+//求变长数组a的长度
+a.size();
+//判断变长数组a是否为空
+a.empty();
+//清空变长数组a
+a.clear();
+//向变长数组a的末尾压入数x
+a.push_back(x);
+//将变长数组a的末尾元素删除
+a.pop_back();
+//取变长数组a的第一个元素和最后一个元素
+a.front(), a.back();
+//取迭代器第一个元素和最后一个元素(指针)
+a.begin(), a.end();
+//三种遍历方式
+for (int i = 0; i < a.size(); ++i) cout << a[i];
+//vector <int> :: iterator i;
+for (auto i = a.begin(); i != a.end(); ++i) cout << *i;
+for (auto x : a) cout << x;
+
+//二元组：pair <int, int>、pair <int, string>、pair <int, char>等
+//在进行排序时先以first的字典序进行排列，后以second的字典序进行排列
+typedef pair <int, int> PII;
+PII a;       
+//vector <PII> a;(与vector操作类似，但push_back({x, c})，注意{})
+//向a中添加一个元素
+a = maek_pair(x, y);
+a = {x, y};
+//取出a中的第一、二个元素
+a.first, a.second;
+string
+string 为C++封装好的字符串，可支持多种操作。
+string s;
+//求字符串的长度
+s.size(), s.length();
+//判断字符串是否为NULL
+s.empty();
+//将字符串置为空字符串
+s.clear();
+//可在字符串末尾添加字符或字符串
+s += 'A';
+s += 'ABCD';
+//取子串substr(下x, y)(重点)，取下标从x开始的长度为y的子串。
+s.substr(x, y);
+//返回字符串的的首地址
+s.C_str();
+queue
+队列queue先进先出，通常用于广度优先(bfs)等算法，可支持插入队尾、弹出队头等操作。
+queue <int> q;
+//向队尾插入元素x
+q.push(x);
+//将队头元素弹出
+q.pop();
+//判断队列是否为空
+q.empty();
+//取队头、队尾元素
+q.front(), q.back();
+//但是不能使用clear()，此时采用
+q = vector <int> ();
+priority_queue
+优先队列(堆，队列中的元素按照某种规则排序)，默认是大根堆，A*算法等是需要用到的。
+//定义成小根堆
+priority_queue<int, vector<int>,  greater<int>> q;
+//向堆中插入一个元素x
+q.push(x);
+//返回堆顶元素
+q.top();
+//弹出堆顶元素
+q.pop();
+stack
+与队列类似，先进后出。
+stack <int> stk;
+//向栈顶插入一个元素
+stk.push(x);
+//取出栈顶元素
+stk.top();
+//弹出栈顶元素
+stk.pop();
+//判断栈是否为空
+stk.empty();
+deque
+双端队列，既可以对队头操作，也可以对队尾操作，但是时间复杂度相对较高。
+双端队列可支持的操作较多。
+deque <int> q;
+//取双端队列大小
+q.size();
+//判断双端队列是否为NULL
+q.empty();
+//清空双端队列，无需按q = deque <int> ()重新赋值
+q.clear();
+//返回第一个元素(队头)、最后一个元素(队尾)
+q.front(), q.back();
+//队尾插入、弹出一个元素
+q.push_back(x), q.pop_back();
+//队头插入、弹出一个元素
+q.push_front(x), q.pop_front();
+//也可使用随机寻址 []
+//也支持迭代器q.begin()、q.end()
+set/multiset
+set/multiset集合中的元素是从小至大排好序的。
+set:里面所有元素都不可能重复(集合的互异性)，自动去重的功能。
+multiset:里面所有的元素可以重复。
+set <int> s;
+//支持迭代器，也支持--(前驱)、++(后继)操作
+set <int> iterator :: it;
+//插入元素x
+s.insert(x);
+//删除元素x
+s.erase(x);
+//清空集合
+s.clear();
+//返回集合元素的个数
+s.size();
+//判断集合是否为空
+s.empty();
+//查找元素x是否在集合中出现，如果不出现则返回s.end()，否则返回对应的迭代器
+s.find(x);
+//敲重点，核心操作
+//返回大于等于x的第一个元素的迭代器
+lower_bound(x);
+//返回大于x的第一个元素的迭代器
+upper_bound(x);
+map/multimap
+map/multimap 在插入元素时，内部按照key进行从小到大进行排序。
+核心为映射key - value，支持随机访问 []。
+map <int, int> m;
+multiimap <int, int> ms;
+pair<int, int> p;
+p = make_pair(x, y);
+//插入
+map.insert(p);
+//删除
+map.erase(p);
+//查找
+map.find(p);
+bitset
+压位，在空间上是有优势的。

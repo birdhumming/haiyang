@@ -1342,3 +1342,1367 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/204001/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 113. 特殊排序    原题链接    简单
+作者：    昂昂累世士 ,  2019-02-13 12:47:04 ,  阅读 1608
+
+15
+
+
+3
+题目描述
+有N个元素，编号1.2..N，每一对元素之间的大小关系是确定的，关系不具有传递性。也就是说，元素的大小关系是N个点与N*(N-1)/2条有向边构成的任意有向图。
+然而，这是一道交互式试题，这些关系不能一次性得知，你必须通过不超过10000次提问来获取信息，每次提问只能了解某两个元素之间的关系。
+现在请你把这N个元素排成一行，使得每个元素都小于右边与它相邻的元素。你可以通过我们预设的bool函数compare来获得两个元素之间的大小关系。例如，编号为a和b的两个元素，如果元素a小于元素b,则compare（a,b）返回true，否则返回false。将N个元素排好序后，把他们的编号以数组的形式输出，如果答案不唯一，则输出任意一个均可。
+数据范围
+1≤N≤1000
+
+输入样例
+
+[[0, 1, 0], [0, 0, 0], [1, 1, 0]]
+
+输出样例
+
+[3, 1, 2]
+
+注意：不存在两个元素大小相等的情况。
+
+分析：
+本题与一般排序有三个区别：
+其一是交互式，你并不知道大小关系，只能通过调用compare接口询问；
+其二是大小不具备传递性，比如a < b,b < c 并不能推出a < c；
+其三是不能超过一万次询问，数据范围为1000，nlogn略小于一万，而CBA算法在最坏情况下的下界也就是nlogn。
+对于其第二个性质仅仅导致答案不唯一，题目仅要求输出一种答案，所以可以忽视该条件。采用二分插入排序解决该问题，首先将第一个元素压入向量里，然后二分查找合适的位置r，将待插入元素插入到向量末尾，从后往前不断交换相邻的两个数直到待插入的元素到达指定位置。注意该二分算法的写法，循环退出时l比r大一，意味着r位置的必然小于待插入的元素，r+1及其之后的元素都大于待插入的元素。（比yxc大佬的代码更加简练了一点，因为我觉得mid=1+r+1>>2以致于代码最后还要多一次判断不容易理解，不如直接在循环里就判断好了，后面插入到末尾后只用不断前移，不用再进行判断了）。
+
+C++ 代码
+class Solution {
+public:
+    vector<int> specialSort(int N) {
+        vector<int> res;
+        res.push_back(1);
+        for(int i = 2;i <= N;i++){
+            int l = 0,r = res.size() - 1;
+            while(l <= r){
+                int mid = l + r >> 1;
+                if(compare(res[mid],i)) l = mid + 1;
+                else    r = mid - 1;
+            }
+            res.push_back(i);
+            for(int j = res.size() - 2;j > r;j--)   swap(res[j],res[j + 1]);
+        }
+        return res;
+    }
+};
+
+作者：昂昂累世士
+链接：https://www.acwing.com/solution/content/1009/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+// Forward declaration of compare API.
+// bool compare(int a, int b);
+// return bool means whether a is less than b.
+
+class Solution {
+public:
+    vector<int> specialSort(int N) {
+        vector<int> res(1, 1);
+        for (int i = 2; i <= N; i ++ )
+        {
+            int l = 0, r = res.size() - 1;
+            while (l < r)
+            {
+                int mid = l + r + 1 >> 1;
+                if (compare(res[mid], i)) l = mid;
+                else r = mid - 1;
+            }
+
+            res.push_back(i);
+            for (int j = res.size() - 2; j > r; j -- ) swap(res[j], res[j + 1]);
+            if (compare(i, res[r])) swap(res[r], res[r + 1]);
+        }
+
+        return res;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/204025/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+https://www.bilibili.com/video/av70261237
+
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 100010;
+
+int row[N], col[N], s[N], c[N];
+
+LL work(int n, int a[])
+{
+    for (int i = 1; i <= n; i ++ ) s[i] = s[i - 1] + a[i];
+
+    if (s[n] % n) return -1;
+
+    int avg = s[n] / n;
+
+    c[1] = 0;
+    for (int i = 2; i <= n; i ++ ) c[i] = s[i - 1] - (i - 1) * avg;
+
+    sort(c + 1, c + n + 1);
+    LL res = 0;
+    for (int i = 1; i <= n; i ++ ) res += abs(c[i] - c[(n + 1) / 2]);
+
+    return res;
+}
+
+int main()
+{
+    int n, m, cnt;
+    scanf("%d%d%d", &n, &m, &cnt);
+
+    while (cnt -- )
+    {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        row[x] ++, col[y] ++ ;
+    }
+
+    LL r = work(n, row);
+    LL c = work(m, col);
+
+    if (r != -1 && c != -1) printf("both %lld\n", r + c);
+    else if (r != -1) printf("row %lld\n", r);
+    else if (c != -1) printf("column %lld\n", c);
+    else printf("impossible\n");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/205163/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+七夕节因牛郎织女的传说而被扣上了「情人节」的帽子。
+
+于是TYVJ今年举办了一次线下七夕祭。
+
+Vani同学今年成功邀请到了cl同学陪他来共度七夕，于是他们决定去TYVJ七夕祭游玩。
+
+TYVJ七夕祭和11区的夏祭的形式很像。
+
+矩形的祭典会场由N排M列共计N×M个摊点组成。
+
+虽然摊点种类繁多，不过cl只对其中的一部分摊点感兴趣，比如章鱼烧、苹果糖、棉花糖、射的屋……什么的。
+
+Vani预先联系了七夕祭的负责人zhq，希望能够通过恰当地布置会场，使得各行中cl感兴趣的摊点数一样多，并且各列中cl感兴趣的摊点数也一样多。
+
+不过zhq告诉Vani，摊点已经随意布置完毕了，如果想满足cl的要求，唯一的调整方式就是交换两个相邻的摊点。
+
+两个摊点相邻，当且仅当他们处在同一行或者同一列的相邻位置上。
+
+由于zhq率领的TYVJ开发小组成功地扭曲了空间，每一行或每一列的第一个位置和最后一个位置也算作相邻。
+
+现在Vani想知道他的两个要求最多能满足多少个。
+
+在此前提下，至少需要交换多少次摊点。
+
+输入格式
+第一行包含三个整数N和M和T，T表示cl对多少个摊点感兴趣。
+
+接下来T行，每行两个整数x, y，表示cl对处在第x行第y列的摊点感兴趣。
+
+输出格式
+首先输出一个字符串。
+
+如果能满足Vani的全部两个要求，输出both；
+
+如果通过调整只能使得各行中cl感兴趣的摊点数一样多，输出row；
+
+如果只能使各列中cl感兴趣的摊点数一样多，输出column；
+
+如果均不能满足，输出impossible。
+
+如果输出的字符串不是impossible， 接下来输出最小交换次数，与字符串之间用一个空格隔开。
+
+数据范围
+1≤N,M≤100000,0≤T≤min(N∗M,100000),1≤x≤N,1≤y≤M1≤N,M≤100000,0≤T≤min(N∗M,100000),1≤x≤N,1≤y≤M
+样例
+输入样例：
+2 3 4
+1 3
+2 1
+2 2
+2 3
+输出样例：
+row 1
+分治+贪心+前缀和+中位数+排序
+这道题目有一个非常重要的性质就是，只会改变相邻的两个数的位置，因此我们交换两个数，只会改变一行的喜爱小摊或者一列的喜爱小摊，而不会同时改变行和列的喜爱小摊，既然这样的话，我们就可以将这道题目分成两个部分，一部分是求行的最少次数，一部分是求列的最少次数。
+既然如此的话，这道题目就成为了环形的均分纸牌问题，均分纸牌这是一道经典的贪心问题，可以自行百度理解即可懒惰病发作ing 但是环形均分纸牌问题和普通均分纸牌问题又有不同之处，因此我们要截环为序列，所以说我们可以利用中位数把环形变成区间，具体思路可见《算法竞赛进阶指南》。
+感谢@sandychn 大佬指出简短代码中一个小问题.
+后更新简短代码
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define fir(i,a,b) for(ll i=a;i<=b;i++)
+const int N=1e5+10;
+ll n,m,t,a[N],b[N],f[N],x,y,rr,cc;
+ll calc(ll a[],ll n)
+{
+    fir(i,1,n)
+    {
+        a[i]-=(a[0]/n);
+        f[i]=f[i-1]+a[i];
+    }
+    sort(f+1,f+1+n);
+    ll mid=(n+1)>>1,ans=0;//不是n|1,因为n若为奇数会出问题.不过这道题目也不会出现问题.因为中位数只要求是最中间,但是如果说我们要求出n+1的话,那么不能用n|1. 感谢@sandychn 大佬指出问题.
+    fir(i,1,n)
+        ans+=abs(f[mid]-f[i]);
+    return ans;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin>>n>>m>>t;
+    for(int i=1;i<=t;i++)
+    {
+        cin>>x>>y;
+        a[x]++;
+        b[y]++;
+    }
+    fir(i,1,n)
+        a[0]+=a[i];
+    fir(i,1,m)
+        b[0]+=b[i];
+    ll as=a[0]%n,bs=b[0]%m;
+    if (!as && !bs)
+        cout<<"both "<<calc(a,n)+calc(b,m);
+    else if(!as)
+        cout<<"row "<<calc(a,n);
+    else if(!bs)
+        cout<<"column "<<calc(b,m);
+    else
+        cout<<"impossible";
+    return 0;
+}
+lyd老师的精简C++ 代码
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<cstdlib>
+using namespace std;
+const int u=100010; 
+long long b[u],c[u],f[u];
+long long n,m,t,i,j,x,y;
+
+long long calc(long long a[u],int n)
+{
+    long long ans=0; int i;
+    for(i=1;i<=n;i++)
+    {
+        a[i]-=a[0]/n;
+        f[i]=f[i-1]+a[i];
+    }
+    sort(f+1,f+n+1);
+    for(i=1;i<=n;i++) ans+=abs(f[i]-f[n+1>>1]);
+    return ans;
+}
+
+int main()
+{
+    freopen("tanabata.in","r",stdin);
+    freopen("tanabata.out","w",stdout); 
+    cin>>n>>m>>t;
+    for(i=1;i<=t;i++)
+    {
+        scanf("%d%d",&x,&y);
+        b[x]++,c[y]++; 
+    }
+    for(i=1;i<=n;i++) b[0]+=b[i];
+    for(i=1;i<=m;i++) c[0]+=c[i];
+    if(b[0]%n==0&&c[0]%m==0)
+        printf("both %lld\n",calc(b,n)+calc(c,m));
+    else if(b[0]%n==0)
+        printf("row %lld\n",calc(b,n));
+    else if(c[0]%m==0)
+        printf("column %lld\n",calc(c,m));
+    else puts("impossible");
+    return 0;
+}
+蒟蒻我的繁杂代码
+#include <bits/stdc++.h>
+using namespace std;
+const int N=100100;
+#define ll long long
+ll n,m,t,i,j,k,s[N],a[N],x,y,ans1,ans2,r[N],c[N],rr,cc;
+void init()
+{
+    ios::sync_with_stdio(false);
+    cin>>n>>m>>t;
+    for (i=1;i<=t;i++)
+    {
+        int x,y;
+        cin>>x>>y;
+        r[x]++;
+        c[y]++;
+        rr++;
+        cc++;
+    } 
+}
+bool work1()//横排
+{
+    if (t%n!=0)
+        return 0;
+    memset(s,0,sizeof(s));
+    rr/=n;
+    for (i=1;i<=n;i++)
+    {
+        r[i]-=rr;
+        s[i]=s[i-1]+r[i];
+    }
+    sort(s+1,s+1+n);
+    int k=(1+n)>>1;
+    for (i=1;i<=n;i++)
+        ans1+=abs(s[i]-s[k]);
+    return 1;
+}
+bool work2()//竖排
+{
+    if (t%m!=0)
+        return 0;
+    memset(s,0,sizeof(s));
+    cc/=m;
+    for (i=1;i<=m;i++)
+    {
+        c[i]-=cc;
+        s[i]=s[i-1]+c[i];
+    }
+    sort(s+1,s+1+m);
+    int k=(1+m)>>1;
+    for (i=1;i<=m;i++)
+        ans2+=abs(s[i]-s[k]);
+    return 1;
+}
+int main()
+{
+    init();
+    bool ok1=work1(),ok2=work2();
+    if (ok1 && ok2)
+        cout<<"both";
+    else
+    if (ok1)
+        cout<<"row";
+    else if (ok2)
+        cout<<"column";
+    else 
+        cout<<"impossible";
+    if (ok1 || ok2)
+        cout<<" "<<ans1+ans2;
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/837/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 106. 动态中位数    原题链接    困难
+作者：    秦淮岸灯火阑珊 ,  2019-01-22 15:58:07 ,  阅读 1594
+
+18
+
+
+5
+题目描述
+依次读入一个整数序列，每当已经读入的整数个数为奇数时，输出已读入的整数构成的序列的中位数。
+
+输入格式
+第一行输入一个整数P，代表后面数据集的个数，接下来若干行输入各个数据集。
+
+每个数据集的第一行首先输入一个代表数据集的编号的整数。
+
+然后输入一个整数M，代表数据集中包含数据的个数，M一定为奇数，数据之间用空格隔开。
+
+数据集的剩余行由数据集的数据构成，每行包含10个数据，最后一行数据量可能少于10个，数据之间用空格隔开。
+
+输出格式
+对于每个数据集，第一行输出两个整数，分别代表数据集的编号以及输出中位数的个数（应为数据个数加一的二分之一），数据之间用空格隔开。
+
+数据集的剩余行由输出的中位数构成，每行包含10个数据，最后一行数据量可能少于10个，数据之间用空格隔开。
+
+输出中不应该存在空行。
+
+数据范围
+1≤P≤10001≤P≤1000
+1≤M≤99991≤M≤9999
+样例
+输入样例：
+3 
+1 9 
+1 2 3 4 5 6 7 8 9 
+2 9 
+9 8 7 6 5 4 3 2 1 
+3 23 
+23 41 13 22 -3 24 -31 -11 -8 -7 
+3 5 103 211 -311 -45 -67 -73 -81 -99 
+-33 24 56
+输出样例：
+1 5
+1 2 3 4 5
+2 5
+9 8 7 6 5
+3 12
+23 23 22 22 13 3 5 5 3 -3 
+-7 -3
+对顶堆
+这是一个很有用的算法作者第一次学到，具体思路大致是，开两个堆，一个是大根堆，一个是小根堆，然后小于中位数的都放在大根堆，大于中位数的都放在小根堆，如果说，一个堆的个数大于了当前序列的1212，那么就将多余的数移过去，直到两个堆数量相等。
+C++ 代码
+
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+#include <queue>
+#include <vector>
+using namespace std;
+struct cmp1
+{
+    bool operator ()(int &a,int &b)
+    {
+        return a>b;//小根堆，不是大根堆
+    }
+};
+priority_queue <int,vector<int>, cmp1> q1,kong1;
+priority_queue <int> q2,kong2;
+void init()
+{
+    int t,x,n,now;
+    cin>>t;
+    while(t--)
+    {
+        cin>>x>>n;
+        cout<<x<<" "<<(n+1)/2<<endl;
+        q1=kong1;
+        q2=kong2;
+        int cnt=0;
+        for (int i=1;i<=n;i++)
+        {
+            cin>>now;
+            if(q1.empty())
+                q1.push(now);
+            else
+            {
+                if(now>q1.top()) 
+                    q1.push(now);
+                else 
+                    q2.push(now);
+                while(q1.size()<q2.size())
+                {
+                    q1.push(q2.top());
+                    q2.pop();
+                }
+                while(q1.size()>q2.size()+1)
+                {
+                    q2.push(q1.top());
+                    q1.pop();
+                }
+            }
+            if (i&1)
+            {
+                cnt++;
+                cout<<q1.top()<<" ";
+                if (!(cnt%10))
+                    cout<<endl;
+            }
+        }
+        puts("");
+    }
+}
+int main()
+{
+    init();
+    return 0;
+}
+
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/838/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+快速选择   47   47行   105ms   105ms
+#include <stdio.h>
+
+typedef long long ll;
+
+const int N=10005;
+
+int test,n;
+int a[N];
+ll ans[N>>1],size;
+
+template<typename T>
+T quick_search(T *begin,T *end,int k)
+{
+    if(begin==end-1)return *begin;
+    T pivot=*(begin+(end-begin>>1));
+    T *i=begin-1,*j=end;
+    while(i!=j)
+    {
+        while(i!=j&&*++i<pivot);
+        while(i!=j&&*--j>pivot);
+        if(i!=j)*i^=*j,*j^=*i,*i^=*j;
+    }
+    if(k<=j-begin)return quick_search(begin,j,k);
+    else    return quick_search(j,end,k-(j-begin));
+}
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        size=0;
+        scanf("%d%d",&test,&n);
+        printf("%d %d\n",test,n+1>>1);
+        for(int i=1;i<=n;i++)
+        {
+            scanf("%d",a+i);
+            if(i&1)ans[size++]=quick_search(a+1,a+i+1,i+1>>1);
+        }
+        for(int i=0;i<size;i++)
+        {
+            if(i&&i%10==0)putchar('\n');
+            printf("%d ",ans[i]);
+        }
+    }
+    return 0;
+}
+对顶堆   148   148行   5ms   5ms
+#include <stdio.h>
+
+typedef long long ll;
+
+const int N=10005;
+
+int test,n;
+ll heap1[N],size_heap1; // 大根堆
+ll heap2[N],size_heap2; // 小根堆
+ll ans[N],size_ans;
+
+void down_heap1(int u)
+{
+    int t=u;
+    if(u<<1<=size_heap1&&heap1[t]<heap1[u<<1])t=u<<1;
+    if((u<<1|1)<=size_heap1&&heap1[t]<heap1[u<<1|1])t=u<<1|1;
+    if(u!=t)
+    {
+        heap1[u]^=heap1[t];
+        heap1[t]^=heap1[u];
+        heap1[u]^=heap1[t];
+        down_heap1(t);
+    }
+}
+
+void up_heap1(int u)
+{
+    while(u>>1&&heap1[u]>heap1[u>>1])
+    {
+        heap1[u]^=heap1[u>>1];
+        heap1[u>>1]^=heap1[u];
+        heap1[u]^=heap1[u>>1];
+        u>>=1;
+    }
+}
+
+void insert_heap1(int x)
+{
+    heap1[++size_heap1]=x;
+    up_heap1(size_heap1);
+}
+
+void erase_heap1(int u)
+{
+    if(u!=size_heap1)
+    {
+        heap1[u]^=heap1[size_heap1];
+        heap1[size_heap1]^=heap1[u];
+        heap1[u]^=heap1[size_heap1];
+    }
+    size_heap1--;
+    down_heap1(u);
+    up_heap1(u);
+}
+
+void down_heap2(int u)
+{
+    int t=u;
+    if(u<<1<=size_heap2&&heap2[u<<1]<heap2[t])t=u<<1;
+    if((u<<1|1)<=size_heap2&&heap2[u<<1|1]<heap2[t])t=u<<1|1;
+    if(t!=u)
+    {
+        heap2[u]^=heap2[t];
+        heap2[t]^=heap2[u];
+        heap2[u]^=heap2[t];
+        down_heap2(t);
+    }
+}
+
+void up_heap2(int u)
+{
+    while(u>>1&&heap2[u>>1]>heap2[u])
+    {
+        heap2[u]^=heap2[u>>1];
+        heap2[u>>1]^=heap2[u];
+        heap2[u]^=heap2[u>>1];
+        u>>=1;
+    }
+}
+
+void insert_heap2(int x)
+{
+    heap2[++size_heap2]=x;
+    up_heap2(size_heap2);
+}
+
+void erase_heap2(int u)
+{
+    if(u!=size_heap2)
+    {
+        heap2[u]^=heap2[size_heap2];
+        heap2[size_heap2]^=heap2[u];
+        heap2[u]^=heap2[size_heap2];
+    }
+    size_heap2--;
+    down_heap2(u);
+    up_heap2(u);
+}
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        size_ans=0;
+        size_heap1=0;
+        size_heap2=0;
+        scanf("%d %d",&test,&n);
+        for(int i=1;i<=n;i++)
+        {
+            int x;
+            scanf("%d",&x);
+            if(i&1)
+                if(x<=heap1[1])
+                {
+                    insert_heap1(x);
+                    ans[size_ans++]=heap1[1];
+                }
+                else
+                {
+                    insert_heap2(x);
+                    ans[size_ans++]=heap2[1];
+                }
+            else
+            {
+                if(size_heap1>size_heap2)insert_heap1(x);
+                else    insert_heap2(x);
+                if(size_heap1>size_heap2)
+                {
+                    insert_heap2(heap1[1]);
+                    erase_heap1(1);
+                }
+                else if(size_heap1<size_heap2)
+                {
+                    insert_heap1(heap2[1]);
+                    erase_heap2(1);
+                }
+            }
+        }
+        printf("%d %d\n",test,size_ans);
+        for(int i=0;i<size_ans;i++)
+        {
+            if(i&&i%10==0)putchar('\n');
+            printf("%d ",ans[i]);
+        }
+    }
+    return 0;
+}
+线段树   135   135行   17ms   17ms
+#include <stdio.h>
+
+typedef long long ll;
+
+const int N=10005;
+const int M=40005;
+
+int test,n;
+struct point
+{
+    int l,r;
+    ll sum;
+}tr[M];
+ll alls[N],size_alls;
+ll ans[N],size_ans;
+ll a[N];
+
+template<typename T>
+void sort(T *begin,T *end)
+{
+    if(begin==end-1)return;
+    T pivot=*(begin+(end-begin>>1));
+    T *i=begin-1,*j=end;
+    while(i!=j)
+    {
+        while(i!=j&&*++i<pivot);
+        while(i!=j&&*--j>pivot);
+        if(i!=j)*i^=*j,*j^=*i,*i^=*j;
+    }
+    sort(begin,j),sort(j,end);
+}
+
+template<typename T>
+int unique(T *begin,T *end)
+{
+    T *pivot1,*pivot2;
+    pivot1=pivot2=begin;
+    while(pivot1!=end)
+    {
+        while(pivot1!=end&&*pivot1==*pivot2)pivot1++;
+        if(pivot1!=end)*++pivot2=*pivot1;
+    }
+    return pivot2-begin+1;
+}
+
+int find(int x)
+{
+    int l=1,r=size_alls;
+    while(l<r)
+    {
+        int mid=l+r>>1;
+        if(alls[mid]>=x)r=mid;
+        else    l=mid+1;
+    }
+    return r;
+}
+
+void pushup(int u)
+{
+    tr[u].sum=tr[u<<1].sum+tr[u<<1|1].sum;
+}
+
+void build(int u,int l,int r)
+{
+    tr[u].l=l,tr[u].r=r;
+    tr[u].sum=0;
+    if(l==r)return;
+    int mid=l+r>>1;
+    build(u<<1,l,mid);
+    build(u<<1|1,mid+1,r);
+}
+
+void modify(int u,int x,int c)
+{
+    if(tr[u].l==tr[u].r)tr[u].sum+=c;
+    else
+    {
+        int mid=tr[u].l+tr[u].r>>1;
+        if(x<=mid)modify(u<<1,x,c);
+        else    modify(u<<1|1,x,c);
+        pushup(u);
+    }
+}
+
+ll query(int u,int l,int r)
+{
+    if(tr[u].l>=l&&tr[u].r<=r)return tr[u].sum;
+    ll sum=0,mid=tr[u].l+tr[u].r>>1;
+    if(l<=mid)sum+=query(u<<1,l,r);
+    if(mid<r)sum+=query(u<<1|1,l,r);
+    return sum;
+}
+
+int get_kth(int k)
+{
+    int l=1,r=size_alls;
+    while(l<r)
+    {
+        int mid=l+r>>1;
+        if(query(1,1,mid)>=k)r=mid;
+        else    l=mid+1;
+    }
+    return alls[r];
+}
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        size_alls=0;
+        size_ans=0;
+        scanf("%d%d",&test,&n);
+        for(int i=1;i<=n;i++)
+        {
+            scanf("%lld",a+i);
+            alls[++size_alls]=a[i];
+        }
+        sort(alls+1,alls+size_alls+1);
+        size_alls=unique(alls+1,alls+size_alls+1);
+        build(1,1,n);
+        for(int i=1;i<=n;i++)
+        {
+            modify(1,find(a[i]),1);
+            if(i&1)ans[size_ans++]=get_kth(i+1>>1);
+        }
+        printf("%d %d\n",test,size_ans);
+        for(int i=0;i<size_ans;i++)
+        {
+            if(i&&i%10==0)putchar('\n');
+            printf("%d ",ans[i]);
+        }
+    }
+    return 0;
+}
+线段树(lazytag)   153(lazytag)   153行   27ms   27ms
+#include <stdio.h>
+
+typedef long long ll;
+
+const int N=10005;
+const int M=40005;
+
+int test,n;
+struct point
+{
+    int l,r;
+    ll sum;
+    ll lazytag;
+}tr[M];
+ll alls[N],size_alls;
+ll ans[N],size_ans;
+ll a[N];
+
+template<typename T>
+void sort(T *begin,T *end)
+{
+    if(begin==end-1)return;
+    T pivot=*(begin+(end-begin>>1));
+    T *i=begin-1,*j=end;
+    while(i!=j)
+    {
+        while(i!=j&&*++i<pivot);
+        while(i!=j&&*--j>pivot);
+        if(i!=j)*i^=*j,*j^=*i,*i^=*j;
+    }
+    sort(begin,j),sort(j,end);
+}
+
+template<typename T>
+int unique(T *begin,T *end)
+{
+    T *pivot1,*pivot2;
+    pivot1=pivot2=begin;
+    while(pivot1!=end)
+    {
+        while(pivot1!=end&&*pivot1==*pivot2)pivot1++;
+        if(pivot1!=end)*++pivot2=*pivot1;
+    }
+    return pivot2-begin+1;
+}
+
+int find(int x)
+{
+    int l=1,r=size_alls;
+    while(l<r)
+    {
+        int mid=l+r>>1;
+        if(alls[mid]>=x)r=mid;
+        else    l=mid+1;
+    }
+    return r;
+}
+
+void pushup(int u)
+{
+    tr[u].sum=tr[u<<1].sum+tr[u<<1|1].sum;
+}
+
+void pushdown(int u)
+{
+    if(tr[u].lazytag)
+    {
+        tr[u<<1].lazytag+=tr[u].lazytag;
+        tr[u<<1|1].lazytag+=tr[u].lazytag;
+        tr[u<<1].sum+=tr[u].lazytag*(tr[u<<1].r-tr[u<<1].l+1);
+        tr[u<<1|1].sum+=tr[u].lazytag*(tr[u<<1|1].r-tr[u<<1|1].l+1);
+        tr[u].lazytag=0;
+    }
+}
+
+void build(int u,int l,int r)
+{
+    tr[u].l=l,tr[u].r=r;
+    tr[u].sum=0;
+    tr[u].lazytag=0;
+    if(l==r)return;
+    int mid=l+r>>1;
+    build(u<<1,l,mid);
+    build(u<<1|1,mid+1,r);
+}
+
+void modify(int u,int l,int r,ll c)
+{
+    if(tr[u].l>=l&&tr[u].r<=r)
+    {
+        tr[u].sum+=c*(tr[u].r-tr[u].l+1);
+        tr[u].lazytag+=c;
+        return;
+    }
+    pushdown(u);
+    int mid=tr[u].l+tr[u].r>>1;
+    if(l<=mid)modify(u<<1,l,r,c);
+    if(mid<r)modify(u<<1|1,l,r,c);
+    pushup(u);
+}
+
+ll query(int u,int l,int r)
+{
+    if(tr[u].l>=l&&tr[u].r<=r)return tr[u].sum;
+    pushdown(u);
+    ll sum=0,mid=tr[u].l+tr[u].r>>1;
+    if(l<=mid)sum+=query(u<<1,l,r);
+    if(mid<r)sum+=query(u<<1|1,l,r);
+    return sum;
+}
+
+int get_kth(int k)
+{
+    int l=1,r=size_alls;
+    while(l<r)
+    {
+        int mid=l+r>>1;
+        if(query(1,mid,mid)>=k)r=mid;
+        else    l=mid+1;
+    }
+    return alls[r];
+}
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        size_alls=0;
+        size_ans=0;
+        scanf("%d%d",&test,&n);
+        for(int i=1;i<=n;i++)
+        {
+            scanf("%lld",a+i);
+            alls[++size_alls]=a[i];
+        }
+        sort(alls+1,alls+size_alls+1);
+        size_alls=unique(alls+1,alls+size_alls+1);
+        build(1,1,n);
+        for(int i=1;i<=n;i++)
+        {
+            modify(1,find(a[i]),n,1);
+            if(i&1)ans[size_ans++]=get_kth(i+1>>1);
+        }
+        printf("%d %d\n",test,size_ans);
+        for(int i=0;i<size_ans;i++)
+        {
+            if(i&&i%10==0)putchar('\n');
+            printf("%d ",ans[i]);
+        }
+    }
+    return 0;
+}
+树状数组   114   114行   9ms   9ms
+#include <stdio.h>
+#include <string.h>
+
+typedef long long ll;
+
+const int N=10005;
+
+int test,n;
+ll a[N];
+ll tr[N];
+ll alls[N],size_alls;
+ll ans[N],size_ans;
+
+template<typename T>
+void sort(T *begin,T *end)
+{
+    if(begin==end-1)return;
+    T pivot=*(begin+(end-begin>>1));
+    T *i=begin-1,*j=end;
+    while(i!=j)
+    {
+        while(i!=j&&*++i<pivot);
+        while(i!=j&&*--j>pivot);
+        if(i!=j)*i^=*j,*j^=*i,*i^=*j;
+    }
+    sort(begin,j),sort(j,end);
+}
+
+template<typename T>
+int unique(T *begin,T *end)
+{
+    T *pivot1,*pivot2;
+    pivot1=pivot2=begin;
+    while(pivot1!=end)
+    {
+        while(pivot1!=end&&*pivot1==*pivot2)pivot1++;
+        if(pivot1!=end)*++pivot2=*pivot1;
+    }
+    return pivot2-begin+1;
+}
+
+template<typename T>
+int find(T x)
+{
+    int l=1,r=size_alls;
+    while(l<r)
+    {
+        int mid=l+r>>1;
+        if(alls[mid]>=x)r=mid;
+        else    l=mid+1;
+    }
+    return r;
+}
+
+ll lowbit(ll x)
+{
+    return x&-x;
+}
+
+void modify(int x,ll c)
+{
+    for(int i=x;i<=n;i+=lowbit(i))
+        tr[i]+=c;
+}
+
+ll query(int x)
+{
+    ll res=0;
+    for(int i=x;i;i-=lowbit(i))
+        res+=tr[i];
+    return res;
+}
+
+int get_kth(ll k)
+{
+    int l=1,r=size_alls;
+    while(l<r)
+    {
+        int mid=l+r>>1;
+        if(query(mid)>=k)r=mid;
+        else    l=mid+1;
+    }
+    return alls[r];
+}
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        size_alls=size_ans=0;
+        memset(tr,0,sizeof tr);
+        scanf("%d%d",&test,&n);
+        for(int i=1;i<=n;i++)
+        {
+            scanf("%lld",a+i);
+            alls[++size_alls]=a[i];
+        }
+        sort(alls+1,alls+size_alls+1);
+        size_alls=unique(alls+1,alls+size_alls+1);
+        for(int i=1;i<=n;i++)
+        {
+            modify(find(a[i]),1);
+            if(i&1)ans[size_ans++]=get_kth(i+1>>1);
+        }
+        printf("%d %d\n",test,size_ans);
+        for(int i=0;i<size_ans;i++)
+        {
+            if(i&&i%10==0)putchar('\n');
+            printf("%d ",ans[i]);
+        }
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/362841/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 107. 超快速排序    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-01-22 17:05:41 ,  阅读 2234
+
+12
+
+
+2
+题目描述
+在这个问题中，您必须分析特定的排序算法----超快速排序。
+
+该算法通过交换两个相邻的序列元素来处理n个不同整数的序列，直到序列按升序排序。
+
+对于输入序列
+
+9 1 0 5 4
+超快速排序生成输出
+
+0 1 4 5 9
+。
+
+您的任务是确定超快速排序需要执行多少交换操作才能对给定的输入序列进行排序。
+
+输入格式
+输入包括一些测试用例。
+
+每个测试用例的第一行输入整数n，代表该用例中输入序列的长度。
+
+接下来n行每行输入一个整数aiai,代表用例中输入序列的具体数据，第i行的数据代表序列中第i个数。
+
+当输入用例中包含的输入序列长度为0时，输入终止，该序列无需处理。
+
+输出格式
+对于每个需要处理的输入序列，输出一个整数op，代表对给定输入序列进行排序所需的最小交换操作数，每个整数占一行。
+
+数据范围
+0≤N<5000000≤N<500000
+0≤ai≤9999999990≤ai≤999999999
+样例
+输入样例：
+5
+9
+1
+0
+5
+4
+3
+1
+2
+3
+0
+输出样例：
+6
+0
+归并排序求逆序对
+首先发现题目就是在模拟冒泡排序，而交换的次数，就是冒泡排序的交换次数就是我们的逆序对个数，至于求逆序对最快的方法，就是归并排序。
+还要注意这里一定要用Longlong，不然的话就会WA，因为最大值可能为n∗nn∗n 作者就是这个傻孩子
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+const int N=501000;
+#define ll long long
+ll n,m,i,j,k,a[N],b[N],cnt;
+void merge(ll a[],ll l,ll r)
+{
+    if (r-l<1)
+        return ;
+    ll mid=(l+r)>>1;
+    merge(a,l,mid);
+    merge(a,mid+1,r);
+    ll i=l,j=mid+1;
+    for (ll k=l;k<=r;k++)
+    {
+        if (j>r || i<=mid && a[i]<=a[j])
+            b[k]=a[i++];
+        else
+        {
+            cnt+=mid-i+1;
+            b[k]=a[j++];
+        }
+    }
+    for (ll k=l;k<=r;k++)
+        a[k]=b[k];
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    while(cin>>n && n)
+    {
+        for (i=1;i<=n;i++)
+            cin>>a[i];
+        cnt=0;
+        merge(a,1,n);
+        cout<<cnt<<endl;
+    }
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/841/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+
+typedef long long LL;
+
+const int N = 500010;
+
+int n;
+LL q[N], w[N];
+
+LL merge_sort(int l, int r)
+{
+    if (l == r) return 0;
+
+    int mid = l + r >> 1;
+    LL res = merge_sort(l, mid) + merge_sort(mid + 1, r);
+    int i = l, j = mid + 1, k = 0;
+    while (i <= mid && j <= r)
+        if (q[i] <= q[j]) w[k ++ ] = q[i ++ ];
+        else
+        {
+            res += mid - i + 1;
+            w[k ++ ] = q[j ++ ];
+        }
+    while (i <= mid) w[k ++ ] = q[i ++ ];
+    while (j <= r) w[k ++ ] = q[j ++ ];
+
+    for (i = l, j = 0; i <= r; i ++, j ++ ) q[i] = w[j];
+
+    return res;
+}
+
+int main()
+{
+    while (scanf("%d", &n), n)
+    {
+        for (int i = 0; i < n; i ++ ) scanf("%d", &q[i]);
+
+        printf("%lld\n", merge_sort(0, n - 1));
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/205204/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1273. 天才的记忆（RMQ算法详解）    原题链接    简单
+作者：    负壹 ,  2020-06-19 10:03:02 ,  阅读 219
+
+5
+
+
+2
+算法1
+(RMQ算法) O(nlogn)O(nlogn)
+题中数据量比较大，查询也比较多，寻常的平方复杂度一定会超时，这里采用RMQ算法，实际上就是用动态规划预先处理数据，查询时时间复杂度是常数级。
+
+首先定义f[i,j]为以第i个数为起点，长度为2^j的一段区间中的最大值，显然状态转移为
+
+f[i,j] = max(f[i,j-1],f[i+2^(j-1),j-1])
+
+这样的话可以在nlogn的时间下完成f数组的建立，下边是区间最大值的查询，对于区间[l,r]，存在一个k使得r-l+1>=2^k且r-l+1<2^(k+1),这样的话区间[l,r]的最大值就是max(f[l,k],f[r-2^k+1,k]),查询可以在常数级完成。
+
+C++ 代码
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+const int N = 200010,M = 18;
+int a[N];
+int n,m;
+int f[N][M];
+
+int main(){
+    cin>>n;
+    for(int i = 1;i<=n;i++)cin>>a[i];
+
+    for(int j = 0;j<M;j++){
+        for(int i = 1;i+(1<<j)-1<=n;i++)
+            if(!j)f[i][j] = a[i];
+            else f[i][j] = max(f[i][j-1],f[i+(1<<j-1)][j-1]);
+    }
+
+
+    cin>>m;
+    while(m--){
+        int l,r;
+        cin>>l>>r;
+        int len = r-l+1;
+        int k = log(len)/log(2);
+        cout<< max(f[l][k],f[r-(1<<k)+1][k])<<endl;;
+    }
+    return 0;
+}
+
+作者：负壹
+链接：https://www.acwing.com/solution/content/14969/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+const int N = 200010, M = 18;
+
+int n, m;
+int w[N];
+int f[N][M];
+
+void init()
+{
+    for (int j = 0; j < M; j ++ )
+        for (int i = 1; i + (1 << j) - 1 <= n; i ++ )
+            if (!j) f[i][j] = w[i];
+            else f[i][j] = max(f[i][j - 1], f[i + (1 << j - 1)][j - 1]);
+}
+
+int query(int l, int r)
+{
+    int len = r - l + 1;
+    int k = log(len) / log(2);
+
+    return max(f[l][k], f[r - (1 << k) + 1][k]);
+}
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]);
+
+    init();
+
+    scanf("%d", &m);
+    while (m -- )
+    {
+        int l, r;
+        scanf("%d%d", &l, &r);
+        printf("%d\n", query(l, r));
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/205231/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
