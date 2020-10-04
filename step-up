@@ -1,0 +1,2677 @@
+AcWing 2171. EK求最大流    原题链接    中等
+作者：    duoduola ,  2020-07-27 16:19:28 ,  阅读 174
+
+7
+
+
+1
+（就是想来理一理思路。小菜鸡第一次写题解(可能也不算是题解)，之前都只是做一做题的。）
+（语言可能描述的不到位或者不清楚(感觉有些地方说不太清呀~~~,然后也不太会写题解)，错误的地方请大家指出）
+
+存下图，建立反向边，构建残余网络，在残余网络中不断寻找增广路径，维护残余网络，将其累加至答案中，直到找不到增广路径。
+1~n的节点之间的边通过add函数来记录，边的编号从2开始。
+在点s之前新增一条编号为1的边，起点是一个新增的点(编号是多少没有用到，所以也没有管它.jpg)，终点为s（这样是为了写bfs的代码时候方便一些，不用先处理以s为顶点的边，直接从编号为1的这条边开始就好）
+
+代码中有注释~~~
+
+代码如下：
+
+#include<iostream>
+#include<cstring>
+using namespace std;
+const int N=1010,M=20010;
+
+//h[i]存下以点i为起点的边的编号（按输入顺序，存下的是最后一条边的编号）
+//f[i]存下边i的权值，e[i]存下边i的终点，ne[i]存下和边i同起点的上一条边的编号(可以依次找出同起点的所有边)
+//idx用来记录边的编号
+//p,d,pre三个数组在bfs寻找增广路径时使用，来记录当前搜到的边的信息，
+//p[i]表示当前边的编号，d[i]表示走到这条边的路径中最小的边权值(最大的可行流量)，
+//pre[i]表示当前这一条边是从之前的哪一条走过来的(记录的是bfs过程中的相应下标)
+//tot用来记录bfs过程中展开的边的数量，下标为tot的位置是增广路径的最后一条边(其终点为t)
+//n,m,s,t如题，mark用来标记bfs过程中已经到达了的点，防止重复搜索
+int h[N]={0},f[M]={0},e[M]={0},ne[M]={0},idx=2;
+int p[N]={0},d[N]={0},pre[N]={0},tot=0,n=0,m=0,s=0,t=0;
+bool mark[N]={0};
+
+//存下边的信息，同时要存下反向边，构建残余网络
+void add(int& a,int& b,int& c){
+    e[idx]=b;f[idx]=c;ne[idx]=h[a];h[a]=idx;idx++;
+    e[idx]=a;f[idx]=0;ne[idx]=h[b];h[b]=idx;idx++;
+}
+
+//bfs找增广路径，结果记录在p,d,pre三个数组中
+bool bfs(){
+    int l=0;tot=0;//l是左端点，tot相当于右端点(每次重新置为0)
+    memset(mark,0,sizeof(mark));//mark数组赋为false
+    while(l<=tot){  //l<=tot,还要继续展开边
+        //p[l]表示当前这条边的编号，e[p[l]]表示当前这条边的终点，h[e[p[l]]]表示以这一终点为顶点的一条边
+        //通过ne数组不断找到以这一终点为顶点的所有边，for循环中的i就是这些边的编号
+        for(int i=h[e[p[l]]];i;i=ne[i]){    //h数组的初始值为0，当i为0时表示以e[p[l]]为起点的边都搜过了
+            if(!mark[e[i]]&&f[i]){//如果当前边的终点还没有到达过并且当前这条边的权值大于0，就会展开这一条边
+                tot++;//右边界++,并标记上这条边的终点
+                mark[e[i]]=1;
+                //存下这条边，p[tot]存下编号i，
+                //d[tot]存下路径中最小的权值(到达上一条边时最小权值d[l]和当前边i的权值中的最小值)
+                //pre[tot]存下当前这一边是从下标l位置的那条边走过来的
+                p[tot]=i;d[tot]=min(f[i],d[l]);pre[tot]=l;
+                if(e[i]==t)return true;//当前这条边到达了终点，返回true
+            }
+        }
+        l++;// l不要忘记++(因为我就忘了)，继续展开下一条边
+    }
+    return false;//没有找到增广路径辽~
+}
+int main(){
+    std::ios::sync_with_stdio(false);
+    cin>>n>>m>>s>>t;
+    e[1]=s;//添加编号为1的边，其终点为s（边的其他信息没有管它，因为没有用到~~
+    p[0]=1;d[0]=1e9;//bfs的起点是这条编号为1的边，当前最小权值赋成一个较大的值
+    int a=0,b=0,c=0;
+    while(m--){//输入边的信息，存下来
+        cin>>a>>b>>c;
+        add(a,b,c);
+    }
+    int ans=0;
+    while(bfs()){//当前残网络中还可找到增广路径，则累加至ans中，并修改这条路径中正向边和反向边的权值
+        ans+=d[tot];
+        for(int i=tot;i;i=pre[i]){//从tot位置的边开始，沿着增广路径往回走，走到0位置的边(也就是边1时)停止
+            //路径中的每一条边减去d[tot]，其反向边加上d[tot]
+            f[p[i]]-=d[tot];f[p[i]^1]+=d[tot];
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：duoduola
+链接：https://www.acwing.com/solution/content/17161/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1010, M = 20010, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], pre[N];
+bool st[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(st, false, sizeof st);
+    q[0] = S, st[S] = true, d[S] = INF;
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (!st[ver] && f[i])
+            {
+                st[ver] = true;
+                d[ver] = min(d[t], f[i]);
+                pre[ver] = i;
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int EK()
+{
+    int r = 0;
+    while (bfs())
+    {
+        r += d[T];
+        for (int i = T; i != S; i = e[pre[i] ^ 1])
+            f[pre[i]] -= d[T], f[pre[i] ^ 1] += d[T];
+    }
+    return r;
+}
+
+int main()
+{
+    scanf("%d%d%d%d", &n, &m, &S, &T);
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+    }
+
+    printf("%d\n", EK());
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/403258/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 2172. Dinic/ISAP求最大流 - python3    原题链接    中等
+作者：    roon2300 ,  2020-08-11 14:45:43 ,  阅读 103
+
+2
+
+
+1
+C++ 版：
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010, M = 200010, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], nh[N];
+
+inline void add(int a, int b, int c){
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++;
+}
+
+bool bfs(){
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, nh[S] = h[S];
+    int hh = 0, tt = 1;
+    while (hh < tt){
+        int t = q[hh ++];
+        for (int i = h[t]; ~i; i = ne[i]){
+            int v = e[i];
+            if (d[v] == -1 && f[i]){
+                d[v] = d[t] + 1;
+                nh[v] = h[v];   // 可以在开头全copy
+                if (v == T) return true;
+                q[tt ++] = v;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit){
+    if (u == T) return limit;
+    int flow = 0;
+
+    for (int i = nh[u]; ~i && flow < limit; i = ne[i]){   // 1. nh 优化， 2. 增广最大量优化
+        nh[u] = i;  // nh当前可行弧优化
+        int v = e[i];
+        if (d[v] == d[u] + 1 && f[i]){
+            int t = find(v, min(f[i], limit - flow));
+            if (t)  flow += t, f[i] -= t; //, f[i ^ 1] += t;
+            else  d[v] = -1;       // 3. 废点优化
+        }
+    }
+    return flow;
+}
+
+int dinic(){
+    int res = 0, flow;
+    while( bfs() ) while (flow = find(S, INF)) res += flow;
+    return res;
+}
+
+int main(){
+    scanf("%d%d%d%d", &n, &m, &S, &T);
+    memset(h, -1, sizeof h);
+    while (m -- ){
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c), add(b, a, 0);
+    }
+    printf("%d\n", dinic());
+    return 0;
+}
+
+
+python3 版：
+
+N, M, inf = 10010, 200010, float('inf')
+
+h, e, f, ne, idx = [-1] * N, [0] * M, [0] * M, [0] * M, 0
+
+q, d, nh = [0] * N, [-1] * N, [0] * N  # d: dist or level 
+
+def add(a, b, c):
+    global idx
+    e[idx], f[idx], ne[idx], h[a] = b, c, h[a], idx
+    idx += 1
+
+def bfs():
+    """ rebuild nh[] and d[] """
+    global nh, d
+    nh = list(h)        # nh[S] = h[S]
+    d = [-1] * N; d[S] = 0
+
+    q[0] = S; hh, tt = 0, 1
+    while hh < tt:
+        u = q[hh]; hh += 1
+        i = h[u]
+        while i != -1:
+            v = e[i]
+            if d[v] == -1 and f[i]:
+                d[v] = d[u] + 1     #  nh[v] = h[v]
+                if v == T: return True   # T 也是要标d和cur的
+                q[tt] = v; tt += 1
+            i = ne[i]
+
+    return False
+
+def find(u, limit):
+    if u == T: return limit
+    flow = 0
+    i = nh[u]        # 1. 当前(起始可用)弧优化
+    while i != -1 and flow < limit:   # 2. 最大增广量优化
+        nh[u] = i    # 当前弧优化。  进阶指南似乎放的位置效率比较低
+        v = e[i]
+        if d[v] == d[u] + 1 and f[i]:             # 标层级
+            t = find(v, min(f[i], limit - flow))  # 避免无限递归
+            if t: flow += t; f[i] -= t;  # f[i ^ 1] += t  
+            else: d[v] = -1         # 3. 废点优化，本轮bfs里面不再可能是增广路
+        i = ne[i]
+
+    return flow
+
+def dinic():
+    res = 0
+    while bfs():
+        flow = find(S, inf)
+        while flow:
+            res += flow
+            flow = find(S, inf)
+    return res
+
+
+n, m, S, T = map(int, input().split())
+while m:
+    a, b, c = map(int, input().split())
+    add(a, b, c); add(b, a, 0)
+    m -= 1
+print(dinic())
+
+loj #127. 最大流 加强版
+
+
+// luogu-judger-enable-o2
+#include <bits/stdc++.h>
+#define maxn 1300
+#define maxm 120010
+using namespace std;
+struct edge {
+    int u, v, cap;
+} e[maxm];
+struct Dinic {
+    int tp, s, t, dis[maxn], cur[maxn], que[maxn];
+    vector<edge> e;
+    vector<int> v[maxn];
+    void AddEdge(int x, int y, int flw) {
+        e.push_back(edge{ x, y, flw });
+        e.push_back(edge{ y, x, 0 });
+        v[x].push_back(e.size() - 2);
+        // v[y].push_back(e.size()-1);
+    }
+    int bfs() {
+        memset(dis, 0x3f, sizeof dis);
+        int l = 1, r = 1;
+        que[1] = s;
+        dis[s] = 0;
+        while (l <= r) {
+            int p = que[l++], to;
+            for (int i : v[p])
+                if (e[i].cap && dis[to = e[i].v] > 1e9)
+                    dis[to] = dis[p] + 1, que[++r] = to;
+        }
+        return dis[t] < 1e9;
+    }
+    int dfs(int p, int a) {
+        if (p == t || !a)
+            return a;
+        int sf = 0, flw;
+        for (int &i = cur[p], to; i < (int)v[p].size(); ++i) {
+            edge &E = e[v[p][i]];
+            if (dis[to = E.v] == dis[p] + 1 && (flw = dfs(to, min(a, E.cap)))) {
+                E.cap -= flw;
+                e[v[p][i] ^ 1].cap += flw;
+                a -= flw;
+                sf += flw;
+                if (!a)     // 把此处移到for的判断里会有问题。。。
+                    break;
+            }
+        }
+        return sf;
+    }
+    int dinic(int s, int t, int tp = 1) {
+        this->s = s;
+        this->t = t;
+        this->tp = tp;
+        int flw = 0;
+        while (bfs()) {
+            memset(cur, 0, sizeof cur);
+            flw += dfs(s, INT_MAX);
+        }
+        return flw;
+    }
+} sol;
+int n, m, i, s, t, ans;
+int main() {
+    scanf("%d%d%d%d", &n, &m, &s, &t);
+    for (i = 0; i < m; i++) scanf("%d%d%d", &e[i].u, &e[i].v, &e[i].cap);
+    sort(e, e + m, [](edge a, edge b) { return a.cap > b.cap; });
+    for (int tp : { 0, 1 })
+        for (int p = 1 << 30, i = 0; p; p /= 2) {
+            while (i < m && e[i].cap >= p) {
+                if (tp)
+                    sol.v[e[i].v].push_back(i * 2 + 1);
+                else
+                    sol.AddEdge(e[i].u, e[i].v, e[i].cap);
+                i++;
+            }
+            ans += sol.dinic(s, t, tp);
+        }
+    printf("%d\n", ans);
+    return 0;
+}
+
+关于最后的
+
+    for (int tp : { 0, 1 })
+        for (int p = 1 << 30, i = 0; p; p /= 2) {
+参考 论如何用dinic ac 最大流 加强版 里面的解释：
+1. 先不加反向边跑一遍，然后一次性把反向边都加进去，然后再跑一遍
+2. 二进制缩放，只跑大于p的边
+看起来应该是针对数据的专门的优化
+
+作者：roon2300
+链接：https://www.acwing.com/solution/content/18166/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+自己都不知道自己写的是个啥
+反正写完就神奇的过了。。
+数据配图↓↓
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N=10005;
+const int M=200005;
+const int INF=0x3fffffff;
+
+int n,m,S,T;
+int h[N],e[M],ne[M],idx;
+int depth[N],flow[M];
+int q[N],hh,tt;
+
+void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    flow[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+int bfs()
+{
+    memset(depth,0,sizeof depth);
+    depth[S]=1,*q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(flow[i]&&!depth[e[i]])
+            {
+                depth[e[i]]=depth[t]+1;
+                q[++tt]=e[i];
+            }
+    }
+    return depth[T];
+}
+
+int dfs(int u,int T,int s)
+{
+    if(u==T)return s;
+    int f=0;
+    for(int i=h[u];i;i=ne[i])
+        if(flow[i]&&depth[e[i]]==depth[u]+1)
+        {
+            int v=dfs(e[i],T,min(s,flow[i]));
+            flow[(i-1^1)+1]+=v;
+            flow[i]-=v;
+            s-=v,f+=v;
+        }
+    if(!f)depth[u]=-1;
+    return f;
+}
+
+int main()
+{
+    scanf("%d%d%d%d",&n,&m,&S,&T);
+    for(int i=0;i<m;i++)
+    {
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        add(a,b,c),add(b,a,0);
+    }
+    int res=0;
+    while(bfs())res+=dfs(S,T,INF);
+    printf("%d\n",res);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/401964/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010, M = 200010, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T)  return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;  // 当前弧优化
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    scanf("%d%d%d%d", &n, &m, &S, &T);
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+    }
+
+    printf("%d\n", dinic());
+
+    return 0;
+
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/412368/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+AcWing 2175. 飞行员配对方案问题    原题链接    困难
+作者：    IEE_ ,  2020-08-16 23:25:27 ,  阅读 86
+
+1
+
+
+建立源点 S 与 1∼m1∼m 的所有飞行员连容量为 1 的边，将剩下的飞行员向汇点 T 连一条边，再将所给搭配连容量为 1 的边，求 S 至 T 的最大流即可
+
+为了方便，将源点 S 设为 00，T 设为 n+1n+1。
+
+此题代码：
+
+signed main() {
+  cin >> m >> n;
+
+  memset(h, -1, sizeof h);
+  S = 0, T = n + 1;
+  for (int i = 1; i <= m; ++i) add(S, i, 1);
+  for (int i = m + 1; i <= n; ++i) add(i, T, 1);
+  int a, b;
+  while (scanf("%d%d", &a, &b), a != -1 && b != -1) add(a, b, 1);
+
+  cout << dinic() << endl;
+
+  for (int i = 0; i < idx; i += 2) {
+    if (e[i] > m && e[i] <= n && !f[i]) {
+      cout << e[i ^ 1] << ' ' << e[i] << endl;
+    }
+  }
+  return 0;
+}
+
+作者：IEE_
+链接：https://www.acwing.com/solution/content/18579/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 2175. 飞行员配对方案问题
+作者：    垫底抽风 ,  2020-07-24 18:06:23 ,  阅读 74
+
+2
+
+
+匈牙利算法求二分图的最大匹配
+模板题
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+bool read(int &a,int &b)
+{
+    a=b=0;char ch=getchar();
+    while(~ch&&ch!='-'&&(ch<48||ch>57))ch=getchar();
+    if(ch=='-')return false;
+    for(;ch>47&&ch<58;ch=getchar())a=(a<<1)+(a<<3)+(ch^48);
+    while(~ch&&(ch<48||ch>57))ch=getchar();
+    for(;ch>47&&ch<58;ch=getchar())b=(b<<1)+(b<<3)+(ch^48);
+}
+
+const int N=105;
+const int M=10005;
+
+int n1,n2,res;
+int h[N],e[M],ne[M],idx;
+int match[N];
+bool st[N];
+
+void add(int a,int b)
+{
+    e[++idx]=b;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool find(int u)
+{
+    for(int i=h[u];i;i=ne[i])
+        if(!st[e[i]])
+        {
+            st[e[i]]=true;
+            if(!match[e[i]]||find(match[e[i]]))
+            {
+                match[e[i]]=u;
+                return true;
+            }
+        }
+    return false;
+}
+
+int main()
+{
+    read(n1,n2);
+    for(int a,b;read(a,b);add(a,b));
+    for(int i=1;i<=n1;i++)
+    {
+        memset(st,false,sizeof st);
+        if(find(i))res++;
+    }
+    printf("%d\n",res);
+    for(int i=n2;i>n1;i--)
+        if(match[i])
+            printf("%d %d\n",match[i],i);
+    return 0;
+}
+DinicDinic 求二分图的最大匹配
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+bool read(int &a,int &b)
+{
+    a=b=0;char ch=getchar();
+    while(~ch&&ch!='-'&&(ch<48||ch>57))ch=getchar();
+    if(ch=='-')return false;
+    for(;ch>47&&ch<58;ch=getchar())a=(a<<1)+(a<<3)+(ch^48);
+    while(~ch&&(ch<48||ch>57))ch=getchar();
+    for(;ch>47&&ch<58;ch=getchar())b=(b<<1)+(b<<3)+(ch^48);
+    return true;
+}
+
+const int N=205;
+const int M=20405;
+const int INF=0x3fffffff;
+
+int n1,n2,S,T;
+int h[N],e[M],w[M],ne[M],idx=1;
+int d[N],cur[N],q[N],hh,tt;
+
+void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool bfs()
+{
+    memset(d,0,sizeof d);
+    d[S]=1,cur[S]=h[S];
+    *q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!d[e[i]]&&w[i])
+            {
+                d[e[i]]=d[t]+1;
+                cur[e[i]]=h[e[i]];
+                if(e[i]==T)return true;
+                q[++tt]=e[i];
+            }
+    }
+    return false;
+}
+
+int find(int u,int limit)
+{
+    if(u==T)return limit;
+    int flow=0;
+    for(int i=cur[u];i&&flow<limit;i=ne[i])
+    {
+        cur[u]=i;
+        if(d[e[i]]==d[u]+1&&w[i])
+        {
+            int t=find(e[i],min(w[i],limit-flow));
+            if(!t)d[e[i]]=0;
+            w[i]-=t,w[i^1]+=t,flow+=t;
+        }
+    }
+    return flow;
+}
+
+int main()
+{
+    read(n1,n2),S=0,T=n2+1;
+    for(int a,b;read(a,b);add(a,b,1),add(b,a,0));
+    for(int i=1;i<=n1;i++)add(S,i,1),add(i,S,0);
+    for(int i=n1+1;i<=n2;i++)add(i,T,1),add(T,i,0);
+    int maxflow=0;
+    while(bfs())
+        for(int flow;flow=find(S,INF);)
+            maxflow+=flow;
+    printf("%d\n",maxflow);
+    for(int i=h[S];i;i=ne[i])
+        if(!w[i])
+            for(int j=h[e[i]];j;j=ne[j])
+                if(e[j]>n1&&!w[j])
+                {
+                    printf("%d %d\n",e[i],e[j]);
+                    break;
+                }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/402007/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+1
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110, M = 5210, INF = 1e8;
+
+int m, n, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = h[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    scanf("%d%d", &m, &n);
+    S = 0, T = n + 1;
+    memset(h, -1, sizeof h);
+    for (int i = 1; i <= m; i ++ ) add(S, i, 1);
+    for (int i = m + 1; i <= n; i ++ ) add(i, T, 1);
+
+    int a, b;
+    while (cin >> a >> b, a != -1) add(a, b, 1);
+
+    printf("%d\n", dinic());
+    for (int i = 0; i < idx; i += 2)
+        if (e[i] > m && e[i] <= n && !f[i])
+            printf("%d %d\n", e[i ^ 1], e[i]);
+
+    return 0;
+
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/412418/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 2179. 圆桌问题    原题链接    困难
+作者：    whsstory ,  2020-07-24 20:23:33 ,  阅读 114
+
+3
+
+
+特殊的二分图匹配问题。
+
+可以拆点后跑二分图最大匹配。复杂度O(∑ri∑ci(∑ri+∑ci))O(∑ri∑ci(∑ri+∑ci)) ,可能会T 。
+
+也可以直接跑最大流：源点S 向单位ii连容量为riri的边，单位ii向餐桌jj连容量为1的边，餐桌jj向汇点T 连容量为cici的边。这显然是个二分图。用Dinic求解最大流，复杂度为O(nm∑ri+∑ci‾‾‾‾‾‾‾‾‾‾‾√)(注意本题中边数为O(nm∑ri+∑ci)(注意本题中边数为nmnm)
+
+//我的Dinic板子肯定没有y总的好，你们可以看看y总的
+const ll INF=1ll<<50;
+#define MAXN 200011
+struct edge
+{
+    ll v,w,nxt;
+}e[MAXN<<1|1];
+ll cnt=1,last[MAXN],cur[MAXN];
+void add_directed_edge(ll u,ll v,ll w)
+{
+    e[++cnt].v=v,e[cnt].w=w;
+    e[cnt].nxt=last[u],last[u]=cnt;
+}
+void adde(ll u,ll v,ll w){add_directed_edge(u,v,w),add_directed_edge(v,u,0);}
+
+ll dep[MAXN];
+bool bfs(ll s,ll t,ll n)
+{
+    for(ll i=1;i<=n;++i)dep[i]=0,cur[i]=last[i];
+    std::queue<ll>q;
+    dep[s]=1,q.push(s);
+    while(q.size())
+    {
+        ll u=q.front();q.pop();
+        for(ll i=last[u];i;i=e[i].nxt)
+        {
+            ll v=e[i].v;
+            if(!dep[v]&&e[i].w>0)dep[v]=dep[u]+1,q.push(v);
+        }
+    }
+    return dep[t];
+}
+ll ex_flow(ll u,ll t,ll flow=INF)
+{
+    if(u==t)return flow;
+    ll f=0;
+    for(ll &i=cur[u];i;i=e[i].nxt)
+    {
+        ll v=e[i].v;
+        if(dep[v]==dep[u]+1&&e[i].w>0)
+        {
+            ll tmp=ex_flow(v,t,min(e[i].w,flow-f));
+            e[i].w-=tmp,e[i^1].w+=tmp;
+            f+=tmp;
+            if(f==flow)return f;
+        }
+    }
+    return f;
+}
+ll Dinic(ll s,ll t,ll n)
+{
+    ll ans=0;
+    while(bfs(s,t,n))ans+=ex_flow(s,t);
+    return ans;
+}
+ll a[MAXN],b[MAXN];
+int main()
+{
+    ll m=read(),n=read(),s=m+n+1,t=m+n+2,sumr=0;
+    for(ll i=1;i<=m;++i)a[i]=read(),sumr+=a[i],adde(s,i,a[i]);
+    for(ll i=m+1;i<=m+n;++i)b[i]=read(),adde(i,t,b[i]);
+    for(ll i=1;i<=m;++i)
+        for(ll j=m+1;j<=m+n;++j)adde(i,j,1);
+    if(Dinic(s,t,t)<sumr)return puts("0"),0;
+    puts("1");
+    for(ll u=1;u<=m;++u)
+    {
+        for(ll i=last[u];i;i=e[i].nxt)
+            if(e[i].v>m&&e[i].v<=m+n&&!e[i].w)printf("%lld ",e[i].v-m);
+        puts("");
+    }
+
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/17003/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+
+using namespace std;
+
+const int N = 430, M = (150 * 270 + N) * 2, INF = 1e8;
+
+int m, n, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    scanf("%d%d", &m, &n);
+    S = 0, T = m + n + 1;
+    memset(h, -1, sizeof h);
+
+    int tot = 0;
+    for (int i = 1; i <= m; i ++ )
+    {
+        int c;
+        scanf("%d", &c);
+        add(S, i, c);
+        tot += c;
+    }
+    for (int i = 1; i <= n; i ++ )
+    {
+        int c;
+        scanf("%d", &c);
+        add(m + i, T, c);
+    }
+    for (int i = 1; i <= m; i ++ )
+        for (int j = 1; j <= n; j ++ )
+            add(i, m + j, 1);
+
+    if (dinic() != tot) puts("0");
+    else
+    {
+        puts("1");
+        for (int i = 1; i <= m; i ++ )
+        {
+            for (int j = h[i]; ~j; j = ne[j])
+                if (e[j] > m && e[j] <= m + n && !f[j])
+                    printf("%d ", e[j] - m);
+            puts("");
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/412450/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+您们以前都写过？？
+只有我一个人是第一次学第一次写是嘛。。。
+
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+const int N=425,M=81845;
+const int INF=0x3ffffff;
+
+int n,m;
+int S,T,sum,res;
+int h[N],e[M],ne[M],idx;
+int depth[N],w[M];
+int q[N],hh,tt;
+
+void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool bfs()
+{
+    memset(depth,0,sizeof depth);
+    depth[S]=1,*q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!depth[e[i]]&&w[i])
+            {
+                depth[e[i]]=depth[t]+1;
+                q[++tt]=e[i];
+                if(e[i]==T)return true;
+            }
+    }
+    return false;
+}
+
+int dfs(int u,int s)
+{
+    if(u==T)return s;
+    int f=0;
+    for(int i=h[u];i;i=ne[i])
+        if(w[i]&&depth[e[i]]==depth[u]+1)
+        {
+            int v=dfs(e[i],min(s,w[i]));
+            w[(i-1^1)+1]+=v;
+            w[i]-=v;
+            s-=v,f+=v;
+        }
+    if(!f)depth[u]=-1;
+    return f;
+}
+
+int main()
+{
+    scanf("%d%d",&n,&m);
+    S=0,T=m+n+1;
+    for(int i=1;i<=n;i++)
+    {
+        int R;
+        scanf("%d",&R);
+        sum+=R;
+        add(S,i,R);
+        add(i,S,0);
+    }
+    for(int i=1;i<=m;i++)
+    {
+        int C;
+        scanf("%d",&C);
+        add(i+n,T,C);
+        add(T,i+n,0);
+    }
+    for(int i=1;i<=n;i++)
+        for(int j=1;j<=m;j++)
+        {
+            add(i,j+n,1);
+            add(j+n,i,0);
+        }
+    while(bfs())res+=dfs(S,INF);
+    if(res^sum)return putchar(0x30),0;
+    putchar(0x31);
+    for(int u=1;putchar(10),u<=n;u++)
+        for(int i=h[u];i;i=ne[i])
+            if(e[i]!=S&&!w[i])
+                printf("%d ",e[i]-n);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/402049/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 2188. 无源汇上下界可行流    原题链接    中等
+作者：    whsstory ,  2020-07-25 21:38:39 ,  阅读 209
+
+9
+
+
+1
+更好的阅读体验：My blog
+
+浅谈上下界网络流
+参考资料：liu_runda’s blog,red’s blog
+
+PS:左侧可以跳转
+
+无源汇有上下界可行流(循环流)
+给一个网络，求一个流满足：每条边ii流量在[low(i),upp(i)][low(i),upp(i)]之间，每个点uu都要满足流量守恒(即∑toi=uf(i)=∑fromi=uf(i)∑toi=uf(i)=∑fromi=uf(i))
+
+[HTML_REMOVED]
+
+可行流算法的核心是将一个不满足流量守恒的初始流调整成满足流量守恒的流. -liu_runda
+
+初始流即一开始将每条边流量设为low(i)low(i)的流。显然这个流不一定满足流量守恒。我们要通过调整（再加上一个附加流）将其变为可行流
+
+记a(u)=∑toi=uf(i)−∑fromi=uf(i)a(u)=∑toi=uf(i)−∑fromi=uf(i),即初始流中，点uu的流入量-流出量。
+
+在附加流中，让点uu的流入量-流出量=−a(u)−a(u),就能保证流量守恒。
+
+当−a(u)<0 (a(u)>0)−a(u)<0 (a(u)>0),需要让uu的流入量增加a(u)a(u).这可以通过新建超级源点SS,并增加S→u,S→u,容量为a(u)a(u)的边做到。
+当−a(u)>0 (a(u)<0)−a(u)>0 (a(u)<0)需要让uu的流出量增加a(u)a(u).这可以通过新建超级汇点TT,并增加u→T,u→T,容量为−a(u)−a(u)的边做到。
+另外，对于原图中的边ii,还有upp(i)−low(i)upp(i)−low(i)的容量，也要加上。
+
+与S,TS,T相邻的边都满流 加上附加流后每个点都满足流量守恒
+
+因此，跑一下SS到TT的最大流，若与S,TS,T相邻的边都满流，则存在可行流。每条边的具体流量即为low(i)+ilow(i)+i在附加流中的流量（即反边容量）。
+
+ll Dinic(ll s,ll t,ll n){....}
+//略去了Dinic板子
+ll a[MAXN],low[MAXM],upp[MAXM];
+int main()
+{
+    ll n=read(),m=read(),S=n+1,T=S+1;
+    for(ll i=1;i<=m;++i)
+    {
+        ll u=read(),v=read();low[i]=read(),upp[i]=read();
+        a[u]-=low[i],a[v]+=low[i];adde(u,v,upp[i]-low[i]);
+    }
+    ll sum=0;
+    for(ll i=1;i<=n;++i)
+        if(a[i]>0)sum+=a[i],adde(S,i,a[i]);
+        else if(a[i]<0)adde(i,T,-a[i]);
+    ll f=Dinic(S,T,T);
+    if(f<sum)return puts("NO")&0;
+    puts("YES");
+    for(ll i=1;i<=m;++i)printf("%lld\n",e[i<<1|1].w+low[i]);//e[i<<1|1].w表示反边容量，即附加流中的流量
+    return 0;
+}
+有源汇有上下界最大流
+在有源汇的网络流图中，源点rSrS、汇点rTrT不满足流量守恒，无法直接跑循环流。
+
+但只要加一条rT→rSrT→rS,下界为0上界为正无穷的边，就能保证流量守恒。跑一下超源SS到TT的最大流，得到可行流，可行流中rT→rSrT→rS的流量即为rS→rTrS→rT的真正流量，记为f1f1.
+
+删掉rT→rSrT→rS的边，再跑一次rS→rTrS→rT的最大流f2f2,答案即为f1+f2f1+f2
+My code
+
+有源汇有上下界最小流
+基本与前者类似，用f1f1减掉rTrT流向rSrS的最大流f3f3(即回退这些流)即为答案。
+My code
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/17067/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 210, M = (10200 + N) * 2, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], l[M], ne[M], idx;
+int q[N], d[N], cur[N], A[N];
+
+void add(int a, int b, int c, int d)
+{
+    e[idx] = b, f[idx] = d - c, l[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    S = 0, T = n + 1;
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, c, d;
+        scanf("%d%d%d%d", &a, &b, &c, &d);
+        add(a, b, c, d);
+        A[a] -= c, A[b] += c;
+    }
+
+    int tot = 0;
+    for (int i = 1; i <= n; i ++ )
+        if (A[i] > 0) add(S, i, 0, A[i]), tot += A[i];
+        else if (A[i] < 0) add(i, T, 0, -A[i]);
+
+    if (dinic() != tot) puts("NO");
+    else
+    {
+        puts("YES");
+        for (int i = 0; i < m * 2; i += 2)
+            printf("%d\n", f[i ^ 1] + l[i]);
+    }
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/412492/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+写了个玄学dinic。。
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <queue>
+
+using namespace std;
+
+const int N=210;
+const int M=60210;
+const int INF=0x3fffffff;
+
+int n,m,S,T;
+int sum,flow;
+int h[N],e[M],w[M],ne[M],idx;
+int up[M],down[M];
+int in[N],out[N];
+int q[N],hh,tt;
+int depth[N];
+
+inline void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool bfs()
+{
+    memset(depth,0,sizeof depth);
+    depth[S]=1,*q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!depth[e[i]]&&w[i]>0)
+            {
+                depth[e[i]]=depth[t]+1;
+                q[++tt]=e[i];
+            }
+    }
+    return depth[T]>0;
+}
+
+int dfs(int u,int s)
+{
+    if(u==T||s<=0)return s;
+    int f=s;
+    for(int i=h[u];i;i=ne[i])
+        if(depth[e[i]]==depth[u]+1&&w[i]>0)
+        {
+            int v=dfs(e[i],min(f,w[i]));
+            if(v<=0)depth[e[i]]=-2;
+            w[(i-1^1)+1]+=v;
+            w[i]-=v;
+            f-=v;
+            if(f<=0)break;
+        }
+    return s-f;
+}
+
+int main()
+{
+    scanf("%d%d",&n,&m);
+    S=0,T=n+1;
+    for(int i=1;i<=m;i++)
+    {
+        int u,v;
+        scanf("%d%d%d%d",&u,&v,down+i,up+i);
+        in[v]+=down[i],out[u]+=down[i];
+        add(u,v,up[i]-down[i]);
+        add(v,u,0);
+    }
+    for(int i=1;i<=n;i++)
+        if(in[i]>=out[i])
+        {
+            add(S,i,in[i]-out[i]);
+            add(i,S,0);
+            sum+=in[i]-out[i];
+        }
+        else
+        {
+            add(i,T,out[i]-in[i]);
+            add(T,i,0);
+        }
+    while(bfs())flow+=dfs(S,INF);
+    if(flow!=sum)
+    {
+        puts("NO");
+        return 0;
+    }
+    puts("YES");
+    for(int i=1;i<=m;i++)printf("%d\n",down[i]+w[i<<1]);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/402171/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+cWing 2189. 有源汇上下界最大流    原题链接    中等
+作者：    stoYZMorz ,  2020-08-03 11:46:41 ,  阅读 93
+
+1
+
+
+算法1
+(dinic)
+前面的思路大家阔以看一下无源上下界可行流
+这里说一下不太好理解的部分
+第一次跑完最大流之后求得的是流满下界的流
+那么图里还剩许多s到t的自由流。
+所以剩下的把st和ed删掉。把与st和ed相连的边也删掉。
+然后在剩下的图上跑一次从s到t的最大流即可。
+那么最终答案就是流满下界的流+残余的自由流
+
+时间复杂度
+参考文献
+https://blog.csdn.net/Hanks_o/article/details/77984623
+
+C++ 代码
+//代码直接cv y总的了,y总的代码总是很好理解
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 210, M = (N + 10000) * 2, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N], A[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    int s, t;
+    scanf("%d%d%d%d", &n, &m, &s, &t);
+    S = 0, T = n + 1;
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b, c, d;
+        scanf("%d%d%d%d", &a, &b, &c, &d);
+        add(a, b, d - c);
+        A[a] -= c, A[b] += c;
+    }
+
+    int tot = 0;
+    for (int i = 1; i <= n; i ++ )
+        if (A[i] > 0) add(S, i, A[i]), tot += A[i];
+        else if (A[i] < 0) add(i, T, -A[i]);
+
+    add(t, s, INF);
+    if (dinic() < tot) puts("No Solution");
+    else
+    {
+        int res = f[idx - 1];
+        S = s, T = t;
+        f[idx - 1] = f[idx - 2] = 0;
+        printf("%d\n", res + dinic());
+    }
+
+    return 0;
+}
+
+作者：stoYZMorz
+链接：https://www.acwing.com/solution/content/17634/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+2
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 210, M = (N + 10000) * 2, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N], A[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    int s, t;
+    scanf("%d%d%d%d", &n, &m, &s, &t);
+    S = 0, T = n + 1;
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b, c, d;
+        scanf("%d%d%d%d", &a, &b, &c, &d);
+        add(a, b, d - c);
+        A[a] -= c, A[b] += c;
+    }
+
+    int tot = 0;
+    for (int i = 1; i <= n; i ++ )
+        if (A[i] > 0) add(S, i, A[i]), tot += A[i];
+        else if (A[i] < 0) add(i, T, -A[i]);
+
+    add(t, s, INF);
+    if (dinic() < tot) puts("No Solution");
+    else
+    {
+        int res = f[idx - 1];
+        S = s, T = t;
+        f[idx - 1] = f[idx - 2] = 0;
+        printf("%d\n", res + dinic());
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/413441/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N=205;
+const int M=20405;
+const int INF=0x3fffffff;
+
+int n,m,S,T,sum;
+int h[N],e[M],w[M],ne[M],idx=1;
+int d[N],cur[N],A[N];
+int q[N],hh,tt;
+
+void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool bfs()
+{
+    memset(d,0,sizeof d);
+    d[S]=1,cur[S]=h[S];
+    *q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!d[e[i]]&&w[i])
+            {
+                d[e[i]]=d[t]+1;
+                cur[e[i]]=h[e[i]];
+                if(e[i]==T)return true;
+                q[++tt]=e[i];
+            }
+    }
+    return false;
+}
+
+int find(int u,int limit)
+{
+    if(u==T)return limit;
+    int flow=0;
+    for(int i=cur[u];i&&flow<limit;i=ne[i])
+    {
+        cur[u]=i;
+        if(d[e[i]]==d[u]+1&&w[i])
+        {
+            int t=find(e[i],min(w[i],limit-flow));
+            if(!t)d[e[i]]=0;
+            w[i]-=t,w[i^1]+=t,flow+=t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int maxflow=0,flow;
+    while(bfs())while(flow=find(S,INF))maxflow+=flow;
+    return maxflow;
+}
+
+int main()
+{
+    int s,t;
+    scanf("%d%d%d%d",&n,&m,&s,&t);
+    S=0,T=n+1;
+    for(int i=0;i<m;i++)
+    {
+        int a,b,c,d;
+        scanf("%d%d%d%d",&a,&b,&c,&d);
+        add(a,b,d-c),add(b,a,0);
+        A[a]-=c,A[b]+=c;
+    }
+    for(int i=1;i<=n;i++)
+        if(A[i]>0)add(S,i,A[i]),add(i,S,0),sum+=A[i];
+        else if(A[i]<0)add(i,T,-A[i]),add(T,i,0);
+    add(t,s,INF),add(s,t,0);
+    if(dinic()!=sum)puts("No Solution");
+    else
+    {
+        int flow=w[idx];
+        w[idx]=w[idx-1]=0;
+        S=s,T=t;
+        printf("%d\n",flow+dinic());
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/418575/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+'''
+转换成有源点，有汇点，流量上下界约束的最小流模型
+用Dinic算法求解即可
+'''
+INF = 0x7fffffffffffffff
+from collections import deque
+
+class FortdFulkerson:
+    # 输入图中所有边列表[(from1, to1, weight1), (form2, to2, weight2), ......]
+    # 边可以有重边和自环边
+    # souece_node 和 end_node 分别为源点和汇点
+    # 所有节点从1开始连续编号, max_node_num是最大节点数，max_edge_nums是最大边数
+    def __init__(self, edges, source_node, end_node, max_node_num, max_edge_num):
+        self.edges = edges[::]
+        self.source_node = source_node
+        self.end_node = end_node
+        self.max_edge_num = max_edge_num
+        self.max_node_num = max_node_num
+
+    #返回整个图的最大流和每条边的流量以及容量，(max_flow, [(from1, to1, flow1, weight1), (from1, to1, flow1, weight1), ......])
+    def Dinic(self, rev_edge_w = None):                 # rev_edge_w是反向边边权，默认都是0
+        e = [-1] * (self.max_edge_num*2 + 1)            # e[idx]表示编号为idx残量图边的终点, idx//2 就是残量图边对应的原图边的编号
+        f = [-1] * (self.max_edge_num*2 + 1)            # f[idx]表示编号为idx的残量图边的流量
+        ne = [-1] * (self.max_edge_num*2 + 1)           # ne[idx]表示根编号为idx的边同一个起点的下一条边的编号
+        h = [-1] * (self.max_node_num + 1)              # h[a]表示节点a为起点的所有边的链表头对应的边的编号
+        dis = [-1] * (self.max_node_num + 1)            # dis[a]表示点a到源点的距离，用于记录分层图信息
+        cur = [-1] * (self.max_node_num + 1)            # cur[a]表示节点a在dfs搜索中第一次开始搜索的边的下标，也称当前弧，用于优化dfs速度
+        orig_flow = [0] * (self.max_edge_num + 1)       # 原图中有向边的流量
+
+        idx = 0
+        for i, (a, b, w) in enumerate(self.edges):
+            e[idx], f[idx], ne[idx], h[a] = b, w, h[a], idx
+            idx += 1
+            e[idx], f[idx], ne[idx], h[b] = a, 0, h[b], idx
+            if rev_edge_w is not None:
+                f[idx] = rev_edge_w[i]
+
+            idx += 1
+
+        # bfs搜索有没有增广路
+        def bfs() -> bool:
+            for i in range(self.max_node_num + 1):
+                dis[i] = -1
+
+            que = deque()
+            que.append(self.source_node)
+            dis[self.source_node] = 0
+            cur[self.source_node] = h[self.source_node]
+
+            while len(que) > 0:
+                cur_node = que.popleft()
+                idx = h[cur_node]
+                while idx != -1:
+                    next_node = e[idx]
+                    if dis[next_node] == -1 and f[idx] > 0:
+                        dis[next_node] = dis[cur_node] + 1
+                        cur[next_node] = h[next_node]
+                        if next_node == self.end_node:
+                            return True
+
+                        que.append(next_node)
+
+                    idx = ne[idx]
+
+            return False
+
+
+        # dfs查找增广路, 返回当前残量图上node节点能流入汇点的不超过limit的最大流量有多事少
+        def dfs(node, limit) -> int:
+            if node == self.end_node:
+                return limit
+
+            flow = 0
+            idx = cur[node]     # 从节点的当前弧开始搜索下一个点
+            while idx != -1 and flow < limit:
+                # 当前弧优化，记录每一个节点最后走的一条边，只要limit还没有减成0，已经搜过的边的终点
+                # 能够汇入汇点的流量就已经全部用完了，另外一条路径到同一个点时候没必要重复搜索已经不会
+                # 再提供流量贡献的邻接点
+                cur[node] = idx
+
+                next_node = e[idx]
+                if dis[next_node] == dis[node]+1 and f[idx] > 0:
+                    t = dfs(next_node, min(f[idx], limit - flow))
+                    if t == 0:
+                        # 已经无法提供流量的废点闪删除掉，不再参与搜索
+                        dis[next_node] = -1
+
+                    # 更新残量图边的流量
+                    f[idx], f[idx^1], flow = f[idx]-t, f[idx^1]+t, flow+t
+
+                    # 更新原图边的流量
+                    if self.edges[idx>>1][0] == node:
+                        orig_flow[idx>>1] += t
+                    else:
+                        orig_flow[idx>>1] -= t
+
+                idx = ne[idx]
+
+            return flow
+
+        max_flow = 0
+        while bfs():
+            # 只要还有增广路，就dfs把增广路都找到，把增广路上的流量加到可行流上
+            max_flow += dfs(self.source_node, INF)
+
+        return max_flow, [(self.edges[i][0], self.edges[i][1], orig_flow[i], self.edges[i][2]) for i in range(len(self.edges))]
+
+from collections import Counter
+n, m, S, T = map(int, input().split())
+SS, TT = n+1, n+2
+edges = []
+L = []
+sum1, sum2 = Counter(), Counter()
+for _ in range(m):
+    a, b, l, u = map(int, input().split())
+    edges.append((a, b, u-l))
+    L.append(l)
+    sum1[b] += l
+    sum2[a] += l
+
+# T和S间建立一条虚拟边
+edges.append((T, S, INF))
+sum1[S] += 0
+sum2[T] += 0
+
+for node in range(1, n+1):
+    v1 = 0 if node not in sum1 else sum1[node]
+    v2 = 0 if node not in sum2 else sum2[node]
+    if v1 > v2:
+        edges.append((SS, node, v1-v2))
+    else:
+        edges.append((node, TT, v2-v1))
+
+algo = FortdFulkerson(edges, SS, TT, max_node_num=n+2, max_edge_num=len(edges))
+ans = algo.Dinic()
+
+F1 = 0
+# 验证满流
+flag = True
+for a, b, f, w in ans[1]:
+    if a == SS and f != w:
+        flag = False
+        break
+
+    if w == INF:
+        F1 = f
+
+if not flag:
+    print('No Solution')
+
+else:
+    # 再构建第二轮的图，求S到T的最大流，最后叠加结果
+    e = []
+    rev_w = []
+    for a, b, f, w in ans[1]:
+        if a >= 1 and a <= n and b >= 1 and b <= n and w != INF and w-f > 0:
+            e.append((a, b, w-f))
+            rev_w.append(f)     # 反向边的边权值
+    algo = FortdFulkerson(e, T, S, max_node_num=n, max_edge_num=len(e))
+    ans = algo.Dinic(rev_w)
+    F2 = ans[0]
+    ans = F1 - F2
+
+    print(ans)
+
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21155/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 50010, M = (N + 125003) * 2, INF = 2147483647;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N], A[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    int s, t;
+    scanf("%d%d%d%d", &n, &m, &s, &t);
+    S = 0, T = n + 1;
+    memset(h, -1, sizeof h);
+    while (m -- )
+    {
+        int a, b, c, d;
+        scanf("%d%d%d%d", &a, &b, &c, &d);
+        add(a, b, d - c);
+        A[a] -= c, A[b] += c;
+    }
+
+    int tot = 0;
+    for (int i = 1; i <= n; i ++ )
+        if (A[i] > 0) add(S, i, A[i]), tot += A[i];
+        else if (A[i] < 0) add(i, T, -A[i]);
+
+    add(t, s, INF);
+
+    if (dinic() < tot) puts("No Solution");
+    else
+    {
+        int res = f[idx - 1];
+        S = t, T = s;
+        f[idx - 1] = f[idx - 2] = 0;
+        printf("%d\n", res - dinic());
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/413437/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+新建超级源点SS,向所有源点连容量为+∞+∞的边即可。汇点同理。问题即转化为普通最大流问题。
+
+ll Dinic(ll s,ll t,ll n)
+{
+    ll res=0;
+    while(bfs(s,t,n))res+=ex_flow(s,t);
+    return res;
+}
+int main()
+{
+    ll n=read(),m=read(),sc=read(),tc=read(),S=n+1,T=n+2;
+    for(ll i=1;i<=sc;++i)adde(S,read(),INF);
+    for(ll i=1;i<=tc;++i)adde(read(),T,INF);
+    while(m--)
+    {
+        ll u=read(),v=read(),w=read();
+        adde(u,v,w);
+    }
+    printf("%lld",Dinic(S,T,T));
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/17483/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+1
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010, M = (100000 + N) * 2, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+int main()
+{
+    int sc, tc;
+    scanf("%d%d%d%d", &n, &m, &sc, &tc);
+    S = 0, T = n + 1;
+    memset(h, -1, sizeof h);
+    while (sc -- )
+    {
+        int x;
+        scanf("%d", &x);
+        add(S, x, INF);
+    }
+    while (tc -- )
+    {
+        int x;
+        scanf("%d", &x);
+        add(x, T, INF);
+    }
+
+    while (m -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+    }
+
+    printf("%d\n", dinic());
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/413457/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N=10005;
+const int M=220005;
+const int INF=0x3fffffff;
+
+int n,m,S,T;
+int h[N],e[M],w[M],ne[M],idx=1;
+int d[N],cur[N],q[N],hh,tt;
+
+void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool bfs()
+{
+    memset(d,0,sizeof d);
+    d[S]=1,cur[S]=h[S];
+    *q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!d[e[i]]&&w[i])
+            {
+                d[e[i]]=d[t]+1;
+                cur[e[i]]=h[e[i]];
+                if(e[i]==T)return true;
+                q[++tt]=e[i];
+            }
+    }
+    return false;
+}
+
+int find(int u,int limit)
+{
+    if(u==T)return limit;
+    int flow=0;
+    for(int i=cur[u];i&&flow<limit;i=ne[i])
+    {
+        cur[u]=i;
+        if(d[e[i]]==d[u]+1&&w[i])
+        {
+            int t=find(e[i],min(w[i],limit-flow));
+            if(!t)d[e[i]]=0;
+            w[i]-=t,w[i^1]+=t,flow+=t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int maxflow=0,flow;
+    while(bfs())while(flow=find(S,INF))maxflow+=flow;
+    return maxflow;
+}
+
+int main()
+{
+    int sc,tc;
+    scanf("%d%d%d%d",&n,&m,&sc,&tc);
+    S=0,T=n+1;
+    for(int x;sc--;)
+    {
+        scanf("%d",&x);
+        add(S,x,INF);
+        add(x,S,0);
+    }
+    for(int x;tc--;)
+    {
+        scanf("%d",&x);
+        add(x,T,INF);
+        add(T,x,0);
+    }
+    for(int i=0;i<m;i++)
+    {
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        add(a,b,c),add(b,a,0);
+    }
+    printf("%d\n",dinic());
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/418593/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 2236. 伊基的故事 I - 道路重建    原题链接    中等
+作者：    皓首不倦 ,  2020-09-22 15:58:19 ,  阅读 23
+
+0
+
+
+
+
+'''
+查找流量图的关键边，输出关键边的数量即可
+'''
+
+
+from typing import List
+from collections import deque
+
+class FortdFulkerson:
+    # 输入图中所有边列表[(from1, to1, weight1), (form2, to2, weight2), ......]
+    # 边可以有重边和自环边
+    # souece_node 和 end_node 分别为源点和汇点
+    # 所有节点从1开始连续编号, max_node_num是最大节点数，max_edge_nums是最大边数
+    def __init__(self, edges, source_node, end_node, max_node_num, max_edge_num):
+        self.edges = edges[::]
+        self.source_node = source_node
+        self.end_node = end_node
+        self.max_edge_num = max_edge_num
+        self.max_node_num = max_node_num
+
+    # 获取关键路径的标号列表，标号从0开始编号
+    def getKeyEdges(self):
+        e = [-1] * (self.max_edge_num * 2 + 1)  # e[idx]表示编号为idx残量图边的终点, idx//2 就是残量图边对应的原图边的编号
+        f = [-1] * (self.max_edge_num * 2 + 1)  # f[idx]表示编号为idx的残量图边的流量
+        ne = [-1] * (self.max_edge_num * 2 + 1)  # ne[idx]表示根编号为idx的边同一个起点的下一条边的编号
+        h = [-1] * (self.max_node_num + 1)  # h[a]表示节点a为起点的所有边的链表头对应的边的编号
+        dis = [-1] * (self.max_node_num + 1)  # dis[a]表示点a到源点的距离，用于记录分层图信息
+        cur = [-1] * (self.max_node_num + 1)  # cur[a]表示节点a在dfs搜索中第一次开始搜索的边的下标，也称当前弧，用于优化dfs速度
+        orig_flow = [0] * (self.max_edge_num + 1)  # 原图中有向边的流量
+
+        idx = 0
+        for a, b, w in self.edges:
+            e[idx], f[idx], ne[idx], h[a] = b, w, h[a], idx
+            idx += 1
+            e[idx], f[idx], ne[idx], h[b] = a, 0, h[b], idx
+            idx += 1
+
+        # bfs搜索有没有增广路
+        def bfs() -> bool:
+            for i in range(self.max_node_num + 1):
+                dis[i] = -1
+
+            que = deque()
+            que.append(self.source_node)
+            dis[self.source_node] = 0
+            cur[self.source_node] = h[self.source_node]
+
+            while len(que) > 0:
+                cur_node = que.popleft()
+                idx = h[cur_node]
+                while idx != -1:
+                    next_node = e[idx]
+                    if dis[next_node] == -1 and f[idx] > 0:
+                        dis[next_node] = dis[cur_node] + 1
+                        cur[next_node] = h[next_node]
+                        if next_node == self.end_node:
+                            return True
+
+                        que.append(next_node)
+
+                    idx = ne[idx]
+
+            return False
+
+        # dfs查找增广路, 返回当前残量图上node节点能流入汇点的不超过limit的最大流量有多事少
+        def dfs(node, limit) -> int:
+            if node == self.end_node:
+                return limit
+
+            flow = 0
+            idx = cur[node]  # 从节点的当前弧开始搜索下一个点
+            while idx != -1 and flow < limit:
+                # 当前弧优化，记录每一个节点最后走的一条边，只要limit还没有减成0，已经搜过的边的终点
+                # 能够汇入汇点的流量就已经全部用完了，另外一条路径到同一个点时候没必要重复搜索已经不会
+                # 再提供流量贡献的邻接点
+                cur[node] = idx
+
+                next_node = e[idx]
+                if dis[next_node] == dis[node] + 1 and f[idx] > 0:
+                    t = dfs(next_node, min(f[idx], limit - flow))
+                    if t == 0:
+                        # 已经无法提供流量的废点闪删除掉，不再参与搜索
+                        dis[next_node] = -1
+
+                    # 更新残量图边的流量
+                    f[idx], f[idx ^ 1], flow = f[idx] - t, f[idx ^ 1] + t, flow + t
+
+                    # 更新原图边的流量
+                    if self.edges[idx >> 1][0] == node:
+                        orig_flow[idx >> 1] += t
+                    else:
+                        orig_flow[idx >> 1] -= t
+
+                idx = ne[idx]
+
+            return flow
+
+
+        while bfs():
+            # 只要还有增广路，就dfs把增广路都找到，把增广路上的流量加到可行流上
+            dfs(self.source_node, 0x7fffffff)
+
+        # 筛选满流的边
+        candi_e = []
+        for i in range(len(self.edges)):
+            if self.edges[i][2] == orig_flow[i]:
+                candi_e.append(i)
+
+        s_reachable = set() # S能够到的点
+        t_reachable = set() # 能够到T的点
+
+        # 从S和T分别正向和反向搜索能够到的点
+        def travel(cur, visit):
+            visit[cur] = 1
+            s_reachable.add(cur)
+
+            idx = h[cur]
+            while idx != -1:
+                next_node = e[idx]
+                if visit[next_node] == 0 and f[idx] > 0:
+                    travel(next_node, visit)
+
+                idx = ne[idx]
+
+        def rev_travle(cur, visit):
+            visit[cur] = 1
+            t_reachable.add(cur)
+
+            idx = h[cur]
+            while idx != -1:
+                next_node = e[idx]
+                if visit[next_node] == 0 and f[idx] != self.edges[idx>>1][2]:
+                    # 方向边没有满流，等价于正向边还有流量可以用，next_node就可以沿着正向边到cur
+                    rev_travle(next_node, visit)
+
+                idx = ne[idx]
+
+        travel(self.source_node, [0] * (self.max_node_num + 1))
+        rev_travle(self.end_node, [0] * (self.max_node_num + 1))
+
+        ans = []
+        for edge_idx in candi_e:
+            a, b, _ = self.edges[edge_idx]
+            if a in s_reachable and b in t_reachable:
+                ans.append(edge_idx)
+        return ans
+
+
+n, m = map(int, input().split())
+e = []
+for _ in range(m):
+    a, b, w = map(int, input().split())
+    a, b = a + 1, b + 1
+    e.append((a, b, w))
+
+algo = FortdFulkerson(e, 1, n, max_node_num=n, max_edge_num=len(e))
+print(len(algo.getKeyEdges()))
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21165/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N=505;
+const int M=10005;
+const int INF=0x3fffffff;
+
+int n,m,S,T,ans;
+int h[N],e[M],w[M],ne[M],idx=1;
+int d[N],cur[N],q[N],hh,tt;
+bool vis_s[N],vis_t[N];
+
+void add(int a,int b,int c)
+{
+    e[++idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx;
+}
+
+bool bfs()
+{
+    memset(d,0,sizeof d);
+    d[S]=1,cur[S]=h[S];
+    *q=S,hh=tt=0;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+            if(!d[e[i]]&&w[i])
+            {
+                d[e[i]]=d[t]+1;
+                cur[e[i]]=h[e[i]];
+                if(e[i]==T)return true;
+                q[++tt]=e[i];
+            }
+    }
+    return false;
+}
+
+int find(int u,int limit)
+{
+    if(u==T)return limit;
+    int flow=0;
+    for(int i=cur[u];i&&flow<limit;i=ne[i])
+    {
+        cur[u]=i;
+        if(d[e[i]]==d[u]+1&&w[i])
+        {
+            int t=find(e[i],min(w[i],limit-flow));
+            if(!t)d[e[i]]=0;
+            w[i]-=t,w[i^1]+=t,flow+=t;
+        }
+    }
+    return flow;
+}
+
+void dfs(int u,int type,bool vis[])
+{
+    vis[u]=true;
+    for(int i=h[u];i;i=ne[i])
+        if(!vis[e[i]]&&w[i^type])
+            dfs(e[i],type,vis);
+}
+
+int main()
+{
+    scanf("%d%d",&n,&m);
+    S=0,T=n-1;
+    for(int i=0;i<m;i++)
+    {
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        add(a,b,c),add(b,a,0);
+    }
+    while(bfs())while(find(S,INF));
+    dfs(S,0,vis_s),dfs(T,1,vis_t);
+    for(int i=0;i<n;i++)
+        if(vis_s[i])
+            for(int j=h[i];j;j=ne[j])
+                if(!(j&1)&&vis_t[e[j]])
+                    ans++;
+    printf("%d\n",ans);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/418613/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+1
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 510, M = 10010, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], ne[M], idx;
+int q[N], d[N], cur[N];
+bool vis_s[N], vis_t[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, f[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool bfs()
+{
+    int hh = 0, tt = 0;
+    memset(d, -1, sizeof d);
+    q[0] = S, d[S] = 0, cur[S] = h[S];
+    while (hh <= tt)
+    {
+        int t = q[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (d[ver] == -1 && f[i])
+            {
+                d[ver] = d[t] + 1;
+                cur[ver] = h[ver];
+                if (ver == T) return true;
+                q[ ++ tt] = ver;
+            }
+        }
+    }
+    return false;
+}
+
+int find(int u, int limit)
+{
+    if (u == T) return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i;
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t) d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
+        }
+    }
+    return flow;
+}
+
+int dinic()
+{
+    int r = 0, flow;
+    while (bfs()) while (flow = find(S, INF)) r += flow;
+    return r;
+}
+
+void dfs(int u, bool st[], int t)
+{
+    st[u] = true;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = i ^ t, ver = e[i];
+        if (f[j] && !st[ver])
+            dfs(ver, st, t);
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    S = 0, T = n - 1;
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+    }
+
+    dinic();
+    dfs(S, vis_s, 0);
+    dfs(T, vis_t, 1);
+
+    int res = 0;
+    for (int i = 0; i < m * 2; i += 2)
+        if (!f[i] && vis_s[e[i ^ 1]] && vis_t[e[i]])
+            res ++ ;
+
+    printf("%d\n", res);
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/413522/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
