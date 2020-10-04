@@ -9267,3 +9267,1040 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/329429/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+AcWing 1252. 搭配购买    原题链接    简单
+作者：    辰风 ,  2020-03-02 11:53:42 ,  阅读 179
+
+3
+
+
+思路
+
+
+代码
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+int p[10010];
+int w[10010];
+int v[10010];
+int f[10010];
+int n,m,sum;
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main(){
+    cin >> n >> m >> sum;
+
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+    for (int i = 1; i <= n; i ++ ) cin >> v[i] >> w[i];
+
+    while(m--){
+        int a,b;
+        cin >> a >> b;
+        int pa=find(a);int pb=find(b);
+        if(pa!=pb){
+            w[pb]+=w[pa];
+            v[pb]+=v[pa];
+            p[pa]=p[pb];//注意这里一定要最后合并集合
+        }
+    }
+    for (int i = 1; i <= n; i ++ )
+        if (p[i] == i)
+            for (int j = sum; j >= v[i]; j -- )
+                f[j] = max(f[j], f[j - v[i]] + w[i]);
+    cout << f[sum];
+}
+
+作者：辰风
+链接：https://www.acwing.com/solution/content/9410/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 10010;
+
+int n, m, vol;
+int v[N], w[N];
+int p[N];
+int f[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m >> vol;
+
+    for (int i = 1; i <= n; i ++ ) p[i] = i;
+    for (int i = 1; i <= n; i ++ ) cin >> v[i] >> w[i];
+
+    while (m -- )
+    {
+        int a, b;
+        cin >> a >> b;
+        int pa = find(a), pb = find(b);
+        if (pa != pb)
+        {
+            v[pb] += v[pa];
+            w[pb] += w[pa];
+            p[pa] = pb;
+        }
+    }
+
+    // 01背包
+    for (int i = 1; i <= n; i ++ )
+        if (p[i] == i)
+            for (int j = vol; j >= v[i]; j -- )
+                f[j] = max(f[j], f[j - v[i]] + w[i]);
+
+    cout << f[vol] << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/161730/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 237. 程序自动分析    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-12 20:08:18 ,  阅读 1927
+
+6
+
+
+3
+原题链接
+更好的阅读体验
+
+题目描述
+在实现程序自动分析的过程中,常常需要判定一些约束条件是否能被同时满足。
+
+考虑一个约束满足问题的简化版本：假设x1,x2,x3,…x1,x2,x3,…代表程序中出现的变量，给定n个形如xi=xjxi=xj或xi≠xjxi≠xj的变量相等/不等的约束条件，请判定是否可以分别为每一个变量赋予恰当的值，使得上述所有约束条件同时被满足。
+
+例如，一个问题中的约束条件为：x1=x2，x2=x3，x3=x4，x1≠x4x1=x2，x2=x3，x3=x4，x1≠x4，这些约束条件显然是不可能同时被满足的，因此这个问题应判定为不可被满足。
+
+现在给出一些约束满足问题，请分别对它们进行判定。
+
+输入格式
+输入文件的第1行包含1个正整数tt，表示需要判定的问题个数，注意这些问题之间是相互独立的。
+
+对于每个问题，包含若干行：
+
+第1行包含1个正整数nn，表示该问题中需要被满足的约束条件个数。
+
+接下来nn行，每行包括3个整数i,j,ei,j,e，描述1个相等/不等的约束条件，相邻整数之间用单个空格隔开。若e=1e=1，则该约束条件为xi=xjxi=xj；若e=0e=0，则该约束条件为xi≠xjxi≠xj。
+
+输出格式
+输出文件包括tt行。
+
+输出文件的第k行输出一个字符串“YES”或者“NO”（不包含引号，字母全部大写），“YES”表示输入中的第k个问题判定为可以被满足，“NO”表示不可被满足。
+
+数据范围
+1≤n≤10000001≤n≤1000000
+1≤i,j≤10000000001≤i,j≤1000000000
+样例
+输入样例：
+2
+2
+1 2 1
+1 2 0
+2
+1 2 1
+2 1 1
+输出样例：
+NO
+YES
+并查集
+什么题目要用到并查集?那就是具有非常明显的传递关系的题目,或者说并查集擅长动态维护许多具有传递性的关系,能在无向图中维护节点之间的连通性.
+这道题目明显就有两个关系变量相等的约束条件和不相等的约束条件.所以说,我们就将相等的约束条件,转化为将两个变量合并到一个集合中.
+那么当相等约束条件全部执行完后,记住是全部执行完毕后,我们再去看不相等约束条件,如果说发现不相等的两个变量在同一个集合,那么就是不满足问题输出NO.如果都满足了,那么就是YES!
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+const int N=1000000*2+10;
+int a[N][3],n,m,i,j,cnt,t,fa[N],ms[N];
+unordered_map<int,int> c;//建立关系表
+int get(int x)
+{
+    return fa[x]==x?x:fa[x]=get(fa[x]);//路径压缩,防止链式结构
+}
+void merge(int x,int y)
+{
+    fa[get(x)]=get(y);
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin>>t;
+    while(t--)
+    {
+        cin>>n;
+        n*=3;
+        for(int i=1;i<=n;i++)
+        {
+            int x;
+            cin>>x;
+            if (i%3)//变量i和变量j
+            {
+                if (c[x]==0)
+                    c[x]=(++cnt);//没有出现过
+                a[i/3+1][i%3]=c[x];//i/3+1是第几对关系.i%3则是判断是变量i还是变量j
+                fa[c[x]]=c[x];
+            }
+            else//约束条件e
+                ms[i/3]=x;
+        }
+        int ok=0;
+        for(int i=1;i<=n/3;i++)
+            if (ms[i])//相等约束条件
+                merge(a[i][1],a[i][2]);
+        for(int i=1;i<=n/3;i++)
+            if (!ms[i])
+            {
+                if (get(a[i][1])==get(a[i][2]))//不相等的两个变量,发现居然相等了,那么不符合问题
+                {
+                    ok=true;
+                    cout<<"NO";
+                    break;
+                }
+            }
+        if (!ok)
+            cout<<"YES";
+        cout<<endl;
+    }
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1004/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+
+using namespace std;
+
+const int N = 2000010;
+
+int n, m;
+int p[N];
+unordered_map<int, int> S;
+
+struct Query
+{
+    int x, y, e;
+}query[N];
+
+int get(int x)
+{
+    if (S.count(x) == 0) S[x] = ++ n;
+    return S[x];
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        n = 0;
+        S.clear();
+        scanf("%d", &m);
+        for (int i = 0; i < m; i ++ )
+        {
+            int x, y, e;
+            scanf("%d%d%d", &x, &y, &e);
+            query[i] = {get(x), get(y), e};
+        }
+
+        for (int i = 1; i <= n; i ++ ) p[i] = i;
+
+        // 合并所有相等约束条件
+        for (int i = 0; i < m; i ++ )
+            if (query[i].e == 1)
+            {
+                int pa = find(query[i].x), pb = find(query[i].y);
+                p[pa] = pb;
+            }
+
+        // 检查所有不等条件
+        bool has_conflict = false;
+        for (int i = 0; i < m; i ++ )
+            if (query[i].e == 0)
+            {
+                int pa = find(query[i].x), pb = find(query[i].y);
+                if (pa == pb)
+                {
+                    has_conflict = true;
+                    break;
+                }
+            }
+
+        if (has_conflict) puts("NO");
+        else puts("YES");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/161741/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 239. 奇偶游戏    原题链接    中等
+作者：    秦淮岸灯火阑珊 ,  2019-02-12 20:34:54 ,  阅读 1313
+
+14
+
+
+1
+原题链接
+更好的阅读体验
+
+题目描述
+小A和小B在玩一个游戏。
+
+首先，小A写了一个由0和1组成的序列S，长度为N。
+
+然后，小B向小A提出了M个问题。
+
+在每个问题中，小B指定两个数 l 和 r，小A回答 S[l~r] 中有奇数个1还是偶数个1。
+
+机智的小B发现小A有可能在撒谎。
+
+例如，小A曾经回答过 S[1~3] 中有奇数个1， S[4~6] 中有偶数个1，现在又回答 S[1~6] 中有偶数个1，显然这是自相矛盾的。
+
+请你帮助小B检查这M个答案，并指出在至少多少个回答之后可以确定小A一定在撒谎。
+
+即求出一个最小的k，使得01序列S满足第1~k个回答，但不满足第1~k+1个回答。
+
+输入格式
+第一行包含一个整数N，表示01序列长度。
+
+第二行包含一个整数M，表示问题数量。
+
+接下来M行，每行包含一组问答：两个整数l和r，以及回答“even”或“odd”，用以描述S[l~r] 中有奇数个1还是偶数个1。
+
+输出格式
+输出一个整数k，表示01序列满足第1~k个回答，但不满足第1~k+1个回答，如果01序列满足所有回答，则输出问题总数量。
+
+数据范围
+N≤109,M≤10000N≤109,M≤10000
+样例
+输入样例：
+10
+5
+1 2 even
+3 4 odd
+5 6 even
+1 6 even
+7 10 odd
+输出样例：
+3
+前缀和+异或性质+并查集+离散化
+我们可以用sum数组表示序列S的前缀和,那么会得到以下性质.
+s[l~r]有偶数个1,等价于sum[l-1]与sum[r]奇偶性相同 (1+0=1 0+0=0,1是奇数,0是偶数)
+s[l~r]有奇数个1,等价于sum[l-1]与sum[r]奇偶性不同 (1+1=0 0+1=0,1是奇数,0是偶数)
+以下是传递关系细目表
+如果说x1x1和x2x2奇偶性质相同,x2x2与x3x3奇偶性质相同,那么x1x1和x3x3也相同
+如果说x1x1和x2x2奇偶性质相同,x2x2与x3x3奇偶性质不同,那么x1x1和x3x3也不同
+如果说x1x1和x2x2奇偶性质不同,x2x2与x3x3奇偶性质不同,那么x1x1和x3x3就相同
+上面看清楚地啊,别看错了,尤其是相同和不同
+离散化:这道题目N超大,但是M却少,所以记得离散化.(最讨厌离散化了)
+异或:我们可以通过异或来满足上面的传递关系,具体可以看代码.我懒了,主要是太久没有写题解了,今天晚上要写至少八篇,好累哎.QwQ
+不懂得记得call下博主啊!不要将问题留在心里!!!
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+const int N=10010<<1;
+struct node
+{
+    int l,r,ans;
+} q[N];
+int a[N],fa[N],d[N],n,m,t_n;
+int get(int x)
+{
+    if (x==fa[x])
+        return x;
+    int root=get(fa[x]);
+    d[x]^=d[fa[x]];//异或
+    return fa[x]=root;
+}
+inline int read_init()//离散化
+{
+    cin>>n>>m;
+    for(int i=1;i<=m;i++)
+    {
+        char str[5];
+        scanf("%d%d%s",&q[i].l,&q[i].r,str);
+        q[i].ans=(str[0]=='e'?0:1);
+        a[++t_n]=q[i].l-1;
+        a[++t_n]=q[i].r;
+    }
+    sort(a+1,a+1+t_n);
+    n=unique(a+1,a+1+t_n)-a-1;//去重
+}
+inline int work()
+{
+    read_init();
+    for(int i=1;i<=n;i++)
+        fa[i]=i;
+    for(int i=1;i<=m;i++)
+    {
+        int x=lower_bound(a+1,a+1+n,q[i].l-1)-a;//离散化后要找数
+        int y=lower_bound(a+1,a+1+n,q[i].r)-a;
+        int p=get(x),q2=get(y);
+        if (p==q2)
+        {
+            if ((d[x]^d[y])!=q[i].ans)//变量要相等,但是却不相等了.
+            {
+                cout<<i-1<<endl;
+                return 0;
+            }
+        } 
+        else
+        {
+            fa[p]=q2;//合并merge.两方代码就懒得写函数了,见谅
+            d[p]^=d[x]^d[y]^q[i].ans;//统统异或
+        }
+    }
+    cout<<m;//数据过于优秀,一个问题都没有
+}
+int main()
+{
+    work();
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1006/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+带边权写法
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+
+using namespace std;
+
+const int N = 20010;
+
+int n, m;
+int p[N], d[N];
+unordered_map<int, int> S;
+
+int get(int x)
+{
+    if (S.count(x) == 0) S[x] = ++ n;
+    return S[x];
+}
+
+int find(int x)
+{
+    if (p[x] != x)
+    {
+        int root = find(p[x]);
+        d[x] += d[p[x]];
+        p[x] = root;
+    }
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+    n = 0;
+
+    for (int i = 0; i < N; i ++ ) p[i] = i;
+
+    int res = m;
+    for (int i = 1; i <= m; i ++ )
+    {
+        int a, b;
+        string type;
+        cin >> a >> b >> type;
+        a = get(a - 1), b = get(b);
+
+        int t = 0;
+        if (type == "odd") t = 1;
+
+        int pa = find(a), pb = find(b);
+        if (pa == pb)
+        {
+            if (((d[a] + d[b]) % 2 + 2) % 2 != t)
+            {
+                res = i - 1;
+                break;
+            }
+        }
+        else
+        {
+            p[pa] = pb;
+            d[pa] = d[a] ^ d[b] ^ t;
+        }
+    }
+
+    cout << res << endl;
+
+    return 0;
+}
+扩展域写法
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+
+using namespace std;
+
+const int N = 40010, Base = N / 2;
+
+int n, m;
+int p[N];
+unordered_map<int, int> S;
+
+int get(int x)
+{
+    if (S.count(x) == 0) S[x] = ++ n;
+    return S[x];
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+    n = 0;
+
+    for (int i = 0; i < N; i ++ ) p[i] = i;
+
+    int res = m;
+    for (int i = 1; i <= m; i ++ )
+    {
+        int a, b;
+        string type;
+        cin >> a >> b >> type;
+        a = get(a - 1), b = get(b);
+
+        if (type == "even")
+        {
+            if (find(a + Base) == find(b))
+            {
+                res = i - 1;
+                break;
+            }
+            p[find(a)] = find(b);
+            p[find(a + Base)] = find(b + Base);
+        }
+        else
+        {
+            if (find(a) == find(b))
+            {
+                res = i - 1;
+                break;
+            }
+
+            p[find(a + Base)] = find(b);
+            p[find(a)] = find(b + Base);
+        }
+    }
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/161795/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 238. 银河英雄传说    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-12 20:21:01 ,  阅读 1156
+
+8
+
+
+1
+原题链接
+更好的阅读体验
+
+题目描述
+有一个划分为N列的星际战场，各列依次编号为1,2,…,N。
+
+有N艘战舰，也依次编号为1,2,…,N,其中第i号战舰处于第i列。
+
+有T条指令，每条指令格式为以下两种之一：
+
+1、M i j，表示让第i号战舰所在列的全部战舰保持原有顺序，接在第j号战舰所在列的尾部。
+
+2、C i j，表示询问第i号战舰与第j号战舰当前是否处于同一列中，如果在同一列中，它们之间间隔了多少艘战舰。
+
+现在需要你编写一个程序，处理一系列的指令。
+
+输入格式
+第一行包含整数T，表示共有T条指令。
+
+接下来T行，每行一个指令，指令有两种形式：M i j或C i j。
+
+其中M和C为大写字母表示指令类型，i和j为整数，表示指令涉及的战舰编号。
+
+输出格式
+你的程序应当依次对输入的每一条指令进行分析和处理：
+
+如果是M i j形式，则表示舰队排列发生了变化，你的程序要注意到这一点，但是不要输出任何信息；
+
+如果是C i j形式，你的程序要输出一行，仅包含一个整数，表示在同一列上，第i号战舰与第j号战舰之间布置的战舰数目，如果第i号战舰与第j号战舰当前不在同一列上，则输出-1。
+
+数据范围
+N≤30000,T≤500000N≤30000,T≤500000
+样例
+输入样例：
+4
+M 2 3
+C 1 2
+M 2 4
+C 4 2
+输出样例：
+-1
+1
+并查集(边带权)
+什么题目要用到并查集?那就是具有非常明显的传递关系的题目,或者说并查集擅长动态维护许多具有传递性的关系,能在无向图中维护节点之间的连通性.
+这道题目要注意的就是,我们要边带权,也就是我们不能只处理集合的关系,而是要多一个附带的数组,这个数组就来记录这道题目中最特殊的间隔了多少战舰.听上去很高大上的边带权,实际上就是格外多了一个数组跟随着merge和find一起走而已.也就多了两三行代码,精简容易得很,直接上代码.
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+const int N=31000+10;
+int fa[N],n,t,i,j,d[N],size[N];//size就是记录个数
+int get(int x)
+{
+    if (x==fa[x])
+        return x;
+    int root=get(fa[x]);
+    d[x]+=d[fa[x]];//往下推进
+    return fa[x]=root;
+}
+void merge(int x,int y)
+{
+    x=get(x),y=get(y);
+    fa[x]=y,d[x]=size[y];
+    size[y]+=size[x];//顺带记录
+}
+int main()
+{
+    scanf("%d\n",&t);
+    for(i=1;i<=30000;i++)
+        fa[i]=i,size[i]=1;
+    while(t--)
+    {
+        char ch=getchar();
+        scanf("%d %d\n",&i,&j);
+        if (ch=='M')
+            merge(i,j);
+        else
+        {
+            if (get(i)==get(j))
+                cout<<abs(d[i]-d[j])-1;
+            else
+                cout<<"-1";
+            cout<<endl;
+        }
+    }
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1005/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 30010;
+
+int m;
+int p[N], size[N], d[N];
+
+int find(int x)
+{
+    if (p[x] != x)
+    {
+        int root = find(p[x]);
+        d[x] += d[p[x]];
+        p[x] = root;
+    }
+    return p[x];
+}
+
+int main()
+{
+    scanf("%d", &m);
+
+    for (int i = 1; i < N; i ++ )
+    {
+        p[i] = i;
+        size[i] = 1;
+    }
+
+    while (m -- )
+    {
+        char op[2];
+        int a, b;
+        scanf("%s%d%d", op, &a, &b);
+        if (op[0] == 'M')
+        {
+            int pa = find(a), pb = find(b);
+            d[pa] = size[pb];
+            size[pb] += size[pa];
+            p[pa] = pb;
+        }
+        else
+        {
+            int pa = find(a), pb = find(b);
+            if (pa != pb) puts("-1");
+            else printf("%d\n", max(0, abs(d[a] - d[b]) - 1));
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/161763/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdlib>
+#include <complex>
+#include <climits>
+#include <utility>
+#include <sstream>
+#include <cctype>
+#include <cstdio>
+#include <bitset>
+#include <vector>
+
+using namespace std;
+
+const int N=30005;
+
+int m;
+int p[N],d[N];
+int sz[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    bool fx=false;
+    do ch=getchar();while(~ch&&ch!='-'&&(ch<48||ch>57));
+    if(ch=='-')fx=true,ch=getchar();
+    for(;ch>47&&ch<58;ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return fx?-x:x;
+}
+
+int find(int x)
+{
+    if(p[x]!=x)
+    {
+        int root=find(p[x]);
+        d[x]+=d[p[x]];
+        p[x]=root;
+    }
+    return p[x];
+}
+
+int main()
+{
+    for(int i=1;i<N;i++)
+    {
+        p[i]=i;
+        sz[i]=1;
+    }
+    for(int T=read();T--;)
+    {
+        char op;
+        int a,b;
+        op=getchar();
+        a=read(),b=read();
+        if(op=='M')
+        {
+            a=find(a);
+            b=find(b);
+            d[a]+=sz[b];
+            sz[b]+=sz[a];
+            p[a]=b;
+        }
+        else printf("%d\n",find(a)==find(b)?abs(d[a]-d[b])-1:-1);
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/329695/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 241. 楼兰图腾    原题链接    简单
+作者：    qiaoxinwei ,  2020-05-28 23:11:28 ,  阅读 303
+
+14
+
+
+2
+树状数组
+引入问题
+给出一个长度为nn的数组，完成以下两种操作：
+1. 将第ii个数加上kk
+2. 输出区间[i,j][i,j]内每个数的和
+
+朴素算法
+单点修改：O(1)O(1)
+区间查询：O(n)O(n)
+使用树状数组
+单点修改：O(logn)O(logn)
+区间查询：O(logn)O(logn)
+前置知识
+lowbit()lowbit()运算：非负整数xx在二进制表示下最低位1及其后面的0构成的数值。
+
+举例说明：
+lowbit(12)=lowbit([1100]2)=[100]2=4lowbit(12)=lowbit([1100]2)=[100]2=4
+函数实现：
+
+int lowbit(int x)
+{
+    return x & -x;
+}
+树状数组思想
+树状数组的本质思想是使用树结构维护”前缀和”，从而把时间复杂度降为O(logn)O(logn)。
+
+对于一个序列，对其建立如下树形结构：
+
+
+每个结点t[x]保存以x为根的子树中叶结点值的和
+每个结点覆盖的长度为lowbit(x)
+t[x]结点的父结点为t[x + lowbit(x)]
+树的深度为log2n+1log2n+1
+树状数组操作
+add(x, k)表示将序列中第x个数加上k。
+
+以add(3, 5)为例：
+在整棵树上维护这个值，需要一层一层向上找到父结点，并将这些结点上的t[x]值都加上k，这样保证计算区间和时的结果正确。时间复杂度为O(logn)O(logn)。
+void add(int x, int k)
+{
+    for(int i = x; i <= n; i += lowbit(i))
+        t[i] += k;
+}
+ask(x)表示将查询序列前x个数的和
+
+以ask(7)为例：
+查询这个点的前缀和，需要从这个点向左上找到上一个结点，将加上其结点的值。向左上找到上一个结点，只需要将下标 x -= lowbit(x)，例如 7 - lowbit(7) = 6。
+int ask(int x)
+{
+    int sum = 0;
+    for(int i = x; i; i -= lowbit(i))
+        sum += t[i];
+    return sum;
+}
+以上关于树状数组的介绍来自于B站 。
+本题题解
+算法1
+(暴力枚举) O(n2)O(n2)
+一种朴素做法就是遍历所有点i， 分别统计i位置左边比a[i]小的数的个数m、右边比a[i]小的数的个数n，运用乘法原理：
+1. 第一步从左边m个数中任选一个，有m种选法
+2. 第二步从右边n个数中任选一个，有n种选法
+那么在i位置组成图腾∧的方案数一共是 m * n。
+累加每个点的方案数，即为所有组成图腾∧的方案总数。
+
+时间复杂度O(n2)O(n2)。
+
+C++ 代码
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+const int N = 2000010;
+
+typedef long long LL;
+
+int a[N];
+//ll[i]表示i的左边比第i个数小的数的个数
+//rl[i]表示i的右边比第i个数小的数的个数
+//lg[i]表示i的左边比第i个数大的数的个数
+//rg[i]表示i的右边比第i个数大的数的个数
+int ll[N], rl[N], lg[N], rg[N];
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    for(int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+    for(int i = 1; i <= n; i++)
+    {
+        for(int j = 1; j < i; j++)
+        {
+            //a[]保存的是1 ~ n的一个排列，不可能相等
+            if(a[j] < a[i]) ll[i] ++;
+            else lg[i] ++;
+        }
+    }
+
+    for(int i = 1; i <= n; i++)
+    {
+        for(int j = n; j > i; j--)
+        {
+            if(a[j] < a[i]) rl[i] ++;
+            else rg[i] ++;
+        }
+    }
+
+    LL resV = 0, resA = 0;
+    for(int i = 1; i <= n; i++)
+    {
+        resV += (LL)lg[i] * rg[i];
+        resA += (LL)ll[i] * rl[i];
+    }
+
+    printf("%lld %lld\n", resV, resA);
+
+    return 0;
+}
+算法2
+(树状数组) O(nlogn)O(nlogn)
+从左向右依次遍历每个数a[i]，使用树状数组统计在i位置之前所有比a[i]大的数的个数、以及比a[i]小的数的个数。
+统计完成后，将a[i]加入到树状数组。
+
+从右向左依次遍历每个数a[i]，使用树状数组统计在i位置之后所有比a[i]大的数的个数、以及比a[i]小的数的个数。
+统计完成后，将a[i]加入到树状数组。
+
+时间复杂度 O(nlogn)O(nlogn)
+C++ 代码
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int N = 2000010;
+
+typedef long long LL;
+
+int n;
+//t[i]表示树状数组i结点覆盖的范围和
+int a[N], t[N];
+//Lower[i]表示左边比第i个位置小的数的个数
+//Greater[i]表示左边比第i个位置大的数的个数
+int Lower[N], Greater[N];
+
+//返回非负整数x在二进制表示下最低位1及其后面的0构成的数值
+int lowbit(int x)
+{
+    return x & -x;
+}
+
+//将序列中第x个数加上k。
+void add(int x, int k)
+{
+    for(int i = x; i <= n; i += lowbit(i)) t[i] += k;
+}
+//查询序列前x个数的和
+int ask(int x)
+{
+    int sum = 0;
+    for(int i = x; i; i -= lowbit(i)) sum += t[i];
+    return sum;
+}
+
+int main()
+{
+
+    scanf("%d", &n);
+    for(int i = 1; i <= n; i++) scanf("%d", &a[i]);
+
+    //从左向右，依次统计每个位置左边比第i个数y小的数的个数、以及大的数的个数
+    for(int i = 1; i <= n; i++)
+    {
+        int y = a[i]; //第i个数
+
+        //在前面已加入树状数组的所有数中统计在区间[1, y - 1]的数字的出现次数
+        Lower[i] = ask(y - 1); 
+
+        //在前面已加入树状数组的所有数中统计在区间[y + 1, n]的数字的出现次数
+        Greater[i] = ask(n) - ask(y);
+
+        //将y加入树状数组，即数字y出现1次
+        add(y, 1);
+    }
+
+    //清空树状数组，从右往左统计每个位置右边比第i个数y小的数的个数、以及大的数的个数
+    memset(t, 0, sizeof t);
+
+    LL resA = 0, resV = 0;
+    //从右往左统计
+    for(int i = n; i >= 1; i--)
+    {
+        int y = a[i];
+        resA += (LL)Lower[i] * ask(y - 1);
+        resV += (LL)Greater[i] * (ask(n) - ask(y));
+
+        //将y加入树状数组，即数字y出现1次
+        add(y, 1);
+    }
+
+    printf("%lld %lld\n", resV, resA);
+
+    return 0;
+}
+
+作者：qiaoxinwei
+链接：https://www.acwing.com/solution/content/13818/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+https://www.bilibili.com/video/BV1pE41197Qj
