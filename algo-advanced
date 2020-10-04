@@ -895,3 +895,450 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/200835/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+基本概念
+普通(一维，二维)前缀和:
+
+a[1],a[2],a[3].....a[n]
+s[i] = a[i] + a[i-1]...a[2] + a[1]
+
+a[3] + a[4]...a[14] + a[15] = s[15] - s[3-1]
+s[l,r] = s[r] - s[l-1]
+二维前缀和:
+
+假设在一个二维平面上，每个点具有一定的权值，我们要计算点（2，2）到（8，4）的权值和。
+
+
+
+首先我们要找到这么几块面积：
+
+
+
+我们可以发现，我们所要求的黄色区域，就是黑色 - 绿色 - 粉色 + 青色。
+
+好了，知识都听少的，看例题。
+
+例1激光炸弹
+一种新型的激光炸弹，可以摧毁一个边长为 R 的正方形内的所有的目标。
+
+现在地图上有 N 个目标，用整数Xi,Yi表示目标在地图上的位置，每个目标都有一个价值Wi。
+
+激光炸弹的投放是通过卫星定位的，但其有一个缺点，就是其爆炸范围，即那个边长为 RR 的正方形的边必须和x，y轴平行。
+
+若目标位于爆破正方形的边上，该目标不会被摧毁。
+
+求一颗炸弹最多能炸掉地图上总价值为多少的目标。
+
+输入格式
+第一行输入正整数 N 和 R ,分别代表地图上的目标数目和正方形的边长，数据用空格隔开。
+
+接下来NN行，每行输入一组数据，每组数据包括三个整数Xi,Yi,Wi,分别代表目标的x坐标，y坐标和价值，数据用空格隔开。
+
+输出格式
+输出一个正整数，代表一颗炸弹最多能炸掉地图上目标的总价值数目。
+
+数据范围
+0<N≤10000
+0≤Xi,Yi≤5000
+
+输入样例：
+2 1
+0 0 1
+1 1 1
+输出样例：
+1
+题解：
+这很明显就是一道二维前缀和的问题了，找区域最值。
+
+#include<bits/stdc++.h>
+using namespace std;
+
+const int maxn = 5010;
+int g[maxn][maxn];
+
+int main(void)
+{
+    int N,R;
+    cin >> N >> R;
+
+    int n = R, m = R;
+
+    for(int i = 0,x,y,w;i < N;++i)
+    {
+        cin >> x >> y >> w;
+        x++,y++;
+        n = max(n,x);
+        m = max(m,y);
+        g[x][y] += w;
+    }
+
+    for(int i = 1; i <= n; i++)
+        for(int j = 1;j <= m; j++)
+            g[i][j] += g[i-1][j] + g[i][j-1] - g[i][j];
+
+    int ans = 0;
+    for(int i = R;i <= n;i++)
+        for(int j = R;j <= m;j++)
+            ans = max(ans,g[i][j]-g[i-R][j]-g[i][j-R]+g[i-R][j-R]);
+
+    cout << ans ;
+
+    return 0;
+}
+
+作者：Chicago
+链接：https://www.acwing.com/solution/content/959/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 5010;
+
+int s[N][N];
+
+int main()
+{
+    int n, R;
+    scanf("%d%d", &n, &R);
+    R = min(R, 5001);
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int x, y, w;
+        scanf("%d%d%d", &x, &y, &w);
+        x ++, y ++ ;
+        s[x][y] += w;
+    }
+
+    for (int i = 1; i <= 5001; i ++ )
+        for (int j = 1; j <= 5001; j ++ )
+            s[i][j] += s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1];
+
+    int res = 0;
+    for (int i = R; i <= 5001; i ++ )
+        for (int j = R; j <= 5001; j ++ )
+            res = max(res, s[i][j] - s[i - R][j] - s[i][j - R] + s[i - R][j - R]);
+
+    printf("%d\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/203942/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 100. IncDec序列    原题链接    中等
+作者：    小呆呆 ,  2019-10-04 23:52:17 ,  阅读 724
+
+5
+
+
+2
+算法分析：
+差分解决一段区域同时增加或减少的问题
+给区间【L，R】上都加上一个常数c，则b[L] += c , b[R + 1] -=c
+
+求出a的差分序列b，其中b1 = a1,b(i) = a(i) - a(i - 1) (2 <= i <= n)。令b(n + 1) = 0，题目对序列a的操作，相当于每次可以选出b1,b2…b(n + 1)中的任意两个数，一个加1，另外一个减一。目标是把b2,b3,…bn变为全0。最终得到的数列a就是由 n 个 b1 构成的
+
+任选两个数的方法可分为四类
+1、2 <= i , j <=n（优先）
+2、i = 1, 2 <=j <=n
+3、2 <= i <= n , j = n + 1
+4、i = 1, j = n + 1（没有意义）
+
+设b2,b3....bn中正数总和为p，负数总和的绝对值为q。首先以正负数匹配的方式尽量执行1类操作，可执行min(p,q)次。剩余|p - q|个为匹对，每个可以选与b1或b(n + 1)匹配，即执行2 或 3 类操作，共需|p - q|次
+
+综上所诉，最少操作次数为min(p,q) + |p - q|。根据|p - q|次第2、3类操作的选择情况，能产生|p - q| + 1中不同的b1的值，即最终得到的序列a可能有|p - q| + 1 种
+
+import java.util.Scanner;
+
+public class Main {
+    static int N = 100010;
+    static int[] a = new int[N];
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        for(int i = 1; i <= n;i ++) a[i] = scan.nextInt();
+        //构成差分序列
+        for(int i = n;i >= 2;i --) a[i] -= a[i - 1];
+
+        long p = 0;//b2到bn的正数总和
+        long q = 0;//b2到bn的负数总和
+        for(int i = 2;i <= n;i ++)
+        {
+            if(a[i] > 0) p += a[i];
+            else q -= a[i];//注意这里a[i]是负数，所以需要q = q - q[i]变成整数
+        }
+        System.out.println(Math.min(p, q) + Math.abs(p - q));
+        System.out.println(Math.abs(p - q) + 1);
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/5060/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <stdio.h>
+
+const int N=100005;
+
+int n;
+int a[N];
+
+int main()
+{
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++)
+        scanf("%d",a+i);
+    for(int i=n;i;i--)
+        a[i]-=a[i-1];
+    long long p=0,q=0;
+    for(int i=2;i<=n;i++)
+        if(a[i]>0)p+=a[i];
+        else    q-=a[i];
+    printf("%lld\n%lld\n",p>q?p:q,(p>q?p-q:q-p)+1);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/362390/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+typedef long long LL;
+
+int n;
+int a[N], b[N];
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &a[i]);
+    for (int i = 1; i <= n; i ++ ) b[i] = a[i] - a[i - 1];
+
+    LL p = 0, q = 0;
+    for (int i = 2; i <= n; i ++ )
+        if (b[i] > 0) p += b[i];
+        else q -= b[i];
+
+    cout << max(p, q) << endl;
+    cout << abs(p - q) + 1 << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/203971/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 102. 最佳牛围栏    原题链接    中等
+作者：    Nicoppa ,  2019-03-14 14:22:08 ,  阅读 1580
+
+25
+
+
+10
+博客地址 https://www.Halocat.Top
+不懂吗？那就搞懂为止
+
+农夫约翰的农场由 NN 块田地组成，每块地里都有一定数量的牛,其数量不会少于1头，也不会超过2000头。
+
+约翰希望用围栏将一部分连续的田地围起来，并使得围起来的区域内每块地包含的牛的数量的平均值达到最大。
+
+围起区域内至少需要包含 FF 块地，其中 FF 会在输入中给出。
+
+在给定条件下，计算围起区域内每块地包含的牛的数量的平均值可能的最大值是多少。
+
+输入格式
+第一行输入整数 NN 和 FF ，数据间用空格隔开。
+
+接下来 NN 行，每行输出一个整数，第i+1i+1行输出的整数代表，第ii片区域内包含的牛的数目。
+
+输出格式
+输出一个整数，表示围起区域内每块地包含的牛的数量的平均值可能的最大值乘以1000得到的数值。
+
+数据范围
+1≤N≤1000001≤N≤100000
+1≤F≤N1≤F≤N
+输入样例：
+10 6
+6 
+4
+2
+10
+3
+8
+5
+9
+4
+1
+输出样例：
+6500
+题目题解
+先分析这道题应该用什么算法，本题应该怎么入手
+
+首先本题没有出现二分的特征词：“最大值最小” or “最小值最大” 并且给的数列不具备单调性，并且不适于排序，我们看到这种题可以先提出假设 比如，假设这道题用二分能解出
+
+那么我们判断是否存在一个平均值大于等于mid，如果最优解是x，那么mid <= x的时候，必然可以找到一段，其平均值≥mid， 否则 一定找不到
+
+对于二分，二分是二分性而不是单调性 只要满足可以找到一个值一半满足一半不满足即可 而不用满足单调性
+
+那么这个题我们就可以使用二分来解决
+
+知道了这道题的算法之后，我们就来分析这道题
+
+首先我们二分针对的是平均数，那么根据我们就可以捏出以下主函数
+
+int main() {
+    scanf("%d %d", &n, &m);
+    double l = 0, r = 0;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &cows[i]);
+        r = std::max(r, (double)cows[i]);
+    } //最小左区间 最大右区间
+
+    while(r - l > 1e-5) { //开始二分 因为是实数所以这里还搞个精度
+        double mid = (l + r) / 2; // 不是>>1 这里是实数
+        if(check(mid)) l = mid; //将问题转变为判定问题
+        else r = mid;
+    } printf("%d\n", (int)(r * 1000)); //因为我们找的极大值 所以要右端点*1000 否则可能会出错
+    return 0; 
+}
+二分最难的地方就在于check函数的写法，我们先来捋一遍思路，防止写代码的时候思路混乱
+
+①：我们要找的是 有没有一段不小于F的区间，使这段区间的平均数尽可能的大，如果我们找到了一段连续的区间且区间长度不小于F且平均数大于我们二分的平均数 那么大于这个数且区间也满足的一定满足了 我们直接判断正确即可
+
+②：因为我们要找一段区间的平均数，根据平均数的一个基本应用，显而易见，对于一段序列，每个数减去我们所算的平均数，如果大于0 那么他本身就大于平均数，如果小于0 那么它本身就小于平均数 此时我们就能算出哪些数大于0 哪些数小于0 ，之后我们再使用前缀和，就能判断一个区间内的平均值是否大于或小于我们二分的平均数了
+
+③：据②我们还可以继续优化，因为我们不仅需要找F大小区间内，我们还要找＞F大小区间内的，我们如果用二次for太费时间了，我们这里可以使用双指针的做法，我们设i=0,j=Fi=0,j=F 每次使两个数++ 因为i,ji,j始终满足相距FF的距离，所以我们用一个变量minvminv来存储ii所遍历到的最小值，这样我们比较的距离一定是≥F≥F的，并且如果我们用jj位的前缀和数减去minvminv的话，就能得到我们的最优解，如果这个最优解＞= 0 那么就满足我们的指定条件（如果不懂这一步 请看②）。 到此，结束
+
+我们便可以写出二分的checkcheck代码
+
+bool check(double avg) {
+    for (int i = 1; i <= n; i++) {
+        sum[i] = sum[i - 1] + (cows[i] - avg); //计算前缀和
+    }
+
+    double minv = 0; //设置最小值
+    for (int i = 0, j = m; j <= n; j++, i++) {
+        minv = std::min(minv, sum[i]); //找最优极小值
+        if(sum[j] - minv >= 0) return true; //进行判断
+    } return false; //如果所有的都不满足，那么这个平均数就一定不满足
+}
+以下是全代码：
+
+//#define fre yes
+
+#include <cstdio>
+#include <iostream>
+
+const int N = 100005;
+int cows[N]; double sum[N];
+
+int n, m;
+
+bool check(double avg) {
+    for (int i = 1; i <= n; i++) {
+        sum[i] = sum[i - 1] + cows[i] - avg;
+    }
+
+    double minv = 0;
+    for (int i = 0, j = m; j <= n; j++, i++) {
+        minv = std::min(minv, sum[i]);
+        if(sum[j] - minv >= 0) return true;
+    } return false;
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    double l = 0, r = 0;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &cows[i]);
+        r = std::max(r, (double)cows[i]);
+    }
+
+    while(r - l > 1e-5) {
+        double mid = (l + r) / 2;
+        if(check(mid)) l = mid;
+        else r = mid;
+    } printf("%d\n", (int)(r * 1000));
+    return 0; 
+}
+
+作者：Nicoppa
+链接：https://www.acwing.com/solution/content/1148/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, F;
+double a[N], s[N];
+
+bool check(double avg)
+{
+    for (int i = 1; i <= n; i ++ ) s[i] = s[i - 1] + a[i] - avg;
+
+    double mins = 0;
+    for (int k = F; k <= n; k ++ )
+    {
+        mins = min(mins, s[k - F]);
+        if (s[k] >= mins) return true;
+    }
+
+    return false;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &F);
+
+    double l = 0, r = 0;
+    for (int i = 1; i <= n; i ++ )
+    {
+        scanf("%lf", &a[i]);
+        r = max(r, a[i]);
+    }
+
+    while (r - l > 1e-5)
+    {
+        double mid = (l + r) / 2;
+        if (check(mid)) l = mid;
+        else r = mid;
+    }
+
+    printf("%d\n", (int)(r * 1000));
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/204001/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
