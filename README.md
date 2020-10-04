@@ -37,7 +37,7 @@ CH/POJ? in comments https://www.acwing.com/solution/content/826/
 作者：胡津铭
 链接：https://www.zhihu.com/question/32019460/answer/887877092
 来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 
 leetcode 136 137 260 - single number in an array
 
@@ -3001,8 +3001,8 @@ LeetCode 146. LRU Cache
 
 作者：AcWing
 链接：https://www.acwing.com/activity/content/punch_the_clock/1/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 Week2完成情况：0/14
 DFS+回溯专题07/16 00:00:00 - 07/22 23:59:59
@@ -6006,8 +6006,8 @@ a.reserve(n)//等价于a.rehash(ceil(n/a.max_load_factor( )))，
 
 作者：wuog
 链接：https://www.acwing.com/blog/content/488/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 STL的数据结构(持续更新)
 作者：    Xie_ ,  2020-09-11 21:52:00 ,  阅读 58
@@ -6054,8 +6054,8 @@ multiset<int>::iterator it
 
 作者：Xie_
 链接：https://www.acwing.com/blog/content/3801/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 
 STL 的sort( )函数常用案例
@@ -6216,8 +6216,8 @@ Jack 112 3.4 Mary 102 3.8 Mary 117 3.9 Ala 333 3.5 Zero 101 4
 
 作者：以梦为马
 链接：https://www.acwing.com/blog/content/3153/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 STL notes -
 https://www.acwing.com/file_system/file/content/whole/index/content/1291096/
@@ -6583,8 +6583,8 @@ public:
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/693/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 
 class Solution {
@@ -6607,8 +6607,8 @@ public:
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/693/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 
 https://www.acwing.com/solution/content/1220/ better doulbe pointer
@@ -6840,8 +6840,8 @@ acwing 838代码
 
 作者：床前明月光
 链接：https://www.acwing.com/file_system/file/content/whole/index/content/1302373/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 https://www.acwing.com/file_system/file/content/whole/index/content/1302373/
 
 
@@ -8040,8 +8040,8 @@ public:
 
 作者：wzc1995
 链接：https://www.acwing.com/solution/content/557/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+  
+ 。
 
 算法
 (动态规划) O(nm)O(nm)
@@ -11533,7 +11533,7 @@ Write Through 是应对写删除更新等操作的策略，如果有一个此类
 如果没命中，则直接更新 MySQL
 图示
 
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 。
 https://www.acwing.com/file_system/file/content/whole/index/content/1343169/
 
 线段树入门笔记（未完）
