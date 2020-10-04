@@ -1,0 +1,57 @@
+
+极角序+双指针
+lucifer1004
+发布于 2 分钟前
+8
+本场周赛题解 | 我的LeetCode比赛题解
+
+首先排除与人的位置重合的点，只考虑剩下的点。
+
+计算每个点到人的位置的极角，然后按极角排序。因为可以循环，所以把整个数组加上360^\circ360 
+∘
+ 再接到后面。
+
+接下来双指针找出覆盖最多点的区间即可。
+
+最后返回答案时，把与人的位置重合的点加上。
+
+总时间复杂度O(N\log N)O(NlogN)。
+
+
+const double eps = 1e-8;
+
+class Solution {
+    double calc(double dx, double dy) {
+        bool sign = dy < 0;
+        double d = sqrt(dx * dx + dy * dy);
+        double arc = acos((double)dx / d);
+        if (sign)
+            arc = M_PI * 2 - arc;
+        return arc * 180 / M_PI;
+    }
+public:
+    int visiblePoints(vector<vector<int>>& points, int angle, vector<int>& location) {
+        int x = location[0], y = location[1];
+        int same = 0;
+        vector<double> v;
+        for (auto p : points) {
+            int px = p[0], py = p[1];
+            if (px == x && py == y)
+                same++;
+            else {
+                v.emplace_back(calc(px - x, py - y));
+            }
+        }
+        sort(v.begin(), v.end());
+        int m = v.size();
+        for (int i = 0; i < m; ++i)
+            v.emplace_back(v[i] + 360);
+        int r = 0, hi = 0;
+        for (int l = 0; l < m; ++l) {
+            while (r + 1 < v.size() && v[r + 1] - v[l] <= (double)angle + eps)
+                r++;
+            hi = max(hi, r - l + 1);
+        }
+        return hi + same;
+    }
+};
