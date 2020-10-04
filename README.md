@@ -1,4 +1,4 @@
-dhttps://clist.by/
+https://clist.by/
 
 An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
 LIST OF AWESOME LEARNING RESOURCES https://www.topcoder.com/thrive/articles/List%20of%20awesome%20learning%20resources
