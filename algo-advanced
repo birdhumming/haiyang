@@ -2706,3 +2706,6564 @@ int main()
 链接：https://www.acwing.com/activity/content/code/content/205231/
 来源：AcWing
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1292. 哥德巴赫猜想    原题链接    简单
+作者：    小呆呆 ,  2020-04-15 17:09:33 ,  阅读 130
+
+2
+
+
+算法分析
+暴力想法：
+
+for(a = 3;;a ++)
+    b = n - 3;
+    if(a 和 b都是质数)
+    {
+        print;
+        break;
+    }
+此方法的时间复杂度是O(nn‾√)O(nn),会gg
+
+优化解法
+
+1、先预处理出106106以内的所有质数，
+2、如下伪代码
+for(a = 所有质数)
+    b = n - a
+    if(!st[b])
+    {
+        print;
+        break;
+    }
+由于从1到n中，约有nlnnnlnn个质数，运行的次数是106+T∗106ln106106+T∗106ln106
+时间复杂度 106+T∗106ln106106+T∗106ln106
+Java代码
+import java.util.Scanner;
+
+public class Main {
+    static int N = 1000010;
+    static int[] primes = new int[N];
+    static int cnt = 0;
+    static boolean[] st = new boolean[N];
+    static void init()
+    {
+        for(int i = 2;i <= N - 1;i ++)
+        {
+            if(!st[i]) primes[cnt ++] = i;
+            for(int j = 0;primes[j] * i <= N - 1;j ++)
+            {
+                st[primes[j] * i] = true;
+                if(i % primes[j] == 0) break;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        init();
+
+        while(true)
+        {
+            int n = scan.nextInt();
+            if(n == 0) break;
+            for(int i = 1;;i ++)
+            {
+                int a = primes[i];
+                int b = n - a;
+                if(!st[b])
+                {
+                    System.out.println(n +" = " + a + " + " + b);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/11581/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+
+using namespace std;
+
+const int N = 1000010;
+
+int primes[N], cnt;
+bool st[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int main()
+{
+    init(N - 1);
+
+    int n;
+    while (cin >> n, n)
+    {
+        for (int i = 1; ; i ++ )
+        {
+            int a = primes[i];
+            int b = n - a;
+            if (!st[b])
+            {
+                printf("%d = %d + %d\n", n, a, b);
+                break;
+            }
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/172842/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1293. 夏洛克和他的女朋友    原题链接    简单
+作者：    TaoZex ,  2020-01-31 18:06:06 ,  阅读 209
+
+3
+
+
+让他给这些珠宝染色，使得一件珠宝的价格是另一件珠宝的价格的质因子时，两件珠宝的颜色不同。
+
+即从一个质数向合数连一条边，最后会构成二分图即从一个质数向合数连一条边，最后会构成二分图
+注：质数之间彼此互质没有连边，合数之间不满足题意也没有连边注：质数之间彼此互质没有连边，合数之间不满足题意也没有连边
+当n<=2时只有质数，输出1，由二分图可知其他情况均为2当n<=2时只有质数，输出1，由二分图可知其他情况均为2
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N=1e5+10;
+int primes[N],cnt;
+bool st[N];
+
+void init(int n){
+    for(int i=2;i<=n;i++){
+        if(!st[i]) primes[cnt++]=i;
+        for(int j=0;primes[j]*i<=n;j++){
+            st[primes[j]*i]=true;
+            if(i%primes[j]==0) break;
+        }
+    }
+}
+
+int main(){
+    int n;
+    cin>>n;
+
+    init(n+1);
+
+    if(n<=2) puts("1");
+    else puts("2");
+
+    for(int i=2;i<=n+1;i++){    //他买了 n 件珠宝，第 i 件的价值是 i+1
+        if(!st[i]) printf("1 ");    //!st为true代表素数
+        else printf("2 ");
+    }
+    return 0;
+}
+
+作者：TaoZex
+链接：https://www.acwing.com/solution/content/7602/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int primes[N], cnt;
+bool st[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[i * primes[j]] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    init(n + 1);
+
+    if (n <= 2) puts("1");
+    else puts("2");
+
+    for (int i = 2; i <= n + 1; i ++ )
+        if (!st[i]) printf("1 ");
+        else printf("2 ");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/172854/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 196. 质数距离    原题链接    中等
+作者：    小呆呆 ,  2020-04-15 21:51:26 ,  阅读 340
+
+7
+
+
+算法分析
+二次筛法
+这里的区间范围给定的最大值是2^31 - 1,而用线性筛法求的是[1,n]中的所有质数，因此直接用线性筛法求肯定会直接gg，因此需要通过挖掘某些性质，才能有技巧性的完成，y总的视频讲得实在太好了，不得不为他点赞
+
+性质
+性质1：若一个数n是一个合数，必然存在2个因子dd,ndnd，假设dd <= ndnd，则dd <= n‾√n，因此必然存在一个小于等于 n‾√n的因子
+
+性质2：若x∈∈[L,R],且x是合数，则一定存在P <= 231−1‾‾‾‾‾‾‾√231−1 (< 50000)，使得P能整除x，其中P < x.
+
+步骤
+1、找出1 ~ 231−1‾‾‾‾‾‾‾√231−1 (< 50000)中的所有质因子
+2、对于1 ~ 50000 中每个质数P，将[L,R]中所有P的倍数筛掉(至少2倍)
+找到大于等于L的最小的P的倍数P0P0，找下一个倍数时只需要+= P即可
+引理(分数的上取整转换下取整)
+
+
+细节
+ly20 同学在y总的代码 问的3个很高质量的问题，也是很细节的地方，感谢ly20 同学
+
+（1）每个质数是2~50000中的数，为啥 LL p = primes[i]; 这里的p的LL啊， int 不就够了吗？
+（2）for (LL j = max(p * 2, (l + p - 1) / p * p); j <= r; j += p) 这里的 j 是小于等于 r 的，而 r 的取值范围是小于2 ^ 31，也是在int 范围内啊， 这里为啥用LL啊？
+（3） 我知道这里是复用st数组，但是在用之前都初始化为0了啊，为什么init(50000); 放在while (cin >> l >> r) 的外面（也就是最前面）代码不行啊？
+回答：
+
+(1)LL p = primes[i]，这里p用LL是因为如果p也是用int类型，本身l也是用int类型，如果l取得足够大，下面的l + p - 1会有可能直接爆int变成负数
+(2)这里的 j 是小于等于 r 的，而 r 的取值范围是小于2 ^ 31,这里确实是这样，可是这个循环跳出的条件是j <= r，也就是说如果r是最大的int，那么当j += p，要超过最大的int的时候需要比它还大才能跳出循环，因此直接爆int变成负数，然后j <= r依然成立，会一直死循环下去
+(3)放在最前面也是可以的，y总的代码中判断从[1,50000]中谁是质数和在区间[L,R]中谁是质数直接复用st[]数组，就不用再开一个数组去存了，也可以把init()放在前面，用一个专门的数组去记录区间[L,R]中谁是质数
+时间复杂度 O(n)O(n)
+参考文献
+算法提高课
+
+Java 代码
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    static int N = 50010;
+    static int M = 1000010;
+    static int[] primes = new int[N];
+    static int cnt = 0;
+    static boolean[] st = new boolean[N];
+    static boolean[] bool = new boolean[M];//存[L,R]的元素是否是质数
+    static int[] primes2 = new int[M];
+    static void init(int n)
+    {
+        for(int i = 2;i <= n;i ++)
+        {
+            if(!st[i]) primes[cnt ++] = i;
+            for(int j = 0;primes[j] * i <= n;j ++)
+            {
+                st[primes[j] * i] = true;
+                if(i % primes[j] == 0) break;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        init(50000);
+        while(scan.hasNext())
+        {
+            int l = scan.nextInt();
+            int r = scan.nextInt();
+            Arrays.fill(bool, false);
+            Arrays.fill(primes2, 0);
+            for(int i = 0;i < cnt;i ++)
+            {
+                long p = primes[i];
+                for(long j = Math.max(2 * p, (l + p - 1) / p * p);j <= r;j += p)
+                    bool[(int)(j - l)] = true;
+            }
+            int k = 0;
+            for(int i = 0;i <= r - l;i ++)
+            {
+                if(!bool[i] && i + l >= 2)
+                    primes2[k ++] = i + l;
+            }
+            if(k < 2) System.out.println("There are no adjacent primes.");
+            else
+            {
+                int minp = 0,maxp = 0;//最小、大距离的位置
+                for(int i = 0;i + 1 < k;i ++)
+                {
+                    int d = primes2[i + 1] - primes2[i];
+                    if(d < primes2[minp + 1] - primes2[minp]) minp = i;
+                    if(d > primes2[maxp + 1] - primes2[maxp]) maxp = i;
+                }
+                System.out.println(primes2[minp] + "," + primes2[minp + 1] + " are closest, "+ primes2[maxp] +"," + primes2[maxp + 1] + " are most distant.");
+            }
+        }
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/11586/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+分析
+
+对于每个合数 xx，一定存在一个 ≤sqrt(x)≤sqrt(x) 的质因子 pp，那么对于极限数据而言，(231−1)‾‾‾‾‾‾‾‾√(231−1)约 5×1045×104，因此 [l,r][l,r] 内任何一个合数，都存在一个 5×1045×104 以内的质因子。
+因此我们可以线性筛出 5×1045×104 内的质数，再用埃氏筛思想筛去 [l,r][l,r] 内的所有合数。
+维护 [l,r][l,r] 区间时，不可能开一个 [1,r][1,r] 的数组，我们做离散化处理，用 [0,r−l][0,r−l] 表示 [l,r][l,r]。
+数学知识：大于等于 ll 的 jj 的最小倍数为 ⌈lj⌉×j=⌊l+j−1j⌋×j⌈lj⌉×j=⌊l+j−1j⌋×j。
+注意点
+
+我们用 [0,50000][0,50000] 内的质数 jj，筛去 [l,r][l,r] 区间大于 jj 的 jj 的倍数，因此如果区间内包含 11，是无法将 11 筛去的，因为最小的质数为 22，用 22 无法筛去 11，因此需要特判。
+在筛倍数的时候，for循环每次+j，会爆int，因此开long long。
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <vector>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 1000010;
+
+int l, r;
+int primes[N], cnt;
+bool st[N];
+
+void euler(int n) {
+    for (int i = 2; i <= n; i++) {
+        if (!st[i]) primes[cnt++] = i;
+        for (int j = 0; primes[j] <= n / i; j++) {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int main() {
+    euler(50000);
+    while (cin >> l >> r) {
+        memset(st, false, sizeof st);
+        for (int i = 0; i < cnt; i++) {
+            LL j = primes[i];
+            for (LL k = max(2 * j, (l + j - 1) / j * j); k <= r; k += j) {
+                st[k - l] = true;
+            }
+        }
+        vector<int> res;
+        if (l == 1) st[0] = true;
+        for (int i = 0; i <= r - l; i++) {
+            if (!st[i]) res.push_back(i + l);
+        }
+        if (res.size() < 2) {
+            puts("There are no adjacent primes.");
+        } else {
+            int minv = N, maxv = 0, minr, maxr;
+            for (int i = 1; i < res.size(); i++) {
+                int d = res[i] - res[i - 1];
+                if (d > maxv) maxv = d, maxr = i;
+                if (d < minv) minv = d, minr = i;
+            }
+            printf("%d,%d are closest, %d,%d are most distant.\n", 
+                res[minr - 1], res[minr], res[maxr - 1], res[maxr]);
+        }
+    }
+    return 0;
+}
+
+作者：番茄酱
+链接：https://www.acwing.com/activity/content/code/content/173866/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 197. 阶乘分解    原题链接    中等
+作者：    秦淮岸灯火阑珊 ,  2019-02-09 09:37:11 ,  阅读 1591
+
+4
+
+
+1
+因为我们有一个质因子p已经出现过了,所以我们并需要乘以2.(乘以二,是因为我们是在统计质因子出现的次数)
+这句话错误的,已经删除了.
+
+原题链接
+更好的阅读体验
+
+题目描述
+给定整数 N ，试把阶乘 N!N! 分解质因数，按照算术基本定理的形式输出分解结果中的 pipi 和 cici 即可。
+
+输入格式
+一个整数NN。
+
+输出格式
+N!N! 分解质因数后的结果，共若干行，每行一对pi,cipi,ci，表示含有picipici项。按照pi从小到大的顺序输出。
+
+数据范围
+1≤N≤1061≤N≤106
+样例
+输入样例：
+5
+输出样例：
+2 3
+3 1
+5 1
+样例解释
+5!=120=23∗3∗55!=120=23∗3∗5
+数学性质(质因数分解)
+首先可以排出的方法,就是把1~N中每一个数字都质因数分解,这种方法复杂度太高了,淘汰.
+正确的数学姿态是:我们发现N!中质数因子p的个数,就是1~N中每个数含有的质因数p个数.既然如此的话,那么我们发现,至少有一个质因子p的显然有[np][np]个,而至少有两个质因子p数的显然是有[np2][np2]
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+const int N=1e6+10;
+long long p[N],vis[N],n,m;
+long long zs(long long n)//素数筛
+{
+    for(long long i=2;i<=n;i++)
+    {
+        if (!vis[i])
+            p[++p[0]]=i;
+        for(long long j=2;j<=n/i;j++)
+            vis[i*j]=1;
+    }
+}
+long long power(long long a,long long b)//快速幂
+{
+    long long ans=1;
+    while(b)
+    {
+        if (b&1)
+            ans=ans*a;
+        a*=a;
+        b>>=1;
+    }
+    return ans;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin>>n;
+    zs(n);
+    for(long long i=2;i<=n;i++)
+        if (!vis[i])
+        {
+            long long ans=0;
+            cout<<i<<" ";
+            for(long long k=1;power(i,k)<=n;k++)//统计p出现的次数
+                ans=ans+n/power(i,k);
+            cout<<ans<<endl;
+        }
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/982/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+（文章链接 ）
+#include<cstdio>
+#include<iostream>
+using namespace std;
+const int MAXN=1e6;
+int primes[MAXN],primeCnt=0;
+bool notPrime[2*MAXN];
+void initPrime(int x){
+    for(int i=2;i<=x;i++){
+        if(notPrime[i])continue;
+        for(int j=2;j<=x/i;j++){
+            notPrime[i*j]=1;
+        }
+    }
+    for(int i=2;i<=x;i++)
+        if(!notPrime[i])primes[++primeCnt]=i;
+}
+int ans[MAXN],ansValue[MAXN];
+int main(){
+    int n;
+    scanf("%d",&n);
+    initPrime(n);
+    for(int i=1;i<=primeCnt;i++){
+        int tmpN=n,nowPrime=primes[i],nowAns=0;
+        while(tmpN){
+            nowAns+=(tmpN/nowPrime);
+            tmpN/=nowPrime;
+        }
+        printf("%d %d\n",nowPrime,nowAns);
+    }
+    return 0;
+}
+
+作者：Object_
+链接：https://www.acwing.com/solution/content/4960/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1000010;
+
+int primes[N], cnt;
+bool st[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[i * primes[j]] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    init(n);
+
+    for (int i = 0; i < cnt; i ++ )
+    {
+        int p = primes[i];
+        int s = 0;
+        for (int j = n; j; j /= p) s += j / p;
+        printf("%d %d\n", p, s);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/172909/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1289. 序列的第k个数    原题链接    简单
+作者：    小呆呆 ,  2020-04-16 16:53:30 ,  阅读 125
+
+4
+
+
+算法分析
+是否存在a,b,c，使得a，b，c既是一个等差数列，也是一个等比数列
+证明：
+
+若a,b,c是一个等差数列，因此a + c = 2b(1)
+若a,b,c是一个等比数列，因此(2)a * c = b^2(2)
+对(2)乘上4,得到4 * a * c = 4 * b^2(3)
+对(1)两边加平方，得到(a + c)^2 = 4 * b^2(4)
+联立(3)，(4)可得(a - c)^2 = 0，即a = c = b
+因此当且仅当a == b == c时，它既是一个公差为0的等差数列也是一个公比为1的等比数列，因此它的第k项用等差数列和等比数列求出来的结果是一样的
+
+两种情况
+情况1：若a,b,c是一个等差数列，则第k项是a + (c - b) * (k - 1)
+情况2：若a,b,c是一个等比数列，则第k项是a * (b / c)^(k - 1)，其中b / c一定是一个整数，用快速幂求解
+时间复杂度 O(logn)O(logn)
+参考文献
+算法提高课
+
+Java 代码
+import java.util.Scanner;
+
+public class Main {
+    static int mod = 200907;
+    static long qmi(int a,int k)
+    {
+        long res = 1 % mod;
+        long t = a;
+        while(k > 0)
+        {
+            if((k & 1) != 0) res = res * t % mod;
+            k >>= 1;
+            t = t * t % mod;
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int T = scan.nextInt();
+        while(T -- > 0)
+        {
+            int a = scan.nextInt();
+            int b = scan.nextInt();
+            int c = scan.nextInt(); 
+            int k = scan.nextInt();
+            if(a + c == 2 * b) System.out.println((a + (long)(c - b) * (k - 1)) % mod);
+            else System.out.println(a * qmi(c / b,k - 1) % mod);
+        }
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/11635/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int mod = 200907;
+
+int qmi(int a, int k)
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (LL)res * a % mod;
+        a = (LL)a * a % mod;
+        k >>= 1;
+    }
+    return res;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    while (n -- )
+    {
+        int a, b, c, k;
+        cin >> a >> b >> c >> k;
+        if (a + c == b * 2) cout << (a + (b - a) * (LL)(k - 1)) % mod << endl;
+        else cout << (LL)a * qmi(b / a, k - 1) % mod << endl;
+    }
+
+    return 0;
+
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/172923/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1290. 越狱    原题链接    简单
+作者：    Dear_You ,  2020-01-14 10:54:23 ,  阅读 314
+
+2
+
+
+upd:2020.9.01
+
+题目描述
+监狱有连续编号为 1 到 n 的 n 个房间，每个房间关押一个犯人。
+
+有 m 种宗教，每个犯人可能信仰其中一种。
+
+如果相邻房间的犯人信仰的宗教相同，就可能发生越狱。
+
+求有多少种状态可能发生越狱。
+
+分析
+正着不行那就反向思考,即有多少种不会发生越狱的情况,对于第一个人，有m种，之后呢因为不能和前面相
+
+同，所以只有m-1种，总方案数减去不能越狱的方案数就是答案了
+
+C++ 代码
+#include<bits/stdc++.h>
+#define ll long long
+#define MOD 100003
+using namespace std;
+ll n,m;
+
+inline ll quickpow(ll m,ll n){
+    ll ans=1;
+    for (;n;n>>=1){
+        if(n&1) ans=(ans*m)%MOD;
+        m=m*m%MOD;
+    }
+    return ans;
+}
+
+int main(){
+    scanf("%lld%lld",&m,&n);
+    ll zong=quickpow(m,n);
+    ll x1=m*quickpow(m-1,n-1)%MOD;
+
+    printf("%lld\n",(zong-x1+MOD)%MOD);
+}
+
+作者：Dear_You
+链接：https://www.acwing.com/solution/content/7559/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int mod = 100003;
+
+int qmi(int a, LL k)
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (LL)res * a % mod;
+        a = (LL)a * a % mod;
+        k >>= 1;
+    }
+    return res;
+}
+
+int main()
+{
+    int m;
+    LL n;
+    cin >> m >> n;
+
+    cout << (qmi(m, n) - (LL)m * qmi(m - 1, n - 1) % mod + mod) % mod << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/172934/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1291. 轻拍牛头    原题链接    简单
+作者：    mur ,  2020-02-17 14:52:02 ,  阅读 141
+
+2
+
+
+小优化
+对y老师的代码的小优化，问题求其他的数中有多少个是它的约数。计算s数组时，故只需统计输入的数据。
+
+C++ 代码
+#include <iostream>
+using namespace std;
+
+const int N = 1000010;
+
+int a[N], cnt[N], s[N];
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        cnt[a[i]]++; //a[i]的个数
+    }
+
+    for (int i = 1; i < N; i++) //预处理约数为a[i]的数
+    {
+        for (int j = i; j < N; j += i) 
+        {
+            if (cnt[i]) s[j] += cnt[i]; //只统计输入的数据
+        }
+    }
+
+    for (int i = 0; i < n; i++) cout << s[a[i]] - 1 << endl; //不包括自己
+}
+
+作者：mur
+链接：https://www.acwing.com/solution/content/8674/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+把 if (cnt[i]) 移到第二次循环外面会更快
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1000010;
+
+int n;
+int a[N], cnt[N], s[N];
+
+int main()
+{
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i ++ )
+    {
+        scanf("%d", &a[i]);
+        cnt[a[i]] ++ ;
+    }
+
+    for (int i = 1; i < N; i ++ )
+        for (int j = i; j < N; j += i)
+            s[j] += cnt[i];
+
+    for (int i = 0; i < n; i ++ ) printf("%d\n", s[a[i]] - 1);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174305/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1294. 樱花    原题链接    中等
+作者：    yingzhaoyang ,  2020-01-14 14:22:53 ,  阅读 237
+
+9
+
+
+题目描述
+题意:求不定方程1x+1y=1n!1x+1y=1n!的正整数解的个数.
+(xx,yy为未知数,nn为给定的数)
+
+样例
+输入样例: 1439 
+
+输出样例: 102426508
+
+线性筛素数(主要算法:数学推导)
+下面是玄学数学推导时间:
+
+因为
+1x+1y=1n!
+1x+1y=1n!
+
+可以很轻松地看出 1x1x和1y1y是小于1n!1n!的,于是由小学知识可知xx和yy是大于n!n!的.
+
+于是,我们令
+y=n!+k(k∈N∗)
+y=n!+k(k∈N∗)
+于是,原式变为
+1x+1n!+k=1n!
+1x+1n!+k=1n!
+两边通分,得
+n!×(n!+k)+x×n!=x×(n!+k)
+n!×(n!+k)+x×n!=x×(n!+k)
+整理,得
+x=(n!)2k+k
+x=(n!)2k+k
+分析至此,已经比较明晰了.
+
+因为xx是正整数,则(n!)2k+k(n!)2k+k也必须为正整数.
+
+又因为k∈N∗k∈N∗,故只需(n!)2k(n!)2k为正整数即可.
+
+由于kk可以为任意正整数,故kk只需取(n!)2(n!)2的约数即可.
+
+此时x=(n!)2k+kx=(n!)2k+k为正整数,y=n!+ky=n!+k也为正整数,故这样的kk是满足题意的.
+
+所以本题的实质其实是:
+求(n!)2的正约数个数和
+求(n!)2的正约数个数和
+玄学数学推导终于结束了…
+
+接下来才是真正与算法有关的部分了.
+我们知道,一个正整数可以被唯一分解为
+N=pc11⋅pc22⋅pc33⋯pcmm
+N=p1c1⋅p2c2⋅p3c3⋯pmcm
+其中cici均为正整数,pipi均为质数,且满足p1<p2<p3<⋯<pmp1<p2<p3<⋯<pm
+则NN的正约数个数为
+(c1+1)⋅(c2+1)⋅(c3+1)⋅⋯⋅(cm+1)=∏i=1m(ci+1)
+(c1+1)⋅(c2+1)⋅(c3+1)⋅⋯⋅(cm+1)=∏i=1m(ci+1)
+所以我们只需找出所有的cici即可.
+
+为了提高效率,我们采用线性筛素数的方法,先找出n!n!的质因子,再通过分解质因数的方法找出所有的cici即可.
+
+注意我们这里只是找出了n!n!的所有的cici,而题目要求的是(n!)2(n!)2的约数个数,所以统计时一定要乘2!!!!
+
+因为平方过后,n!n!的所有cici都变为了2ci2ci.(这个应该可以理解吧....)
+
+还有一件事,记得取模(此事非常重要)!!!!
+
+自此,你就完美的解决了这道题.
+
+时间复杂度 O(nlogn)O(nlogn)
+C++ 代码
+#include<bits/stdc++.h>
+#define ll long long
+using namespace std;
+const ll MAX=1e6+1;
+const ll mod=1e9+7;
+ll n,ans=1;
+ll c[MAX],prime[MAX];//c[i]为指数 
+ll flag[MAX],s[MAX];
+int tot;
+inline void Linear()//线性筛素数 (查找1到n中每个数的最小质因子并记录位置)
+{
+    for(int i=2;i<=n;i++){
+        if(!flag[i]){
+            prime[++tot]=i;
+            s[i]=tot;   
+        }
+        for(int j=1;j<=tot&&i*prime[j]<=n;j++){
+            flag[i*prime[j]]=1;
+            s[i*prime[j]]=j;// s[i] 表示 i 的最小质因子在prime数组中的位置 
+            if(i%prime[j]==0)
+                break;
+        }
+    }
+}
+inline void divide(int x)//将x分解质因数 
+{
+    while(x!=1){
+        ++c[s[x]];//s[x]为x的最小质因子，c[s[x]]表示s[x]这个质因子的指数 
+        x/=prime[s[x]];//分解 
+    }
+}
+int main()
+{
+    scanf("%lld",&n);
+    Linear();
+    for(int i=1;i<=n;i++)
+        divide(i);
+    for(int i=1;i<=MAX;i++)
+        if(c[i])
+            ans=ans*(2*c[i]+1)%mod;//注意这里要乘二,因为最后统计的是n!的约数个数,而不是n!,所以所有的ci要变为2*ci
+    printf("%lld\n",ans);
+    return 0;
+}
+
+作者：yingzhaoyang
+链接：https://www.acwing.com/solution/content/7562/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 1e6 + 10, mod = 1e9 + 7;
+
+int primes[N], cnt;
+bool st[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    init(n);
+
+    int res = 1;
+    for (int i = 0; i < cnt; i ++ )
+    {
+        int p = primes[i];
+        int s = 0;
+        for (int j = n; j; j /= p) s += j / p;
+        res = (LL)res * (2 * s + 1) % mod;
+    }
+
+    cout << res << endl;
+
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174318/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 198. 反素数    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-09 11:39:40 ,  阅读 1385
+
+7
+
+
+1
+原题链接
+
+题目描述
+对于任何正整数x，其约数的个数记作g(x)，例如g(1)=1、g(6)=4。
+
+如果某个正整数x满足：对于任意的小于x的正整数 i，都有g(x)>g(i) ，则称x为反素数。
+
+例如，整数1，2，4，6等都是反素数。
+
+现在给定一个数N，请求出不超过N的最大的反素数。
+
+输入格式
+一个正整数N。
+
+输出格式
+一个整数，表示不超过N的最大反素数。
+
+数据范围
+1≤N≤2∗1091≤N≤2∗109
+样例
+输入样例：
+1000
+输出样例：
+840
+数学性质(质因数分解)
+首先我们来三个性质
+1~N中最大的反质数,就是1~N中约数个数最多的数中最小的一个.因为,如果不是最小的那一个,必然会出现g(x)=g(i)g(x)=g(i)
+1~N中任何数的不同质因子都不会超过10个,因为2∗3∗5∗7∗11∗13∗17∗19∗23∗29∗31>2∗1092∗3∗5∗7∗11∗13∗17∗19∗23∗29∗31>2∗109,且所有质因数的指数总和不超过30,因为231>2∗109231>2∗109.
+x的质因子是连续的若干个最小的质数,且质数的指数单调递减.如果说我们选择的质数不是连续的,也就是A1∗A3A1∗A3,那么我还不如选择A1∗A2A1∗A2,因为这样数还更小.至于指数问题,如果说c1<c2c1<c2,那么c1+1c1+1,c2−1c2−1会是的我们乘积更加小,而且约数个数不变.x=A1C1∗A2C2∗A3C3∗......∗AnCnx=A1C1∗A2C2∗A3C3∗......∗AnCn
+根据上面一系列性质,我们得出了最简洁的思路,使用DFS,尝试确定前十个质数的指数,然后满足指数单调递减,总乘积不超过N,且同时记录约数的个数
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define INF 2e9
+ll zs[11]={0,2,3,5,7,11,13,17,19,23,29},c[11],ans=INF,cnt_ans=1,n;
+void dfs(ll now, ll num, ll cnt)
+{
+    if (now==11) 
+    {
+        if (cnt>cnt_ans || (cnt==cnt_ans && ans>num))
+        {
+            cnt_ans=cnt;
+            ans=num;
+        }
+        return;
+    }
+    ll num_cnt=num;
+    for (int i=0;i<=c[now-1];i++)
+    {
+        if (num_cnt>n)
+            return;
+        c[now]=i;
+        dfs(now+1,num_cnt,cnt*(i+1));
+        num_cnt*=zs[now];
+    }
+}
+int main() 
+{
+    cin>>n;
+    c[0]=INF;
+    dfs(1,1,1);
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/985/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+int primes[9] = {2, 3, 5, 7, 11, 13, 17, 19, 23};
+int maxd, number;
+int n;
+
+void dfs(int u, int last, int p, int s)
+{
+    if (s > maxd || s == maxd && p < number)
+    {
+        maxd = s;
+        number = p;
+    }
+
+    if (u == 9) return;
+
+    for (int i = 1; i <= last; i ++ )
+    {
+        if ((LL)p * primes[u] > n) break;
+        p *= primes[u];
+        dfs(u + 1, i, p, s * (i + 1));
+    }
+}
+
+int main()
+{
+    cin >> n;
+
+    dfs(0, 30, 1, 1);
+
+    cout << number << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174335/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 200. Hankson的趣味题    原题链接    中等
+作者：    yxc ,  2019-07-28 17:47:13 ,  阅读 1109
+
+14
+
+
+3
+算法
+(数论) O(nb1‾‾√/log(b1))O(nb1/log(b1))
+由于 [x,b0]=b1[x,b0]=b1，因此 xx 一定是 b1b1 的约数。
+所以我们可以枚举 b1b1 的所有约数，然后依次判断是否满足 [x,b0]=b1[x,b0]=b1 以及 (x,a0)=a1(x,a0)=a1 即可。
+
+如果直接用试除法求 b1b1 的所有约数，那么总计算量是 nb1‾‾√=2000∗2×109‾‾‾‾‾‾‾√≈108nb1=2000∗2×109≈108，会有一个测试数据超时。
+
+我们可以先预处理出 1∼b1‾‾√1∼b1 内的所有质数，然后用这些质数去试除 b1b1。由质数定理：
+
+1∼n1∼n 中的质数个数约为 nln(n)nln(n)。
+
+因此我们可以在 bi‾‾√/log(bi)bi/log(bi) 的时间复杂度内将 b1b1 分解质因数。然后通过DFS枚举出 b1b1 的所有约数。
+
+时间复杂度分析
+一共 nn 组测试数据，每组测试数据分解 b1b1 的计算量是 nb1‾‾√/log(b1)≈107nb1/log(b1)≈107。
+
+平均每个数的约数个数为 lognlogn 个，计算最小公倍数和最大公约数的时间复杂度也是 O(logn)O(logn)，因此判断 xx 是否合法的计算量是 nlog2n≈2×106nlog2n≈2×106。
+
+C++ 代码
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+typedef long long LL;
+typedef pair<int, int> PII;
+
+const int N = 45000, M = 50;
+
+int primes[N], cnt;
+bool st[N];
+
+PII factor[M];
+int cntf;
+
+int divider[N], cntd;
+
+void get_primes(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] <= n / i; j ++ )
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int gcd(int a, int b)
+{
+    return b ? gcd(b, a % b) : a;
+}
+
+void dfs(int u, int p)
+{
+    if (u > cntf)
+    {
+        divider[cntd ++ ] = p;
+        return;
+    }
+
+    for (int i = 0; i <= factor[u].second; i ++ )
+    {
+        dfs(u + 1, p);
+        p *= factor[u].first;
+    }
+}
+
+int main()
+{
+    get_primes(N);
+
+    int n;
+    scanf("%d", &n);
+    while (n -- )
+    {
+        int a0, a1, b0, b1;
+        scanf("%d%d%d%d", &a0, &a1, &b0, &b1);
+
+        int d = b1;
+        cntf = 0;
+        for (int i = 0; primes[i] <= d / primes[i]; i ++ )
+        {
+            int p = primes[i];
+            if (d % p == 0)
+            {
+                int s = 0;
+                while (d % p == 0) s ++, d /= p;
+                factor[ ++ cntf] = {p, s};
+            }
+        }
+        if (d > 1) factor[ ++ cntf] = {d, 1};
+
+        cntd = 0;
+        dfs(1, 1);
+
+        int res = 0;
+        for (int i = 0; i < cntd; i ++ )
+        {
+            int x = divider[i];
+            if (gcd(x, a0) == a1 && (LL)x * b0 / gcd(x, b0) == b1)
+            {
+
+                res ++ ;
+            }
+        }
+
+        printf("%d\n", res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/solution/content/3101/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 50010;
+
+int primes[N], cnt;
+bool st[N];
+struct Factor
+{
+    int p, s;
+}factor[10];
+int fcnt;
+
+int dividor[1601], dcnt;
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+void dfs(int u, int p)
+{
+    if (u == fcnt)
+    {
+        dividor[dcnt ++ ] = p;
+        return;
+    }
+
+    for (int i = 0; i <= factor[u].s; i ++ )
+    {
+        dfs(u + 1, p);
+        p *= factor[u].p;
+    }
+}
+
+int gcd(int a, int b)
+{
+    return b ? gcd(b, a % b) : a;
+}
+
+int main()
+{
+    init(N - 1);
+
+    int n;
+    cin >> n;
+    while (n -- )
+    {
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+
+        fcnt = 0;
+        int t = d;
+        for (int i = 0; primes[i] <= t / primes[i]; i ++ )
+        {
+            int p = primes[i];
+            if (t % p == 0)
+            {
+                int s = 0;
+                while (t % p == 0) t /= p, s ++ ;
+                factor[fcnt ++ ] = {p, s};
+            }
+        }
+
+        if (t > 1) factor[fcnt ++ ] = {t, 1};
+
+        dcnt = 0;
+        dfs(0, 1);
+
+        int res = 0;
+        for (int i = 0; i < dcnt; i ++ )
+        {
+            int x = dividor[i];
+            if (gcd(a, x) == b && (LL)c * x / gcd(c, x) == d) res ++ ;
+        }
+
+        cout << res << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174349/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 201. 可见的点    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-22 17:27:35 ,  阅读 847
+
+4
+
+
+1
+原题链接
+更好的阅读体验
+
+题目描述
+在一个平面直角坐标系的第一象限内，如果一个点(x,y)(x,y)与原点(0,0)(0,0)的连线中没有通过其他任何点，则称该点在原点处是可见的。
+
+例如，点(4,2)(4,2)就是不可见的，因为它与原点的连线会通过点(2,1)(2,1)。
+
+部分可见点与原点的连线如下图所示：
+
+
+
+编写一个程序，计算给定整数N的情况下，满足0≤x,y≤N0≤x,y≤N的可见点(x,y)(x,y)的数量（可见点不包括原点）。
+
+输入格式
+第一行包含整数C，表示共有C组测试数据。
+
+每组测试数据占一行，包含一个整数N。
+
+输出格式
+每组测试数据的输出占据一行。
+
+应包括：测试数据的编号（从1开始），该组测试数据对应的N以及可见点的数量。
+
+同行数据之间用空格隔开。
+
+数据范围
+1≤N,C≤10001≤N,C≤1000
+样例
+输入样例：
+4
+2
+4
+5
+231
+输出样例：
+1 2 5
+2 4 13
+3 5 21
+4 231 32549
+欧拉函数 O(NlogN)O(NlogN)
+分析这道题目,我们发现除了(1,0),(0,1),(1,1)三个钉子,其他钉子被看到,只有满足了1≤x,y≤N,x≠y1≤x,y≤N,x≠y 而且gcd(x,y)=1gcd(x,y)=1
+然后我们再次发现,能够看到的钉子,是沿着(0,0)(n,n)(0,0)(n,n)这条直线对称的,所以我们只要考虑其中一半就好了,然后最后乘以2即可.
+然后满足上述性质的钉子,x的数量恰好就是φ(y)φ(y)
+有了性质的数学题目是什么,就是直接套公式.ans=3+2∗∑Ni=2φ(i)ans=3+2∗∑i=2Nφ(i) 然后我们就只需要利用类似于素数筛选法一样的东西,筛选欧拉函数即可.
+C++ 代码
+//SDOI仪仗队,和这道题目极为类似,或者说一模一样,只不过不是多组数据.
+#include<bits/stdc++.h>
+using namespace std;
+const int N=41000;
+long long phi[N],n,ans;
+void euler(long long n)
+{
+    for(long long i=2; i<=n; i++)
+        phi[i]=i;
+    for(long long i=2; i<=n; i++)
+        if (phi[i]==i)
+            for(long long j=i; j<=n; j+=i)
+                phi[j]=phi[j]/i*(i-1);
+}
+int main()
+{
+    cin>>n;
+    n--;
+    euler(n);
+    for(long long i=2; i<=n; i++)
+        ans=ans+2*phi[i];
+    if (n==0)
+        cout<<0<<endl;
+    else
+        cout<<ans+3;
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1053/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1010;
+
+int primes[N], cnt;
+bool st[N];
+int phi[N];
+
+void init(int n)
+{
+    phi[1] = 1;
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i])
+        {
+            primes[cnt ++ ] = i;
+            phi[i] = i - 1;
+        }
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[i * primes[j]] = true;
+            if (i % primes[j] == 0)
+            {
+                phi[i * primes[j]] = phi[i] * primes[j];
+                break;
+            }
+            phi[i * primes[j]] = phi[i] * (primes[j] - 1);
+        }
+    }
+}
+
+int main()
+{
+    init(N - 1);
+
+    int n, m;
+    cin >> m;
+    for (int T = 1; T <= m; T ++ )
+    {
+        cin >> n;
+        int res = 1;
+        for (int i = 1; i <= n; i ++ ) res += phi[i] * 2;
+        cout << T << ' ' << n << ' ' << res << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174364/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 220. 最大公约数(通俗易懂&效率高)    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-08-01 22:55:27 ,  阅读 1007
+
+13
+
+
+5
+更好的阅读体验
+
+题目
+题目描述
+给定整数NN，求1≤x,y≤N1≤x,y≤N且gcd(x,y)gcd(x,y)为素数的数对(x,y)(x,y)有多少对。
+
+gcd(x,y)gcd(x,y)即求x，yx，y的最大公约数。
+
+输入格式
+输入一个整数N
+
+输出格式
+输出一个整数，表示满足条件的数对数量。
+
+数据范围
+1≤N≤107
+1≤N≤107
+输入样例：
+4
+输出样例：
+4
+解题报告
+题意理解
+就是要找统计一类特殊数对.
+
+要求两个数,他们的最大公约数为素数.
+
+算法解析
+这道题目思路比较清晰,除了算法基础课上的欧拉函数,完全没有高级数学知识,只有最大公约数,乘法这些数学知识,而且公式都非常简短,可以放心食用.违背了数学题目的常识
+
+我们先来下定义.
+a=x×dx为任意正整数b=y×dy为任意正整数d为素数
+a=x×dx为任意正整数b=y×dy为任意正整数d为素数
+
+那么什么时候才会出现
+gcd(a,b)=d
+gcd(a,b)=d
+
+也就是题目要求统计的数对呢?
+
+我们思索一下,什么是最大公约数,不就是两个数的最大公因子吗?
+
+那么我们把定义放入进去.
+a=x×db=y×dgcd(a,b)=gcd(x×d,y×d)=dgcd(a,b)=d×gcd(x,y)
+a=x×db=y×dgcd(a,b)=gcd(x×d,y×d)=dgcd(a,b)=d×gcd(x,y)
+
+此时我们应该很好看出来了,一个a,ba,b为合法数对的条件了.
+gcd(x,y)=1x,y必须互素
+gcd(x,y)=1x,y必须互素
+
+否则的话,我们观察发现
+gcd(a,b)=d×gcd(x,y)如果不满足gcd(x,y)=1的话d×gcd(x,y)≠d
+gcd(a,b)=d×gcd(x,y)如果不满足gcd(x,y)=1的话d×gcd(x,y)≠d
+
+一个素数乘以一个大于1的数字,请问还有可能是素数吗?
+
+显然是不可能的.
+
+所以我们就证明了这个性质.
+
+既然如此的话,我们发现了性质,那么就要推导公式了.
+
+对于一个素数dd而言.他在11~nn中显然有这些数.
+d,d×2,d×3,…,d×k.d×k≤n
+d,d×2,d×3,…,d×k.d×k≤n
+
+我们发现gcd(a,b)=dgcd(a,b)=d的数对,只能从上面这个式子中选择.
+
+因为最大公约数是dd,所以必须有共同因子dd.
+
+那么我们再来简化数列,也就是上面式子,都抛去d.
+a/=db/=d.
+a/=db/=d.
+
+那么a,ba,b就会从下面这个数列中选择
+1,2,3,…k
+1,2,3,…k
+
+我们再来分析.
+
+因为合法数对a,ba,b都除以dd这个最大公约数,所以此时.
+gcd(a,b)=d==>gcd(a/d,b/d)=1
+gcd(a,b)=d==>gcd(a/d,b/d)=1
+
+总而言之,言而总之,我们要
+
+在下面这个数列中,找到两个互质的数,那么一定是合法数对.
+1,2,3,…k
+1,2,3,…k
+
+比如说我们选择
+2,3
+2,3
+
+那么实际上对应的数字就是
+2×d,3×d
+2×d,3×d
+
+因此当前的任务就是找到互质的两个数.
+
+此时我们就需要用到这道题目唯一的难点数学知识.
+
+欧拉函数:是小于n的正整数中与n互质的数的数目
+
+那么我们对于一个数列而言,它的欧拉函数总和,就是两个互质数对个数.
+ans=ϕ1+ϕ2+ϕ3+…+ϕk
+ans=ϕ1+ϕ2+ϕ3+…+ϕk
+
+不过本题目是无序数对,因此.
+ans×2
+ans×2
+
+因此使用线性筛法,就可以O(n)O(n)求出每一个ϕiϕi
+不过为了加速处理,我们还可以使用前缀和数组.
+sum[i]表示ϕ1+ϕ2+ϕ3+..+ϕk的总和
+sum[i]表示ϕ1+ϕ2+ϕ3+..+ϕk的总和
+代码解析
+#include <bits/stdc++.h>
+const int N=1e7+10;
+using namespace std;
+int zs[N],cnt,phi[N],n;
+long long sum[N],ans;
+bool st[N];
+void get_phi(int n)
+{
+    phi[1]=1;
+    for (int i=2; i<=n; i++)
+    {
+        if (!st[i])
+        {
+            zs[cnt++]=i;
+            phi[i]=i-1;
+        }
+        for (int j=0; zs[j]<=n/i; j++)
+        {
+            int t=zs[j]*i;
+            st[t]=true;
+            if (i%zs[j]==0)
+            {
+                phi[t]=phi[i]*zs[j];
+                break;
+            }
+            phi[t]=phi[i]*(zs[j]-1);
+        }
+    }
+}
+int main()
+{
+    scanf("%d",&n);
+    get_phi(n);
+    for(int i=2;i<=n;i++)
+        sum[i]=sum[i-1]+phi[i];
+    for(int i=0;i<cnt;i++)
+    {
+        int now=n/zs[i];
+        ans+=sum[now]*2+1;//因为phi[1]=1,我们的前缀和没有处理.
+    }
+    printf("%lld\n",ans);
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/3325/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 1e7 + 10;
+
+int primes[N], cnt;
+bool st[N];
+int phi[N];
+LL s[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i])
+        {
+            primes[cnt ++ ] = i;
+            phi[i] = i - 1;
+        }
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0)
+            {
+                phi[i * primes[j]] = phi[i] * primes[j];
+                break;
+            }
+            phi[i * primes[j]] = phi[i] * (primes[j] - 1);
+        }
+    }
+
+    for (int i = 1; i <= n; i ++ ) s[i] = s[i - 1] + phi[i];
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    init(n);
+
+    LL res = 0;
+    for (int i = 0; i < cnt; i ++ )
+    {
+        int p = primes[i];
+        res += s[n / p] * 2 + 1;
+    }
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174376/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 203. 同余方程    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-02-22 17:37:56 ,  阅读 815
+
+9
+
+
+3
+原题链接
+更好的阅读体验
+
+题目描述
+求关于x的同余方程ax≡1(modb)ax≡1(modb)的最小正整数解。
+
+输入格式
+输入只有一行，包含两个正整数a,b,用一个空格隔开。
+
+输出格式
+输出只有一行,包含一个正整数x，表示最小正整数解。
+
+输入数据保证一定有解。
+
+数据范围
+2≤a,b≤2∗1092≤a,b≤2∗109
+样例
+输入样例：
+3 10
+输出样例：
+7
+拓展欧几里得算法+线性同余方程
+线性同余方程,也就是给定a,b,m,求一个整数x满足a×x≡b(modm)a×x≡b(modm),然后因为a×x≡b(modm)a×x≡b(modm)等价于a×x−ba×x−b是m的倍数,不妨设y为一个负数,那么这个方程可以改写为a×x+m×y=ba×x+m×y=b
+然后这道题目就是特殊的,a×x≡1(modb)a×x≡1(modb)
+于是我们可以通过拓展欧几里得算法求出特解,然后(x%b+b)%b(x%b+b)%b来达到最小值的效果.
+C++ 代码
+#include <bits/stdc++.h>
+#define int long long
+using namespace std;
+inline int ex_gcd(int a,int b,int &x,int &y)
+{
+    if (b==0)
+    {
+        x=1;
+        y=0;
+        return a;
+    }
+    int d=ex_gcd(b,a%b,x,y);
+    int z=x;
+    x=y;
+    y=z-y*(a/b);
+    return d;
+}
+signed main()
+{
+    int a,b,x=0,y=0;
+    scanf("%lld%lld",&a,&b);
+    ex_gcd(a,b,x,y);
+    printf("%lld\n",(x%b+b)%b);
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1054/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 203. 同余方程
+作者：    swust-zyh ,  2020-04-29 13:05:02 ,  阅读 63
+
+3
+
+
+1
+1.0 % x = 0, 所以x一定不为0
+
+2.x % b的正余数求法, (x % b + b) % b, 一般我们不需要负余数, 所以若x为负数时, 求余一般写成这样
+取模正确写法 (x % y + y) % y
+
+(因为c++会根据x的正负来选择返回正负余数)
+
+3.
+
+
+4.图解
+exgcd的递归思想与通解表达式与基本应用
+
+
+/*
+1.由于输入数据保证同余方程一定有解, 而同余方程等价于ax + by = 1, 要想该方程有解x, y, 则a, b的最大公约数一定为1
+
+2.x必然不可能等于0, 因为x = 0的话, ax % b = 0.不满足题意
+
+3. x = x0 + k(b / d); -> 最小(d == 1) -> x0 + kb的min
+   y = y0 + k(a / d);
+*/
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+// 维护了d最大公约数, 同时也维护了方程ax + by = d的解x, y
+int exgcd(int a, int b, int &x, int &y)
+{
+    if (!b)
+    {
+        /*
+        因为此时a为最大公约数d, 所以要想方程ax + by = d成立, x需要等于1, y随便取值
+        (但是就算ll可以过爆int的情况如果y取得太大爆longlong的话还是不行的, 所以这个地方的y应该尽量取小的好)
+        */
+        x = 1, y = 0; // 这里y建议都取成0
+        return a;
+    }
+
+    /*
+    这里x, y传参为什么要颠倒, 见图解我们会发现
+    ax + by, a, b的系数其实是由a % b(x)和b(y)上的系数转化过来的。
+    */
+    int d = exgcd(b, a % b, y, x);
+    y -= a / b * x; // 见图解 x引用
+
+    return d; // 维护了最大公约数
+}
+
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+
+    int x, y;
+    exgcd(a, b, x, y);
+
+    /*
+    x可能为正也可能为负
+    **** 求x + kb (k∈Z)的最小正整数 = x % b的正余数
+    */
+    cout << (x % b + b) % b << endl; // 求正余数公式
+
+    return 0;
+}
+
+作者：swust-zyh
+链接：https://www.acwing.com/activity/content/code/content/298338/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+#include <iostream>
+
+using namespace std;
+
+int n,m;
+int x,y;
+
+void exgcd(int a,int b,int &x,int &y)
+{
+    b?exgcd(b,a%b,y,x),y-=a/b*x:x=y=1;
+}
+
+int main()
+{
+    scanf("%d %d",&n,&m);
+    exgcd(n,m,x,y);
+    printf("%lld\n",(x%m+0ll+m)%m);
+    return 0;
+}
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+int exgcd(int a, int b, int &x, int &y)
+{
+    if (!b)
+    {
+        x = 1, y = 0;
+        return a;
+    }
+
+    int d = exgcd(b, a % b, y, x);
+    y -= a / b * x;
+
+    return d;
+}
+
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+
+    int x, y;
+    exgcd(a, b, x, y);
+
+    cout << (x % b + b) % b << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174843/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 222. 青蛙的约会(来自一个憨憨的纯模拟)    原题链接    困难
+作者：    Accepting ,  2020-05-21 18:36:56 ,  阅读 163
+
+3
+
+
+鄙人不才，此中鄙陋甚多，望海涵！
+题目描述
+两只青蛙在网上相识了，它们聊得很开心，于是觉得很有必要见一面。
+
+它们很高兴地发现它们住在同一条纬度线上，于是它们约定各自朝西跳，直到碰面为止。
+
+可是它们出发之前忘记了一件很重要的事情，既没有问清楚对方的特征，也没有约定见面的具体位置。
+
+不过青蛙们都是很乐观的，它们觉得只要一直朝着某个方向跳下去，总能碰到对方的。
+
+但是除非这两只青蛙在同一时间跳到同一点上，不然是永远都不可能碰面的。
+
+为了帮助这两只乐观的青蛙，你被要求写一个程序来判断这两只青蛙是否能够碰面，会在什么时候碰面。
+
+我们把这两只青蛙分别叫做青蛙A和青蛙B，并且规定纬度线上东经0度处为原点，由东往西为正方向，单位长度1米，这样我们就得到了一条首尾相接的数轴。
+
+设青蛙A的出发点坐标是x，青蛙B的出发点坐标是y。
+
+青蛙A一次能跳m米，青蛙B一次能跳n米，两只青蛙跳一次所花费的时间相同。
+
+纬度线总长L米。
+
+现在要你求出它们跳了几次以后才会碰面。
+
+输入格式
+输入只包括一行5个整数x，y，m，n，L，其中x≠y < 2000000000，0 < m、n < 2000000000，0 < L < 2100000000。
+
+输出格式
+输出碰面所需要的跳跃次数，如果永远不可能碰面则输出一行”Impossible”
+
+输入样例
+1 2 3 4 5
+输出样例
+4
+算法 模拟
+其实这个代码看起来长，但有50行代码都是重复的，虽然多，但也好写（CV）
+真正需要处理的只有4种情况而已，始终要把模型转化为后追前的追及问题即可！
+C++ 代码
+#include<iostream>
+
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    int x,y,m,n,l;
+    cin>>x>>y>>m>>n>>l;
+    int d=y-x;
+    int v=n-m;
+    int flag=0;
+    if(d==0) cout<< 0 <<endl;
+    else if(v==0 && d!=0) puts("Impossible");
+    else if(d<0)
+    {
+        d=-d;
+        if(v>0)
+        {
+            if(d%v==0) cout<< d/v <<endl;
+            else
+            {
+                for(ll i=1;i<=10000000;i++)
+                    if((ll)(d+i*l)%v==0)
+                    {
+                        cout<< (ll)(d+i*l)/v <<endl;
+                        flag=1;
+                        break;
+                    }
+                    if(!flag) 
+                    {
+                        puts("Impossible");
+                        return 0;
+                    }
+            }
+        }
+        else
+        {
+            d=l-d;
+            v=-v;
+            if(d%v==0) cout<< d/v <<endl;
+            else
+            {
+                for(ll i=1;i<=10000000;i++)
+                    if((ll)(d+i*l)%v==0)
+                    {
+                        cout<< (ll)(d+i*l)/v <<endl;
+                        flag=1;
+                        break;
+                    }
+                    if(!flag) 
+                    {
+                        puts("Impossible");
+                        return 0;
+                    }
+            }
+        }
+    }
+    else
+    {
+        d=l-d;
+        if(v>0)
+        {
+            if(d%v==0) cout<< d/v <<endl;
+            else
+            {
+                for(ll i=1;i<=10000000;i++)
+                    if((ll)(d+i*l)%v==0)
+                    {
+                        cout<< (ll)(d+i*l)/v <<endl;
+                        flag=1;
+                        break;
+                    }
+                    if(!flag) 
+                    {
+                        puts("Impossible");
+                        return 0;
+                    }
+            }
+        }
+        else
+        {
+            d=l-d;
+            v=-v;
+            if(d%v==0) cout<< d/v <<endl;
+            else
+            {
+                for(ll i=1;i<=10000000;i++)
+                    if((ll)(d+i*l)%v==0)
+                    {
+                        cout<< (ll)(d+i*l)/v <<endl;
+                        flag=1;
+                        break;
+                    }
+                    if(!flag) 
+                    {
+                        puts("Impossible");
+                        return 0;
+                    }
+            }
+        }
+    }
+    return 0;
+}
+
+作者：Accepting
+链接：https://www.acwing.com/solution/content/13478/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+2
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+LL exgcd(LL a, LL b, LL &x, LL &y)
+{
+    if (!b)
+    {
+        x = 1, y = 0;
+        return a;
+    }
+
+    LL d = exgcd(b, a % b, y, x);
+    y -= a / b * x;
+
+    return d;
+}
+
+int main()
+{
+    LL a, b, m, n, L;
+    cin >> a >> b >> m >> n >> L;
+
+    LL x, y;
+    LL d = exgcd(m - n, L, x, y);
+    if ((b - a) % d) puts("Impossible");
+    else
+    {
+        x *= (b - a) / d;
+        LL t = abs(L / d);
+        cout << (x % t + t) % t << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174861/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 202. 最幸运的数字    原题链接    简单
+作者：    kirai ,  2019-06-03 18:34:45 ,  阅读 1020
+
+10
+
+
+2
+考虑x个8的整数可以表示为10x−19×810x−19×8，于是这个问题相当于求解最小的x满足：
+10x−19×8≡0 (mod L)
+10x−19×8≡0 (mod L)
+
+整理下就是：
+8(10x−1)≡0 (mod 9L)
+8(10x−1)≡0 (mod 9L)
+
+为了满足条件，8的存在可以化简一下模数，直接放进去考虑，即：
+10x−1≡0 (mod 9Lgcd(L,8))
+10x−1≡0 (mod 9Lgcd(L,8))
+
+也就是：
+10x≡1 (mod 9Lgcd(L,8))
+10x≡1 (mod 9Lgcd(L,8))
+
+令p=9Lgcd(L,8)p=9Lgcd(L,8)，考虑xx与pp不一定互质，所以应用欧拉定理，得到一个可行解：令x=ϕ(p)x=ϕ(p)
+10ϕ(p)≡1 (mod p)
+10ϕ(p)≡1 (mod p)
+
+由于ϕ(p)ϕ(p)不一定是满足条件的最小自然数，但是可以证明满足上式的xx一定是ϕ(p)ϕ(p)的因子，于是我们枚举ϕ(p)ϕ(p)的因子判断是否满足条件即可。
+
+C++ 代码
+#include<bits/stdc++.h>
+
+using namespace std;
+using LL = long long;
+
+LL mul(LL x, LL n, LL mod) {
+  LL ret = 1;
+  while (n) {
+    if (n & 1) ret = ret * x % mod;
+    n >>= 1;
+    x = x * x % mod;
+  }
+  return ret;
+}
+
+LL phi(LL x) {
+  LL ret = x;
+  for (LL i = 2; i * i <= x; i++) {
+    if (x % i == 0) {
+      ret = ret / i * (i - 1);
+      while (x % i == 0) x /= i;
+    }
+  }
+  if (x > 1) ret = ret / x * (x - 1);
+  return ret;
+}
+
+signed main() {
+  // freopen("in", "r", stdin);
+  LL L;
+  for (int _ = 1; cin >> L && L; _++) {
+    LL mod = L / __gcd(8LL, L) * 9LL;
+    LL p = phi(mod), ret = 1E18;
+    for (LL x = 1; x * x <= p; x++) {
+      if (p % x != 0) continue;
+      if (mul(10, x, mod) == 1) ret = min(ret, x);
+      if (mul(10, p / x, mod) == 1) ret = min(ret, p / x);
+    }
+    printf("Case %d: ", _);
+    printf("%lld\n", ret == 1E18 ? 0 : ret);
+  }
+  return 0;
+}
+
+作者：kirai
+链接：https://www.acwing.com/solution/content/2350/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+LL qmul(LL a, LL k, LL b)
+{
+    LL res = 0;
+    while (k)
+    {
+        if (k & 1) res = (res + a) % b;
+        a = (a + a) % b;
+        k >>= 1;
+    }
+    return res;
+}
+
+LL qmi(LL a, LL k, LL b)
+{
+    LL res = 1;
+    while (k)
+    {
+        if (k & 1) res = qmul(res, a, b);
+        a = qmul(a, a, b);
+        k >>= 1;
+    }
+    return res;
+}
+
+LL get_euler(LL C)
+{
+    LL res = C;
+    for (LL i = 2; i <= C / i; i ++ )
+        if (C % i == 0)
+        {
+            while (C % i == 0) C /= i;
+            res = res / i * (i - 1);
+        }
+    if (C > 1) res = res / C * (C - 1);
+    return res;
+}
+
+int main()
+{
+    int T = 1;
+    LL L;
+    while (cin >> L, L)
+    {
+        int d = 1;
+        while (L % (d * 2) == 0 && d * 2 <= 8) d *= 2;
+
+        LL C = 9 * L / d;
+
+        LL phi = get_euler(C);
+
+        LL res = 1e18;
+        if (C % 2 == 0 || C % 5 == 0) res = 0;
+        else
+        {
+            for (LL d = 1; d * d <= phi; d ++ )
+                if (phi % d == 0)
+                {
+                    if (qmi(10, d, C) == 1) res = min(res, d);
+                    if (qmi(10, phi / d, C) == 1) res = min(res, phi / d);
+                }
+        }
+
+        printf("Case %d: %lld\n", T ++, res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174898/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1298. 曹冲养猪（孙子定理求通解）    原题链接    中等
+作者：    Accepting ,  2020-03-18 11:44:45 ,  阅读 224
+
+1
+
+
+题目描述
+自从曹冲搞定了大象以后，曹操就开始琢磨让儿子干些事业，于是派他到中原养猪场养猪，可是曹冲很不高兴，于是在工作中马马虎虎，有一次曹操想知道母猪的数量，于是曹冲想狠狠耍曹操一把。
+
+举个例子，假如有 16 头母猪，如果建了 3 个猪圈，剩下 1 头猪就没有地方安家了；如果建造了 5 个猪圈，但是仍然有 1 头猪没有地方去；如果建造了 7 个猪圈，还有 2 头没有地方去。
+
+你作为曹总的私人秘书理所当然要将准确的猪数报给曹总，你该怎么办？
+
+输入格式
+第一行包含一个整数 n，表示建立猪圈的次数；
+
+接下来 n 行，每行两个整数 ai,bi，表示建立了 ai 个猪圈，有 bi 头猪没有去处。
+
+你可以假定 ai,aj 互质。
+
+输出格式
+输出仅包含一个正整数，即为曹冲至少养猪的数目。
+
+数据范围
+1≤n≤10,
+1≤bi≤ai≤1100000
+所有ai的乘积不超过 1018
+
+输入样例
+3
+3 1
+5 1
+7 2
+输出样例：
+16
+算法
+中国剩余定理简单应用
+C++ 代码
+#include<iostream>
+
+using namespace std;
+
+const int N=15;
+
+typedef long long LL;
+
+LL M[N],m[N],a[N];
+
+LL exgcd(LL a,LL b,LL &x,LL &y)
+{
+    if(b==0)
+    {
+        x=1,y=0;
+        return a;
+    }
+    LL d=exgcd(b,a%b,y,x);
+    y-=a/b*x;
+    return d;
+}
+
+
+int main()
+{
+    int n;
+    cin>>n;
+    M[0]=1;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>m[i]>>a[i];
+        M[0]*=m[i];
+    }
+    LL res=0;
+    for(int i=1;i<=n;i++)
+    {
+        M[i]=M[0]/m[i];
+        LL x=0,y=0;
+        exgcd(M[i],m[i],x,y);
+        x=(x%m[i]+m[i])%m[i];
+        res=(res+a[i]*M[i]*x)%M[0];
+    }
+    cout<< res <<endl;
+    return 0;
+}
+
+作者：Accepting
+链接：https://www.acwing.com/solution/content/10105/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+/*
+1. 中国剩余定理
+    x=a1(mod m1)  x=a2(mod m2)  x=a3(mod m3)....
+    设 M=m1*m2*m3.... 两两互质
+    令 Mi=M/mi ti是Mi关于M的逆元 Mi*ti=1(mod m)
+    x=(a1*M1*t1)*(a2*M2*t3)...
+2. 题意
+     就是中国剩余定理模板题
+
+*/
+//代码
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int N=10;
+
+int n;
+int A[N],B[N];
+
+void ex_gcd(ll a,ll b,ll &x,ll &y){
+    if(!b)x=1,y=0;
+    else{
+    ex_gcd(b,a%b,y,x);
+    y-=a/b*x;
+    }
+}
+int main(){
+    cin>>n;
+    ll M=1;
+    for(int i=0;i<n;i++){
+        cin>>A[i]>>B[i];
+        M*=A[i];
+    }
+    ll res=0;
+    for(int i=0;i<n;i++){
+        ll Mi=M/A[i];
+        ll ti,x;
+        ex_gcd(Mi,A[i],ti,x);
+        res+=B[i]*Mi*ti;
+    }
+    cout<<(res%M+M)%M<<endl;
+}
+
+作者：wuog
+链接：https://www.acwing.com/activity/content/code/content/187387/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 10;
+
+int n;
+int A[N], B[N];
+
+void exgcd(LL a, LL b, LL &x, LL &y)
+{
+    if (!b) x = 1, y = 0;
+    else
+    {
+        exgcd(b, a % b, y, x);
+        y -= a / b * x;
+    }
+}
+
+int main()
+{
+    scanf("%d", &n);
+
+    LL M = 1;
+    for (int i = 0; i < n; i ++ )
+    {
+        scanf("%d%d", &A[i], &B[i]);
+        M *= A[i];
+    }
+
+    LL res = 0;
+    for (int i = 0; i < n; i ++ )
+    {
+        LL Mi = M / A[i];
+        LL ti, x;
+        exgcd(Mi, A[i], ti, x);
+        res += B[i] * Mi * ti;
+    }
+
+    cout << (res % M + M) % M << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174913/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1303. 斐波那契前 n 项和    原题链接    中等
+作者：    垫底抽风 ,  2020-06-22 12:58:05 ,  阅读 370
+
+15
+
+
+2
+题目描述
+大家都知道 Fibonacci 数列吧，f1=1,f2=1,f3=2,f4=3,⋯,fn=fn−1+fn−2f1=1,f2=1,f3=2,f4=3,⋯,fn=fn−1+fn−2。
+
+现在问题很简单，输入 nn 和 mm，求 fnfn 的前 nn 项和 SnmodmSnmodm。
+
+输入格式
+共一行，包含两个整数 nn 和 mm。
+
+输出格式
+输出前 nn 项和 SnmodmSnmodm 的值。
+
+数据范围
+1≤n≤20000000001≤n≤2000000000（别数了，2×1092×109）
+1≤m≤10000000101≤m≤1000000010（109+10109+10）
+
+输入样例：
+5 1000
+输出样例：
+12
+看数据范围，基本可以肯定是矩阵快速幂了，那么怎么构造矩阵呢？
+
+这里给出一个万能，但较为复杂的矩阵构造方式。
+
+首先推一下公式
+
+fn=fn−1+fn−2fn=fn−1+fn−2
+Sn−Sn−1=fnSn−Sn−1=fn
+=fn−1+fn−2=fn−1+fn−2
+=Sn−1−Sn−3=Sn−1−Sn−3
+所以 Sn−Sn−1=Sn−1−Sn−3Sn−Sn−1=Sn−1−Sn−3
+Sn=2×Sn−1−Sn−3Sn=2×Sn−1−Sn−3
+那么有递推式了，怎么构造矩阵呢？
+
+结论：对于数列 {an}{an}，若ai=k1ai−1+k2ai−2+⋯+kia0ai=k1ai−1+k2ai−2+⋯+kia0，那么 ⎡⎣⎢⎢⎢⎢⎢⎢k110⋮0k201⋮0⋯⋯⋯⋮⋯ki−100⋮1ki00⋮0⎤⎦⎥⎥⎥⎥⎥⎥n⎡⎣⎢⎢⎢⎢⎢⎢ai−1ai−2⋮a1a0⎤⎦⎥⎥⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢⎢⎢an+i−1an+i−2⋮an+1an⎤⎦⎥⎥⎥⎥⎥⎥[k1k2⋯ki−1ki10⋯0001⋯00⋮⋮⋮⋮⋮00⋯10]n[ai−1ai−2⋮a1a0]=[an+i−1an+i−2⋮an+1an]
+证明：
+
+因为 ⎡⎣⎢⎢⎢⎢⎢⎢k110⋮0k201⋮0⋯⋯⋯⋮⋯ki−100⋮1ki00⋮0⎤⎦⎥⎥⎥⎥⎥⎥⎡⎣⎢⎢⎢⎢⎢⎢ai−1ai−2⋮a1a0⎤⎦⎥⎥⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢⎢⎢aiai−1⋮a2a1⎤⎦⎥⎥⎥⎥⎥⎥[k1k2⋯ki−1ki10⋯0001⋯00⋮⋮⋮⋮⋮00⋯10][ai−1ai−2⋮a1a0]=[aiai−1⋮a2a1]
+所以此结论对于 n=1n=1 成立
+
+假设此结论对于 n=Nn=N 成立，那么有
+⎡⎣⎢⎢⎢⎢⎢⎢k110⋮0k201⋮0⋯⋯⋯⋮⋯ki−100⋮1ki00⋮0⎤⎦⎥⎥⎥⎥⎥⎥N⎡⎣⎢⎢⎢⎢⎢⎢ai−1ai−2⋮a1a0⎤⎦⎥⎥⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢⎢⎢aN+i−1aN+i−2⋮aN+1aN⎤⎦⎥⎥⎥⎥⎥⎥[k1k2⋯ki−1ki10⋯0001⋯00⋮⋮⋮⋮⋮00⋯10]N[ai−1ai−2⋮a1a0]=[aN+i−1aN+i−2⋮aN+1aN]
+两边同时左乘矩阵 ⎡⎣⎢⎢⎢⎢⎢⎢k110⋮0k201⋮0⋯⋯⋯⋮⋯ki−100⋮1ki00⋮0⎤⎦⎥⎥⎥⎥⎥⎥[k1k2⋯ki−1ki10⋯0001⋯00⋮⋮⋮⋮⋮00⋯10]
+得 ⎡⎣⎢⎢⎢⎢⎢⎢k110⋮0k201⋮0⋯⋯⋯⋮⋯ki−100⋮1ki00⋮0⎤⎦⎥⎥⎥⎥⎥⎥N+1⎡⎣⎢⎢⎢⎢⎢⎢ai−1ai−2⋮a1a0⎤⎦⎥⎥⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢⎢⎢k110⋮0k201⋮0⋯⋯⋯⋮⋯ki−100⋮1ki00⋮0⎤⎦⎥⎥⎥⎥⎥⎥⎡⎣⎢⎢⎢⎢⎢⎢aN+i−1aN+i−2⋮aN+1aN⎤⎦⎥⎥⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢⎢⎢k1×aN+i−1+k2×aN+i−2+⋯+ki×aNaN+i−1⋮aN+2aN+1⎤⎦⎥⎥⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢⎢⎢aN+iaN+i−1⋮aN+2aN+1⎤⎦⎥⎥⎥⎥⎥⎥[k1k2⋯ki−1ki10⋯0001⋯00⋮⋮⋮⋮⋮00⋯10]N+1[ai−1ai−2⋮a1a0]=[k1k2⋯ki−1ki10⋯0001⋯00⋮⋮⋮⋮⋮00⋯10][aN+i−1aN+i−2⋮aN+1aN]=[k1×aN+i−1+k2×aN+i−2+⋯+ki×aNaN+i−1⋮aN+2aN+1]=[aN+iaN+i−1⋮aN+2aN+1]
+所以此结论对于 n=Nn=N 也成立。
+
+所以此结论对于任意的 n∈N+n∈N+ 都成立，证毕
+
+由上述结论，可以构造出矩阵 A=⎡⎣⎢⎢210001−100⎤⎦⎥⎥, S=⎡⎣⎢⎢S2S1S0⎤⎦⎥⎥=⎡⎣⎢⎢f0+f1+f2f0+f1f0⎤⎦⎥⎥=⎡⎣⎢⎢210⎤⎦⎥⎥A=[20−1100010], S=[S2S1S0]=[f0+f1+f2f0+f1f0]=[210]
+找到矩阵之后，用矩阵快速幂求出 AnAn，然后再乘上矩阵 SS，即可求出 SnSn
+时间复杂度 (logn)O(log⁡n)
+注：该题矩阵快速幂的时间复杂度虽然是 (logn)O(log⁡n)，看似能跑的飞快，但实际上还有 2727 的常数，并不能跑的飞快，当然过这题毫无压力
+
+C++C++ 代码
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdlib>
+
+using namespace std;
+
+typedef long long ll;
+
+const int N = 3;
+
+int n, m;
+ll A[N][N] =    // 上述矩阵 A
+{
+    {2, 0, -1},
+    {1, 0, 0},
+    {0, 1, 0}
+};
+ll S[N] = {2, 1, 0}; // 上述矩阵 S（转置）
+
+void multi(ll A[], ll B[][N]) // 计算向量 A 乘方阵 B，并将结果储存在 A 中
+{
+    ll ans[N] = {0};
+    for (int i = 0; i < N; i ++ )
+        for (int j = 0; j < N; j ++ )
+            ans[i] += A[j] * B[i][j] % m;
+    for (int i = 0; i < N; i ++ )
+        A[i] = ans[i] % m;
+}
+
+void multi(ll A[][N], ll B[][N]) // 计算方阵 A * B，并将结果储存在 A 中
+{
+    ll ans[N][N] = {0};
+    for (int i = 0; i < N; i ++ )
+        for (int j = 0; j < N; j ++ )
+            for (int k = 0; k < N; k ++ )
+                ans[i][j] += A[i][k] * B[k][j] % m;
+    for (int i = 0; i < N; i ++ )
+        for (int j = 0; j < N; j ++ )
+            A[i][j] = ans[i][j] % m;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+
+    while (n)        // 矩阵快速幂
+    {
+        if (n & 1) multi(S, A);
+        multi(A, A);
+        n >>= 1;
+    }
+
+    printf("%lld", (S[2] % m + m) % m);
+
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/15121/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1303. 斐波那契前 n 项和——一个更巧妙的解法    原题链接    中等
+作者：    垫底抽风 ,  2020-08-01 20:27:05 ,  阅读 170
+
+10
+
+
+题目描述
+这里的做法，和这个做法的时间复杂度是相同的，但常数更小
+
+思路
+观察原式 fn=fn−1+fn−2
+观察原式 fn=fn−1+fn−2
+移项可得 fn−2=fn−fn−1
+移项可得 fn−2=fn−fn−1
+也就是 fn=fn+2−fn+1
+也就是 fn=fn+2−fn+1
+将斐波那契的前n项都写成这种形式，得
+将斐波那契的前n项都写成这种形式，得
+⎧⎩⎨⎪⎪⎪⎪⎪⎪f1=f2=f3=f4=fn= f3−f2 f4−f3 f5−f4 f6−f5  ⋮ fn+2−fn+1
+{f1= f3−f2f2= f4−f3f3= f5−f4f4= f6−f5  ⋮fn= fn+2−fn+1
+累加所有等式，
+累加所有等式，
+左边正好是我们要求的答案
+左边正好是我们要求的答案
+而右边，从f1到fn+1，都互相抵消掉了，
+而右边，从f1到fn+1，都互相抵消掉了，
+得到
+得到
+f1+f2+⋯+fn=fn+2−f2=fn+2−1
+f1+f2+⋯+fn=fn+2−f2=fn+2−1
+也就是说，我们就只需要求出 fn+2−1 即可
+也就是说，我们就只需要求出 fn+2−1 即可
+这里给出三种求的算法
+这里给出三种求的算法
+算法1    矩阵快速幂
+这里不再做过多赘述，关于矩阵快速幂的方法可以看下面的参考文献
+
+时间复杂度 O(logn)O(log⁡n)
+参考文献1    求斐波那契数列若干方法
+参考文献2    如何通过递推式构造矩阵
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+typedef long long ll;
+
+int n, m;
+ll A[2][2] = {      // 用于快速幂的矩阵
+    {1, 1},
+    {1, 0}
+};
+ll res[2] = {1, 0}; // 用于存答案的矩阵（转置）
+
+// 计算列矩阵 A 乘方阵 B 的乘积，并存储在 A 中
+void _multi(ll A[], ll B[][2])
+{
+    ll ans[2] = {0};
+    for (int i = 0; i < 2; i ++ )
+        for (int j = 0; j < 2; j ++ )
+            ans[i] += A[j] * B[i][j] % m;
+    for (int i = 0; i < 2; i ++ )
+        A[i] = ans[i] % m;
+}
+
+// 计算方阵 A 乘方阵 B 的乘积，并存储在 A 中
+void multi(ll A[][2], ll B[][2])
+{
+    ll ans[2][2] = {0};
+    for (int i = 0; i < 2; i ++ )
+        for (int j = 0; j < 2; j ++ )
+            for (int k = 0; k < 2; k ++ )
+                ans[i][j] += A[i][k] * B[k][j] % m;
+    for (int i = 0; i < 2; i ++ )
+        for (int j = 0; j < 2; j ++ )
+            A[i][j] = ans[i][j] % m;
+}
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+    n += 2; // 求 f[n + 2] 的结果
+
+    while (n) // 矩阵快速幂板子
+    {
+        if (n & 1) _multi(res, A);
+        multi(A, A);
+        n >>= 1;
+    }
+
+    printf("%lld\n", res[1] - 1); // 最后 res[1] 即为 f[n + 2] 的结果
+
+    return 0;
+}
+算法2    推式子 + 暴力
+时间复杂度 O(n) O(O(能过))
+空间复杂度 O(n) O(O(超级大))
+这里先给出结论，再给出证明过程
+
+结论  fn=fkfn−k+1+fk−1fn−k  (k≤n)  fn=fkfn−k+1+fk−1fn−k  (k≤n)
+证明
+∵fn=fn−1+fn−2=f2fn−2+1+f1fn−2∵fn=fn−1+fn−2=f2fn−2+1+f1fn−2
+∴结论对于 k=1 成立∴结论对于 k=1 成立
+假设结论对于 k=i 成立假设结论对于 k=i 成立
+则有fn=fifn−i+1+fi−1fn−i则有fn=fifn−i+1+fi−1fn−i
+⇒=fi(fn−i+fn−i−1)+fi−1fn−i⇒=fi(fn−i+fn−i−1)+fi−1fn−i
+⇒=fifn−i+fifn−i−1+fi−1fn−i⇒=fifn−i+fifn−i−1+fi−1fn−i
+⇒=(fi+fi−1)fn−i+fifn−i−1⇒=(fi+fi−1)fn−i+fifn−i−1
+⇒=fi+1fn−i+fifn−i−1⇒=fi+1fn−i+fifn−i−1
+所以结论对于 k=i+1 成立，证毕所以结论对于 k=i+1 成立，证毕
+那么根据结论，当 n=2kn=2k 时，有
+f2k=fkfk+1+fk−1fk=fk(fk+1+fk−1)=fk(2fk+1−fk)f2k=fkfk+1+fk−1fk=fk(fk+1+fk−1)=fk(2fk+1−fk)
+当 n=2k+1n=2k+1 时，有
+f2k+1=fkfk+fk+1fk+1=f2k+f2k+1f2k+1=fkfk+fk+1fk+1=fk2+fk+12
+也就是说，我们可以通过递归求出 f⌊k2⌋f⌊k2⌋ 和 f⌊k2⌋+1f⌊k2⌋+1 来得到 fkfk
+直接这么求，时间复杂度还是 O(n)O(n)，和递推相比，并没有任何优化
+
+但是这个做法的优点，是可以快速将我们要求的 fnfn 的 nn 缩小到一个很小的范围内
+
+利用这一点，我们可以预处理出 ff 的前 kk 项（具体 kk 的值根据题目而定）
+
+如果递归到了 kk 以内，直接返回我们预处理好的值
+
+C++ 代码
+#include <iostream>
+
+using namespace std;
+
+typedef long long ll;
+const int k = 1e7 + 5; // 这里取 k = 1e7 + 5
+
+int n, m;
+int f[k];
+
+// 递归求出 f[x] 的值
+ll calc(int x)
+{
+    if (x < k) return f[x]; // 如果 x 在我们预处理的 k 之内，则直接返回我们预处理出的值
+    ll t1 = calc(x / 2 + 1), t2 = calc(x / 2); // 递归求出 f[x / 2 + 1] 和 f[x / 2]
+    if (x & 1) return (t1 * t1 + t2 * t2) % m; // 按照上述等式，返回 x 是奇数时的结果
+    return t2 * (t1 * 2 - t2 % m + m) % m; // 返回 x 是偶数时的结果，注意这里求的是 % m 的正余数，要在括号内先加上 m，以保证结果为正数
+}
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+
+    f[1] = f[2] = 1; // 递推求出 f[0 ~ k - 1] 的值
+    for (int i = 3; i < k; i ++ )
+        f[i] = (f[i - 1] + f[i - 2]) % m;
+
+    printf("%lld\n", calc(n + 2) - 1); // 输出结果
+
+    return 0;
+}
+算法3    快速倍增法
+这里感谢@洛零巨佬给出该方法
+时间复杂度 O(logn)O(log⁡n)
+我们在做递归时，可以通过二元组的方式进行计算，并返回(fn,fn+1)(fn,fn+1)，将时间复杂度优化至 O(logn)O(log⁡n)
+C ++ 代码
+#include <cstdio>
+#include <utility>
+
+using namespace std;
+
+typedef long long ll;
+typedef pair<ll, ll> pll;
+
+int n, m;
+
+// 递归求出二元组 {f[x], f[x + 1]}
+pll calc(int x)
+{
+    if (!x) return make_pair(0, 1);         // 如果 x 为 0，那么返回 (0, 1)
+    pll u = calc(x >> 1);                   // 递归求出二元组 (f[x / 2], f[x / 2 + 1])
+    ll t1 = u.first, t2 = u.second;         // 分别取出 f[x / 2] 和 f[x / 2 + 1]
+    ll f2 = t1 * (2 * t2 - t1 % m + m) % m; // 求出 (f[x], f[x + 1]) 中，x 为奇数的元素的值
+    ll f1 = (t1 * t1 + t2 * t2) % m;        // 求出 (f[x], f[x + 1]) 中，x 为偶数的元素的值
+    if (!(x & 1)) return make_pair(f2, f1); // 如果 x 是偶数，则 f[x] = f2，直接返回 (f2, f1) 即可
+    return make_pair(f1, (f1 + f2) % m);    // 否则说明 x 是奇数，则 f[x] = f1，需要求下 f[x + 1] 再返回
+}
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+
+    printf("%lld\n", calc(n + 2).first - 1); // 输出结果
+
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/16868/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 3;
+
+int n, m;
+
+void mul(int c[], int a[], int b[][N])
+{
+    int temp[N] = {0};
+    for (int i = 0; i < N; i ++ )
+        for (int j = 0; j < N; j ++ )
+            temp[i] = (temp[i] + (LL)a[j] * b[j][i]) % m;
+
+    memcpy(c, temp, sizeof temp);
+}
+
+void mul(int c[][N], int a[][N], int b[][N])
+{
+    int temp[N][N] = {0};
+    for (int i = 0; i < N; i ++ )
+        for (int j = 0; j < N; j ++ )
+            for (int k = 0; k < N; k ++ )
+                temp[i][j] = (temp[i][j] + (LL)a[i][k] * b[k][j]) % m;
+
+    memcpy(c, temp, sizeof temp);
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    int f1[N] = {1, 1, 1};
+    int a[N][N] = {
+        {0, 1, 0},
+        {1, 1, 1},
+        {0, 0, 1}
+    };
+
+    n -- ;
+    while (n)
+    {
+        if (n & 1) mul(f1, f1, a);  // res = res * a
+        mul(a, a, a);  // a = a * a
+        n >>= 1;
+    }
+
+    cout << f1[2] << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/174930/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1304. 佳佳的斐波那契    原题链接    中等
+作者：    垫底抽风 ,  2020-06-22 17:44:20 ,  阅读 274
+
+12
+
+
+1
+题目描述
+佳佳对数学，尤其对数列十分感兴趣。
+
+在研究完 Fibonacci 数列后，他创造出许多稀奇古怪的数列。
+
+例如用 S(n)S(n) 表示 Fibonacci 前 nn 项和 modmmodm 的值，即 S(n)=(F1+F2+⋯+Fn)modmS(n)=(F1+F2+⋯+Fn)modm，其中 F1=F2=1,Fi=Fi−1+Fi−2F1=F2=1,Fi=Fi−1+Fi−2。
+
+可这对佳佳来说还是小菜一碟。
+
+终于，她找到了一个自己解决不了的问题。
+
+用 T(n)=(F1+2F2+3F3+⋯+nFn)modmT(n)=(F1+2F2+3F3+⋯+nFn)modm 表示 Fibonacci 数列前 nn 项变形后的和 modmmodm 的值。
+
+现在佳佳告诉你了一个 nn 和 mm，请求出 T(n)T(n) 的值。
+
+输入格式
+共一行，包含两个整数 nn 和 mm。
+
+输出格式
+共一行，输出 T(n)T(n) 的值。
+
+数据范围
+1≤n,m≤231−11≤n,m≤231−1
+输入样例：
+5 5
+输出样例：
+1
+样例解释
+T(5)=(1+2×1+3×2+4×3+5×5)mod5=1T(5)=(1+2×1+3×2+4×3+5×5)mod5=1
+算法1
+首先推公式
+
+设
+Sn=F1+F2+⋯+Fn,Sn=F1+F2+⋯+Fn,
+Gn=S1+S2+⋯+SnGn=S1+S2+⋯+Sn
+那么 T(n)=F1+2F2+3F3+⋯+nFn=[nF1−(n−1)F1]+[nF2−(n−2)F2]+⋯+[nFn−1−Fn−1]+[nFn]T(n)=F1+2F2+3F3+⋯+nFn=[nF1−(n−1)F1]+[nF2−(n−2)F2]+⋯+[nFn−1−Fn−1]+[nFn]
+=(nF1+nF2+⋯+nFn)−[(n−1)F1+(n−2)F2+⋯+2Fn−2+Fn−1]=(nF1+nF2+⋯+nFn)−[(n−1)F1+(n−2)F2+⋯+2Fn−2+Fn−1]
+=n(F1+F2+⋯+Fn)−[(F1+F2+⋯+Fn−1)+(F1+F2+⋯+Fn−2)+⋯+(F1+F2)+(F1)]=n(F1+F2+⋯+Fn)−[(F1+F2+⋯+Fn−1)+(F1+F2+⋯+Fn−2)+⋯+(F1+F2)+(F1)]
+=nSn−[Sn−1+Sn−2+⋯+S2+S1]=nSn−[Sn−1+Sn−2+⋯+S2+S1]
+=nSn−Gn−1=nSn−Gn−1
+那么只要快速求出 SnSn 和 Gn−1Gn−1 就好了。
+关于快速求 SnSn 的方法，可以参考 AcWing 1303. 斐波那契前 nn 项和。
+那 GnGn 怎么求呢？
+
+先推下公式，
+由斐波那契前 nn 项和中所推公式 Sn=2Sn−1−Sn−3Sn=2Sn−1−Sn−3
+可得 Gn−Gn−1=2(Gn−1−Gn−2)−(Gn−3−Gn−4)Gn−Gn−1=2(Gn−1−Gn−2)−(Gn−3−Gn−4)
+整理得 Gn=3Gn−1−2Gn−2−Gn−3+Gn−4Gn=3Gn−1−2Gn−2−Gn−3+Gn−4
+那么只要构造矩阵 A=⎡⎣⎢⎢⎢⎢3100−2010−10011000⎤⎦⎥⎥⎥⎥,G=⎡⎣⎢⎢⎢⎢G3G2G1G0⎤⎦⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢S0+S1+S2+S3S0+S1+S2S0+S1S0⎤⎦⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢3F1+2F2+F32F1+F2F10⎤⎦⎥⎥⎥⎥=⎡⎣⎢⎢⎢⎢7310⎤⎦⎥⎥⎥⎥A=[3−2−11100001000010],G=[G3G2G1G0]=[S0+S1+S2+S3S0+S1+S2S0+S1S0]=[3F1+2F2+F32F1+F2F10]=[7310]
+然后用矩阵快速幂即可解决
+
+时间复杂度 (logn)O(log⁡n)
+常数巨大，但能过
+
+C++C++ 代码
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+typedef long long ll;
+
+int n, m;
+
+void multi_3(ll A[][3], ll B[][3]) // 求出 3 × 3 的方阵 A 和 B 的乘积，并把结果储存在 A 中
+{
+    ll ans[3][3] = {0};
+    for (int i = 0; i < 3; i ++ )
+        for (int j = 0; j < 3; j ++ )
+            for (int k = 0; k < 3; k ++ )
+                ans[i][j] += A[i][k] * B[k][j] % m;
+    for (int i = 0; i < 3; i ++ )
+        for (int j = 0; j < 3; j ++ )
+            A[i][j] = ans[i][j] % m;
+}
+
+void _multi_3(ll A[], ll B[][3])   // 求出 1 × 3 的矩阵 A 与 3 × 3 的方阵 B 的乘积，并把结果储存在 A 中
+{
+    ll ans[3] = {0};
+    for (int i = 0; i < 3; i ++ )
+        for (int j = 0; j < 3; j ++ )
+            ans[i] += A[j] * B[i][j] % m;
+    for (int i = 0; i < 3; i ++ )
+        A[i] = ans[i] % m;
+}
+
+void multi_4(ll A[][4], ll B[][4]) // 求出 4 × 4 的矩阵 A 和 B 的乘积，并把结果储存在 A 中
+{
+    ll ans[4][4] = {0};
+    for (int i = 0; i < 4; i ++ )
+        for (int j = 0; j < 4; j ++ )
+            for (int k = 0; k < 4; k ++ )
+                ans[i][j] += A[i][k] * B[k][j] % m;
+    for (int i = 0; i < 4; i ++ )
+        for (int j = 0; j < 4; j ++ )
+            A[i][j] = ans[i][j] % m;
+}
+
+void _multi_4(ll A[], ll B[][4])   // 求出 1 × 4 的矩阵 A 乘 4 × 4 的矩阵 B 的乘积，并把结果储存在 A 中
+{
+    ll ans[4] = {0};
+    for (int i = 0; i < 4; i ++ )
+        for (int j = 0; j < 4; j ++ )
+            ans[i] += A[j] * B[i][j];
+    for (int i = 0; i < 4; i ++ )
+        A[i] = ans[i] % m;
+}
+
+ll get_S(int n)                    // 求出 S[n]
+{
+    ll S[3] = {2, 1, 0};
+    ll A[3][3] =
+    {
+        {2, 0, -1},
+        {1, 0, 0},
+        {0, 1, 0}
+    };
+    while (n)
+    {
+        if (n & 1) _multi_3(S, A);
+        multi_3(A, A);
+        n >>= 1;
+    }
+    return S[2];
+}
+
+ll get_G(int n)                    // 求出 G[n]
+{
+    ll G[4] = {7, 3, 1, 0};
+    ll A[4][4] =
+    {
+        {3, -2, -1, 1},
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0}
+    };
+    while (n)
+    {
+        if (n & 1) _multi_4(G, A);
+        multi_4(A, A);
+        n >>= 1;
+    }
+    return G[3];
+}
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+    ll S = get_S(n), G = get_G(n - 1);
+    printf("%lld\n", ((n * S - G) % m + m) % m);
+    return 0;
+}
+算法2
+上面的代码虽然能过，但是代码长度的确非常长，不好写。
+
+上机考试的时候不光要考虑代码的时间复杂度、空间复杂度，还要考虑代码复杂度——yxc
+
+那么有没有什么写起来更简单的算法呢？
+
+看上述算法，是将 SnSn 和 Gn−1Gn−1 分开来算，相当于是写了两遍矩阵快速幂，所以代码写起来就非常复杂。
+我们在算的时候，其实可以用一个矩阵，直接将 SnSn 和 Gn−1Gn−1 存在一起，然后一起算出来。
+这时候就要换一个构造矩阵的方法了。
+
+我们先构造一个矩阵 Xn=[Fn−1FnSnGn−1]Xn=[Fn−1FnSnGn−1]
+然后想一下，如何将 XnXn 转移到 Xn+1Xn+1 呢？
+不妨设 Xn×A=Xn+1Xn×A=Xn+1
+其中 A=⎡⎣⎢⎢⎢⎢a11a21a31a41a12a22a32a42a13a23a33a43a14a24a34a44⎤⎦⎥⎥⎥⎥A=[a11a12a13a14a21a22a23a24a31a32a33a34a41a42a43a44]
+所以有 [Fn−1FnSnGn−1]⎡⎣⎢⎢⎢⎢a11a21a31a41a12a22a32a42a13a23a33a43a14a24a34a44⎤⎦⎥⎥⎥⎥=[FnFn+1Sn+1Gn]=[FnFn+Fn−1Sn+Fn+Fn−1Gn−1+Sn][Fn−1FnSnGn−1][a11a12a13a14a21a22a23a24a31a32a33a34a41a42a43a44]=[FnFn+1Sn+1Gn]=[FnFn+Fn−1Sn+Fn+Fn−1Gn−1+Sn]
+所以 [a11Fn−1+a21Fn+a31Sn+a41Gn−1a12Fn−1+a22Fn+a32Sn+a42Gn−1a13Fn−1+a23Fn+a33Sn+a43Gn−1a14Fn−1+a24Fn+a34Sn+a44Gn−1]=[FnFn+Fn−1Sn+Fn+Fn−1Gn−1+Sn][a11Fn−1+a21Fn+a31Sn+a41Gn−1a12Fn−1+a22Fn+a32Sn+a42Gn−1a13Fn−1+a23Fn+a33Sn+a43Gn−1a14Fn−1+a24Fn+a34Sn+a44Gn−1]=[FnFn+Fn−1Sn+Fn+Fn−1Gn−1+Sn]
+太乱了，整理下
+⎧⎩⎨⎪⎪⎪⎪a11Fn−1+a21Fn+a31Sn+a41Gn−1a12Fn−1+a22Fn+a32Sn+a42Gn−1a13Fn−1+a23Fn+a33Sn+a43Gn−1a14Fn−1+a24Fn+a34Sn+a44Gn−1=Fn=Fn+Fn−1=Sn+Fn+Fn−1=Gn−1+Sn{a11Fn−1+a21Fn+a31Sn+a41Gn−1=Fna12Fn−1+a22Fn+a32Sn+a42Gn−1=Fn+Fn−1a13Fn−1+a23Fn+a33Sn+a43Gn−1=Sn+Fn+Fn−1a14Fn−1+a24Fn+a34Sn+a44Gn−1=Gn−1+Sn
+可以推出
+⎧⎩⎨⎪⎪⎪⎪a21=a12=a13=a34= 1 a22=1 a23=a33=1 a44=1{a21= 1a12= a22=1a13= a23=a33=1a34= a44=1
+（非唯一解）
+
+所以 A=⎡⎣⎢⎢⎢⎢0100110011100011⎤⎦⎥⎥⎥⎥A=[0110111000110001]
+因为 Xn−1A=XnXn−1A=Xn
+所以 Xn=X1An−1Xn=X1An−1
+根据定义，X1=[F0F1S1G0]=[0110]X1=[F0F1S1G0]=[0110]
+所以我们只需要用矩阵快速幂求出 An−1An−1，再左乘矩阵 [0110][0110] 即可。
+
+时间复杂度 (logn)O(log⁡n)
+C++ 代码
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+typedef long long ll;
+
+int n, m;
+ll A[4][4] = {                   // 上述矩阵 A
+    {0, 1, 1, 0},
+    {1, 1, 1, 0},
+    {0, 0, 1, 1},
+    {0, 0, 0, 1}
+};
+ll X[4] = {0, 1, 1, 0};          // 上述矩阵 X
+
+void multi(ll A[][4], ll B[][4]) // 求出 4 × 4 的方阵 A 与 B 的乘积，并储存在 A 中
+{
+    ll ans[4][4] = {0};
+    for (int i = 0; i < 4; i ++ )
+        for (int j = 0; j < 4; j ++ )
+            for (int k = 0; k < 4; k ++ )
+                ans[i][j] += A[i][k] * B[k][j] % m;
+    for (int i = 0; i < 4; i ++ )
+        for (int j = 0; j < 4; j ++ )
+            A[i][j] = ans[i][j] % m;
+}
+
+void _multi(ll A[], ll B[][4])   // 求出 1 × 4 的矩阵 A 与 4 × 4 的矩阵 B 的乘积，并储存在 A 中
+{
+    ll ans[4] = {0};
+    for (int i = 0; i < 4; i ++ )
+        for (int j = 0; j < 4; j ++ )
+            ans[i] += A[j] * B[j][i] % m;
+    for (int i = 0; i < 4; i ++ )
+        A[i] = ans[i] % m;
+}
+
+void get(int n)                  // 求出 X[n]
+{
+    while (n)
+    {
+        if (n & 1) _multi(X, A);
+        multi(A, A);
+        n >>= 1;
+    }
+}
+
+int main()
+{
+    scanf("%d %d", &n, &m);
+
+    get(n - 1);                  // 求出 X[n - 1]
+
+    printf("%lld\n", ((n * X[2] - X[3]) % m + m) % m);
+
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/15132/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 4;
+
+int n, m;
+
+void mul(int c[][N], int a[][N], int b[][N])  // c = a * b
+{
+    static int t[N][N];
+    memset(t, 0, sizeof t);
+
+    for (int i = 0; i < N; i ++ )
+        for (int j = 0; j < N; j ++ )
+            for (int k = 0; k < N; k ++ )
+                t[i][j] = (t[i][j] + (LL)a[i][k] * b[k][j]) % m;
+
+    memcpy(c, t, sizeof t);
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    // {fn, fn+1, sn, pn}
+    // pn = n * sn - tn
+    int f1[N][N] = {1, 1, 1, 0};
+    int a[N][N] = {
+        {0, 1, 0, 0},
+        {1, 1, 1, 0},
+        {0, 0, 1, 1},
+        {0, 0, 0, 1},
+    };
+
+    int k = n - 1;
+
+    // 快速幂
+    while (k)
+    {
+        if (k & 1) mul(f1, f1, a);  // f1 = f1 * a
+        mul(a, a, a);  // a = a * a
+        k >>= 1;
+    }
+
+    cout << (((LL)n * f1[0][2] - f1[0][3]) % m + m) % m << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/188826/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1305. GT考试    原题链接    中等
+作者：    Anoxia_3 ,  2020-08-01 10:30:02 ,  阅读 69
+
+2
+
+
+f[i][j]f[i][j]:表示长度是i，且不包含不吉利串，末尾部分与不吉利数字相同的长度是j的所有字符串集合。
+
+状态转移方程：f[i+1][k]=a[0][k]∗f[i][0]+a[1][k]∗f[i][1]+…+a[m−1][k]∗f[i][m−1]f[i+1][k]=a[0][k]∗f[i][0]+a[1][k]∗f[i][1]+…+a[m−1][k]∗f[i][m−1]
+发现f[i]与f[i+1]f[i]与f[i+1]的关系是线性的，所以可以用向量来计算，F[i+1]=F[i]∗AF[i+1]=F[i]∗A。
+
+A向量中a[i][j]a[i][j]表示在总长度相邻的两个串中，将末尾部分与不吉利数字重复部分的长度从i变成ji变成j的方案数，这是一个定值，可以预处理。
+
+通过kmp可以优化求A向量的过程。
+
+在代码中因为ff数组是不断累乘的，所以在做完快速幂之后ff数组就是在乘完AnAn后的结果。
+
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+const int N = 25;
+
+int n , m , mod;
+char str[N];
+int ne[N] , a[N][N];
+
+void mul(int c[][N] , int a[][N] , int b[][N])
+{
+    static int t[N][N];
+    memset(t , 0 , sizeof t);//如果写了static，就不能通过static int t[N][N] = 0的方式初始化，因为只会调用一次 
+
+    for(int i = 0 ; i < m ; i++)
+        for(int j = 0 ; j < m ; j++)
+            for(int k = 0 ; k < m ; k++)
+                t[i][j] = (t[i][j] + a[i][k] * b[k][j]) % mod;
+
+    memcpy(c , t , sizeof t);
+}
+
+int qmi(int k)
+{
+    int f[N][N] = {1};//为了简化代码f数组开二维，其实只用到了f[0]
+
+    while(k)
+    {
+        if(k & 1) mul(f , f , a);
+        k >>= 1;
+        mul(a , a, a);
+    }
+
+    int res = 0;
+    for(int i = 0 ; i < m ; i++) res = (res + f[0][i]) % mod;
+    return res;
+}
+
+int main()
+{
+    cin >> n >> m >> mod;
+    cin >> str + 1;
+
+    //kmp
+    for(int i = 2 , j = 0 ; i < m ; i++)
+    {
+        while(j && str[j + 1] != str[i]) j = ne[j];
+        if(str[j + 1] == str[i]) j++;
+        ne[i] = j;
+    }
+
+    for(int j = 0 ; j < m ; j++)//当前长度是j
+        for(int c = '0' ; c <= '9' ; c++)//枚举后一位添加的数字
+        {
+            int k = j;
+            while(k && str[k + 1] != c) k = ne[k];
+            if(str[k + 1] == c) k++;
+            if(k < m) a[j][k]++;//添加完后一位后，与不吉利串的匹配长度是k，方案数++
+        }
+
+    cout << qmi(n) << endl;
+    return 0;
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/17413/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 25;
+
+int n, m, mod;
+char str[N];
+int ne[N];
+int a[N][N];
+
+void mul(int c[][N], int a[][N], int b[][N])  // c = a * b
+{
+    static int t[N][N];
+    memset(t, 0, sizeof t);
+
+    for (int i = 0; i < m; i ++ )
+        for (int j = 0; j < m; j ++ )
+            for (int k = 0; k < m; k ++ )
+                t[i][j] = (t[i][j] + a[i][k] * b[k][j]) % mod;
+
+    memcpy(c, t, sizeof t);
+}
+
+int qmi(int k)
+{
+    int f0[N][N] = {1};
+    while (k)
+    {
+        if (k & 1) mul(f0, f0, a);  // f0 = f0 * a
+        mul(a, a, a);  // a = a * a
+        k >>= 1;
+    }
+
+    int res = 0;
+    for (int i = 0; i < m; i ++ ) res = (res + f0[0][i]) % mod;
+    return res;
+}
+
+int main()
+{
+    cin >> n >> m >> mod;
+    cin >> str + 1;
+
+    // kmp
+    for (int i = 2, j = 0; i <= m; i ++ )
+    {
+        while (j && str[j + 1] != str[i]) j = ne[j];
+        if (str[j + 1] == str[i]) j ++ ;
+        ne[i] = j;
+    }
+
+    // 初始化A[i][j]
+    for (int j = 0; j < m; j ++ )
+        for (int c = '0'; c <= '9'; c ++ )
+        {
+            int k = j;
+            while (k && str[k + 1] != c) k = ne[k];
+            if (str[k + 1] == c) k ++ ;
+            if (k < m) a[j][k] ++ ;
+        }
+
+
+    // F[n] = F[0] * A^n
+    cout << qmi(n) << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/188887/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1307. 牡牛和牝牛    原题链接    简单
+作者：    王雨阳 ,  2020-03-23 20:08:40 ,  阅读 199
+
+6
+
+
+Description:
+约翰要带 N 只牛去参加集会里的展示活动，这些牛可以是牡牛，也可以是牝牛。
+
+牛们要站成一排，但是牡牛是好斗的，为了避免牡牛闹出乱子，约翰决定任意两只牡牛之间至少要有 K 只牝牛。
+
+请计算一共有多少种排队的方法，所有牡牛可以看成是相同的，所有牝牛也一样，答案对 5000011 取模。
+
+Solution:
+设 f[i]f[i] 表示 i 头牛站成一排有多少种排队的方法。
+
+显然，对于1≤i≤k+1,f[i]=i+11≤i≤k+1,f[i]=i+1
+因为这些情况最多有一只牡牛。
+
+假设有i头牛排队，我们考虑最后一头牛，是牡牛或者不是牡牛。
+
+如果不是牡牛， 那么前i-1头牛任意排队就可以了， 方案为f[i - 1]。
+如果是牡牛，那么第i - k 到 i - 1都不能是牡牛，方案数为f[i - k - 1]
+
+所以 ,f[i] = f[i - 1] + f[i - k - 1]
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+using namespace std;
+
+const int mod = 5000011, N = 1e5 +100;
+int n, k, f[N];
+
+int main()
+{
+    scanf("%d%d", &n, &k);
+    for(int i = 1; i <= k + 1; i ++)  
+        f[i] = i + 1;
+    for(int i = k + 2; i <= n; i ++)
+        f[i] = (f[i - 1] + f[i - k - 1]) % mod;
+    printf("%d\n", f[n]);
+    return 0;
+}
+
+作者：王雨阳
+链接：https://www.acwing.com/solution/content/10366/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, mod = 5000011;
+
+int n, k;
+int f[N], s[N];
+
+int main()
+{
+    cin >> n >> k;
+
+    f[0] = s[0] = 1;
+    for (int i = 1; i <= n; i ++ )
+    {
+        f[i] = s[max(i - k - 1, 0)];
+        s[i] = (s[i - 1] + f[i]) % mod;
+    }
+
+    cout << s[n] << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/188918/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1308. 方程的解    原题链接    中等
+作者：    Anoxia_3 ,  2020-08-02 21:39:03 ,  阅读 82
+
+1
+
+
+利用隔板法，把g(x)这个数看成g(x)个小球把g(x)这个数看成g(x)个小球，左边k个变量看成kk个变量看成k个盒子，要求每个盒子中都要有小球，
+
+将g(x)个球排成一排，因为有k个盒子，所以需要把小球分成k部分，即要k−1将g(x)个球排成一排，因为有k个盒子，所以需要把小球分成k部分，即要k−1个隔板将小球分割，
+
+因为每个盒子中都要有小球，所以一共有n-1个位置可以放置隔板，因此结果是 C n−1k−1C n−1k−1
+#include <iostream>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 150;
+
+int f[1000][100][N];//f[i][j]表示求Cij
+int k , x;
+
+int qmi(int a,  int b, int mod)
+{
+    int res = 1;
+    while(b)
+    {
+        if(b & 1) res = (LL) res * a % mod;
+        b >>= 1;
+        a = (LL) a * a % mod;
+    }
+
+    return res;
+}
+
+void add(int c[] , int a[] , int b[])
+{
+    for(int i = 0 , t = 0 ; i < N ; i++)
+    {
+        t += a[i] + b[i];
+        c[i] = t % 10;
+        t /= 10;
+    }
+}
+
+int main()
+{
+
+    cin >> k >> x;
+
+    int n = qmi(x % 1000 , x , 1000);
+
+    //C(n-1 , k-1)，因为题目中没有说取模，所以要用到高精度
+    for(int i = 0 ; i < n ; i++)
+        for(int j = 0 ; j <= i && j < k ; j++)//C右上角<=C右下角，C右上角 <= k-1
+            if(!j) f[i][j][0] = 1;
+            else add(f[i][j] , f[i - 1][j] , f[i - 1][j - 1]);
+
+    int *g = f[n - 1][k - 1];
+    int k = N - 1;
+    while(!g[k]) k--;
+    while(k >= 0) cout << g[k--];
+
+    return 0;
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/17593/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 150;
+
+int k, x;
+int f[1000][100][N];
+
+int qmi(int a, int b, int p)
+{
+    int res = 1;
+    while (b)
+    {
+        if (b & 1) res = res * a % p;
+        a = a * a % p;
+        b >>= 1;
+    }
+    return res;
+}
+
+void add(int c[], int a[], int b[])
+{
+    for (int i = 0, t = 0; i < N; i ++ )
+    {
+        t += a[i] + b[i];
+        c[i] = t % 10;
+        t /= 10;
+    }
+}
+
+int main()
+{
+    cin >> k >> x;
+
+    int n = qmi(x % 1000, x, 1000);
+
+    // C(n - 1, k - 1)
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j <= i && j < k; j ++ )
+            if (!j) f[i][j][0] = 1;
+            else add(f[i][j], f[i - 1][j], f[i - 1][j - 1]);  // f[i][j] = f[i - 1][j] + f[i - 1][j - 1];
+
+    int *g = f[n - 1][k - 1];
+    int i = N - 1;
+    while (!g[i]) i -- ;
+    while (i >= 0) cout << g[i -- ];
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/188959/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1309. 车的放置    原题链接    中等
+作者：    Anoxia_3 ,  2020-08-03 10:35:48 ,  阅读 64
+
+1
+
+
+乘法原理、加法原理
+将原来的图分成上下两块，分别在上半部分放ii个，下半部分放k−ik−i个，方案之间是加法原理，因为两两之间没有关系。
+
+①先考虑上半部分：
+
+          若在上半部分放ii个，则要从bb行中选出i行用来放置，是一个组合问题，即Ci bCi b；再考虑列，因为
+车的前后顺序不同，方案也不同，所以是个排列问题，即Ai aAi a。
+
+②再考虑下半部分：
+
+          因为已经放了ii个，所以下半部分只能放k−ik−i个，同样先考虑行，要从dd行中选出k−ik−i行，即Ck−i dCk−i d；再考虑列，同样是排列问题，即即Ak−i a+c−iAk−i a+c−i
+内部是乘法原理，因为后面的结果会受到前面的影响。
+
+#include <iostream>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 2010 , mod = 100003;//因为式子中出现a+c，所以N要开两倍
+
+int f[N] , inf[N];
+
+int qmi(int a ,  int b)
+{
+    int res = 1;
+    while(b)
+    {
+        if(b & 1) res = (LL) res * a % mod;
+        b >>= 1;
+        a = (LL) a * a % mod;
+    }
+    return res;
+}
+
+int C(int a , int b)
+{
+    if(a < b) return 0;
+    return (LL)f[a] * inf[b] % mod  * inf[a-b] % mod;
+}
+
+int A(int a , int b)
+{
+    if(a < b) return 0;
+    return (LL)f[a] * inf[a - b] % mod;
+}
+
+int main()
+{
+    int a , b , c , d , k;
+    cin >> a >> b >> c >> d >> k;
+
+    f[0] = inf[0] = 1;
+    for(int i = 1 ; i < N ; i++)    
+    {
+        f[i] = (LL)f[i - 1] * i % mod;
+        inf[i] = (LL)inf[i - 1] * qmi(i , mod - 2) % mod;
+    }
+
+    int res = 0;
+    for(int i = 0 ; i <= b ; i++)
+        res = (res + (LL) C(b , i) * A(a , i) % mod * C(d , k - i) % mod * A(a + c - i , k - i) % mod) % mod;
+
+    cout << (res % mod + mod) % mod << endl;
+    return 0; 
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/17627/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 2010, mod = 100003;
+
+int fact[N], infact[N];
+
+int qmi(int a, int k)
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (LL)res * a % mod;
+        a = (LL)a * a % mod;
+        k >>= 1;
+    }
+    return res;
+}
+
+int C(int a, int b)
+{
+    if (a < b) return 0;
+    return (LL)fact[a] * infact[a - b] % mod * infact[b] % mod;
+}
+
+int P(int a, int b)
+{
+    if (a < b) return 0;
+    return (LL)fact[a] * infact[a - b] % mod;
+}
+
+int main()
+{
+    fact[0] = infact[0] = 1;
+    for (int i = 1; i < N; i ++ )
+    {
+        fact[i] = (LL)fact[i - 1] * i % mod;
+        infact[i] = (LL)infact[i - 1] * qmi(i, mod - 2) % mod;
+    }
+
+    int a, b, c, d, k;
+    cin >> a >> b >> c >> d >> k;
+
+    int res = 0;
+    for (int i = 0; i <= k; i ++ )
+    {
+        res = (res + (LL)C(b, i) * P(a, i) % mod * C(d, k - i) % mod * P(a + c - i, k - i)) % mod;
+    }
+
+    cout << res << endl;
+
+    return 0;
+
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/192187/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 1310. 数三角形    原题链接    中等
+作者：    番茄酱 ,  2020-02-19 17:39:16 ,  阅读 269
+
+8
+
+
+首先n++, m++;转化为格点数，我们需要从 n×mn×m 个格点中选出 33 个合法格点构成三角形，那么显然我们只需要将 C3nmCnm3 减去不合法的情况（即三点共线的情况）。
+
+我们将三点共线的斜率分为三种情况分别统计：
+
+斜率不存在（即竖直）：mC3nmCn3
+斜率为 00（即水平）：nC3mnCm3
+斜率存在且不为 00，斜率为正，与斜率为负是对称的，那么只考虑前者即可。
+首先n--, m--; 还原为长度。
+我们在 n×mn×m 的矩形中，枚举底为 ii，高为 jj 的直角三角形，共有 (n−i+1)(m−j+1)(n−i+1)(m−j+1) 种（当然，我们只考虑斜边斜率大于 00 的情况）
+这样的直角三角形，其斜边上的两个端点一定在格点上，我们只需要考察斜边上除了端点，还存在的格点的数量，结论：有 gcd(i,j)−1gcd(i,j)−1 个。那么这个三角形的斜边对三点共线的贡献即为：(gcd(i,j)−1)(gcd(i,j)−1) 种。
+总结：共 2(n−i+1)(m−j+1)(gcd(i,j)−1)2(n−i+1)(m−j+1)(gcd(i,j)−1) 种
+最后，利用容斥原理，从总数减去不合法的即可。
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long LL;
+
+LL n, m;
+
+int gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+LL C(LL a, LL b) {
+    return a * (a - 1) * (a - 2) / 6;
+}
+
+int main() {
+    cin >> n >> m;
+    n++, m++; // 转化为格点数
+    LL res = C(n * m, 3) - n * C(m, 3) - m * C(n, 3);
+    n--, m--; // 还原成长度
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++)
+            res -= 2 * (n - i + 1) * (m - j + 1) * (gcd(i, j) - 1);
+    }
+    cout << res << endl;
+    return 0;
+}
+
+作者：番茄酱
+链接：https://www.acwing.com/solution/content/8781/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+int gcd(int a, int b)
+{
+    return b ? gcd(b, a % b) : a;
+}
+
+LL C(int n)
+{
+    return (LL)n * (n - 1) * (n - 2) / 6;
+}
+
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+
+    n ++, m ++ ;
+
+    LL res = C(n * m) - (LL)n * C(m) - (LL)m * C(n);
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= m; j ++ )
+            res -= 2ll * (gcd(i, j) - 1) * (n - i) * (m - j);
+
+    cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/192215/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1312. 序列统计    原题链接    中等
+作者：    番茄酱 ,  2020-02-21 13:22:09 ,  阅读 390
+
+5
+
+
+1
+解法
+约定：题目中的 N,L,RN,L,R 用 n,l,rn,l,r 表示。
+
+首先，数据之间只存在相对关系，那么可以将 [l,r][l,r] 区间映射到 [0,r−l][0,r−l]，设序列长度为 kk，题意即求：
+
+满足 0≤a1≤a2≤⋯≤ak≤r−l, 其中 ai∈[0,r−l] 的序列个数
+满足 0≤a1≤a2≤⋯≤ak≤r−l, 其中 ai∈[0,r−l] 的序列个数
+令 x1=a1,x2=a2−a1,⋯,xk=ak−ak−1x1=a1,x2=a2−a1,⋯,xk=ak−ak−1，则有：
+
+0≤x1+x2+⋯+xk≤r−l, 其中 xi≥0 
+0≤x1+x2+⋯+xk≤r−l, 其中 xi≥0 
+那么我们只要求上述满足条件的 {xk}{xk} 数列的个数，问题即：用不超过 r−lr−l 个小球放入 kk 个盒子，盒子允许为空的方案数。
+
+但是我们更倾向于解决盒子不空的情况，那么可以这么转化：先给每一个盒子放入一个小球，那么就变成了盒子不空的情况，此时我们需要令小球的总数 +k+k，即用不超过 r−l+kr−l+k 个小球放入 kk 个盒子，且盒子不空的方案数。
+
+我们考虑「隔板法」来解决这个排列组合问题。需要注意的是，这里的条件是不等式，对于等式而言，我们用 k−1k−1 个隔板将所有小球分为 kk 部分即可；对于不等式，我们考虑用 kk 个隔板，将所有小球分为 k+1k+1 部分，其中最后一部分被舍弃（即不选用），当然最后一部分的个数在本题可以为零。如下示意图：
+
+⚪···⚪|⚪···⚪|···|⚪···⚪|⚪···⚪
+
+⚪···⚪|⚪···⚪|···|⚪···⚪|这里没有球
+
+如果用 yiyi 表示每个盒子的小球个数，那么第一部分为 y1y1，第二部分为 y2y2，倒数第二部分为 ykyk，最后一部分为舍弃的部分（可以为零，如第二个图）。
+
+这样我们就可以运行排列组合的知识，共 nn 个球，有 n−1n−1 个缝隙，还需要加上最右边的一个“缝隙”，共 nn 个缝隙，插入 kk 个隔板。答案为：∑nk=1Ckr−l+k∑k=1nCr−l+kk
+计算
+数据范围 109109，显然不能枚举长度 kk 来累加答案，需要进行数学推导，下面的过程用到了两个组合数公式：
+
+Cmn=Cn−mn, Cmn=Cmn−1+Cm−1n−1
+Cnm=Cnn−m, Cnm=Cn−1m+Cn−1m−1
+令 r−l=mr−l=m，则：
+
+原式=======∑k=1nCkm+kC1m+1+C2m+2+⋯+Cnm+nCmm+1+Cmm+2+⋯+Cmm+n(Cm+1m+1+Cmm+1)+⋯+Cmm+n−Cm+1m+1(Cm+1m+2+Cmm+2)+⋯+Cmm+n−1⋯Cm+1m+n+1−1
+原式=∑k=1nCm+kk=Cm+11+Cm+22+⋯+Cm+nn=Cm+1m+Cm+2m+⋯+Cm+nm=(Cm+1m+1+Cm+1m)+⋯+Cm+nm−Cm+1m+1=(Cm+2m+1+Cm+2m)+⋯+Cm+nm−1=⋯=Cm+n+1m+1−1
+然后用 LucasLucas 定理求解组合数即可。
+
+代码
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long LL;
+
+const int mod = 1e6 + 3;
+
+int n, l, r;
+
+int ksm(int a, int k) {
+    int res = 1;
+    while (k) {
+        if (k & 1) res = (LL)res * a % mod;
+        a = (LL)a * a % mod;
+        k >>= 1;
+    }
+    return res;
+}
+
+int C(int a, int b) {
+    int res = 1, inv = 1;
+    for (int i = 1, j = a; i <= b; i++, j--) {
+        res = (LL)res * j % mod;
+        inv = (LL)inv * i % mod;
+    }
+    res = (LL)res * ksm(inv, mod - 2) % mod;
+    return res;
+}
+
+int lucas(LL a, LL b) {
+    if (a < mod && b < mod) return C(a, b);
+    return (LL)C(a % mod, b % mod) * lucas(a / mod, b / mod) % mod;
+}
+
+int main() {
+    int T; scanf("%d", &T);
+    while (T--) {
+        scanf("%d%d%d", &n, &l, &r);
+        int res = lucas(r - l + n + 1, r - l + 1) - 1;
+        cout << (res % mod + mod) % mod << endl;
+    }
+    return 0;
+}
+
+作者：番茄酱
+链接：https://www.acwing.com/solution/content/8867/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int p = 1000003;
+
+int qmi(int a, int k)
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (LL)res * a % p;
+        a = (LL)a * a % p;
+        k >>= 1;
+    }
+    return res;
+}
+
+int C(int a, int b)
+{
+    if (a < b) return 0;
+
+    int down = 1, up = 1;
+    for (int i = a, j = 1; j <= b; i --, j ++ )
+    {
+        up = (LL)up * i % p;
+        down = (LL)down * j % p;
+    }
+
+    return (LL)up * qmi(down, p - 2) % p;
+}
+
+int Lucas(int a, int b)
+{
+    if (a < p && b < p) return C(a, b);
+    return (LL)Lucas(a / p, b / p) * C(a % p, b % p) % p;
+}
+
+int main()
+{
+    int T;
+    cin >> T;
+    while (T -- )
+    {
+        int n, l, r;
+        cin >> n >> l >> r;
+        cout << (Lucas(r - l + n + 1, r - l + 1) + p - 1) % p << endl;
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/192257/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1315. 网格    原题链接    中等
+作者：    Anoxia_3 ,  2020-08-03 20:38:43 ,  阅读 75
+
+1
+
+
+1
+卡特兰数的应用
+依据卡塔兰数的推导，找出(n,m)(n,m)关于y=x+1y=x+1的对称点(m−1,n+1)(m−1,n+1)，每一条非法路径都对应一条(0,0)(0,0)到(m−1,n+1)(m−1,n+1)的路径，因此合法路径=总路径数-非法路径，即Cnn+m−Cm−1n+mCn+mn−Cn+mm−1
+#include <iostream>
+
+using namespace std;
+
+const int N = 10010;
+
+int primes[N] , cnt;
+bool st[N];
+int a[N] , b[N];
+
+void init(int n)
+{
+    for(int i = 2 ; i <= n ; i++)
+    {
+        if(!st[i]) primes[cnt++] = i;
+
+        for(int j = 0 ; primes[j] <= n / i ; j++)
+        {
+            st[primes[j] * i] = true;
+
+            if(i % primes[j] == 0) break;
+        }
+    }
+}
+
+int get(int n , int p)//n!中p的次数
+{
+    int res = 0;
+    for(int i = n ; i ; i /= p) res += i / p;
+    return res;
+}
+
+void mul(int a[] , int &len , int b)//a = a * b 高精度*低精度
+{
+    int t = 0;
+    for(int i = 0  ; i < len ; i++)
+    {
+        t += a[i] * b;
+        a[i] = t % 10;
+        t /= 10;
+    }
+
+    while(t)
+    {
+        a[len++] = t % 10;
+        t /= 10;
+    }
+
+}
+
+int C(int a , int b , int c[])//把$C_{a}^{b}$存到c数组中
+{
+    int len = 1;
+    c[0] = 1;
+
+    for(int i = 0 ; i < cnt ; i++)
+    {
+        int p = primes[i];
+        int s = get(a , p) - get(b , p) - get(a - b , p);
+        while(s--) mul(c , len , p);
+    }
+
+    return len;
+}
+
+void sub(int a[] , int al , int b[] , int bl)
+{
+    for(int i = 0 , t = 0; i < al ; i++)
+    {
+        a[i] -= t + b[i];
+        if(a[i] < 0) t = 1 , a[i] += 10;
+        else t = 0;//t代表前一位是否要减一
+    }
+}
+
+int main()
+{
+    init(N - 1);
+
+    int n , m;
+    cin >> n >> m;
+    int al = C(n + m , m , a);
+    int bl = C(n + m , m - 1 , b);
+
+    sub(a , al , b , bl);
+
+    int i = al - 1;
+    while(!a[i] && i) i--;
+    while(i >= 0) cout << a[i--];
+    return 0;
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/17680/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int primes[N], cnt;
+bool st[N];
+int a[N], b[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int get(int n, int p)
+{
+    int s = 0;
+    while (n) s += n / p, n /= p;
+    return s;
+}
+
+void mul(int r[], int &len, int x)
+{
+    int t = 0;
+    for (int i = 0; i < len; i ++ )
+    {
+        t += r[i] * x;
+        r[i] = t % 10;
+        t /= 10;
+    }
+    while (t)
+    {
+        r[len ++ ] = t % 10;
+        t /= 10;
+    }
+}
+
+void sub(int a[], int al, int b[], int bl)
+{
+    for (int i = 0, t = 0; i < al; i ++ )
+    {
+        a[i] -= t + b[i];
+        if (a[i] < 0) a[i] += 10, t = 1;
+        else t = 0;
+    }
+}
+
+int C(int x, int y, int r[N])
+{
+    int len = 1;
+    r[0] = 1;
+
+    for (int i = 0; i < cnt; i ++ )
+    {
+        int p = primes[i];
+        int s = get(x, p) - get(y, p) - get(x - y, p);
+        while (s -- ) mul(r, len, p);
+    }
+
+    return len;
+}
+
+int main()
+{
+    init(N - 1);
+
+    int n, m;
+    cin >> n >> m;
+    int al = C(n + m, m, a);
+    int bl = C(n + m, n + 1, b);
+
+    sub(a, al, b, bl);
+
+    int k = al - 1;
+    while (!a[k] && k > 0) k -- ;
+    while (k >= 0) printf("%d", a[k -- ]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/192302/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1316. 有趣的数列    原题链接    中等
+作者：    Anoxia_3 ,  2020-08-03 21:35:32 ,  阅读 99
+
+1
+
+
+看到样例中n=3，答案=5，就有可能是卡特兰数。
+
+做法：依次将1~2n内的每个数归入奇数项和偶数项，显然1要排在奇数项的第一位(整个序列的第一位)。
+
+本题结论：奇数项数>=偶数项数
+
+证明：
+      如果奇数项数 < 偶数项数，那么当将一个数归入奇数项时，因为是顺次枚举每个数，那么这个数将比上一个选出归入偶数项的数要大，即如果把这个数放入奇数项，肯定会比之后所有的偶数项都要大，显然会比相邻的偶数项要大，不满足条件，假设不成立。
+
+#include <iostream>
+
+using namespace std;
+
+const int N = 2000010;
+
+typedef long long LL;
+
+int n , mod;
+int primes[N] , cnt;
+bool st[N];
+
+int qmi(int a, int b)
+{
+    int res = 1;
+    while(b)
+    {
+        if(b & 1) res = (LL) res * a % mod;
+        b >>= 1;
+        a = (LL) a * a % mod;
+    }
+    return res;
+}
+
+void init(int n)
+{
+    for(int i = 2 ; i <= n ; i++)
+    {
+        if(!st[i]) primes[cnt++] = i;
+
+        for(int j = 0 ; primes[j] <= n / i ; j++)
+        {
+            st[primes[j] * i] = true;
+
+            if(i % primes[j] == 0) break;
+        }
+    }
+}
+
+int get(int x , int p)
+{
+    int s = 0;
+    while(x) s += x / p , x /= p;
+    return s;
+}
+
+int C(int a , int b)
+{
+    int res = 1;
+    for(int i = 0 ; i < cnt ; i++)
+    {
+        int p = primes[i];
+        int s = get(a , p) - get(b , p) - get(a - b , p);
+        res = (LL) res * qmi(p , s) % mod;
+    }
+    return res;
+}
+
+int main()
+{
+
+    cin >> n >> mod;
+
+    init(2 * n);//因为式子中会用到2*n
+
+    cout << (C(2 * n , n) - C(2 * n , n - 1) + mod) % mod << endl;
+    return 0;
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/17682/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+看到 2n，不禁想起卡特兰数（什么鬼，其实是看了算法标签。
+
+自己想的一个映射方式。
+对于一个 2n 的 01 卡特兰序列。
+
+从左往右考虑每一位，设当前是第 i 位，那么要填的就是第 i 个数字
+如果是 0，则将 i 填到奇数下标（ 1、3、5、7、9 ）中第一个空位中。
+如果是 1，则将 i 填到偶数下标（2、4、6、8）的第一个空位中
+因为卡特兰保证在任何情况下 0 个个数 >= 1 的个数。
+所以再填一个偶数的时候，他前面的奇数已经填完了，所以肯定比他的值小。
+
+然后逆映射也是类似的，所以显然就是卡特兰数。。
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+const int N = 2000005;
+typedef long long LL;
+int n, P, ans = 1, cnt[N];
+bool st[N];
+int power(int a, int b) {
+    int res = 1;
+    while (b) {
+        if (b & 1) res = (LL)res * a % P;
+        a = (LL)a * a % P;
+        b >>= 1;
+    }
+    return res;
+}
+int get(int a, int b) {
+    int res = 0;
+    while (a) res += a / b, a /= b;
+    return res;
+}
+int main() {
+    scanf("%d%d", &n, &P);
+    // C(2n, n)
+    int x = n + 1;
+    for (int i = 2; i * i <= x; i++) {
+        while (x % i == 0) cnt[i]++, x /= i;
+    }
+    if (x > 1) cnt[x] ++;
+    for (int i = 2; i <= 2 * n; i++) {
+        if (st[i]) continue;
+        for (int j = i * 2; j <= 2 * n; j += i) st[j] = true;
+        int k = get(2 * n, i) - 2 * get(n, i) - cnt[i];
+        ans = (LL)ans * power(i, k) % P;
+    }
+    printf("%d\n", ans);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/activity/content/code/content/192386/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 2000010;
+
+int n, p;
+int primes[N], cnt;
+bool st[N];
+
+void init(int n)
+{
+    for (int i = 2; i <= n; i ++ )
+    {
+        if  (!st[i]) primes[cnt ++ ] = i;
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            st[i * primes[j]] = true;
+            if (i % primes[j] == 0) break;
+        }
+    }
+}
+
+int qmi(int a, int k)
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (LL)res * a % p;
+        a = (LL)a * a % p;
+        k >>= 1;
+    }
+    return res;
+}
+
+int get(int n, int p)
+{
+    int s = 0;
+    while (n)
+    {
+        s += n / p;
+        n /= p;
+    }
+    return s;
+}
+
+int C(int a, int b)
+{
+    int res = 1;
+    for (int i = 0; i < cnt; i ++ )
+    {
+        int prime = primes[i];
+        int s = get(a, prime) - get(b, prime) - get(a - b, prime);
+
+        res = (LL)res * qmi(prime, s) % p;
+    }
+
+    return res;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &p);
+    init(n * 2);
+
+    cout << (C(n * 2, n) - C(n * 2, n - 1) + p) % p << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/193215/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+typedef long long ll;
+
+const int N=148935;
+const int M=2000005;
+
+ll n,p;
+ll ans=1;
+int a[M];
+int primes[N],cnt;
+bool st[M];
+
+inline void init(int n)
+{
+    for(int i=2;i<=n;i++)
+    {
+        if(!st[i])primes[cnt++]=i;
+        for(int j=0;primes[j]<=n/i;j++)
+        {
+            st[primes[j]*i]=true;
+            if(i%primes[j]==0)break;
+        }
+    }
+}
+
+inline void get_primes(int n,int t)
+{
+    for(int i=0;primes[i]<=n;i++)
+        for(int j=n/primes[i];j;j/=primes[i])
+            a[primes[i]]+=j*t;
+}
+
+int main()
+{
+    scanf("%lld %lld",&n,&p);
+    init(M-1);
+    get_primes(n<<1,1);
+    get_primes(n,-2);
+    int j=n+1;
+    for(int i=0;primes[i]<=j/primes[i];i++)
+        while(j%primes[i]==0)
+            j/=primes[i],a[primes[i]]--;
+    if(j>1)a[j]--;
+    for(int i=0;i<cnt;i++)
+        while(a[primes[i]]--)
+            ans=ans*primes[i]%p;
+    printf("%lld\n",ans);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/358991/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 207. 球形空间产生器    原题链接    困难
+作者：    秦淮岸灯火阑珊 ,  2019-03-03 16:14:11 ,  阅读 775
+
+7
+
+
+1
+原题连接
+更好的阅读体验
+
+题目描述
+有一个球形空间产生器能够在n维空间中产生一个坚硬的球体。
+
+现在，你被困在了这个nn维球体中，你只知道球面上n+1n+1个点的坐标，你需要以最快的速度确定这个nn维球体的球心坐标，以便于摧毁这个球形空间产生器。
+
+输入格式
+第一行是一个整数nn。
+
+接下来的n+1n+1行，每行有nn个实数，表示球面上一点的n维坐标。
+
+每一个实数精确到小数点后66位，且其绝对值都不超过2000020000。
+
+输出格式
+有且只有一行，依次给出球心的n维坐标（n个实数），两个实数之间用一个空格隔开。
+
+每个实数精确到小数点后3位。
+
+数据保证有解。
+
+数据范围
+1≤n≤101≤n≤10
+样例
+输入样例：
+2
+0.0 0.0
+-1.0 1.0
+1.0 0.0
+输出样例：
+0.500 1.500
+高斯消元
+超级讨厌这种数学题目,欺负蒟蒻我latex写不好,注意以下latex一些是数学公式生成器生成的.
+对于一个球体而言,所有点到球心的距离相等,所以只需要求出一个点(x1,x2,…,xn)(x1,x2,…,xn)使得满足∑nj=0(ai,j−xj)2=C∑j=0n(ai,j−xj)2=C
+记住C是常数,i∈[1,n+1]i∈[1,n+1] 那么这个方程组是由n+1n+1个nn元二次方程,然后我们同时消去C.∑nj=1(a2i,j−a2i+1,j−2xj(ai,j−ai+1,j,))(i=1,2,3,…,n)∑j=1n(ai,j2−ai+1,j2−2xj(ai,j−ai+1,j,))(i=1,2,3,…,n)
+我们再把变量放左边,常数放右边.
+∑nj=12(ai,j−ai+1,j)xj=∑nj=1(a2i,j−a2i+1,j)(i=1,2,3,…,n)∑j=1n2(ai,j−ai+1,j)xj=∑j=1n(ai,j2−ai+1,j2)(i=1,2,3,…,n)
+然后我们就可以开始愉快地高斯消元了.
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+int n,i,j;
+double a[21][21],b[21],c[21][21];
+inline int work()
+{
+    for(i=1;i<=n;i++)
+    {
+        for(j=i;j<=n;j++)
+            if (fabs(c[j][i])>1e-8)
+            {
+                for (int k=1;k<=n;k++)
+                    swap(c[i][k],c[j][k]);
+                swap(b[i],b[j]);
+            }
+        for(int j=1;j<=n;j++)
+        {
+            if (i==j)
+                continue;
+            double rate=c[j][i]/c[i][i];
+            for(int k=i;k<=n;k++)
+                c[j][k]-=c[i][k]*rate;
+            b[j]-=b[i]*rate;
+        }
+    }
+}
+inline void init()
+{
+    cin>>n;
+    for(i=1;i<=n+1;i++)
+        for(j=1;j<=n;j++)
+            cin>>a[i][j];
+    for(i=1;i<=n;i++)
+        for(j=1;j<=n;j++)
+        {
+            c[i][j]=2*(a[i][j]-a[i+1][j]);
+            b[i]+=a[i][j]*a[i][j]-a[i+1][j]*a[i+1][j];
+        }
+}
+inline void out()
+{
+    for(int i=1;i<=n;i++)
+        printf("%.3lf ",b[i]/c[i][i]);
+}
+int main()
+{
+    init();
+    work();
+    out();
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1086/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+const int N=12;
+
+int n;
+double sum[N];
+double w[N][N];
+double b[N][N];
+double x[N];
+
+inline void print(double a[][N])
+{
+    for(int i=0;i<n;i++,puts(""))
+        for(int j=0;j<=n;j++)
+            printf("%.2lf ",b[i][j]);
+    putchar('\n');
+}
+
+int main()
+{
+    scanf("%d",&n);
+    for(int i=0;i<=n;i++)
+        for(int j=0;j<n;j++)
+        {
+            scanf("%lf",&w[i][j]);
+            sum[i]+=w[i][j]*w[i][j];
+        }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+            b[i][j]=2.0*(w[i+1][j]-w[0][j]);
+        b[i][n]=sum[i+1]-sum[0];
+    }
+    for(int i=0;i<n;i++)
+        for(int j=i+1;j<n;j++)
+            for(int k=n;k>=i;k--)
+                b[j][k]-=b[i][k]*b[j][i]/b[i][i];
+    for(int i=n-1;i>0;i--)
+        for(int j=i-1;j>=0;j--)
+            b[j][n]-=b[j][i]/b[i][i]*b[i][n];
+    for(int i=0;i<n;i++)
+        x[i]=b[i][n]/b[i][i];
+    for(int i=0;i<n;i++)
+        printf("%.3lf ",x[i]);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/359096/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+遇事不决先打卡
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+const int N = 11;
+const double eps = 1e-5;
+int n;
+double a[N][N], x[N][N];
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i <= n; i++)
+        for (int j = 0; j < n; j++) scanf("%lf", &x[i][j]);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            a[i][j] = 2 * (x[i][j] - x[i + 1][j]);
+            a[i][n] += x[i][j] * x[i][j] - x[i + 1][j] * x[i + 1][j];
+        }
+    }
+    for (int r = 0, c = 0; c < n; c++) {
+        for (int i = n; i >= c; i--) a[r][i] /= a[r][c];
+        for (int i = r + 1; i < n; i++)
+            for (int j = n; j >= r; j--) a[i][j] -= a[r][j] * a[i][c];
+        r++;
+    }
+
+    for (int i = n - 2; ~i; i--)
+        for (int j = n - 1; j > i; j--) a[i][n] -= a[i][j] * a[j][n];
+
+    for (int i = 0; i < n; i++) printf("%.3lf ", a[i][n]);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/activity/content/code/content/192936/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+const int N = 15;
+
+int n;
+double a[N][N], b[N][N];
+
+void gauss()
+{
+    // 转化成上三角矩阵
+    for (int r = 1, c = 1; c <= n; c ++, r ++ )
+    {
+        // 找主元
+        int t = r;
+        for (int i = r + 1; i <= n; i ++ )
+            if (fabs(b[i][c]) > fabs(b[t][c]))
+                t = i;
+
+        // 交换
+        for (int i = c; i <= n + 1; i ++ ) swap(b[t][i], b[r][i]);
+        // 归一化
+        for (int i = n + 1; i >= c; i -- ) b[r][i] /= b[r][c];
+        // 消
+        for (int i = r + 1; i <= n; i ++ )
+            for (int j = n + 1; j >= c; j -- )
+                b[i][j] -= b[i][c] * b[r][j];
+    }
+
+    // 转化成对角矩阵
+    for (int i = n; i > 1; i -- )
+        for (int j = i - 1; j; j -- )
+        {
+            b[j][n + 1] -= b[i][n + 1] * b[j][i];
+            b[j][i] = 0;
+        }
+}
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 0; i < n + 1; i ++ )
+        for (int j = 1; j <= n; j ++ )
+            scanf("%lf", &a[i][j]);
+
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= n; j ++ )
+        {
+            b[i][j] += 2 * (a[i][j] - a[0][j]);
+            b[i][n + 1] += a[i][j] * a[i][j] - a[0][j] * a[0][j];
+        }
+
+    gauss();
+
+    for (int i = 1; i <= n; i ++ ) printf("%.3lf ", b[i][n + 1]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/193255/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 208. 开关问题    原题链接    简单
+作者：    秦淮岸灯火阑珊 ,  2019-03-03 16:35:32 ,  阅读 805
+
+7
+
+
+2
+原题连接
+更好的阅读体验
+
+题目描述
+有N个相同的开关，每个开关都与某些开关有着联系，每当你打开或者关闭某个开关的时候，其他的与此开关相关联的开关也会相应地发生变化，即这些相联系的开关的状态如果原来为开就变为关，如果为关就变为开。
+
+你的目标是经过若干次开关操作后使得最后NN个开关达到一个特定的状态。
+
+对于任意一个开关，最多只能进行一次开关操作。
+
+你的任务是，计算有多少种可以达到指定状态的方法。（不计开关操作的顺序）
+
+输入格式
+输入第一行有一个数KK，表示以下有KK组测试数据。
+
+每组测试数据的格式如下：
+
+第一行 一个数NN（0<N<29）（0<N<29）。
+
+第二行 NN个0或者1的数，表示开始时NN个开关状态。
+
+第三行 NN个0或者1的数，表示操作结束后NN个开关的状态。
+
+接下来 每行两个数IJIJ，表示如果操作第 II 个开关，第JJ个开关的状态也会变化。
+
+每组数据以 0 0 结束。
+
+输出格式
+如果有可行方法，输出总数，否则输出“Oh,it’s impossible~!!” 。
+
+样例
+输入样例：
+2
+3
+0 0 0
+1 1 1
+1 2
+1 3
+2 1
+2 3
+3 1
+3 2
+0 0
+3
+0 0 0
+1 0 1
+1 2
+2 1
+0 0
+输出样例：
+4
+Oh,it's impossible~!!
+高斯消元+异或空间
+设xixi表示第ii个开关的操作情况,那么xi=1xi=1为按了这个开关,否则xi=0xi=0表示这个开关并没有按下去,那么我们接着统计ai,jai,j表示第i个开关和第j个开关的联系情况,ai,j=1ai,j=1表示按下j会影响i的状态,否则就是不会影响,即ai,j=0ai,j=0,特殊地一个点就是,ai,i=1ai,i=1,因为我们本身肯定会影响本身.
+我们用int整数,来存储一个n+1位的二进制数
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+int a[110],n,t,ans,x,y;
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin>>t;
+    while(t--)
+    {
+        cin>>n;
+        for(int i=1;i<=n;i++)
+            cin>>a[i];
+        for(int i=1;i<=n;i++)
+        {
+            cin>>x;
+            a[i]^=x;
+            a[i]|=1<<i;
+        }
+        while(cin>>x>>y && (x && y))
+            a[y]|=1<<x;
+        ans=1;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=i+1;j<=n;j++)
+                if (a[j]>a[i])
+                    swap(a[i],a[j]);
+            if (a[i]==0)
+            {
+                ans=1<<(n-i+1);
+                break;
+            }
+            if (a[i]==1)
+            {
+                ans=0;
+                break;
+            }
+            for(int k=n;k;k--)
+                if (a[i]>>k & 1)
+                {
+                    for(int j=1;j<=n;j++)
+                        if (i!=j && (a[j]>>k & 1))
+                            a[j]^=a[i];
+                    break;
+                }
+        }
+        if (ans==0)
+            cout<<"Oh,it's impossible~!!"<<endl;
+        else
+            cout<<ans<<endl;
+    }
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1087/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+const int N=35;
+
+int T,n;
+int a[N][N];
+
+inline int Gauss()
+{
+    int r,c;
+    for(r=c=1;c<=n;c++)
+    {
+        int t=r;
+        for(int i=r+1;i<=n;i++)
+            if(a[i][c])t=i;
+        if(!a[t][c])continue;
+        for(int i=c;i<=n+1;i++)
+            swap(a[t][i],a[r][i]);
+        for(int i=r+1;i<=n;i++)
+            for(int j=n+1;j>=c;j--)
+                a[i][j]^=a[i][c]&a[r][j];
+        r++;
+    }
+    int res=1;
+    if(r<n+1)
+    {
+        for(int i=r;i<=n;i++)
+        {
+            if(a[i][n+1])return -1;
+            res<<=1;
+        }
+    }
+    return res;
+}
+
+int main()
+{
+    for(scanf("%d",&T);T--;)
+    {
+        memset(a,0,sizeof a);
+        scanf("%d",&n);
+        for(int i=1;i<=n;i++)scanf("%d",&a[i][n+1]);
+        for(int i=1;i<=n;i++)
+        {
+            int t;
+            scanf("%d",&t);
+            a[i][n+1]^=t;
+            a[i][i]=1;
+        }
+        for(int u,v;scanf("%d%d",&u,&v),u||v;a[v][u]=1);
+        int t=Gauss();
+        if(~t)printf("%d\n",t);
+        else puts("Oh,it's impossible~!!");
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/359271/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 35;
+
+int n;
+int a[N][N];
+
+int gauss()
+{
+    int r, c;
+    for (r = 1, c = 1; c <= n; c ++ )
+    {
+        // 找主元
+        int t = r;
+        for (int i = r + 1; i <= n; i ++ )
+            if (a[i][c])
+                t = i;
+
+        if (!a[t][c]) continue;
+        // 交换
+        for (int i = c; i <= n + 1; i ++ ) swap(a[t][i], a[r][i]);
+        // 消
+        for (int i = r + 1; i <= n; i ++ )
+            for (int j = n + 1; j >= c; j -- )
+                a[i][j] ^= a[i][c] & a[r][j];
+        r ++ ;
+    }
+
+    int res = 1;
+    if (r < n + 1)
+    {
+        for (int i = r; i <= n; i ++ )
+        {
+            if (a[i][n + 1]) return -1;  // 出现了 0 == !0，无解
+            res *= 2;
+        }
+    }
+
+    return res;
+}
+
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        memset(a, 0, sizeof a);
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i ++ ) scanf("%d", &a[i][n + 1]);
+        for (int i = 1; i <= n; i ++ )
+        {
+            int t;
+            scanf("%d", &t);
+            a[i][n + 1] ^= t;
+            a[i][i] = 1;
+        }
+
+        int x, y;
+        while (scanf("%d%d", &x, &y), x || y) a[y][x] = 1;
+
+        int t = gauss();
+        if (t == -1) puts("Oh,it's impossible~!!");
+        else printf("%d\n", t);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/193292/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+    AcWing 214. Devu和鲜花    原题链接    中等
+作者：    叁秋. ,  2020-05-25 21:40:29 ,  阅读 222
+
+5
+
+
+1
+经典容斥
+题意就不说了.
+
+解法
+理想情况
+理想每一组中可以取无限朵花，那么我们就需要达到x1+x2+x3+……+xn=Mx1+x2+x3+……+xn=M。
+此时xi>=0xi>=0，那么令yi=xi+1yi=xi+1，则y1+y2+y3+……+yn=M+Ny1+y2+y3+……+yn=M+N。
+因为yi>=1yi>=1，所以可以用隔板法,在M+N−1M+N−1个空隙中插入N−1N−1个板,答案为CN−1M+N−1CM+N−1N−1。
+
+实际
+在实际中有x1<=A1,x2<=A2,x3<=A3……xn<=Anx1<=A1,x2<=A2,x3<=A3……xn<=An等条件，此时就需要同时满足这N个条件。
+那么正难则反，考虑求补集，也就是至少不满足其中一个条件的方案。就可以用总方案减去这些方案就可以得出答案。
+设不满足ii的方案为sisi，
+那么答案就是CN−1M+N−1−|s1⋃s2⋃s3……⋃sn|CM+N−1N−1−|s1⋃s2⋃s3……⋃sn|。
+将其展开就是：
+CN−1M+N−1−|s1|−|s2|−……|s3|+|s1⋂s2|+……−|s1⋂s2⋂s3|−……CM+N−1N−1−|s1|−|s2|−……|s3|+|s1⋂s2|+……−|s1⋂s2⋂s3|−……。
+就是一个容斥原理的展开。
+考虑sisi怎么求。以s1s1举例，假如要求s1s1，就代表我们必须从第一组里取出至少A1+1A1+1朵花，那么此时还剩M−(A1+1)M−(A1+1)朵花。剩下的就是隔板，
+那么此时方案就是CN−1M+N−1−(A1+1)CM+N−1−(A1+1)N−1。
+那么|s1⋂s2||s1⋂s2|同上，方案就是CN−1M+N−1−(A1+1)−(A2+1)CM+N−1−(A1+1)−(A2+1)N−1。
+整理一下，就得到 res=CN−1M+N−1−∑i=1CN−1M+N−1−(Ai+1)+∑i<jCN−1M+N−1−(Ai+1)−(Aj+1)−……res=CM+N−1N−1−∑i=1CM+N−1−(Ai+1)N−1+∑i<jCM+N−1−(Ai+1)−(Aj+1)N−1−……。
+总所周知，容斥复杂度O(2n)O(2n)，那么可以从0枚举到2n−10枚举到2n−1。
+然后把每一个条件看成一个二进制位,如果是11或00就代表遵守或不遵守这个条件，奇数个就减，偶数个就加。
+那么怎么去算组合数，可以发现虽然MM非常大，但是我们的NN很小，所以只需按着定义去算，大概是NN的复杂度。所以总的复杂度就是O(2N∗N)O(2N∗N)。
+
+参考代码
+/*
+    容斥+组合数计算.
+*/
+#include<bits/stdc++.h>
+using namespace std;
+const int mod=1e9+7;
+typedef long long ll;
+const int N=25;
+ll n,m;
+int res;
+ll a[N];
+int down=1;
+int ksm(int a,int b) {
+    int res=1;
+    while(b) {
+        if(b&1) res=1ll*res*a%mod;
+        a=1ll*a*a%mod;
+        b>>=1;
+    }
+    return res;
+}
+int C(ll a,ll b) {
+    if(a<b) return 0;
+    int up=1;
+    for(ll i=a; i>a-b; --i) up=i%mod*up%mod;
+    return 1ll*up*down%mod;
+}
+int main() {
+    scanf("%lld%lld",&n,&m);
+    for(int i=0; i<n; ++i) scanf("%lld",&a[i]);
+    for(int i=1; i<=n-1; ++i) down=1ll*i*down%mod;
+    down=ksm(down,mod-2);
+    for(int i=0; i<(1<<n); ++i) {
+        ll d=m+n-1,up=n-1;
+        int sign=1;
+        for(int j=0; j<n; ++j) {
+            if((i>>j)&1) {
+                sign*=-1;
+                d-=a[j]+1;
+            }
+        }
+        res=(res+C(d,up)*sign)%mod;
+    }
+    printf("%d\n",(res+mod)%mod);
+    return 0;
+}
+
+作者：叁秋.
+链接：https://www.acwing.com/solution/content/13666/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 20, mod = 1e9 + 7;
+
+LL A[N];
+int down = 1;
+
+int qmi(int a, int k, int p)
+{
+    int res = 1;
+    while (k)
+    {
+        if (k & 1) res = (LL)res * a % p;
+        a = (LL)a * a % p;
+        k >>= 1;
+    }
+    return res;
+}
+
+int C(LL a, LL b)
+{
+    if (a < b) return 0;
+    int up = 1;
+    for (LL i = a; i > a - b; i -- ) up = i % mod * up % mod;
+
+    return (LL)up * down % mod; // 费马小定理
+}
+
+int main()
+{
+    LL n, m;
+    cin >> n >> m;
+    for (int i = 0; i < n; i ++ ) cin >> A[i];
+
+    for (int j = 1; j <= n - 1; j ++ ) down = (LL)j * down % mod;
+    down = qmi(down, mod - 2, mod);
+
+    int res = 0;
+    for (int i = 0; i < 1 << n; i ++ )
+    {
+        LL a = m + n - 1, b = n - 1;
+        int sign = 1;
+        for (int j = 0; j < n; j ++ )
+            if (i >> j & 1)
+            {
+                sign *= -1;
+                a -= A[j] + 1;
+            }
+        res = (res + C(a, b) * sign) % mod;
+    }
+
+    cout << (res + mod) % mod << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/196359/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 215. 破译密码    原题链接    困难
+作者：    Anoxia_3 ,  2020-08-07 09:18:07 ,  阅读 92
+
+3
+
+
+1
+莫比乌斯函数：
+
+
+题意：给定a,b,d，若1≤x≤a，1≤y≤b1≤x≤a，1≤y≤b，求有多少对x和y,使得(x,y)=d(x,y)=d。
+
+转化=>令x′=x/d，y′=y/dx′=x/d，y′=y/d，则1≤x′≤a/d，1≤y′≤b/d1≤x′≤a/d，1≤y′≤b/d，求有多少对x'和y'互质,。
+
+如何求总共有多少对合法的呢？这里用到补集的思想：合法对数= 总对数-不合法对数。
+
+不合法对：x'和y'的最大公因数大于1。
+令a′=a/d，b′=b/da′=a/d，b′=b/d，利用容斥原理求得不合法对数：
+
+a′b′−a′/2∗b‘2−a′/3∗b′/3−…(有一个质公因子)a′b′−a′/2∗b‘2−a′/3∗b′/3−…(有一个质公因子)
+            +a′/6∗b′/6+…                      (有两个不同质公因子)+a′/6∗b′/6+…                      (有两个不同质公因子)
+            −a′/30∗b′/30−…                  (有三个不同质公因子)−a′/30∗b′/30−…                  (有三个不同质公因子)
+=>∑min(a,b)i=1a′/i∗b′/i∗mobius[i]∑i=1min(a,b)a′/i∗b′/i∗mobius[i]
+发现如果要这样做i就要枚举1−N1−N，因此每次的时间复杂度是O(n)O(n)的,有N=50000N=50000，会TLETLE，所以还要优化。
+
+如何优化？
+发现，这个式子中虽然i要枚举NN次，但是实际上因为整除的原因aiai的值很少，只有2a‾√2a个！
+因为a1a1、a2a2、a3a3、…是单调递减的，所以整个序列的值可以分成2a‾√2a段相同的值。
+
+说明：1、为什么是2a‾√2a段 2、怎么分
+
+1、
+将原来的n项分为两部分：
+     1、a1−aa√     1、a1−aa 有a‾√a项
+     2、aa√+1−aa     2、aa+1−aa 有a‾√a个取值
+
+2、
+设g(x)表示使axax的取值不变的最大的x值，就有axax=ag(x)ag(x)，且axax>ag(x)+1ag(x)+1，其中g(x)=aaxg(x)=aax
+证：axax=ag(x)ag(x)
+
+只有这一条式子无法保证时间复杂度，因为虽然知道从xx跳到g(x)g(x)，分式的值不变，但是不知道g(x)g(x)是不是xx所能达到的最大值，因此需要证下式!
+
+证：axax>ag(x)+1ag(x)+1
+
+由这条式子可以得知，g(x)g(x)可以使分式的值不变，但是g(x)+1g(x)+1却小于，说明g(x)g(x)是xx所能达到的最大值！
+综上：将原来的序列分成2a‾√2a段，而且每次都会跳一段，所以总共会跳2a‾√2a次，时间复杂度就是O(a‾√)O(a)!
+
+#include <iostream>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 50010;
+
+int primes[N] , cnt;
+bool st[N];
+int mobius[N] , sum[N];
+
+void init(int n)
+{
+    mobius[1] = 1;
+    for(int i = 2 ; i <= n ; i++)
+    {
+        if(!st[i]) 
+        {
+            primes[cnt++] = i;
+            mobius[i] = -1;
+        }
+
+        for(int j = 0 ; primes[j] <= n / i ; j++)
+        {
+            int t = primes[j] * i;
+            st[t] = true;
+            if(i % primes[j] == 0)
+            {
+                mobius[t] = 0;//t中至少包含2个primes[j]
+                break;
+            }
+            mobius[t] = mobius[i] * -1;//primes[j]只出现一次，所以t的mobius值取决于i
+        }
+    }
+
+    for(int i = 1 ; i <= n ; i++) sum[i] = sum[i - 1] + mobius[i];
+}
+
+int main()
+{
+    init(N - 1);
+
+    int T;
+    cin >> T;
+    while(T--)
+    {
+        int a , b , d;
+        cin >> a >> b >> d;
+        a /= d , b /= d;
+        int n = min(a , b);
+        LL res = 0;
+        for(int l = 1 , r ; l <= n ; l = r + 1)
+        {
+            r = min(n , min(a / (a / l) , b / (b / l)));
+            //x最远跳到的位置g(x) = t / (t / x)，因为要使a/l和b/l的值都不变，所以要取跳的位置的min
+            res += (sum[r] - sum[l - 1]) * (LL)(a / l) * (b / l);
+            //在x∈[l,r]上，a/x和b/x的值是不变的，所以只要求出l~r上mobius的和*分式的值即可
+        }
+        cout << res << endl;
+    }
+    return 0;
+}
+
+作者：Anoxia_3
+链接：https://www.acwing.com/solution/content/17858/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 50010;
+
+int primes[N], cnt;
+bool st[N];
+int mobius[N], sum[N];
+
+// 线性筛法，求莫比乌斯函数
+void init(int n)
+{
+    mobius[1] = 1;
+    for (int i = 2; i <= n; i ++ )
+    {
+        if (!st[i])
+        {
+            primes[cnt ++ ] = i;
+            mobius[i] = -1;
+        }
+        for (int j = 0; primes[j] * i <= n; j ++ )
+        {
+            int t = primes[j] * i;
+            st[t] = true;
+            if (i % primes[j] == 0)
+            {
+                mobius[t] = 0;
+                break;
+            }
+            mobius[t] = mobius[i] * -1;
+        }
+    }
+
+    for (int i = 1; i <= n; i ++ ) sum[i] = sum[i - 1] + mobius[i];
+}
+
+int main()
+{
+    init(N - 1);
+
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        int a, b, d;
+        scanf("%d%d%d", &a, &b, &d);
+        a /= d, b /= d;
+        int n = min(a, b);
+        LL res = 0;
+        for (int l = 1, r; l <= n; l = r + 1)
+        {
+            r = min(n, min(a / (a / l), b / (b / l)));
+            res += (sum[r] - sum[l - 1]) * (LL)(a / l) * (b / l);
+        }
+
+        printf("%lld\n", res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/196411/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 217. 绿豆蛙的归宿    原题链接    简单
+作者：    zhangxu ,  2019-09-08 22:29:09 ,  阅读 427
+
+4
+
+
+感觉 书上写的 如果状态转移复杂了 不好对付
+有等可能的挺在原地 或者是 掉到之前某个点 计算就必须 单独分开 而不能 直接 每次for ++ 了
+按照 直接理解重写了分 同事 2019 南昌网络赛 D 题 也是 差不多的思路
+
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn = 2e5 + 5;
+int n, m;
+int head[maxn], cnt;
+int to[maxn], nxt[maxn];
+int from[maxn], pre[maxn], come[maxn], val[maxn], tot;
+int out[maxn], deg[maxn];
+double dis[maxn];
+
+void cometo(int a, int b, int c) {
+    come[++ tot] = b, val[tot] = c;
+    pre[tot] = from[a],  from[a] = tot;
+}
+
+void ade(int a, int b) {
+    to[++ cnt] = b;
+    nxt[cnt] = head[a], head[a] = cnt;
+}
+
+double redis(int u) {
+    if(u == n) return 0;
+    double res = 0;
+    for(int i = from[u]; i; i = pre[i]) {
+        res += (dis[come[i]] + 1.0 * val[i]) / deg[u];
+    }
+    return res;
+}
+
+void topsort() {
+    queue<int> que;
+    que.push(n);
+    while(!que.empty()) {
+        int x = que.front(); que.pop();
+        dis[x] = redis(x);
+        for(int i = head[x]; i; i = nxt[i]) {
+            out[to[i]] --;
+            if(out[to[i]] == 0) que.push(to[i]);
+        }
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for(int i = 1, a, b, c; i <= m; ++ i) {
+        scanf("%d %d %d", &a, &b, &c);
+        cometo(a, b, c), ade(b, a);
+        deg[a] ++, out[a] ++;
+    }
+    topsort();
+    printf("%.2lf\n", dis[1]);
+    return 0;
+}
+
+作者：zhangxu
+链接：https://www.acwing.com/solution/content/4448/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, M = 200010;
+
+int n, m;
+int h[N], e[M], w[M], ne[M], idx;
+int dout[N];
+double f[N];
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+double dp(int u)
+{
+    if (f[u] >= 0) return f[u];
+    f[u] = 0;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        f[u] += (w[i] + dp(j)) / dout[u];
+    }
+    return f[u];
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+        dout[a] ++ ;
+    }
+
+    memset(f, -1, sizeof f);
+
+    printf("%.2lf\n", dp(1));
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/196433/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+const int N=100005;
+const int M=200005;
+
+int n,m;
+int e[M],w[M],ne[M],idx;
+int h[N],din[N],dout[N];
+int q[N],hh,tt;
+double f[N],g[N];
+
+int main()
+{
+    scanf("%d%d",&n,&m);
+    for(int i=0,a;i<m;i++)
+    {
+        scanf("%d%d%d",e+idx,&a,w+ ++idx);
+        ne[idx]=h[a],h[a]=idx;
+        din[e[idx]]++,dout[e[idx]]++;
+    }
+    q[0]=n,g[n]=1;
+    while(hh<=tt)
+    {
+        int t=q[hh++];
+        for(int i=h[t];i;i=ne[i])
+        {
+            f[e[i]]+=(f[t]+w[i])/dout[e[i]];
+            if(!--din[e[i]])q[++tt]=e[i];
+        }
+    }
+    printf("%.2lf\n",f[1]);
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/359911/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 218. 扑克牌    原题链接    中等
+作者：    mesopotamian ,  2019-11-15 17:55:39 ,  阅读 441
+
+7
+
+
+4
+期望dp的状态转移方程
+
+
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+#define eps 1e-8
+double F[15][15][15][15][5][5],E;
+bool vis[15][15][15][15][5][5];
+int A,B,C,D;
+double dfs(int a,int b,int c,int d,int e,int f)
+{
+    if(F[a][b][c][d][e][f]>1e-8) return F[a][b][c][d][e][f];
+    if(a+(e==1)+(f==1)>=A&&b+(e==2)+(f==2)>=B&&
+       c+(e==3)+(f==3)>=C&&d+(e==4)+(f==4)>=D) return 0;
+    double sum=1.0,Min1=1e9,Min2=1e9;
+    int cnt = a+b+c+d+(e!=0)+(f!=0);
+    if(a<13) sum+=dfs(a+1,b,c,d,e,f)*(13-a)/(54-cnt);
+    if(b<13) sum+=dfs(a,b+1,c,d,e,f)*(13-b)/(54-cnt);
+    if(c<13) sum+=dfs(a,b,c+1,d,e,f)*(13-c)/(54-cnt);
+    if(d<13) sum+=dfs(a,b,c,d+1,e,f)*(13-d)/(54-cnt);
+    if(e==0)for(int i=1;i<5;++i)Min1=min(Min1,dfs(a,b,c,d,i,f)/(54-cnt));
+    if(f==0)for(int i=1;i<5;++i)Min2=min(Min2,dfs(a,b,c,d,e,i)/(54-cnt));
+    if(e==0)sum+=Min1;
+    if(f==0)sum+=Min2;
+    return F[a][b][c][d][e][f]=sum;
+}
+int main(int argc, char const *argv[])
+{
+    scanf("%d%d%d%d",&A,&B,&C,&D);
+    if(max(A-13,0)+max(B-13,0)+max(C-13,0)+max(D-13,0)>2)
+    return puts("-1.000"),0;
+    double ans = dfs(0,0,0,0,0,0);
+    printf("%.3f",ans);
+    return 0;
+}
+
+作者：mesopotamian
+链接：https://www.acwing.com/solution/content/5890/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 14;
+const double INF = 1e20;
+
+int A, B, C, D;
+double f[N][N][N][N][5][5];
+
+double dp(int a, int b, int c, int d, int x, int y)
+{
+    double &v = f[a][b][c][d][x][y];
+    if (v >= 0) return v;
+    int as = a + (x == 0) + (y == 0);
+    int bs = b + (x == 1) + (y == 1);
+    int cs = c + (x == 2) + (y == 2);
+    int ds = d + (x == 3) + (y == 3);
+    if (as >= A && bs >= B && cs >= C && ds >= D) return v = 0;
+
+    int sum = a + b + c + d + (x != 4) + (y != 4);
+    sum = 54 - sum;
+    if (sum <= 0) return v = INF;
+
+    v = 1;
+    if (a < 13) v += (13.0 - a) / sum * dp(a + 1, b, c, d, x, y);
+    if (b < 13) v += (13.0 - b) / sum * dp(a, b + 1, c, d, x, y);
+    if (c < 13) v += (13.0 - c) / sum * dp(a, b, c + 1, d, x, y);
+    if (d < 13) v += (13.0 - d) / sum * dp(a, b, c, d + 1, x, y);
+    if (x == 4)
+    {
+        double t = INF;
+        for (int i = 0; i < 4; i ++ ) t = min(t, 1.0 / sum * dp(a, b, c, d, i, y));
+        v += t;
+    }
+    if (y == 4)
+    {
+        double t = INF;
+        for (int i = 0; i < 4; i ++ ) t = min(t, 1.0 / sum * dp(a, b, c, d, x, i));
+        v += t;
+    }
+
+    return v;
+}
+
+int main()
+{
+    cin >> A >> B >> C >> D;
+    memset(f, -1, sizeof f);
+
+    double t = dp(0, 0, 0, 0, 4, 4);
+    if (t > INF / 2) t = -1;
+
+    printf("%.3lf\n", t);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/196477/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+    AcWing 1319. 移棋子游戏    原题链接    中等
+作者：    垫底抽风 ,  2020-06-26 14:27:54 ,  阅读 182
+
+12
+
+
+题目描述
+给定一个有 NN 个节点的有向无环图，图中某些节点上有棋子，两名玩家交替移动棋子。
+
+玩家每一步可将任意一颗棋子沿一条有向边移动到另一个点，无法移动者输掉游戏。
+
+对于给定的图和棋子初始位置，双方都会采取最优的行动，询问先手必胜还是先手必败。
+
+输入格式
+第一行，三个整数 N,M,KN,M,K，NN 表示图中节点总数，MM 表示图中边的条数，KK 表示棋子的个数。
+
+接下来 M 行，每行两个整数 X,YX,Y 表示有一条边从点 XX 出发指向点 YY。
+
+接下来一行，KK 个空格间隔的整数，表示初始时，棋子所在的节点编号。
+
+节点编号从 11 到 NN。
+
+输出格式
+若先手胜，输出 win，否则输出 lose。
+
+数据范围
+1≤N≤2000,1≤N≤2000,
+1≤M≤6000,1≤M≤6000,
+1≤K≤N1≤K≤N
+输入样例：
+6 8 4
+2 1
+2 4
+1 4
+1 5
+4 5
+1 3
+3 5
+3 6
+1 2 4 6
+输出样例：
+win
+这题咋没人写题解嘞 qwqqwq
+SG 函数
+首先定义 mexmex 函数，这是施加于一个集合的函数，返回最小的不属于这个集合的非负整数
+例：mex({1,2})=0,mex({0,1})=2,mex({0,1,2,4})=3mex({1,2})=0,mex({0,1})=2,mex({0,1,2,4})=3
+在一张有向无环图中，对于每个点 uu，设其所有能到的点的 SGSG 函数值集合为集合 AA，那么 uu 的 SGSG 函数值为 mex(A)mex(A)，记做 SG(u)=mex(A)SG(u)=mex(A)
+例图：
+
+例图解释：
+
+SG(5)=mex({∅})=0SG(5)=mex({∅})=0
+SG(3)=mex({SG(5)})=mex({0})=1SG(3)=mex({SG(5)})=mex({0})=1
+SG(4)=mex({SG(5),SG(3)})=mex({0,1})=2SG(4)=mex({SG(5),SG(3)})=mex({0,1})=2
+SG(2)=mex({SG(3)}=mex({1})=0SG(2)=mex({SG(3)}=mex({1})=0
+SG(1)=mex({SG(2),SG(4)})=mex({0,2})=1SG(1)=mex({SG(2),SG(4)})=mex({0,2})=1
+那么 SGSG 函数的定义说完了，这题和 SGSG 函数又有什么关系呢？
+下面先说本题做法，再证明该方法正确性。
+
+做法：求出每个棋子所在的点的 SGSG 函数值，将所有值异或起来。若异或值为 00，则输出win，否则输出lose
+
+证明：
+首先，由于这是一张有向无环图，所以游戏最后一定会结束，也就是说每个棋子最后都会移动到一个点上，且该点没有任何能到达的点。
+那么根据定义，结束状态的所有点的 SGSG 函数值异或起来为 00，做法对于结束状态可行。
+所以接下来，只要证明出
+
+任何一种每个棋子所在点的 SGSG 函数值异或起来非 00 的情况，一定能通过一次移动棋子，到达一个 每个棋子所在点的 SGSG 函数值异或起来为 00 的情况
+任何一种每个棋子所在点的 SGSG 函数值异或起来为 00 的情况，一定不能通过一次移动棋子，到达一个每个棋子所在点的 SGSG 函数值异或起来为 00 的情况
+那么做法就是对的
+
+证明 1：
+设每个棋子所在点的 SGSG 函数值分别为 a1,a2,⋯,ana1,a2,⋯,an
+设 x=a1 XOR a2 XOR ⋯ XOR anx=a1 XOR a2 XOR ⋯ XOR an，设 xx 的最高位为第 kk 位，那么在 a1,a2,⋯,ana1,a2,⋯,an 中，一定有一个值的第 kk 位为 11
+设该值为 aiai，那么由于 xx 的第 kk 位和 aiai 的第 kk 位都是 11，且第 kk 位是 xx 的最高位，所以 ai XOR xai XOR x 一定小于 aiai
+又因为 aiai 是其中一个棋子所在点的 SGSG 函数值，那么根据 SGSG 函数值的定义，该点能到达的所有点中，一定存在一个点的 SGSG 函数值为 ai XOR xai XOR x
+那么我们就可以将该点上的棋子，移到一个 SGSG 函数值为 ai XOR xai XOR x 的点上去
+移完之后，原来每个棋子所在点的 SGSG 函数异或值就变为了 a1 XOR a2 XOR ⋯ XOR ai−1 XOR (ai XOR x) XOR ai+1 ⋯ XOR ana1 XOR a2 XOR ⋯ XOR ai−1 XOR (ai XOR x) XOR ai+1 ⋯ XOR an
+=(a1 XOR a2 XOR ⋯ XOR an) XOR x=x XOR x=0=(a1 XOR a2 XOR ⋯ XOR an) XOR x=x XOR x=0
+1 证毕
+
+证明 2：
+反证法，设将点 uu 上的棋子移动到点 vv 上后，每个棋子所在点的 SGSG 函数值仍然为 00
+那就说明 SG(u)=SG(v)SG(u)=SG(v)，不符合 SGSG 函数的定义，不成立
+2 证毕
+
+所以做法是正确的。
+
+那么如何求出每个点的 SGSG 函数值呢？
+记忆化搜索就好啦~
+每层记忆化搜索中，如果该点的 SGSG 函数值已经被计算出，那就直接返回该值。否则用一个 setset 记录每个点能到的所有点的 SGSG 函数值集合，然后从 00 开始遍历，找到第一个 setset 里面没有的数，将该值记录在该点上并返回。
+
+时间复杂度
+貌似是 O(n+mlogm)O(n+mlog⁡m)
+C++C++ 代码
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+#include <set>
+
+using namespace std;
+
+const int N = 2005;
+const int M = 6005;
+
+int n, m, k;
+int h[N], e[M], ne[M], idx;          // 邻接表存图
+int sg[N];                           // 存所有被计算过的点的 SG 函数值
+int res;
+
+inline void add(int u, int v)        // 加边函数。从点 u 向点 v 连一条有向边
+{
+    e[ ++ idx] = v;
+    ne[idx] = h[u];
+    h[u] = idx;
+}
+
+int SG(int u)
+{
+    if (~sg[u]) return sg[u];        // 如果当前 sg[u] 不是 -1，那么说明该点的 SG 函数值已经被计算过了，直接返回
+    set<int> S;                      // 否则要建一个集合 S，存该点能到的所有点的 SG 函数值
+    for (int i = h[u]; i; i = ne[i]) // 遍历点 u 能到达的所有点
+        S.insert(SG(e[i]));          // 计算该点的 SG 函数值，并放入集合 S
+    for (int i = 0; ; i ++ )         // 从 0 开始枚举所有非负整数
+        if (!S.count(i))             // 如果该值没有在 S 中出现过
+        {
+            sg[u] = i;               // 那么将该值记录在 sg[u] 中并返回
+            return i;
+        }
+}
+
+int main()
+{
+    scanf("%d %d %d", &n, &m, &k);   // 读入题目中 N, M, K
+    for (int i = 0; i < m; i ++ )    // 读入 M 条边并建图
+    {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        add(u, v);
+    }
+    memset(sg, -1, sizeof sg);       // 先将 sg 数组中的所有值初始化成 -1，表示没有记录过
+    while (k -- )                    // 读入 K 个棋子所在的点
+    {
+        int u;
+        scanf("%d", &u);
+        res ^= SG(u);
+    }
+    if (res) puts("win");            // 如果 res 不为 0，那么输出 win
+    else    puts("lose");            // 否则输出 lose
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/solution/content/15279/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+#include <set>
+
+using namespace std;
+
+const int N = 2010, M = 6010;
+
+int n, m, k;
+int h[N], e[M], ne[M], idx;
+int f[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+int sg(int u)
+{
+    if (f[u] != -1) return f[u];
+
+    set<int> S;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        S.insert(sg(j));
+    }
+
+    for (int i = 0; ; i ++ )
+        if (S.count(i) == 0)
+        {
+            f[u] = i;
+            break;
+        }
+
+    return f[u];
+}
+
+int main()
+{
+    scanf("%d%d%d", &n, &m, &k);
+    memset(h, -1, sizeof h);
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b);
+    }
+
+    memset(f, -1, sizeof f);
+
+    int res = 0;
+    for (int i = 0; i < k; i ++ )
+    {
+        int u;
+        scanf("%d", &u);
+        res ^= sg(u);
+    }
+
+    if (res) puts("win");
+    else puts("lose");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/197415/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+AcWing 1321. 取石子    原题链接    困难
+作者：    Serman轩 ,  2020-05-08 17:18:16 ,  阅读 203
+
+2
+
+
+1
+题目描述
+Alice 和 Bob 两个好朋友又开始玩取石子了。
+
+游戏开始时，有 N 堆石子排成一排，然后他们轮流操作（Alice 先手），每次操作时从下面的规则中任选一个：
+
+从某堆石子中取走一个；
+合并任意两堆石子。
+不能操作的人输。
+
+Alice 想知道，她是否能有必胜策略。
+
+输入格式
+第一行输入 T，表示数据组数。
+
+对于每组测试数据，第一行读入 N；
+
+接下来 N 个正整数 a1,a2,⋯,aN ，表示每堆石子的数量。
+
+输出格式
+对于每组测试数据，输出一行。
+
+输出 YES 表示 Alice 有必胜策略，输出 NO 表示 Alice 没有必胜策略。
+
+数据范围
+1≤T≤100,
+1≤N≤50,
+1≤ai≤1000
+
+算法1
+(数学) O(1)O(1)
+这道题先是课上听了记忆化搜索，然后一直觉得搜索时是有问题的，有一类情况没有考虑到。就是B类 REMOVE石头的时候，其中一个为2. 此时应该A+1, B-3的。但是代码里只要考虑B-1，A不变的非2情况。一直想为什么不用加这个可能也是对的，分析了3个小时在没分析出来，希望有大佬日后看到可以给我解答。
+
+不过发现了下述性质
+
+首先把所有石子堆分为2类。一类是只有1个石头的堆。一类是>1个石头的堆。
+我们维护有1个石头的堆的堆数，ONES。维护>1个石头的堆 SUM数 为 石子总数+堆数-1， OTHERS。
+
+假设第二类的OTHERS <=2 （即要么全是第一类，要么第二类就一个2个石头的堆）。我们可以枚举发现，有3个1 是先手必输的， 6个1 是必输的。 3 * k 个1 都是必输的（可数学归纳）
+
+if (others <= 2) {
+    System.out.println(ones % 3 == 0 ? "NO": "YES");
+} 
+我们还可以证明如果没有第一类。 OTHERS为奇数则先手必胜。（算法提高课已证）
+
+下面就是考虑既有第一类 又有第二类，且第二类OTHERS > 2的情况。
+
+先说结论
+
+else {
+    System.out.println((ones % 2 == 1 || others % 2 == 1) ? "YES" : "NO");
+}
+可以证明第一类石子的堆数为偶数并且第二类SUM数为偶数则先手必败。
+最小情况， OTHERS = 4 ，ONES = 0; （根据算法提高课的证明，OTHERS += 2 依然为偶数，则还是必败）
+如果ONES += 2；
+先手有几种选择。
+
+（移除第一类石堆）ONES - -. 那么后手可以通过再一次ONES– 使得 ONES 回到之前已证的必败态。
+
+（第一类石堆和第二类石堆合并）ONES - -, OTHERS++。 那么后手可以通过再一次该操作回到ONES = 0, OTHERS=偶数+2的已证必败态。
+
+（2个第一类合并）ONES-=2, OTHERS += 3. 那么后手可以对第二类做基本操作（合并或者移除非2的石堆，因为OTHERS >=4必然可以找到这个操作）使得OTHERS–。 回到双偶数的必败态。
+
+（第二类的基本操作） OTHERS- -。那么后手就要分情况讨论。
+4.1 OTHERS == 3, 那么后手就合并2个第一类，得到ONES = 0, OTHER=6的情况，回到已证必败态。
+4.2 OTHERS != 3 ， 那么后手就用第二类基本操作，使得OTHERS–， 回到之前 OTHERS >= 4, ONES = 2 的更小的双偶必败态。
+
+递推得证。
+
+同理如果先手看到的局面是这2个数里至少有一个是奇数的，他只要给通过一种方式给后手构造出一种双偶数的局面，他就可以保持自己必胜。
+1. ONES 为奇， OTHERS 为奇，使用ONES MERGE 进OTHERS， ONES–, OTHERS++. 变成双偶数
+2. ONES 为奇， OTHERS 为偶，使用REMOVE ONES STONE， ONES–。 变成双偶数
+3. ONES 为偶， OTHERS为奇，使用OTHERS基本操作，OTHERS–。 变成双偶数。
+
+由上述可以得知一旦拿到双偶数，则任何操作都是必败。可以证明在有第一类 又有第二类，且第二类OTHERS > 2的情况，先手2个数有一个为奇数 则必胜。
+
+时间复杂度 O(1)
+JAVA 代码
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int ones = 0, others = -1;
+            for (int i = 0; i < n; i++) {
+                int x = sc.nextInt();
+                if (x == 1) ones++;
+                else others += x + 1;
+            }
+            if (others <= 2) {
+                System.out.println(ones % 3 == 0 ? "NO": "YES");
+            } else {
+                System.out.println((ones % 2 == 1 || others % 2 == 1) ? "YES" : "NO");
+            }
+        }
+    }
+}
+
+作者：Serman轩
+链接：https://www.acwing.com/solution/content/12916/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+# 定义一组大小大于1的堆的状态为这些堆的数量加上这些堆的石子总数减去1的结果
+# dp(a, b)表示大小只有1的堆有a个，其余堆分成一组的的状态是b的情况下是否是必赢局
+from functools import lru_cache
+@lru_cache(typed=False, maxsize=128000000)
+def dp(a, b) -> bool:
+    if a == 0:
+        '''
+        在剩下的a=0情况里面，所有堆的石子个数都是大于等于2的
+        把这些石碓看成一个整体来讨论，整体的状态值定义为这些堆的数量加上这些堆的石子总数减去1的结果
+        如果b是一个奇数:
+            如果只剩一堆了
+                如果b=1, 那是必赢局不用往下转移状态了
+                如果b!=1, 那b >= 3, 最后这一堆的大小一定大于等于3，可以拿掉这一堆里面的一个石子，变换到b是偶数状态
+            如果剩下不止一堆
+                随便找两堆合并起来，变换到b是偶数的状态
+
+            综上，b为奇数状态不论什么情况都至少能找到一种转换路径转到b为偶数的状态
+
+        如果b是一个偶数：
+            如果只剩一堆了：
+                只能取石子，b是一个偶数，且是正数，那b >= 2，可推出这一堆石子个数大于等于2，取掉一个石子，一定变到b是奇数状态
+            如果剩下不止一堆
+                如果当前操作是合并石子，那下一个状态必然是b是奇数状态
+                如果当前操作是拿石子，拿的那一堆如果石子数大于2，那拿掉之后还是进入b是奇数状态
+                                   如果拿掉那一堆石子数刚好是2，那新产生了一个大小是1的堆，这种状态交给下一个人，下一个人
+                                   一定可以把这个1合并到另外一堆去，状态又回到了所有堆个数大于等于2，且b为偶数的状态，所以
+                                   这么操作，会交一个不败局给下一个人
+
+            综上，b为偶数情况下，不管怎么操作，都会把一个不败局重新交回给上一个人
+
+        根据博弈理论，持有b为奇数状态的人必胜，否则必败
+        '''
+        return (b & 1) != 0
+
+    if b == 1:
+        return dp(a+1, 0)
+
+    else:
+
+        '''
+        对于有大小是1的堆的情况，分情况进行状态转移
+        '''
+
+        # 两个大小是1的堆合并
+        if a >= 2 and not dp(a-2, b + 3 if b != 0 else 2):
+            return True
+
+        # 一个大小是1的和一个大小不是1的堆合并
+        if b != 0 and not dp(a-1, b + 1):
+            return True
+
+        # 两个大小不是1的堆合并
+        if b != 0 and not dp(a, b - 1):
+            return True
+
+        # 大小是1的堆拿掉一个石子
+        if a >= 1 and not dp(a-1, b):
+            return True
+
+        # 大小不是1的堆拿掉一个石子(跟上面一个分支的处理重复)
+        # 但是这有个疑问，从大小不是1的堆里面拿掉一个石子，有可能让a+1的，这种状态转移漏掉了居然答案是对的，暂时没想通什么原理
+        # 是数据弱还是怎么的，这个地方逻辑不严密，DP状态两维没法描述这种状况，应该还要多一维描述堆大小是2的堆的个数
+        #if b != 0 and not dp(a, b-1):
+        #    return True
+
+        # 前面几种情况都赢不了，那只能输掉了
+        return False
+
+T = int(input())
+for _ in range(T):
+    n = int(input())
+    arr = list(map(int, input().split()))
+    a, b = 0, -1 # a是只有一个石子的堆的个数，b是超过一个石子的所有堆的堆数加上这些堆石子总数减去1
+
+    for val in arr:
+        if val == 1:
+            a += 1
+        else:
+            b += 1 + val
+
+    print('YES' if dp(a, b) else 'NO')
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/20942/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <stdio.h>
+#include <string.h>
+
+const int N=55;
+const int M=50050;
+
+int f[N][M];
+
+bool dp(int a,int b)
+{
+    if(~f[a][b])return f[a][b];
+    if(!a)return f[a][b]=b&1;
+    if(b==1)return dp(a+1,0);
+    if(a&&!dp(a-1,b))return f[a][b]=true;
+    if(b&&!dp(a,b-1))return f[a][b]=true;
+    if(a>1&&!dp(a-2,b+(b?3:2)))return f[a][b]=true;
+    if(a&&b&&!dp(a-1,b+1))return f[a][b]=true;
+    return f[a][b]=false;
+}
+
+int main()
+{
+    memset(f,-1,sizeof f);
+    int T;
+    for(scanf("%d",&T);T--;)
+    {
+        int n,x,a=0,b=0;
+        for(scanf("%d",&n);n--;)
+        {
+            scanf("%d",&x);
+            if(x==1)a++;
+            else b+=x+1;
+        }
+        if(b)b--;
+        puts(dp(a,b)?"YES":"NO");
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/361713/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int N = 55, M = 50050;
+
+int f[N][M];
+
+int dp(int a, int b)
+{
+    int &v = f[a][b];
+    if (v != -1) return v;
+    if (!a) return v = b % 2;
+    if (b == 1) return dp(a + 1, 0);
+
+    if (a && !dp(a - 1, b)) return v = 1;
+    if (b && !dp(a, b - 1)) return v = 1;
+    if (a >= 2 && !dp(a - 2, b + (b ? 3 : 2))) return v = 1;
+    if (a && b && !dp(a - 1, b + 1)) return v = 1;
+
+    return v = 0;
+}
+
+int main()
+{
+    memset(f, -1, sizeof f);
+
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        int n;
+        scanf("%d", &n);
+        int a = 0, b = 0;
+        for (int i = 0; i < n; i ++ )
+        {
+            int x;
+            scanf("%d", &x);
+            if (x == 1) a ++ ;
+            else b += b ? x + 1 : x;
+        }
+
+        if (dp(a, b)) puts("YES");
+        else puts("NO");
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/197462/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+
+using namespace std;
+
+const int N = 1010;
+
+int n;
+int a[N];
+int l[N][N], r[N][N];
+
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i ++ ) scanf("%d", &a[i]);
+
+        for (int len = 1; len <= n; len ++ )
+            for (int i = 1; i + len - 1 <= n; i ++ )
+            {
+                int j = i + len - 1;
+                if (len == 1) l[i][j] = r[i][j] = a[i];
+                else
+                {
+                    int L = l[i][j - 1], R = r[i][j - 1], X = a[j];
+                    if (R == X) l[i][j] = 0;
+                    else if (X < L && X < R || X > L && X > R) l[i][j] = X;
+                    else if (L > R) l[i][j] = X - 1;
+                    else l[i][j] = X + 1;
+
+                    L = l[i + 1][j], R = r[i + 1][j], X = a[i];
+                    if (L == X) r[i][j] = 0;
+                    else if (X < L && X < R || X > L && X > R) r[i][j] = X;
+                    else if (R > L) r[i][j] = X - 1;
+                    else r[i][j] = X + 1;
+                }
+            }
+
+        if (n == 1) puts("1");
+        else printf("%d\n", l[2][n] != a[1]);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/197506/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <stdio.h>
+
+const int N=1005;
+
+int n,a[N];
+int l[N][N];
+int r[N][N];
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        scanf("%d",&n);
+        for(int i=1;i<=n;i++)scanf("%d",a+i);
+        for(int len=0;len<n;len++)
+            for(int i=1;i+len<=n;i++)
+            {
+                int j=i+len;
+                if(!len)l[i][j]=r[i][j]=a[i];
+                else
+                {
+                    int L=l[i][j-1],R=r[i][j-1],X=a[j];
+                    if(R==X)l[i][j]=0;
+                    else if(L<X&&R<X||L>X&&R>X)l[i][j]=X;
+                    else if(L>R)l[i][j]=X-1;
+                    else    l[i][j]=X+1;
+                    L=l[i+1][j],R=r[i+1][j],X=a[i];
+                    if(L==X)r[i][j]=0;
+                    else if(L<X&&R<X||L>X&&R>X)r[i][j]=X;
+                    else if(R>L)r[i][j]=X-1;
+                    else    r[i][j]=X+1;
+                }
+            }
+        putchar((n==1||l[2][n]!=a[1])?49:48);
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/361934/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+    #include <stdio.h>
+
+const int N=1005;
+
+int n,a[N];
+int l[N][N];
+int r[N][N];
+
+int main()
+{
+    int T;
+    for(scanf("%d",&T);T--;putchar('\n'))
+    {
+        scanf("%d",&n);
+        for(int i=1;i<=n;i++)scanf("%d",a+i);
+        for(int len=0;len<n;len++)
+            for(int i=1;i+len<=n;i++)
+            {
+                int j=i+len;
+                if(!len)l[i][j]=r[i][j]=a[i];
+                else
+                {
+                    int L=l[i][j-1],R=r[i][j-1],X=a[j];
+                    if(R==X)l[i][j]=0;
+                    else if(L<X&&R<X||L>X&&R>X)l[i][j]=X;
+                    else if(L>R)l[i][j]=X-1;
+                    else    l[i][j]=X+1;
+                    L=l[i+1][j],R=r[i+1][j],X=a[i];
+                    if(L==X)r[i][j]=0;
+                    else if(L<X&&R<X||L>X&&R>X)r[i][j]=X;
+                    else if(R>L)r[i][j]=X-1;
+                    else    r[i][j]=X+1;
+                }
+            }
+        putchar((n==1||l[2][n]!=a[1])?49:48);
+    }
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/361936/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+const int N = 1005;
+int n, a[N], L[N][N], R[N][N];
+int main() {
+    int T; scanf("%d", &T);
+    while(T--) {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++) scanf("%d", a + i), L[i][i] = R[i][i] = a[i];
+        for (int len = 2; len < n; len++) {
+            for (int i = 1, j; (j = i + len - 1) <= n; i++) {
+                int l = L[i][j - 1], r = R[i][j - 1], x = a[j];
+                if (r == x) L[i][j] = 0;
+                else if((x < r && x < l) || (x > r && x > l)) L[i][j] = x;
+                else if(l < r) L[i][j] = x + 1;
+                else L[i][j] = x - 1; 
+                l = L[i + 1][j], r = R[i + 1][j], x = a[i];
+                if (l == x) R[i][j] = 0;
+                else if((x < r && x < l) || (x > r || x > l)) R[i][j] = x;
+                else if(l < r) R[i][j] = x - 1;
+                else R[i][j] = x + 1; 
+            }
+        }
+        puts(a[1] == L[2][n] ? "0" : "1");
+    }
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/activity/content/code/content/197917/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+AcWing 1250. 格子游戏    原题链接    简单
+作者：    小呆呆 ,  2020-04-04 00:42:13 ,  阅读 251
+
+5
+
+
+1
+算法分析
+并查集(典型并查集判断是否存在环的问题)
+
+1、将每个坐标看成一个点值，为了方便计算，第一个位置即(1,1)看成是0，(1,2)看成是1，依次类推，假设当前点是(x,y),则该点的映射值是a = (x * n + y)，
+若向下画，则b = [(x + 1) * n + y],若向右画，则b = [x * n + y - 1]
+
+2、枚举所有操作，通过并查集操作判断a和b是否在同一个集合，
+
+若在同一个集合则标记此操作可以让格子形成环
+若不在同一个集合，则需要将两个集合进行合并
+时间复杂度
+并查集操作接近O(1)O(1)
+参考文献
+算法提高课
+
+Java 代码
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class Main {
+
+    static int N = 201 * 201 + 10;
+    static int n,m;
+    static int[] p = new int[N];
+    static int get(int x,int y)
+    {
+        return x * n + y;
+    }
+    static int find(int x)
+    {
+        if(x != p[x]) p[x] = find(p[x]);
+        return p[x];
+    }
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = br.readLine().split(" ");
+        n = Integer.parseInt(s1[0]);
+        m = Integer.parseInt(s1[1]);
+        for(int i = 0;i < n * n;i ++) p[i] = i;
+        int res = 0;
+        for(int i = 1;i <= m;i ++)
+        {
+            String[] s2= br.readLine().split(" ");
+            int x = Integer.parseInt(s2[0]) - 1;
+            int y = Integer.parseInt(s2[1]) - 1;
+            String d = s2[2];
+            int a = get(x,y);
+            int b ;
+            if(d.equals("D")) b = get(x + 1,y);
+            else b = get(x,y + 1);
+
+            int pa = find(a);
+            int pb = find(b);
+            if(pa == pb)
+            {
+                res = i;
+                break;
+            }
+            p[pa] = pb;
+        }
+        if(res == 0) System.out.println("draw");
+        else System.out.println(res);
+    }
+}
+
+作者：小呆呆
+链接：https://www.acwing.com/solution/content/10961/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 40010;
+
+int n, m;
+int p[N];
+
+int get(int x, int y)
+{
+    return x * n + y;
+}
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    for (int i = 0; i < n * n; i ++ ) p[i] = i;
+
+    int res = 0;
+    for (int i = 1; i <= m; i ++ )
+    {
+        int x, y;
+        char d;
+        cin >> x >> y >> d;
+        x --, y -- ;
+        int a = get(x, y);
+        int b;
+        if (d == 'D') b = get(x + 1, y);
+        else b = get(x, y + 1);
+
+        int pa = find(a), pb = find(b);
+        if (pa == pb)
+        {
+            res = i;
+            break;
+        }
+        p[pa] = pb;
+    }
+
+    if (!res) puts("draw");
+    else cout << res << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/161716/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+include <algorithm>
+
+using namespace std;
+
+const int N=40005;
+
+int n,m;
+int p[N];
+
+inline int read()
+{
+    int x=0;
+    char ch;
+    bool fx=false;
+    do ch=getchar();while(~ch&&ch!='-'&&(ch<48||ch>57));
+    if(ch=='-')fx=true,ch=getchar();
+    for(;ch>47&&ch<58;ch=getchar())
+        x=(x<<1)+(x<<3)+(ch^48);
+    return fx?-x:x;
+}
+
+int find(int x)
+{
+    if(p[x]!=x)p[x]=find(p[x]);
+    return p[x];
+}
+
+inline int get(int x,int y)
+{
+    return x*n+y;
+}
+
+int main()
+{
+    n=read(),m=read();
+    for(int i=1;i/n<=n;i++)
+        p[i]=i;
+    for(int i=1;i<=m;i++)
+    {
+        int x,y;
+        char c;
+        x=read(),y=read();
+        c=getchar();
+        int a=find(get(x,y));
+        int b=find(get(x+(c=='D'),y+(c=='R')));
+        if(a==b)
+        {
+            printf("%d\n",i);
+            return 0;
+        }
+        p[a]=b;
+    }
+    puts("draw");
+    return 0;
+}
+
+作者：垫底抽风
+链接：https://www.acwing.com/activity/content/code/content/329429/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
