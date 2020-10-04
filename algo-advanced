@@ -1,0 +1,897 @@
+AcWing 90. 64位整数乘法    原题链接    简单
+作者：    洛希krist ,  2019-01-23 11:41:20 ,  阅读 2426
+
+19
+
+
+4
+题目描述
+求 a 乘 b 对 p 取模的值。
+数据范围
+1≤a,b,p≤10^18
+
+样例
+输入样例：
+3
+4
+5
+输出样例：
+2
+算法1
+(二进制思想) O(logn)O(logn)
+如果直接计算a乘b这会超过 long long 的最大范围，所以采用类似于快速幂的思想
+把 b写成二进制形式，然后如果某位上为1就加上它a*（2^n）次方（n与这位的位置有关）
+并且每次计算后取模就可以了
+
+例：计算 3*7
+
+7的二进制 111
+3*(2^0)=3
+3*(2^1)=6
+3*(2^2)=12
+
+观察可发现每次的可由前一次*2推出(记得取模)
+
+时间复杂度分析：logn
+
+C++ 代码
+#include <iostream>
+#include <cstdio>
+#define ll long long
+using namespace std;
+int main()
+{
+    ll a,b,p,res;
+    cin>>a>>b>>p;
+    res=0;
+    while(b)
+    {
+        if(b&1)
+            res=(res+a)%p;
+        b>>=1;
+        a=2*a%p;
+    }
+    cout<<res<<endl;
+    return 0;
+}
+
+作者：洛希krist
+链接：https://www.acwing.com/solution/content/844/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+
+typedef long long LL;
+
+LL qadd(LL a, LL b, LL p)
+{
+    LL res = 0;
+    while (b)
+    {
+        if (b & 1) res = (res + a) % p;
+        a = (a + a) % p;
+        b >>= 1;
+    }
+    return res;
+}
+
+int main()
+{
+    LL a, b, p;
+    scanf("%lld%lld%lld", &a, &b, &p);
+    printf("%lld\n", qadd(a, b, p));
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/200703/
+来源：AcWing
+
+
+AcWing 95. 费解的开关    原题链接    中等
+作者：    Vizdl ,  2019-01-16 23:12:22 ,  阅读 1768
+
+3
+
+
+1
+题目描述
+如题:发现书上有更好的题解,思路还是太复杂了,但是写都写了就留在这吧= = 有兴趣的话可以看看。
+
+样例
+这个样例对应的输出是2
+
+
+
+1
+11101
+11101
+11110
+11111
+11111
+这个样例对应的输出是2
+算法1
+(经过一些优化的dfs,结果超时)
+一开始的思路是,既然这个是5X5,那么我应该可以直接dfs吧（？？？没看清题目的我）
+但我还是做了一些减少计算量的操作（几乎没起到什么作用）
+在我的仔细分析之下,我发现:
+/*
+* 每次只需要改变0或者身边(上下左右)有0的1
+* 因为如若附近都没有0,那么只能让这次修改的
+* 浪费一次修补回来的机会。
+* 所以在这里我只改上下左右或中间有0的节点…
+/
+于是我就着这个思路写了一个巨长又臭的代码,不想看的直接跳过吧。。。
+
+public class acwing95 {
+    /**
+     * 每次只需要改变0或者身边(上下左右)有0的1
+     * 因为如若附近都没有0,那么只能让这次修改的
+     * 浪费一次修补回来的机会。
+     * 所以在这里我只改上下左右或中间有0的节点...
+     */
+    static int[][] matrix;
+    static boolean[][] has;
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+        int m = scanner.nextInt();
+        scanner.nextLine();
+        matrix = new int[5][5];
+        for (int i = 0; i < m; i++) {
+            has = new boolean[5][5];
+            for (int j = 0; j < 5; j++) {
+                char[] ch = scanner.nextLine().toCharArray();
+                for (int k = 0; k < 5; k++) {
+                    matrix[j][k] = ch[k] - '0';
+                }
+            }
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+            int res = dfs (1);
+            System.out.println(res);
+        }
+    }
+
+    public static int dfs (int times) {
+        if (isRight()) {
+            return times - 1;
+        }
+        if (times == 7) {
+            return -1;
+        }
+        int res = -1;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (isValid(i, j)) {
+                    change(i, j);
+                    has[i][j] = true;
+                    int r = dfs (times + 1);
+                    change(i, j);
+                    has[i][j] = false;
+                    if (r != -1 && (res == -1 || res > r)) {
+                        res = r;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+    //判断目前矩阵是否全为1
+    public static boolean isRight () {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (matrix[i][j] != 1) {
+                    return false;
+                }
+            }
+        }return true;
+    }
+    //判断当前输入的坐标是不是有效坐标（这个操作好像并没有减低我的计算量,可能因为矩阵太小了。。。）
+    public static boolean isValid (int i, int j) {
+        return !has[i][j] && (matrix[i][j] == 0 || (i + 1 < 5 && matrix[i + 1][j] == 0) || (j + 1 < 5 && matrix[i][j + 1] == 0)
+                || (i > 0 && matrix[i - 1][j] == 0) || (j > 0 && matrix[i][j - 1] == 0));
+    }
+    //输入一个坐标,将它和它上下左右改变一下位置
+    public static void change (int i, int j) {
+        matrix[i][j] = matrix[i][j] != 0 ? 0 : 1;
+        if (i > 0) {
+            matrix[i - 1][j] = matrix[i - 1][j] != 0 ? 0 : 1;
+        }
+        if (j > 0) {
+            matrix[i][j - 1] = matrix[i][j - 1] != 0 ? 0 : 1;
+        }
+        if (i + 1 < 5) {
+            matrix[i + 1][j] = matrix[i + 1][j] != 0 ? 0 : 1;
+        }
+        if (j + 1 < 5) {
+            matrix[i][j + 1] = matrix[i][j + 1] != 0 ? 0 : 1;
+        }return;
+    }
+}
+算法2
+(这次是AC的算法了:广度优先搜索+状态压缩+dp) O(1)O(1) : 25^6 hhh
+吸取了上一次的教训,我首先想到的是,我一定要用dp来写这道题目,
+因为只要我用了dp,那么无论输入的n为多少,我都不用管因为我能直
+接找到当前的状态直接得出结果！
+这里用二进制数表示矩阵的状态(如若对这个不是很理解可以先看看哔哩哔哩y神昨晚录播的第三道题),
+恰好这个矩阵只有25个节点且每个节点
+只有0或1两种状态。
+这时候我想到了我写过的另一道题目,这道题也是这种类型的(一个拼图游戏的问题)。。。
+这种类型的题目可以利用广度优先搜索,从成功的状态,来逆推所有能成功到达的状态
+恰巧这个只能推六次,所以我就弄了个界定层次的一个end（整型）,来判断当前处于第几层
+因为广度优先搜索具有寻找最短路径的那个特点,在这里正好用得上。也就是说,这个节点只要载入
+就一定会是最小的次数。
+到这里就基本上没什么问题了,我就直接贴代码了。代码上会对函数功能进行注解
+时间复杂度分析：25^6
+
+Java 代码
+import java.util.*;
+
+/**
+ * acwing 95 费解的开关
+ * 2019年1月15日21:20:17
+ * @author HP
+ *
+ */
+
+public class Main {
+    /**
+     * 首先可以明确的是,一个状态如若最少点击三个不同的点能全部为1
+     * 那么,与点击这三个点的顺序是无关的。
+     * 这里采用状态压缩,将矩阵用一个整型表示。
+     * 然后利用广度优先搜索,全是1的状态下往回点
+     * dp内元素先默认为-1,然后如若在六次之内能到达
+     * 的元素都会进入队列中,并且赋都会最小次数的值（bfs找单源最短路径也是利用了这个性质）
+     * 如若dp数组中已经有所有结果了,那么之后的无论是多少组数据都可以直接通过了。
+     */
+    static int[] dp;
+    static int n = 1 << 25;
+    static boolean[] has;
+    public static void main (String[] args){
+        Scanner scanner = new Scanner(System.in);
+        int m = scanner.nextInt();
+        scanner.nextLine();
+        dp = new int[n];
+        has = new boolean[n];
+        Arrays.fill(dp, -1);
+        dp[n - 1] = 0;
+        has[n - 1] = true;
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        queue.add(n - 1);
+        int times = 0;
+        int end = n - 1;
+        while (!queue.isEmpty() && times < 7) {
+            int val = queue.poll();
+            dp[val] = times;
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    int num = change(val, i, j);
+                    if (!has[num]) {
+                        queue.add(num);
+                        has[num] = true;
+                    }
+                }
+            }
+            if (end == val) {
+                times++;
+                end = queue.getLast();
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            int matrix = 0;
+            for (int j = 0; j < 5; j++) {
+                char[] ch = scanner.nextLine().toCharArray();
+                for (int k = 0; k < 5; k++) {
+                    matrix += ((ch[k] - '0') << (j * 5 + k));
+                }
+            }
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+            System.out.println(dp[matrix]);
+        }
+    }
+
+    /**
+     * 给出一个代表5X5矩阵的数
+     * 按照费解的开关定义的那样
+     * 去操作后会生成另一个代表
+     * 5X5矩阵的数,并返回。
+     * @param val
+     * @param i
+     * @param j
+     * @return
+     */
+    public static int change (int val, int i, int j) {
+        //(val >> i * 5 + j) & 1 : 代表的是当前的i,j坐标对应位置的位
+        //如若这个位置是1,则减去1为0,如若这个位置是0,则减去-1为1;
+        val -= (1 & (val >> i * 5 + j)) != 0 ? 1 << i * 5 + j : -(1 << i * 5 + j);
+        if (i > 0) {
+            val -= (1 & (val >> (i - 1) * 5 + j)) != 0 ? 1 << (i - 1) * 5 + j : -(1 << (i - 1) * 5 + j);
+        }
+        if (j > 0) {
+            val -= (1 & (val >> i * 5 + j - 1)) != 0 ? 1 << i * 5 + j - 1 : -(1 << i * 5 + j - 1);
+        }
+        if (i < 4) {
+            val -= (1 & (val >> (i + 1) * 5 + j)) != 0 ? 1 << (i + 1) * 5 + j : -(1 << (i + 1) * 5 + j);
+        }
+        if (j < 4) {
+            val -= (1 & (val >> i * 5 + j + 1)) != 0 ? 1 << i * 5 + j + 1 : -(1 << i * 5 + j + 1);
+        }return val;
+    }
+}
+
+作者：Vizdl
+链接：https://www.acwing.com/solution/content/786/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int N = 6;
+
+char g[N][N], bg[N][N];
+int dx[5] = {-1, 0, 1, 0, 0}, dy[5] = {0, 1, 0, -1, 0};
+
+void turn(int x, int y)  // 按一下第x行第y列的开关
+{
+    for (int i = 0; i < 5; i ++ )
+    {
+        int a = x + dx[i], b = y + dy[i];
+        if (a < 0 || a >= 5 || b < 0 || b >= 5) continue;
+        g[a][b] ^= 1;
+    }
+}
+
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        for (int i = 0; i < 5; i ++ ) scanf("%s", bg[i]);
+
+        int res = 10;
+        for (int op = 0; op < 32; op ++ )
+        {
+            int cnt = 0;
+            memcpy(g, bg, sizeof g);
+            // 操作第一行的开关
+            for (int i = 0; i < 5; i ++ )
+                if (op >> i & 1)
+                {
+                    turn(0, i);
+                    cnt ++ ;
+                }
+
+            // 递推出第1~4行开关的状态
+            for (int i = 0; i < 4; i ++ )
+                for (int j = 0; j < 5; j ++ )
+                    if (g[i][j] == '0')
+                    {
+                        turn(i + 1, j);
+                        cnt ++ ;
+                    }
+
+            // 检查最后一行灯是否全亮
+            bool success = true;
+            for (int i = 0; i < 5; i ++ )
+                if (g[4][i] == '0')
+                    success = false;
+            if (success && res > cnt) res = cnt;
+        }
+
+        if (res > 6) res = -1;
+        printf("%d\n", res);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/200737/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 97. 约数之和    原题链接    困难
+作者：    CB ,  2019-02-02 16:54:43 ,  阅读 972
+
+6
+
+
+wrong 做法
+看到这个题，最开始的想法是想通过乘法快速幂先求出A的B次方，然后再利用二分的思想求结果的约数，最后将约数加和取模
+，但是很不幸，木有通过，wrong answer。顿觉此题不能蛮做，有简便方法。
+
+C++ 代码
+//感觉是一道综合题,先用快速幂求出A的B次方，然后再求ret的的约数，然后再求结果
+
+#include<iostream>
+using namespace std;
+#include<set>
+
+typedef long long ll;
+ll a,b,sum;
+set<int> s;
+
+ll quick(ll a,ll b)
+{
+    // ll e=1;
+    //定义幺元
+    ll ret=1;
+    while(b)
+    {
+        if(b&1) ret=ret*a;
+        a=a*a;
+        b>>=1;
+    }
+    return ret;
+}
+
+int main(){
+    cin>>a>>b;
+    ll ret=quick(a,b);
+    for(ll i=1;i*i<ret;i++)
+    {
+        if(ret%i==0) s.insert(i),s.insert(ret/i);
+    }
+
+    //ll s=0;
+    set<int>::iterator it=s.begin();
+    while(it!=s.end())
+    {   
+        sum=(sum+(*it))%9901;
+        it++;
+    }
+    cout<<sum<<endl;
+    return 0;
+}
+灿神的思路（“又是一道小学奥数题.........”）
+C++ 代码
+//灿神做法
+#include<iostream>
+using namespace std;
+const int mod=9901;
+
+//快速幂
+int quick(int a,int b)
+{
+    int res=1;
+    a=a%mod;
+    while(b)
+    { 
+        if(b&1) res=(res*a)%mod;
+        a=(a*a)%mod;
+        b>>=1;
+    }
+    return res;
+}
+
+//sum函数用来求某个数的幂次项的等比数列的和
+int sum(int p,int k)
+{
+    //k如果是奇数的话，从0到k即为偶数个数
+    if(k==0) return 1;
+    //k是偶数的时候，则我们(k-1)是奇数，即(k-1)项是偶数,则我们可以把第k项
+    //单独把p拿出来,然后对(k-1)再调用sum
+    if(k%2==0)
+    {
+        //这里少了个p的0次方，所以把1加上
+        return (p%mod*sum(p,k-1)+1)%mod;
+    }
+    //否则k如果是奇数，则质因数有(k+1)即偶数项，就去套我们的公式
+    return (1+quick(p,k/2+1))*sum(p,k/2)%mod;
+}
+
+int main(){
+
+    int A,B;
+    cin>>A>>B;
+    int res=1;
+
+    //这里是想看i是不是质因数，以及得出i的幂次
+    //比如，对于12，可以分解成2^2*3
+    for(int i=2;i<=A;i++)
+    {
+        int s=0;
+        //这里的操作是求当我们的质因数是i的时候，它的质因数的幂次项能到几
+        while(A%i==0)
+        {
+            s++;
+            A/=i;
+        }
+        //i,s即相当于我们的质因数以及它的幂次项，即pk和k
+        if(s) res=res*sum(i,s*B)%mod;
+    }
+    //ifA为0的话，那么res=0，。。。。？？？A什么时候为0呢？？？？？
+    if(!A) res=0;
+    cout<<res<<endl;
+    return 0;
+}
+
+作者：CB
+链接：https://www.acwing.com/solution/content/933/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+
+const int mod = 9901;
+
+int qmi(int a, int k)
+{
+    int res = 1;
+    a %= mod;
+    while (k)
+    {
+        if (k & 1) res = res * a % mod;
+        a = a * a % mod;
+        k >>= 1;
+    }
+    return res;
+}
+
+int sum(int p, int k)
+{
+    if (k == 1) return 1;
+    if (k % 2 == 0) return (1 + qmi(p, k / 2)) * sum(p, k / 2) % mod;
+    return (sum(p, k - 1) + qmi(p, k - 1)) % mod;
+}
+
+int main()
+{
+    int a, b;
+    scanf("%d%d", &a, &b);
+
+    int res = 1;
+    // 对a分解质因数
+    for (int i = 2; i * i <= a; i ++ )
+        if (a % i == 0)
+        {
+            int s = 0;
+            while (a % i == 0)
+            {
+                a /= i, s ++ ;
+            }
+            res = res * sum(i, b * s + 1) % mod;
+        }
+
+    if (a > 1) res = res * sum(a, b + 1) % mod;
+    if (a == 0) res = 0;
+
+    printf("%d\n", res);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/200776/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 98. 分形之城    原题链接    困难
+作者：    秦淮岸灯火阑珊 ,  2019-01-20 08:13:42 ,  阅读 2439
+
+17
+
+
+6
+题目描述
+城市的规划在城市建设中是个大问题。
+
+不幸的是，很多城市在开始建设的时候并没有很好的规划，城市规模扩大之后规划不合理的问题就开始显现。
+
+而这座名为 Fractal 的城市设想了这样的一个规划方案，如下图所示：
+
+
+
+当城区规模扩大之后，Fractal 的解决方案是把和原来城区结构一样的区域按照图中的方式建设在城市周围，提升城市的等级。
+
+对于任意等级的城市，我们把正方形街区从左上角开始按照道路标号。
+
+虽然这个方案很烂，Fractal 规划部门的人员还是想知道，如果城市发展到了等级 N，编号为 A 和 B 的两个街区的直线距离是多少。
+
+街区的距离指的是街区的中心点之间的距离，每个街区都是边长为 10 米的正方形。
+
+输入格式
+第一行输入正整数n，表示测试数据的数目。
+
+以下n行，输入n组测试数据，每组一行。
+
+每组数据包括三个整数 N,A,B, 表示城市等级以及两个街区的编号，整数之间用空格隔开。
+
+输出格式
+一共输出n行数据，每行对应一组测试数据的输出结果，结果四舍五入到整数。
+
+数据范围
+1≤N≤311≤N≤31
+1≤A,B≤22N1≤A,B≤22N
+1≤n≤10001≤n≤1000
+输入样例：
+
+3 
+1 1 2 
+2 16 1 
+3 4 33 
+输出样例：
+
+10 
+30 
+50 
+递归+分治+数学坐标系公式+找规律
+递归+分治好理解，因为这个题目中最显著的特点就是，不断地重复旋转复制，也就是NN级城市，可以由44个N−1N−1级城市构造，因此我们每次可以不断地分形N−1N−1级，将问题范围不断地缩小即可
+这道题目的数学坐标公式，其实一共有两个，一个是高中的数学函数，旋转，这是一个难点，其实可以通过找规律，求解，第二公式则是欧几里得距离公式。(x1−x2)2−(y1−y2)2‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾√(x1−x2)2−(y1−y2)2
+最难的就是如何旋转这个正方形 找规律。
+总的来说这道题目数学知识较多，考察画图能力，解法自然，数据毒瘤，相信可以给你的NOIP一个有利的一脚。
+
+左上角：我们可以发现，左上角的N−1N−1级矩阵其实就是等级为N−1N−1，也就是上一个矩阵，顺时针旋转90°90°，那么既然如此的话，我们就可以综合yxc老师上课所讲的公式(补充:也就是旋转矩阵,属于大学的线性代数内容)，得出转移后的矩阵中的一点坐标从(x,y)(x,y)变为(y,x)(y,x)
+左下角：同左上角，它则是逆时针旋转90°90°而且还要水平翻转，也即是沿着XX轴对称，原本逆时针后为(y,−x)(y,−x)，然后要对称,xx坐标不变，yy坐标取反，所以坐标为(−y,−x)(−y,−x) 也就是所谓的(2×len−1−y,len−1−x)(2×len−1−y,len−1−x) 最难理解的坐标，具体可以画图理解
+右上角和右下角：通过N=2N=2级图发现，其实和N=1N=1是一样的，并没有旋转，只是平移，则右上角坐标为(x,y+len)(x,y+len)，右下角坐标为(x+len,y+len)(x+len,y+len)
+总的来说以上四种转移，都可以通过画图理解
+还有本题数据毒瘤，四舍五入最好是double类型，而且整数类型一定要是long long，否则容易WA！
+易错点：公式使用，double型浮点数精度问题，输出格式化问题,还有@墨辛大佬指出的问题。
+C++ 代码
+以下为ACwingAc代码
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define PLL pair<ll,ll>
+PLL calc(ll n,ll m)
+{
+    if (n==0)
+        return make_pair(0,0);
+    ll len=1LL<<(n-1),cnt=1LL<<(2*n-2);
+    PLL pos=calc(n-1,m%cnt);
+    ll x=pos.first,y=pos.second;
+    ll z=m/cnt;
+    if (z==0)
+        return make_pair(y,x);
+    if (z==1)
+        return make_pair(x,y+len);
+    if (z==2)
+        return make_pair(x+len,y+len);
+    return make_pair(2*len-1-y,len-1-x);
+}
+int main()
+{
+    //ios::sync_with_stdio(false);
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        ll n,a,b;
+        cin>>n>>a>>b;
+        PLL x=calc(n,a-1);
+        PLL y=calc(n,b-1);
+        ll dx=x.first-y.first,dy=x.second-y.second;
+        double ans=(sqrt(dx*dx+dy*dy)*10);
+        printf("%0.lf\n",ans);
+    }
+    return 0;
+}
+//以下为POJ&Acwing Ac代码
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cmath>
+using namespace std;
+#define ll long long
+#define PLL pair<ll,ll>
+PLL calc(ll n,ll m)
+{
+    if (n==0)
+        return make_pair(0,0);
+    ll len=1LL<<(n-1),cnt=1LL<<(2*n-2);
+    PLL pos=calc(n-1,m%cnt);
+    ll x=pos.first,y=pos.second;
+    ll z=m/cnt;
+    if (z==0)
+        return make_pair(y,x);
+    if (z==1)
+        return make_pair(x,y+len);
+    if (z==2)
+        return make_pair(x+len,y+len);
+    return make_pair(2*len-1-y,len-1-x);
+}
+int main()
+{
+    //ios::sync_with_stdio(false);
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        ll n,a,b;
+        scanf("%lld%lld%lld",&n,&a,&b);
+        PLL x=calc(n,a-1);
+        PLL y=calc(n,b-1);
+        ll dx=x.first-y.first,dy=x.second-y.second;
+        double ans=(sqrt(double(dx*dx+dy*dy))*10);
+        printf("%0.lf\n",ans);
+    }
+    return 0;
+}
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/814/
+来源：AcWing
+
+
+分析
+本题看懂题目花费了大量的时间，后面理解题意如下：
+等级一：4个点，等级2:16个点，等级3:64个点。。。至于贯穿这些点的线，是城市编号增长的顺序。
+分析从等级一如何到等级2：首先，原来的城区设为A，A顺时针旋转90度再关于中间翻转一下得到等级2的左上角城区，A向右平移得到右上角的城区，A向右平移再向下平移得到右下角的城区，至于左下角城区，一会再说。
+数学知识：
+我们知道，两点之间距离的平方是对应横纵坐标距离之差的平方和。
+坐标旋转公式：比如第一象限的点（1,2），顺时针旋转90度得到的点在第四象限，也就是（2，-1），逆时针旋转90度得到的点在第二象限，也就是（-2,1）。更一般的，（x，y）顺时针旋转90度得到（y，-x），逆时针得到 （-y，x）。（这里yxc大佬在视频里好像把两个弄反了，虽然程序结果正确，但是的确是把顺时针、逆时针旋转的坐标公式写反了）。
+最重要的是确定坐标原点以及坐标系，大多数人都是按照二维数组的思想，把左上角第一个点作为原点，往下的方向作为x轴正方向，往右的方向作为y轴正方向，然后旋转都是绕左上角第一个点旋转，这样造成的问题就是左下角的城区在计算坐标时，逆时针旋转会转偏了，不容易计算。
+个人浅见是按照各个城区中心为坐标原点。
+
+刚开始一直是以城区一的中心为原点，然后图一的四个点坐标分别为：（-1,1），（1,1），（1,-1），（-1,-1）左上角：（x，y）关于原点顺时针90度旋转得到（y，-x）再关于y轴轴对称变换得到（-y，-x）；右上角：（x，y）向右平移2len个单位得到（x+2len，y），注意这里的len在代码中有定义；右下角：（x，y）向右平移2len个单位得到（x+2len，y）再向下平移2len个单位得到（x+2len，y-2len）；左下角：（x，y）逆时针旋转90度得到 （-y，x），再关于y轴轴对称变换得到（y，x），注意这里四个点的中心是旋转中心，所以只是换了方向，本质四个点还在原地，最后再向下平移2len得到（y，x-2len）.
+以上是以第一行第一列的点为坐标原点（旋转中心）经坐标变换得到其他城区的点的，但是并不能ac，因为图一这样旋转变换得到图二没问题，但是图二绕原来的旋转中心再转就会转歪，后面坐标便不对了。解决办法就是一轮坐标变换后便改变坐标原点（旋转中心），比如等级一经坐标变换后得到等级二的四个坐标后立刻调整坐标原点（旋转中心）为等级二的中心，再推出等级三坐标，继续调整坐标原点，以此类推。
+上面的调整坐标原点是向右下角移动，具体操作为调整原来的坐标，横坐标减小len，纵坐标增加len，也就是在上面推出的坐标后面对横纵坐标再次变换，注意必须先坐标转换再移动坐标原点，即得到左上角：（-y，-x）改变坐标得到（-y-len，-x+len）；右上角：（x+2len，y）变成（x+len，y+len）；右下角：（x+2len，y-2len）变成 （x+len，y-len）；左下角：（y，x-2len）变成（y-len，x-len）.
+注意点：
+1.代码中坐标公式是两步得到，第一步旋转平移，第二步移动原点。
+2.虽然主题代码和yxc大佬一样，但是输出时是乘以5，看上面我写的关于等级一的四个坐标便可理解，原点不同。
+
+C++ 代码
+#include <iostream>
+#include <cmath>
+#include <cstdio>
+using namespace std;
+typedef long long ll;
+typedef pair<ll,ll> pll;
+
+pll calc(ll n,ll m){
+    if(n == 0)  return {0,0};//递归边界
+    ll len = 1ll << (n-1),cnt = 1ll << (2 * n - 2);
+    pll pos = calc(n-1,m%cnt);//上一个等级的坐标信息
+    ll x = pos.first,y = pos.second;
+    ll z = m / cnt;//处在城区的哪个角
+    if(z == 0)  return {-y-len,-x+len};
+    if(z == 1)  return {x + len,y+len};
+    if(z == 2)  return {x + len,y - len};
+    return {y-len,x - len};
+}
+
+int main(){
+    int T;
+    cin>>T;
+    while(T--){
+        ll N,A,B;
+        cin>>N>>A>>B;
+        pll ac = calc(N,A - 1);
+        pll bc = calc(N,B - 1);
+        double x = ac.first - bc.first;
+        double y = ac.second - bc.second;
+        printf("%.0lf\n",sqrt(x*x+y*y)*5);
+    }
+    return 0;
+}
+
+作者：昂昂累世士
+链接：https://www.acwing.com/solution/content/996/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+算法分析&C++11代码
+1. 以每个图形的中心点作为原点；
+2. 当前坐标在图形中的位置可以由序号所在小图形（左上/右上/左下/右下）和该点在对应小图形中的位置决定！
+左上角和左下角的小图形需要翻转,而右上角的和右下角的不变，之后将小图形的坐标原点变换到当前大图形的坐标原点上；
+左上角的需要进行顺时针 90° 旋转后沿 Y 轴对称，（x，y）—>（y，-x） —>（-y，-x）
+左下角的需要进行逆时针 90° 旋转后沿 Y 轴对称，（x，y）—>（-y，x）—>（y，x）
+右上角和右下角的保持不变，（x，y）
+进行坐标原点变换，为避免出现小数，采用 len = 1 << ( level - 1 ) ，level为当前图形级别；此时变换的单位长度应是 len / 2 才对，但是为此处避免出现小数，抽出边长 10 的 2 作为因子，之后计算距离后只需要乘以 5 即可。
+如左上角（-y，-x）—>（-y - len，-x + len），右上/左下/右下坐标原点变换后依次为 （x + len，y + len）， （y - len，x - len）， （x + len，y - len）
+3.递归结束于 level == 0 ，此时 x = 0，y = 0
+4.计算两点距离，结果乘以（ 10 / 2 ，前面已经为不出现小数乘过一个 2 ）
+#include <cmath>
+#include <iostream>
+// #define debug
+using namespace std;
+using Long = long long int;
+using Longpair = pair<Long, Long>;
+Longpair findindex(int level, Long dis)
+{
+    if (!level)
+        return {0LL, 0LL};
+    auto len{1 << (level - 1)};
+    auto space{1LL << (2 * level - 2)};
+    auto diss{findindex(level - 1, dis % space)};
+    auto x{diss.first}, y{diss.second};
+    switch (dis / space)
+    {
+    case 0LL:
+        return {-y - len, -x + len};
+    case 1LL:
+        return {x + len, y + len};
+    case 2LL:
+        return {x + len, y - len};
+    case 3LL:
+        return {y - len, x - len};
+    }
+}
+int main(int argc, char **argv)
+{
+    int cnt;
+    cin >> cnt;
+    while (cnt--)
+    {
+        int level;
+        Long A, B;
+        cin >> level >> A >> B;
+        auto tempA{findindex(level, A - 1)}, tempB{findindex(level, B - 1)};
+#ifdef debug
+        cout << "----------" << endl;
+        cout << tempA.first << ',' << tempA.second << endl;
+        cout << tempB.first << ',' << tempB.second << endl;
+        cout << "----------" << endl;
+#endif
+        double x = tempA.first - tempB.first;
+        double y = tempA.second - tempB.second;
+        cout.flags(ios::fixed);
+        cout.precision(0);
+        cout << sqrt(x * x + y * y) * 5.0 << endl;
+    }
+    return EXIT_SUCCESS;
+}
+
+
+作者：Belous
+链接：https://www.acwing.com/solution/content/1388/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+#include <cstdio>
+#include <cstring>
+#include <cmath>
+
+typedef long long LL;
+
+struct Point
+{
+    LL x, y;
+};
+
+Point get(LL n, LL a)
+{
+    if (n == 0) return {0, 0};
+    LL block = 1ll << n * 2 - 2, len = 1ll << n - 1;
+    auto p = get(n - 1, a % block);
+    LL x = p.x, y = p.y;
+    int z = a / block;
+
+    if (z == 0) return {y, x};
+    else if (z == 1) return {x, y + len};
+    else if (z == 2) return {x + len, y + len};
+    return {len * 2 - 1 - y, len - 1 - x};
+}
+
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T -- )
+    {
+        LL n, a, b;
+        scanf("%lld%lld%lld", &n, &a, &b);
+        auto pa = get(n, a - 1);
+        auto pb = get(n, b - 1);
+        double dx = pa.x - pb.x, dy = pa.y - pb.y;
+        printf("%.0lf\n", sqrt(dx * dx + dy * dy) * 10);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/200835/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
