@@ -10869,8 +10869,7 @@ int main()
 
 作者：goontry
 链接：https://www.acwing.com/solution/content/2396/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -10910,8 +10909,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/45287/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 143. 最大异或对（好题）    原题链接    简单
 作者：    高数 ,  2020-03-06 11:30:57 ,  阅读 921
@@ -10985,8 +10983,7 @@ int main(void)
 
 作者：高数
 链接：https://www.acwing.com/solution/content/9587/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 #include <algorithm>
@@ -11044,8 +11041,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/45284/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 835. Trie字符串统计    原题链接    简单
 作者：    goontry ,  2019-06-07 19:13:58 ,  阅读 1728
@@ -11119,8 +11115,7 @@ int main()
 
 作者：goontry
 链接：https://www.acwing.com/solution/content/2083/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -11172,8 +11167,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/45282/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 831. KMP字符串    原题链接    简单
 作者：    薯条 ,  2019-05-28 15:21:26 ,  阅读 3276
@@ -11355,8 +11349,7 @@ for i := 0; i < n; i++ { //4. 两个循环的时间复杂度是O(2n),所以KMP�
 
 作者：薯条
 链接：https://www.acwing.com/solution/content/2286/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -11433,8 +11426,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/43108/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 154. 滑动窗口    原题链接    简单
 作者：    Tyouchie ,  2019-06-29 09:55:38 ,  阅读 1842
@@ -11568,8 +11560,7 @@ int main()
 
 作者：Tyouchie
 链接：https://www.acwing.com/solution/content/2499/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -11616,8 +11607,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/43107/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 题目描述
 给定一个长度为N的整数数列，输出每个数左边第一个比它小的数，如果不存在则输出-1。
@@ -11696,8 +11686,7 @@ int main() {
 
 作者：wuog
 链接：https://www.acwing.com/solution/content/3481/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -11726,8 +11715,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/43105/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 题目描述
 实现一个队列，队列初始为空，支持四种操作：
@@ -11834,8 +11822,7 @@ int main(){
 
 作者：wuog
 链接：https://www.acwing.com/solution/content/3480/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -11871,8 +11858,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/43104/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include<iostream>
 using namespace std;
@@ -11905,8 +11891,7 @@ int main()
 
 作者：Struggle
 链接：https://www.acwing.com/solution/content/13610/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -12057,8 +12042,7 @@ int main()
 
 作者：N1ce丶燊
 链接：https://www.acwing.com/solution/content/2384/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -12132,8 +12116,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/42982/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 826. 单链表    原题链接    简单
 作者：    wuog ,  2019-08-06 01:30:24 ,  阅读 2819
@@ -12283,8 +12266,7 @@ int main(){
 
 作者：wuog
 链接：https://www.acwing.com/solution/content/3472/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -12363,8 +12345,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/42977/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 803. 区间合并    原题链接    简单
 作者：    李乾 ,  2019-06-27 16:54:58 ,  阅读 1427
@@ -12468,8 +12449,7 @@ int main()
 
 作者：李乾
 链接：https://www.acwing.com/solution/content/2615/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 #include <vector>
@@ -12521,8 +12501,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/40108/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 802. 区间和    原题链接    简单
 作者：    此题有解否 ,  2019-05-30 20:23:21 ,  阅读 2831
@@ -12640,8 +12619,7 @@ int main()
 
 作者：此题有解否
 链接：https://www.acwing.com/solution/content/2321/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 #include <vector>
@@ -12730,8 +12708,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/40105/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 801. 二进制中1的个数    原题链接    简单
 作者：    过眼云烟1 ,  2019-06-05 00:19:23 ,  阅读 1181
@@ -12818,8 +12795,7 @@ int main(){
 
 作者：过眼云烟1
 链接：https://www.acwing.com/solution/content/2370/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -12898,8 +12874,7 @@ int main()
 
 作者：Hrbust_Lmh
 链接：https://www.acwing.com/solution/content/2341/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -12927,8 +12902,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/40069/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 本题的核心思想是双指针算法，i指针是快指针，j是慢指针，每当i指针i指针右移一位的时候，
   其对应的元素的个数就需要++，可以看出此处需要一个计数的数组或者unordered_map<int, int>，
@@ -12967,8 +12941,7 @@ int main()
 
 作者：此题有解否
 链接：https://www.acwing.com/solution/content/2070/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -12999,8 +12972,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/40066/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 798. 差分矩阵    原题链接    简单
 作者：    p_c ,  2019-05-21 05:38:43 ,  阅读 2008
@@ -13100,8 +13072,7 @@ int main(void) {
 
 作者：p_c
 链接：https://www.acwing.com/solution/content/2137/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -13154,8 +13125,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39800/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 797. 差分 C++    原题链接    简单
 作者：    过眼云烟1 ,  2019-05-20 13:00:14 ,  阅读 2710
@@ -13229,8 +13199,7 @@ int main(){
 
 作者：过眼云烟1
 链接：https://www.acwing.com/solution/content/2118/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -13270,8 +13239,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39799/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 AcWing 796. 子矩阵的和    原题链接    简单
 作者：    番茄酱 ,  2019-08-13 18:05:41 ,  阅读 1428
 
@@ -13318,8 +13286,7 @@ int main() {
 
 作者：番茄酱
 链接：https://www.acwing.com/solution/content/3797/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -13354,8 +13321,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39797/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 AcWing 795. 前缀和理解_Java    原题链接    简单
 作者：    zning ,  2019-09-20 12:28:55 ,  阅读 987
 
@@ -13469,8 +13435,7 @@ public class Main {
 
 作者：zning
 链接：https://www.acwing.com/solution/content/4683/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -13500,8 +13465,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39796/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 794. 高精度除法 C++    原题链接    简单
 作者：    过眼云烟1 ,  2019-05-20 01:32:16 ,  阅读 1548
@@ -13572,8 +13536,7 @@ int main(){
 
 作者：过眼云烟1
 链接：https://www.acwing.com/solution/content/2108/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 #include <vector>
@@ -13617,8 +13580,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39795/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 793. 高精度乘法 A x b 和 A x B 的模版    原题链接    简单
 作者：    Wilson79 ,  2020-05-26 11:00:43 ,  阅读 367
@@ -13713,8 +13675,7 @@ int main() {
 
 作者：Wilson79
 链接：https://www.acwing.com/solution/content/13694/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 #include <vector>
@@ -13759,8 +13720,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39794/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。AcWing 792. 高精度减法（C语言新手版）    原题链接    简单
+ AcWing 792. 高精度减法（C语言新手版）    原题链接    简单
 作者：    师大专升本16级学长 ,  2019-12-12 16:16:13 ,  阅读 687
 
 4
@@ -13852,8 +13812,7 @@ int main()
 
 作者：师大专升本16级学长
 链接：https://www.acwing.com/solution/content/6946/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 
 include <iostream>
@@ -13909,8 +13868,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39793/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 791. 高精度加法C++数组实现    原题链接    简单
 作者：    lyclyc_NSP ,  2020-05-10 11:35:23 ,  阅读 702
@@ -13970,8 +13928,7 @@ int main() {
 
 作者：lyclyc_NSP
 链接：https://www.acwing.com/solution/content/10016/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 不圧位代码
 #include <iostream>
@@ -14078,8 +14035,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39792/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 790. 数的三次方根    原题链接    简单
 作者：    第一WA者金银花 ,  2019-08-08 19:10:10 ,  阅读 2542
@@ -14109,8 +14065,7 @@ int main(){
 
 作者：第一WA者金银花
 链接：https://www.acwing.com/solution/content/3564/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -14243,8 +14198,7 @@ int main() {
 
 作者：昂昂累世士
 链接：https://www.acwing.com/solution/content/3338/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -14295,8 +14249,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39787/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 788. 逆序对的数量    原题链接    简单
 作者：    xuanxuanxuan ,  2019-10-06 11:08:00 ,  阅读 1637
@@ -14346,8 +14299,7 @@ y总算法基础课
 
 作者：xuanxuanxuan
 链接：https://www.acwing.com/solution/content/5103/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -14396,8 +14348,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39791/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 787. 归并排序（Python版本）    原题链接    简单
 作者：    肆十一 ,  2019-09-17 22:49:32 ,  阅读 533
@@ -14451,8 +14402,7 @@ if __name__ == "__main__":
 
 作者：肆十一
 链接：https://www.acwing.com/solution/content/4628/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -14495,8 +14445,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39790/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 786. 快排应用——第k个数    原题链接    简单
 作者：    Sniper02 ,  2020-01-15 01:50:29 ,  阅读 1160
@@ -14571,8 +14520,7 @@ int main(){
 
 作者：Sniper02
 链接：https://www.acwing.com/solution/content/7585/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -14612,8 +14560,7 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39785/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 AcWing 785. 快速排序    原题链接    简单
 作者：    Diamondz ,  2019-05-19 17:52:13 ,  阅读 1619
@@ -14716,8 +14663,7 @@ void quick_sort(int q[], int l, int r)
 
 作者：Diamondz
 链接：https://www.acwing.com/solution/content/2089/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
 
 #include <iostream>
 
@@ -14759,5 +14705,4 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/39784/
-来源：AcWing
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+ 
