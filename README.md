@@ -12257,6 +12257,7 @@ f[u]=maxv∈son[u]f[v]+len(v,u)
 那么红色的呢?考虑到每一条红色链都能被它的最浅的点分成两条蓝色链,那么在决策点u时顺便更新答案即可(可见代码)
 
 每个点u都只决策|son[u]||son[u]|次,故总时间复杂度O(n)O(n)
+```
 #include<iostream>
 #include<cstdio>
 typedef long long ll;
@@ -12689,5 +12690,5 @@ public:
         
     }
 };
-
+```
 
