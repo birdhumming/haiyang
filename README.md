@@ -12142,7 +12142,9 @@ https://zhuanlan.zhihu.com/p/139041734
 首先，各大算法孰优孰劣并无定论。如果是刚入门，优先考虑SGD+Nesterov Momentum或者 Adam.（Standford 231n : The two recommended updates to use are either SGD+Nesterov Momentum or Adam）
 
 
-机器学习中用来防止过拟合的方法有哪些？overfitting
+机器学习中用来防止过拟合的方法有哪些？overfitting - 
+regularization and cross validation by slicing data, in the stat learning book
+
 https://www.zhihu.com/question/59201590
 https://zhuanlan.zhihu.com/p/56475281
 https://blog.csdn.net/Left_Think/article/details/77684087
