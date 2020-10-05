@@ -12222,3 +12222,383 @@ https://leetcode-cn.com/problems/copy-list-with-random-pointer/solution/
 二叉树中的最远距离
 https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/er-cha-shu-de-jie-dian-jian-zui-da-ju-chi-wen-ti-b/
 https://blog.csdn.net/liuyi1207164339/article/details/50898902
+
+graph LR
+单源最短路 ->
+    边权为正 -> dijkstra
+
+    边权有负 ->
+        存在负权回路 -> Bellman-Ford
+        不存在负权回路 -> spfa
+
+多源最短路 -> Floyd
+
+
+
+
+AcWing 1072. 树的最长路径    原题链接    简单
+作者：    whsstory ,  2019-10-08 21:20:19 ,  阅读 851
+
+14
+
+
+树形dp好题.
+考虑到链一定是连续的,且在树上有两种情况:
+蓝色表示,链上深度最浅的点是链的一端的情况.
+而红色表示,链的两端都不是链上最浅的点.
+而显然,对于蓝色的链,其最浅的点仍然可以向上拓展,而红色不行.
+那么,问题就可以用树形dp解决了.
+
+设f[u]表示以u为链的一端,且u为链上最浅的点的最长链的长度
+这样我们就可以得到最长的蓝色链,转移方程也不难得出:
+f[u]=maxv∈son[u]f[v]+len(v,u)
+f[u]=maxv∈son[u]f[v]+len(v,u)
+
+那么红色的呢?考虑到每一条红色链都能被它的最浅的点分成两条蓝色链,那么在决策点u时顺便更新答案即可(可见代码)
+
+每个点u都只决策|son[u]||son[u]|次,故总时间复杂度O(n)O(n)
+#include<iostream>
+#include<cstdio>
+typedef long long ll;
+#define MAXN 20011
+void umax(ll &a,ll t)
+{
+    if(t>a)a=t;
+}
+struct Edge
+{
+    ll v,w,nxt;
+}e[MAXN<<1|1];
+ll cnt=0,last[MAXN];
+void adde(ll u,ll v,ll w)
+{
+    ++cnt;
+    e[cnt].v=v,e[cnt].w=w;
+    e[cnt].nxt=last[u],last[u]=cnt;
+}
+
+ll f[MAXN],fa[MAXN],ans=0;
+void dfs(ll u)
+{
+    ll premax=0;
+    for(ll i=last[u];i;i=e[i].nxt)
+    {
+        ll v=e[i].v;
+        if(v==fa[u])continue;
+        fa[v]=u;
+        dfs(v);
+        umax(ans,premax+f[v]+e[i].w);
+        umax(premax,f[v]+e[i].w);
+    }
+    f[u]=premax;
+}
+int main()
+{
+    ll n;
+    scanf("%lld",&n);
+    for(ll i=1;i<n;++i)
+    {
+        ll u,v,w;
+        scanf("%lld%lld%lld",&u,&v,&w);
+        adde(u,v,w);adde(v,u,w);
+    }
+    dfs(1);
+    printf("%lld",ans);
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/5185/
+
+
+题目描述
+给定一棵树，树中包含 n 个结点（编号1~n）和 n−1 条无向边，每条边都有一个权值。
+
+现在请你找到树中的一条最长路径。
+
+换句话说，要找到一条路径，使得使得路径两端的点的距离最远。
+
+注意：路径中可以只包含一个点。
+
+输入格式
+第一行包含整数 n。
+
+接下来 n−1 行，每行包含三个整数 ai,bi,ci，表示点 ai 和 bi 之间存在一条权值为 ci 的边。
+
+输出格式
+输出一个整数，表示树的最长路径的长度。
+
+数据范围
+1≤n≤10000,
+1≤ai,bi≤n,
+−105≤ci≤105
+
+样例
+输入：
+
+6
+5 1 6
+1 4 5
+6 3 9
+2 6 8
+6 1 7
+输出：
+
+22
+
+算法1
+(两次dfs或bfs) 线性
+1. 任选一个起始节点开始dfs或bfs，直到到达距离它最远的节点maxv;👴
+2.从maxv再次开始dfs或bfs，直到到达距离maxv最远的距离p;👮‍♀️
+3.maxv到p的路径就是树的直径
+C++ 代码
+#include<bits/stdc++.h>
+using namespace std;
+const int N=10010,M=2*N;
+int h[N],e[M],w[M],ne[M],idx;//链式前向星
+int n;
+int maxv,maxd;//maxv用来记录距离刚开始距离选为dfs()起点最远的那个节点p，maxd用来记录距离p最远的距离，也就是直径
+void init()
+{
+    memset(h,-1,sizeof(h));
+    idx=0;
+}
+void add(int a,int b,int c)
+{
+    e[idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx++;
+}
+void dfs(int u,int fa,int dist)//dist记录遍历到的顶点到u的距离
+{
+
+    for(int i=h[u];i!=-1;i=ne[i])
+    {
+        int j=e[i];
+        int k=w[i];
+        if(j==fa) continue;
+        if(maxd<dist+k)//在遍历u连接的顶点前看看能不能把maxd更新一下，如果能说明j就是当前的maxv
+        {
+            maxd=dist+k;
+            maxv=j;
+            //dfs(j,u,dist+k);错误！！！！！！
+        }
+     dfs(j,u,dist+k);//必须遍历所有可能
+    }
+}
+int main()
+{
+    cin>>n;
+    init();
+    for(int i=0;i<n-1;i++)
+    {
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        add(a,b,c);
+        add(b,a,c);
+    }
+     dfs(1,-1,0);
+     dfs(maxv,-1,0);
+    cout<<maxd<<endl;
+    return 0;
+}
+
+算法2
+(树形DP)
+DP的分类标准是: 枚举每个点作为根节点时能够延申的最长链和次长链
+dp[x]表示以x为根节点，y1，y2....为子节点时的最长链
+dp[x]=max(dp[yn]+w[n][x]);
+
+C++ 代码
+//题目中说路径可以只包含一个点的意识就是说路径最小值就是0，不能是负数
+#include<bits/stdc++.h>
+using namespace std;
+const int N=10010,M=2*N;
+int h[N],e[M],ne[M],w[M],idx;
+int n;
+int ans;
+void init()
+{
+    memset(h,-1,sizeof(h));
+    idx=0;
+}
+void add(int a,int b,int c)
+{
+    e[idx]=b;
+    w[idx]=c;
+    ne[idx]=h[a];
+    h[a]=idx++;
+}
+int dfs(int u,int fa)
+{
+    int dist=0;//dist记录以u为根的树最远走的距离
+    int d1=0,d2=0;//d1记录u为根走到的最长链，d2记录u为根走到的次长链
+    for(int i=h[u];i!=-1;i=ne[i])
+    {
+        int j=e[i];
+        if(j==fa) continue;
+        int d=dfs(j,u)+w[i];
+        dist=max(dist,d);//d1,d2的初值都是0，所以最终d1,d2一定大于等于零，所以d1+d2一定不小于d1，
+        if(d>d1) d2=d1,d1=d;//这里的顺序很重要，不能搞错了！！
+        else if(d>d2) d2=d;
+
+    }
+    ans=max(ans,d1+d2);
+    return dist;
+}
+int main()
+{
+    cin>>n;
+    init();
+    for(int i=0;i<n-1;i++)
+    {
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        add(a,b,c);
+        add(b,a,c);
+    }
+    dfs(1,-1);//第一次递归的返回值没有用到，所以这样写问题不大
+    cout<<ans<<endl;
+    return 0;
+}
+
+作者：Pr
+链接：https://www.acwing.com/solution/content/13593/
+ 。
+
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+const int N=10010,M=N*2;
+int head[N],w[M],ne[M],to[M],tot,ans,v[N],d[N];
+void add(int u,int v,int c){
+    to[tot]=v,w[tot]=c,ne[tot]=head[u],head[u]=tot++;
+}
+void dp(int x){
+    v[x]=1;
+    for(int i=head[x];i!=-1;i=ne[i]){
+        int y=to[i];
+        if(v[y]) continue;
+        dp(y);
+        ans=max(ans,d[x]+d[y]+w[i]);
+        d[x]=max(d[x],d[y]+w[i]);
+    }
+}
+int main(){
+    memset(head,-1,sizeof head);
+    int n;
+    scanf("%d",&n);
+    for(int i=1;i<n;i++){
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        add(a,b,c),add(b,a,c);
+    }
+    dp(1);
+    printf("%d",ans);
+    return 0;
+}
+
+作者：cqh
+链接：https://www.acwing.com/solution/content/18966/
+ 。
+
+too much stuff:
+
+AcWing 1072. 树的最长路径
+楚天的头像楚天
+4小时前
+@the_xin借鉴大佬的思路
+
+首先对根节点进行dfs，求出离根节点最远的点，可以证明，离根节点最远的点一定在树的直径上
+
+那么我们就可以分为这样几步
+
+1.找出离根节点最远的点，记为dian ，做一遍dfs
+
+2.然后以dian 为根，再进行一遍dfs，找出离dian最远的点，那么他们之间的距离就是答案，也就是树的直径
+
+#include<bits/stdc++.h>
+
+using namespace std;
+const int N=2e4+100;//记得开二倍大小的数组
+int dian;
+int dis[N];
+int n;
+int ne[N],idx,head[N],ver[N],e[N];
+
+inline int read()
+{
+    int x=0;
+    int f=1;
+    char ch;
+    ch=getchar();
+    while(ch>'9'||ch<'0')
+    {
+        if(ch=='-')
+            f=-1;
+        ch=getchar();
+    }
+    while(ch>='0'&&ch<='9')
+    {
+        x=x*10,x=x+ch-'0';
+        ch=getchar();
+    }
+    return x*f;
+}
+void add(int u,int v,int w)
+{
+    ne[idx]=head[u];
+    ver[idx]=v;
+    head[u]=idx;
+    e[idx]=w;
+    idx++;
+}
+
+void dfs(int u,int fa,int cnt)
+{
+    dis[u]=max(dis[u],cnt);
+    for(int i=head[u];i!=-1;i=ne[i])
+    {
+        int j=ver[i];
+        int w=e[i];
+        if(j!=fa)
+        {
+            dfs(j,u,cnt+w);
+        }
+    }
+}
+int main()
+{
+    n=read();
+    memset(head,-1,sizeof(head));
+    for(int i=1;i<=n-1;i++)
+    {
+        int a,b,c;
+        a=read();
+        b=read();
+        c=read();
+        add(a,b,c);
+        add(b,a,c);
+    }
+    dfs(1,1,0);
+    int res=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(dis[i]>res)
+        {   
+            res=dis[i];
+            dian=i;
+        }
+    }
+    memset(dis,0,sizeof(dis));
+    dfs(dian,dian,0);
+    int ans=0;
+    for(int i=1;i<=n;i++)
+    {
+        ans=max(ans,dis[i]);
+    }
+    cout<<ans<<endl;
+}
