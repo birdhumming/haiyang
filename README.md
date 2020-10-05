@@ -12121,3 +12121,100 @@ Christopher Bishop的 Pattern Recognition and Machine Learning ：
 
 Murphy/Machine_Learning-_A_Probabilistic_Perspective.pdf
 百科全书
+
+word2vec/cbow/skip-gram:
+https://zh.wikipedia.org/wiki/Word2vec
+
+
+深度学习优化器总结
+https://zhuanlan.zhihu.com/p/58236906
+
+深度学习——优化器算法Optimizer详解（BGD、SGD、MBGD、Momentum、NAG、Adagrad、Adadelta、RMSprop、Adam）
+https://www.cnblogs.com/guoyaohua/p/8542554.html
+
+优化器的种类有很多，概括起来常用的有五类：
+随机梯度下降(SGD, stochastic gradient descent)
+SGDM(加入了一阶动量)
+AdaGrad（加入了二阶动量）
+RMSProp
+Adam
+https://zhuanlan.zhihu.com/p/139041734
+首先，各大算法孰优孰劣并无定论。如果是刚入门，优先考虑SGD+Nesterov Momentum或者 Adam.（Standford 231n : The two recommended updates to use are either SGD+Nesterov Momentum or Adam）
+
+
+机器学习中用来防止过拟合的方法有哪些？overfitting
+https://www.zhihu.com/question/59201590
+https://zhuanlan.zhihu.com/p/56475281
+https://blog.csdn.net/Left_Think/article/details/77684087
+
+dropout, regularization, data augmentation
+
+LR loss function:
+https://zhuanlan.zhihu.com/p/29120200
+https://blog.csdn.net/yz930618/article/details/104363705
+https://blog.csdn.net/bitcarmanlee/article/details/51165444
+https://blog.csdn.net/weixin_41725746/article/details/93378662
+
+
+梯度消失和梯度爆炸
+https://zhuanlan.zhihu.com/p/51490163
+https://blog.csdn.net/qq_25737169/article/details/78847691
+RELU - rectified linear unit
+https://blog.csdn.net/weixin_37933986/article/details/69255863
+
+偏差 bias 和方差 variance, error
+https://www.zhihu.com/question/27068705
+
+任意在空间中线性可分的两类点，分别向SVM的超平面上做投影，这些点在超平面上是有可能可分吗
+https://blog.csdn.net/taoqick/article/details/102651151
+https://zhuanlan.zhihu.com/p/31534828
+不可能。
+
+以二维空间为例，超平面刚好是支持向量的中垂线，支持向量在中垂线上的投影重合，肯定不可分
+
+特征选择方法 feature selection -filter, wrapper, embedded
+https://zhuanlan.zhihu.com/p/74198735
+https://www.zhihu.com/question/28641663
+
+
+深拷贝和浅拷贝
+https://github.com/YvetteLau/Step-By-Step/issues/17
+
+LSTM和transformer
+https://blog.csdn.net/weixin_41089007/article/details/96474760
+https://www.zhihu.com/question/302392659
+https://zhuanlan.zhihu.com/p/50915723
+
+
+如何实现多态 c++底层是怎么实现
+https://blog.csdn.net/Ferlan/article/details/82856536
+https://zhuanlan.zhihu.com/p/101306087
+
+set,map,unordered_map,unordered_set的区别
+set is a collection of same type of things; map is key-value pair
+
+A map stores keys sorted. It maps keys to values. Usually it is implemented as a binary search tree (red-black tree) for keys. A set is a map where values are irrelevant. unordered_map and unordered_set (new in C++11) store keys unsorted and use hash table for search.
+https://stackoverflow.com/questions/22088607/what-is-the-difference-between-set-vs-map-in-c
+
+
+static keyword in C and c++:
+
+In the C programming language, static is used with global variables and functions to set their scope to the containing file. In local variables, static is used to store the variable in the statically allocated memory instead of the automatically allocated memory.
+
+statically allocated memory is typically reserved in data segment of the program at compile time, while the automatically allocated memory is normally implemented as a transient call stack.
+
+In C++, however, static is also used to define class attributes (shared between all objects of the same class) and methods. 
+
+堆空间和栈空间的区别
+https://www.cnblogs.com/kevinGaoblog/archive/2012/03/23/2413102.html
+https://blog.csdn.net/capecape/article/details/78038997
+
+为什么要连续特征离散化
+
+https://zhuanlan.zhihu.com/p/68865422
+https://blog.csdn.net/rosenor1/article/details/52388064
+
+
+拷贝带有random指针的链表
+https://blog.csdn.net/u013709270/article/details/53667321
+https://leetcode-cn.com/problems/copy-list-with-random-pointer/solution/
