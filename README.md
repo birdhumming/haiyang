@@ -12072,6 +12072,52 @@ To expand, it's these 7 lines. (Actually 12)
 2.维护时，采用while操作（别用错了if）
 再补充
 
+machine learning interview
+https://www.acwing.com/file_system/file/content/whole/index/content/1339859/
+
+【机器学习】【白板推导系列】【合集 1～23】
+https://www.bilibili.com/video/BV1aE411o7qd?p=9
+https://www.bilibili.com/video/BV1aE411o7qd?p=1
 
 python
+
+cs229 stanford - Lecture 1 - Welcome | Stanford CS229: Machine Learning (Autumn 2018)
+
+http://cs229.stanford.edu/syllabus-fall2020.html
 http://cs229.stanford.edu/notes2020fall/notes2020fall/Fall_2020_Notebook.html
+
+deep learning http://cs229.stanford.edu/notes2020fall/notes2020fall/Fall_2020_Notebook.html
+
+
+
+deep learning
+https://cs230.stanford.edu/fall2020/lecture1.pdf
+
+li feifei 
+http://cs231n.stanford.edu/
+
+台大 机器学习 林轩田
+https://www.youtube.com/watch?v=0ttRHJUHZog&t=4s
+
+list of ML books - 
+https://github.com/Mikoto10032/DeepLearning/tree/master/books
+https://zhuanlan.zhihu.com/p/33982890
+MIT ML course https://github.com/peteflorence/MachineLearning6.867
+
+https://github.com/tpn/pdfs
+https://github.com/Tongzhenguo/ebooks
+https://www.cnblogs.com/arachis/p/books.html
+
+深度学习花书  deep learning 圣经 张志华：
+deep learning bible http://www.deeplearningbook.org/
+中文版 https://github.com/exacity/deeplearningbook-chinese
+
+李航《统计学习方法》: 感K朴决逻， 支提E隐条
+
+机器学习周志华 西瓜书
+
+Christopher Bishop的 Pattern Recognition and Machine Learning ：
+回分神核稀， 图混近采连，顺组
+
+Murphy/Machine_Learning-_A_Probabilistic_Perspective.pdf
+百科全书
