@@ -12602,3 +12602,92 @@ int main()
     }
     cout<<ans<<endl;
 }
+
+
+
+class Solution:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        self.res=0 #存储最长直径
+        def dfs(root:TreeNode):# 记录每一个子树的深度
+            if not root:
+                return 0
+            l= dfs(root.left)
+            r= dfs(root.right)
+            self.res=max(self.res,l+r)#存储当前节点与之前遍历节点的最长路径
+            return max(l,r)+1 #返回当前子树的最长深度
+        dfs(root)
+        return self.res
+
+
+
+class Solution {
+    int ans;
+    int depth(TreeNode* rt){
+        if (rt == NULL) return 0; // 访问到空节点了，返回0
+        int L = depth(rt->left); // 左儿子为根的子树的深度
+        int R = depth(rt->right); // 右儿子为根的子树的深度
+        ans = max(ans, L + R + 1); // 计算d_node即L+R+1 并更新ans
+        return max(L, R) + 1; // 返回该节点为根的子树的深度
+    }
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        ans = 1;
+        depth(root);
+        return ans - 1;
+    }
+};
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/er-cha-shu-de-zhi-jing-by-leetcode-solution/
+。
+
+分析
+还记不记得如何求二叉树的最大深度，那么如何求穿过根节点的直径，很显然答案就是将左子树的最大深度 + 右子树的最大深度；
+但是题目中要求最大直径，也就是说最大直径路径不一定是穿过根节点的，所以要设置一个变量max，用来记录所有的子树的直径，然后更新最大值。
+
+思路
+
+设置一个全局变量max；
+对root进行求最大深度，调用下maxDeepth方法；
+越过叶子节点，返回0；
+计算左子树最大深度left；
+计算右子树最大深度right；
+（在这个位置：计算直径 = left + right , 然后再维护最大值max）
+返回左右子树较大者 + 1
+
+作者：xmblgt
+链接：https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/si-lu-qing-xi-ming-liao-kan-wan-bu-xin-ni-huan-bu-/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int res=0; 
+    int dfs(TreeNode* rt){
+            if(rt==NULL) return 0;
+            int L, R;
+            L=dfs(rt->left);
+            R=dfs(rt->right);
+            res=max(res,L+R);
+            return max(L,R)+1;
+        }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        dfs(root);
+        return res;
+        
+    }
+};
+
+
