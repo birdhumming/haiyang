@@ -12071,3 +12071,7 @@ To expand, it's these 7 lines. (Actually 12)
 1.维护单调栈/单调队列，本质都是求最值；不同之处在于是否要一端/两端操作
 2.维护时，采用while操作（别用错了if）
 再补充
+
+
+python
+http://cs229.stanford.edu/notes2020fall/notes2020fall/Fall_2020_Notebook.html
