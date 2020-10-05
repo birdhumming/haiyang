@@ -11864,4 +11864,5575 @@ print(FordFulkerson(edges, S, T, 2*N+2, len(edges)).getCostFlow()[1])
 
 作者：皓首不倦
 链接：https://www.acwing.com/solution/content/21514/
+
+
+   。
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1610, M = 10000, INF = 1e8;
+
+int n, p, x, xp, y, yp, S, T;
+int h[N], e[M], f[M], w[M], ne[M], idx;
+int q[N], d[N], pre[N], incf[N];
+bool st[N];
+
+void add(int a, int b, int c, int d)
+{
+    e[idx] = b, f[idx] = c, w[idx] = d, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, w[idx] = -d, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool spfa()
+{
+    int hh = 0, tt = 1;
+    memset(d, 0x3f, sizeof d);
+    memset(incf, 0, sizeof incf);
+    q[0] = S, d[S] = 0, incf[S] = INF;
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (f[i] && d[ver] > d[t] + w[i])
+            {
+                d[ver] = d[t] + w[i];
+                pre[ver] = i;
+                incf[ver] = min(f[i], incf[t]);
+                if (!st[ver])
+                {
+                    q[tt ++ ] = ver;
+                    if (tt == N) tt = 0;
+                    st[ver] = true;
+                }
+            }
+        }
+    }
+    return incf[T] > 0;
+}
+
+int EK()
+{
+    int cost = 0;
+    while (spfa())
+    {
+        int t = incf[T];
+        cost += t * d[T];
+        for (int i = T; i != S; i = e[pre[i] ^ 1])
+        {
+            f[pre[i]] -= t;
+            f[pre[i] ^ 1] += t;
+        }
+    }
+    return cost;
+}
+
+int main()
+{
+    scanf("%d%d%d%d%d%d", &n, &p, &x, &xp, &y, &yp);
+    S = 0, T = n * 2 + 1;
+    memset(h, -1, sizeof h);
+    for (int i = 1; i <= n; i ++ )
+    {
+        int r;
+        scanf("%d", &r);
+        add(S, i, r, 0);
+        add(n + i, T, r, 0);
+        add(S, n + i, INF, p);
+        if (i < n) add(i, i + 1, INF, 0);
+        if (i + x <= n) add(i, n + i + x, INF, xp);
+        if (i + y <= n) add(i, n + i + y, INF, yp);
+    }
+    printf("%d\n", EK());
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/459012/
+   。
+
+AcWing 969. 志愿者招募    原题链接    困难
+作者：    皓首不倦 ,  2020-09-28 16:16:41 ,  阅读 31
+
+0
+
+
+
+
+
+from collections import deque
+class SPFA:
+
+    # 包含节点为1, 2, 3, 4, ..... max_node_num
+    def __init__(self, start_node, edges, max_node_num):
+        self.edges = edges[::]
+        self.start_node = start_node
+        self.max_node_num = max_node_num
+        self.link = {}
+        for a, b, w, idx in edges:
+            if a not in self.link:
+                self.link[a] = []
+            self.link[a].append((b, w, idx))
+
+    # 获取最短路径长度的列表[(节点1，长度1), (节点2, 长度2) .....]
+    def getMinPathLen(self, pre, f):
+        return self.getInfo(pre, f, min_path=True)
+
+    # 获取最长路径长度列表[(节点1，长度1), (节点2, 长度2) .....]
+    def getMaxPathLen(self, pre, f):
+        return self.getInfo(pre, f, min_path=False)
+
+    # min_path表示求的是最短路径还是最长路径
+    def getInfo(self, pre, f, min_path = True):
+        link = self.link
+        dis = [0x7fffffff] * (self.max_node_num+1) if min_path else [-0x7fffffff] * (self.max_node_num+1)
+        dis[self.start_node] = 0
+
+        updated_nodes = deque()
+        updated_nodes.append(self.start_node)
+        in_que = [0] * (self.max_node_num + 1)
+        in_que[self.start_node] = 1
+
+
+        for _ in range(self.max_node_num-1):
+            update_flag = False
+
+            # 利用上一轮迭代距离变小的点进行松弛操作
+            node_num = len(updated_nodes)
+            for _ in range(node_num):
+                a = updated_nodes.popleft()
+                in_que[a] = 0
+                if a not in link:
+                    continue
+
+                for b, w, edge_idx in link[a]:
+                    if f[edge_idx] == 0:
+                        continue
+
+                    if dis[a] == 0x7fffffff:
+                        if w == -0x7fffffff:
+                            new_dis = 0
+                        else:
+                            new_dis = 0x7fffffff
+
+                    elif dis[a] == -0x7fffffff:
+                        if w == 0x7fffffff:
+                            new_dis = 0
+                        else:
+                            new_dis = -0x7fffffff
+                    else:
+                        new_dis = dis[a] + w
+
+
+                    if (min_path == True and new_dis < dis[b]) or (min_path == False and new_dis > dis[b]):
+                        dis[b] = new_dis
+                        pre[b] = (a, edge_idx)
+                        update_flag = True
+
+                        if in_que[b] == 0:
+                            in_que[b] = 1
+                            updated_nodes.append(b)
+
+            if not update_flag:
+                break
+
+        return None
+
+
+class FordFulkerson:
+    # 输入图中所有边列表[(from1, to1, weight1, cost1), (form2, to2, weight2, cost1), ......]
+    # weight是边的容量，cost是边的费用
+    # 边可以有重边和自环边
+    # souece_node 和 end_node 分别为源点和汇点
+    # 所有节点从1开始连续编号, max_node_num是最大节点数，max_edge_nums是最大边数
+    def __init__(self, edges, source_node, end_node, max_node_num, max_edge_num):
+        self.edges = edges[::]
+        self.source_node = source_node
+        self.end_node = end_node
+        self.max_edge_num = max_edge_num
+        self.max_node_num = max_node_num
+
+    # 费用流计算函数，min_cost为True时候获取最小费用最大流，反之获取最大费用最大流
+    # 返回(最大流数值，费用值，[(from1, to1, flow1, capacity1, cost1), (from2, to2, flow2, capacity2, cost2) ......])
+    # 流量方案以类表方式返回，五元组依次是边起点，边终点，边上走过的流量，原边容量，原边费用
+    def getCostFlow(self, min_cost = True):
+        e = [-1] * (self.max_edge_num * 2 + 1)      # e[idx]表示编号为idx残量图边的终点, idx//2 就是残量图边对应的原图边的编号
+        f = [-1] * (self.max_edge_num * 2 + 1)      # f[idx]表示编号为idx的残量图边的流量
+        c = [-1] * (self.max_edge_num * 2 + 1)      # c[idx]表示编号为idx的残量图的边的费用值
+        ne = [-1] * (self.max_edge_num * 2 + 1)     # ne[idx]表示根编号为idx的边同一个起点的下一条边的编号
+        h = [-1] * (self.max_node_num + 1)          # h[a]表示节点a为起点的所有边的链表头对应的边的编号
+        orig_flow = [0] * (self.max_edge_num + 1)   # 原图中有向边的流量
+
+        # 构建残量图
+        idx = 0
+        for a, b, w, cost in self.edges:
+            e[idx], f[idx], c[idx], ne[idx], h[a] = b, w, cost, h[a], idx
+            idx += 1
+            e[idx], f[idx], c[idx], ne[idx], h[b] = a, 0, -cost, h[b], idx
+            idx += 1
+
+        max_flow_val, cost_val = 0, 0
+        e1 = [(a, b, c, idx * 2) for idx, (a, b, _, c) in enumerate(self.edges)]
+        e2 = [(b, a, -c, idx * 2 + 1) for idx, (a, b, _, c) in enumerate(self.edges)]
+        e = e1 + e2
+        algo = SPFA(self.source_node, e, self.max_node_num)
+
+        while True:
+            pre = [(None, None)] * (self.max_node_num + 1)
+            if min_cost:
+                algo.getMinPathLen(pre, f)
+            else:
+                algo.getMaxPathLen(pre, f)
+
+            if pre[self.end_node][0] is None:
+                break
+
+            min_w = 0x7fffffff
+            path_len = 0
+            cur, edge_idx, next = self.end_node, 0, None
+            while cur is not None:
+                if next:
+                    min_w = min(min_w, f[edge_idx])
+                    path_len += c[edge_idx]
+                cur, edge_idx, next = pre[cur][0], pre[cur][1], cur
+
+            max_flow_val += min_w
+            cost_val += path_len * min_w  # 累加费用
+
+            cur, edge_idx, next = self.end_node, 0, None
+            while cur is not None:
+                if next:
+                    f[edge_idx], f[edge_idx ^ 1] = f[edge_idx] - min_w, f[edge_idx ^ 1] + min_w
+
+                    # 更新原图边的流量
+                    if idx & 1:
+                        orig_flow[edge_idx >> 1] -= min_w
+                    else:
+                        orig_flow[edge_idx >> 1] += min_w
+
+                cur, edge_idx, next = pre[cur][0], pre[cur][1], cur
+
+        return max_flow_val, cost_val, [(self.edges[i][0], self.edges[i][1], orig_flow[i], self.edges[i][2], self.edges[i][3]) for i in range(len(self.edges))]
+
+
+N, M = map(int, input().split())
+lower_bound = [0] + list(map(int, input().split()))
+
+e = [] # (每条边是(起点，终点，容量下界，容量上界, 费用))
+for node in range(1, N+1):
+    e.append((node, node+1, lower_bound[node], 0x7fffffff, 0))
+
+for i in range(M):
+    a, b, c = map(int, input().split())
+    e.append((b+1, a, 0, 0x7fffffff, c))
+
+sub = [0] * (N+2)
+for a, b, l, u, c in e:
+    sub[a] -= l
+    sub[b] += l
+
+S, T = N+2, N+3
+
+edges = [(a, b, u-l, c) for a, b, l, u, c in e]
+for node in range(1, N+2):
+    if sub[node] > 0:
+        edges.append((S, node, sub[node], 0))
+    elif sub[node] < 0:
+        edges.append((node, T, -sub[node], 0))
+
+print(FordFulkerson(edges, S, T, N+3, len(edges)).getCostFlow()[1])
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21524/
+   。
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1010, M = 24010, INF = 1e8;
+
+int n, m, S, T;
+int h[N], e[M], f[M], w[M], ne[M], idx;
+int q[N], d[N], pre[N], incf[N];
+bool st[N];
+
+void add(int a, int b, int c, int d)
+{
+    e[idx] = b, f[idx] = c, w[idx] = d, ne[idx] = h[a], h[a] = idx ++ ;
+    e[idx] = a, f[idx] = 0, w[idx] = -d, ne[idx] = h[b], h[b] = idx ++ ;
+}
+
+bool spfa()
+{
+    int hh = 0, tt = 1;
+    memset(d, 0x3f, sizeof d);
+    memset(incf, 0, sizeof incf);
+    q[0] = S, d[S] = 0, incf[S] = INF;
+    while (hh != tt)
+    {
+        int t = q[hh ++ ];
+        if (hh == N) hh = 0;
+        st[t] = false;
+
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int ver = e[i];
+            if (f[i] && d[ver] > d[t] + w[i])
+            {
+                d[ver] = d[t] + w[i];
+                pre[ver] = i;
+                incf[ver] = min(f[i], incf[t]);
+                if (!st[ver])
+                {
+                    q[tt ++ ] = ver;
+                    if (tt == N) tt = 0;
+                    st[ver] = true;
+                }
+            }
+        }
+    }
+    return incf[T] > 0;
+}
+
+int EK()
+{
+    int cost = 0;
+    while (spfa())
+    {
+        int t = incf[T];
+        cost += t * d[T];
+        for (int i = T; i != S; i = e[pre[i] ^ 1])
+        {
+            f[pre[i]] -= t;
+            f[pre[i] ^ 1] += t;
+        }
+    }
+    return cost;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    S = 0, T = n + 2;
+    memset(h, -1, sizeof h);
+    int last = 0;
+    for (int i = 1; i <= n; i ++ )
+    {
+        int cur;
+        scanf("%d", &cur);
+        if (last > cur) add(S, i, last - cur, 0);
+        else if (last < cur) add(i, T, cur - last, 0);
+        add(i, i + 1, INF - cur, 0);
+        last = cur;
+    }
+    add(S, n + 1, last, 0);
+
+    while (m -- )
+    {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(b + 1, a, INF, c);
+    }
+
+    printf("%d\n", EK());
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/459075/
+   。
+
+文化课 + 竞赛双废物又来水题解了。
+
+首先，对于题干中的人，很像网络流中的流量，但是他有一个每天人数的下限，我从网上借鉴（chaoxi）到了两种思路：
+
+把下界限制转化为一条边的流量下界，这样就是最小费用上下界最大流。
+加入几个新值，其条件正好为 ≥0≥0，将其当做一条流量，这样不等式就变成了等式，我们可以利用流量守恒，用点的流满 ⇔⇔ 等式成立，这样就变成了一个最小费用最大流，去掉了上下界的影响。
+其实这两种思路本质好像是一致的…
+
+思路一
+即 yy 总视频的解法，考虑到人的工作时间是一段区间，不妨差分考虑，先让 ii 的人无条件免费顺延到 i+1i+1 的边，然后在 SS 和 TT 人为规定加入/去除即可，这样一类工作者只会设计常数的点边，复杂度正常。
+
+那么建立网络 GG：
+
+对于一天 ii，让 ii 点向 i+1i+1 点连边。流量下界是 AiAi、上界是正无穷，费用是 00，这条边的流量意味着第 ii 天的工作人数，
+对于一类志愿者 jj，让 Tj+1Tj+1 向 SjSj 连一条容量无界限，费用是 CiCi 的边，这条边可以自由活动，意味着自由安排是志愿者。
+这样，每个志愿者相当于在流网络的一单位的流量流过了一个环，这个问题变成了最小费用无源汇上下界可行流，我们都知道可行流的可行判定经过转化就是跑到最大流，所以转化完后用最小费用最大流就行了。
+
+时间复杂度
+O(n2m)O(n2m) 复杂度真棒
+
+Code
+这题 Acwing 咋这么卡常啊
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#define rint register int
+typedef long long LL;
+
+using namespace std;
+
+const int N = 1005, M = (N * 2 + 10000) * 2, INF = 0x3f3f3f3f;
+
+int n, m, a[N], incf[N], d[N], q[N], pre[N]; 
+int head[N], numE = 1, S, T;
+bool vis[N];
+LL ans;
+struct E{
+    int next, v, w, c;
+} e[M];
+
+void inline add(int u, int v, int w, int c) {
+    e[++numE] = (E) { head[u], v, w, c };
+    head[u] = numE;
+    e[++numE] = (E) { head[v], u, 0, -c };
+    head[v] = numE;
+}
+
+bool inline spfa() {
+    memset(d, 0x3f, sizeof d);
+    rint hh = 0, tt = 1;
+    d[S] = 0, q[0] = S, incf[S] = INF;
+    while (hh != tt) {
+        rint u = q[hh++]; vis[u] = false;
+        if (hh == N) hh = 0;
+        for (rint i = head[u]; i; i = e[i].next) {
+            rint v = e[i].v;
+            if (d[u] + e[i].c < d[v] && e[i].w) {
+                d[v] = d[u] + e[i].c, pre[v] = i, incf[v] = min(incf[u], e[i].w);
+                if (!vis[v]) {
+                    vis[v] = true, q[tt++] = v;
+                    if (tt == N) tt = 0;
+                }
+            }
+        }
+    }
+    return d[T] != INF;
+}
+
+void inline update() {
+    int x = T;
+    while (x != S) {
+        int i = pre[x];
+        e[i].w -= incf[T], e[i ^ 1].w += incf[T]; 
+        x = e[i ^ 1].v;
+    }
+    ans += (LL)d[T] * incf[T];
+}
+
+int main() {
+    scanf("%d%d", &n, &m); 
+    S = n + 2, T = n + 3;
+    for (rint i = 1, A; i <= n; i++) {
+        scanf("%d", &A);
+        add(i, i + 1, INF, 0);
+        a[i] -= A, a[i + 1] += A;
+    }
+    for (rint i = 1, s, t, c; i <= m; i++) {
+        scanf("%d%d%d", &s, &t, &c);
+        add(t + 1, s, INF, c);
+    }
+    for (rint i = 1; i <= n + 1; i++) {
+        if (a[i] > 0) add(S, i, a[i], 0);
+        else if (a[i] < 0) add(i, T, -a[i], 0);
+    }
+    while (spfa()) update();
+    printf("%lld\n", ans);
+    return 0;
+}
+思路二
+设一些新的变量：
+
+Bi(Bi≥0)Bi(Bi≥0)，表示第 ii 天实际招了 Ai+BiAi+Bi 人。
+
+Di(Di≥0)Di(Di≥0)，表示实际上第 ii 类志愿者招了 DiDi 类人
+
+这样我们就可以列出 nn 个等式，对于第 ii 个等式（针对第 ii 天的匹配情况）
+
+Ai+Bi=∑Sj≤i≤TjDj
+Ai+Bi=∑Sj≤i≤TjDj
+但是为了让每个变量在流网络中、在每个等式中都相等，所以我们得让每个变量至多出现在两个式子中，（如果出现在一个式子，就可以将其到源汇点的费用改了，这样就是费用对应上了，如果两个式子，可以从本该连向汇点的边直接连向本该从源点出的边，这样费用对应。这里本人实力还是非常菜，很可能讲了一些玄学的东西，求大佬们轻喷。）
+
+由于每个 jj 影响的 ii 是连续的一段，所以我们可以将式子前后加入两个 0=00=0，然后将式子差分（这是一步等价变换）这样每个 Dj,BiDj,Bi 都恰好会出现在两个式子之中。
+
+对于第 ii 个等式而言，差分后的式子：
+
+−Ai−1−Bi−1+Ai+Bi=−∑i−1=TjDj+∑i=SjDj
+−Ai−1−Bi−1+Ai+Bi=−∑i−1=TjDj+∑i=SjDj
+我们把式子移项，让每一项都是正的：
+Ai+Bi+∑i−1=TjDj=Ai−1+Bi−1+∑i=SjDj
+Ai+Bi+∑i−1=TjDj=Ai−1+Bi−1+∑i=SjDj
+这样，我们可以把等式看作一个点的流量守恒等式，等式左右两侧分别是流入该点/流出改点的流量，我们建立流网络：
+
+对于常量 AA，在左侧则连一条自虚拟源点出发，到 ii 点，流量为 AiAi，无费用的边，右侧连到汇点，即对称的。
+对于变量 BB，从 BiBi 所在右侧等式的点向 BiBi 所在左侧的点，即 ii 连向 i−1i−1，这条边流量无限，意味着自由选择的 BB，而这条边 + 流量守恒保证了 BiBi 在两个式子中不变
+对于变量 DD 同理，即 SjSj 连向 Tj+1Tj+1，流量无限，费用为 CjCj 的边。
+这样，在流网络跑到的最大流 = 从 SS 出发所有容量（满足常量的强行限制） ⇔⇔ 差分等式成立 ⇔⇔ 原始等式成立 ⇔⇔ 一个满足条件的方案
+
+所以，原问题最小费用 ⇔⇔ 最小费用最大流
+
+时间复杂度
+O(n2m)O(n2m)
+Code
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#define rint register int
+typedef long long LL;
+
+using namespace std;
+
+const int N = 1005, M = (N * 3 + 10000) * 2, INF = 0x3f3f3f3f;
+
+int n, m, a[N], incf[N], d[N], q[N], pre[N]; 
+int head[N], numE = 1, S, T;
+bool vis[N];
+LL ans;
+struct E{
+    int next, v, w, c;
+} e[M];
+
+void inline add(int u, int v, int w, int c) {
+    e[++numE] = (E) { head[u], v, w, c };
+    head[u] = numE;
+    e[++numE] = (E) { head[v], u, 0, -c };
+    head[v] = numE;
+}
+
+bool inline spfa() {
+    memset(d, 0x3f, sizeof d);
+    rint hh = 0, tt = 1;
+    d[S] = 0, q[0] = S, incf[S] = INF;
+    while (hh != tt) {
+        rint u = q[hh++]; vis[u] = false;
+        if (hh == N) hh = 0;
+        for (rint i = head[u]; i; i = e[i].next) {
+            rint v = e[i].v;
+            if (d[u] + e[i].c < d[v] && e[i].w) {
+                d[v] = d[u] + e[i].c, pre[v] = i, incf[v] = min(incf[u], e[i].w);
+                if (!vis[v]) {
+                    vis[v] = true;
+                    q[tt++] = v;
+                    if (tt == N) tt = 0;
+                }
+            }
+        }
+    }
+    return d[T] != INF;
+}
+
+void inline update() {
+    int x = T;
+    while (x != S) {
+        int i = pre[x];
+        e[i].w -= incf[T], e[i ^ 1].w += incf[T]; 
+        x = e[i ^ 1].v;
+    }
+    ans += (LL)d[T] * incf[T];
+}
+
+int main() {
+    scanf("%d%d", &n, &m); 
+    S = n + 2, T = n + 3;
+    for (rint i = 1, A; i <= n; i++) {
+        scanf("%d", &A);
+        add(S, i, A, 0), add(i + 1, T, A, 0);
+        add(i + 1, i, INF, 0);
+    }
+    for (rint i = 1, s, t, c; i <= m; i++) {
+        scanf("%d%d%d", &s, &t, &c);
+        add(s, t + 1, INF, c);
+    }
+    while (spfa()) update();
+    printf("%lld\n", ans);
+    return 0;
+}
+
+作者：墨染空
+链接：https://www.acwing.com/solution/content/14362/
+   。
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cstdio>
+
+using namespace std;
+
+const int N = 2000010, M = 2000010;
+
+int n, m;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], ts, stk[N], top;
+int id[N], cnt;
+bool ins[N];
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ ts;
+    stk[ ++ top] = u, ins[u] = true;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        } else if (ins[j]) low[u] = min(low[u], dfn[j]);
+    }
+
+    if (low[u] == dfn[u])
+    {
+        int y;
+        cnt ++ ;
+        do
+        {
+            y = stk[top -- ], ins[y] = false, id[y] = cnt;
+        } while (y != u);
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    memset(h, -1, sizeof h);
+
+    while (m -- )
+    {
+        int i, a, j, b;
+        scanf("%d%d%d%d", &i, &a, &j, &b);
+        i --, j -- ;
+        add(2 * i + !a, 2 * j + b);
+        add(2 * j + !b, 2 * i + a);
+    }
+
+    for (int i = 0; i < n * 2; i ++ )
+        if (!dfn[i])
+            tarjan(i);
+
+    for (int i = 0; i < n; i ++ )
+        if (id[i * 2] == id[i * 2 + 1])
+        {
+            puts("IMPOSSIBLE");
+            return 0;
+        }
+
+    puts("POSSIBLE");
+    for (int i = 0; i < n; i ++ )
+        if (id[i * 2] < id[i * 2 + 1]) printf("0 ");
+        else printf("1 ");
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/468121/
+   。
+
+AcWing 371. 牧师约翰最忙碌的一天    原题链接    中等
+作者：    whsstory ,  2020-01-12 22:34:37 ,  阅读 198
+
+1
+
+
+这题有点难度.
+先假设这些婚礼都能办成,若推出矛盾则不能办成.
+每个婚礼不是在开始时办就是在结束时办.所以把每个婚礼ii拆成两个点i,n+ii,n+i分别表示在开始时办和在结束时办.
+如果某两个婚礼的时间有交集,那么他们会互相限制.我们可以枚举这两个婚礼,记为i,ji,j.
+比如说,ii需要的时间和jj有重合,那么如果ii办,jj就不能办.而j,j+nj,j+n中又必须有一个办,也就是说, 如果ii办,j+nj+n必须办(同理可得其逆否命题如果jj办,i+ni+n必须办).
+
+因此,这些限制关系和这n+nn+n个点构成了一个2-SAT模型.
+跑一遍tarjan,如果存在矛盾(即i,i+ni,i+n在同一个强连通分量中)则不是所有婚礼都能办成.
+接下来考虑如何输出一种方案.
+tarjan算法求出的SCC编号满足拓扑序.
+因此,直接比较scc[i],scc[n+i]scc[i],scc[n+i]即可得到该在ii办还是该在n+in+i办.
+综上,问题在O(n2)O(n2)的时间内解决.
+
+实现的时候有时间转化等细节需要注意.
+
+/**********/
+#define MAXN 2011
+#define MAXM 1000011
+struct Edge
+{
+    ll v,nxt;
+}e[MAXM<<2|1];
+ll cnt=0,last[MAXN];
+void adde(ll u,ll v)
+{
+    e[++cnt].v=v;
+    e[cnt].nxt=last[u],last[u]=cnt;
+}
+
+ll s[MAXN],t[MAXN],d[MAXN];
+bool invaild(ll s1,ll t1,ll s2,ll t2)
+{
+    return t1>s2&&t2>s1;
+}
+
+ll dfn[MAXN],low[MAXN],cur=0,scc[MAXN],scnt;
+ll stack[MAXN],top=0;
+bool ins[MAXN];
+void tarjan(ll u)
+{
+    dfn[u]=low[u]=++cur;
+    stack[++top]=u;ins[u]=1;
+    for(ll i=last[u];i;i=e[i].nxt)
+    {
+        ll v=e[i].v;
+        if(!dfn[v])
+        {
+            tarjan(v);
+            umin(low[u],low[v]);
+        }
+        else if(ins[v])umin(low[u],dfn[v]);
+    }
+    if(dfn[u]==low[u])
+    {
+        ++scnt;
+        while(stack[top]!=u)
+        {
+            scc[stack[top]]=scnt;
+            ins[stack[top]]=0;
+            --top;
+        }
+        scc[stack[top--]]=scnt;
+        ins[u]=0;
+    }
+}
+int main()
+{
+    ll n=read();
+    for(ll i=1;i<=n;++i)
+    {
+        s[i]=read()*60+read();
+        t[i]=read()*60+read();
+        d[i]=read();
+    }
+    for(ll i=1;i<=n;++i)
+        for(ll j=1;j<=n;++j)
+            if(i!=j)
+            {
+                if(invaild(s[i],s[i]+d[i],s[j],s[j]+d[j]))adde(i,j+n),adde(j,i+n);
+                if(invaild(t[i]-d[i],t[i],s[j],s[j]+d[j]))adde(i+n,j+n),adde(j,i);
+                if(invaild(s[i],s[i]+d[i],t[j]-d[j],t[j]))adde(i,j),adde(j+n,i+n);
+                if(invaild(t[i]-d[i],t[i],t[j]-d[j],t[j]))adde(i+n,j),adde(j+n,i);
+            }
+    for(ll i=1;i<=n+n;++i)
+        if(!dfn[i])tarjan(i);
+    for(ll i=1;i<=n;++i)
+        if(scc[i]==scc[i+n])
+        {
+            puts("NO");
+            return 0;
+        }
+    puts("YES");
+    for(ll i=1;i<=n;++i)
+    {
+        ll x=scc[i]>scc[i+n];
+        if(!x)printf("%02d:%02d %02d:%02d\n",s[i]/60,s[i]%60,(s[i]+d[i])/60,(s[i]+d[i])%60);
+        else printf("%02d:%02d %02d:%02d\n",(t[i]-d[i])/60,(t[i]-d[i])%60,t[i]/60,t[i]%60);
+    }
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/7529/
+   。
+
+'''
+当做一个2-SAT问题看待，
+每一对情侣看做一个变量x(i) x(i)要么取0，要么取1，取1表示选择开始的区间做仪式，取0表示选择结束的区间
+做仪式, x(i)不论取0还是取1, 情侣对应的开始区间和结束区间都会被选择一个，所以一组合法的x序列就对应了
+一种合法的选择方式，是否合法需要验证是否会出现区间覆盖的矛盾
+
+把所有x(i) 和 ~x(i)表示的区间都算出来，暴力枚举一遍所有发生了覆盖的区间，如果 A B发生覆盖
+那么 A and B 不能成立，等价于 ~(A and B) = 1 要成立，等价于  ~A or ~B 成立，因此添加
+一个2-SAT需要满足的命题 ~A or ~B, 构造一个约束
+
+利用2-SAT模型计算x序列的合法解即可
+
+'''
+
+
+
+
+from typing import List, Tuple
+import sys
+sys.setrecursionlimit(999999)
+
+class TWO_SAT:
+    # max_node_num表示xi有多少个，所有命题应该是x(1), x(2), ...... x(max_node_num序列)
+    # edges为边序列, i -> j 边表示 x(i) or x(j) 成立 (也表示x(j) or x(i)成立，两个是等价的)
+    # 若i是负的，代表 非x(i)
+    def __init__(self, edges, max_node_num):
+        self.max_node_num = max_node_num
+        self.edges = edges
+
+    # 返回一组x向量的取值，[0, x(1), x(2), x(3), ...... x(max_node_num)]
+    # 返回None代表无解
+    def getSolution(self):
+        e = []
+        n = self.max_node_num
+        for a, b in self.edges:
+            aa = -a if a < 0 else a+n
+            bb = -b+n if b < 0 else b
+            e.append((aa, bb))
+
+            aa = -a+n if a < 0 else a
+            bb = -b if b < 0 else b+n
+            e.append((bb, aa))
+
+        max_node_num = 2*self.max_node_num
+
+        link = [[] for _ in range(max_node_num + 1)]
+        dfn = [0x7fffffff] * (max_node_num + 1)
+        low = [0x7fffffff] * (max_node_num + 1)
+        node2sccid = [0] * (max_node_num + 1)
+
+        global_time = [0]
+        for a, b in self.edges:
+            aa = -a if a < 0 else a+n
+            bb = -b+n if b < 0 else b
+            link[aa].append(bb)
+
+            aa = -a+n if a < 0 else a
+            bb = -b if b < 0 else b+n
+            link[bb].append(aa)
+
+        stack = [0] * (max_node_num+1)
+        stack_size = [0]
+
+        visit = [0] * (max_node_num + 1)
+
+        scc_id_cnt = [1]
+        def dfs(cur):
+            global_time[0] += 1
+            dfn[cur], low[cur] = global_time[0], global_time[0]
+            stack[stack_size[0]] = cur
+            stack_size[0] += 1
+
+            pos = stack_size[0] - 1
+
+            for next in link[cur]:
+                if visit[next] == 1:
+                    continue
+
+                if dfn[next] == 0x7fffffff:
+                    dfs(next)
+                    low[cur] = min(low[cur], low[next])
+                else:
+                    low[cur] = min(low[cur], dfn[next])
+
+            if low[cur] == dfn[cur]:
+                # dfn 和 low 相等时候，一直退栈退到cur出栈为止
+                for node in stack[pos:stack_size[0]]:
+                    node2sccid[node] = scc_id_cnt[0]
+                    visit[node] = 1
+                scc_id_cnt[0] += 1
+
+                stack_size[0] = pos
+
+        for node in range(1, max_node_num + 1):
+            if len(link[node]) == 0:
+                continue
+
+            if dfn[node] == 0x7fffffff:
+                dfs(node)
+
+        x = [0] * (n+1)
+        for node in range(1, n+1):
+            if node2sccid[node] == node2sccid[node+n] and node2sccid[node] != 0:
+                return None
+
+            if node2sccid[node] < node2sccid[node+n]:
+                x[node] = 1
+
+        return x
+
+def minute_val(s):
+    a, b = map(int, s.split(':'))
+    return a * 60 + b
+
+def minute_val2str(val):
+    return '{:02d}:{:02d}'.format(val // 60 , val % 60)
+
+
+def is_overlap(s1, t1, s2, t2):
+    return max(s1, s2) < min(t1, t2)
+
+n = int(input())
+ss = sys.stdin.readlines()
+
+node2str = {}
+node2pair = {}
+edges = []
+for i, s in enumerate(ss):
+    node = i + 1
+
+    part = s.split()
+    start, end = map(minute_val, part[:2])
+    period = int(part[2])
+
+    node2str[node] = minute_val2str(start) + ' ' + minute_val2str(start + period)
+    node2str[-node] = minute_val2str(end-period) + ' ' + minute_val2str(end)
+
+    node2pair[node] = (start, start + period)
+    node2pair[-node] = (end-period, end)
+
+
+for a in range(-n, n+1):
+    if a == 0:
+        continue
+
+    s1, t1 = node2pair[a]
+    for b in range(a+1, n+1):
+        if b == 0:
+            continue
+
+        s2, t2 = node2pair[b]
+        if is_overlap(s1, t1, s2, t2):
+            edges.append((-a, -b))
+
+algo = TWO_SAT(edges, n)
+ans = algo.getSolution()
+
+if ans is not None:
+    print('YES')
+    for node in range(1, n+1):
+        if ans[node] == 1:
+            print(node2str[node])
+        else:
+            print(node2str[-node])
+else:
+    print('NO')
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21584/
+   。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 2010, M = 4000010;
+
+int n;
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], ts, stk[N], top;
+int id[N], cnt;
+bool ins[N];
+
+struct Wedding
+{
+    int s, t, d;
+}w[N];
+
+bool is_overlap(int a, int b, int c, int d)
+{
+    return d > a && b > c;
+}
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ ts;
+    stk[ ++ top] = u, ins[u] = true;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        } else if (ins[j]) low[u] = min(low[u], dfn[j]);
+    }
+    if (dfn[u] == low[u])
+    {
+        int y;
+        cnt ++ ;
+        do
+        {
+            y = stk[top -- ], ins[y] = false, id[y] = cnt;
+        }while (y != u);
+    }
+}
+
+int main()
+{
+    scanf("%d", &n);
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < n; i ++ )
+    {
+        int s0, s1, t0, t1, d;
+        scanf("%d:%d %d:%d %d", &s0, &s1, &t0, &t1, &d);
+        w[i] = {s0 * 60 + s1, t0 * 60 + t1, d};
+    }
+
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j < i; j ++ )
+        {
+            auto a = w[i], b = w[j];
+            if (is_overlap(a.s, a.s + a.d, b.s, b.s + b.d)) add(i, j + n), add(j, i + n);
+            if (is_overlap(a.s, a.s + a.d, b.t - b.d, b.t)) add(i, j), add(j + n, i + n);
+            if (is_overlap(a.t - a.d, a.t, b.s, b.s + b.d)) add(i + n, j + n), add(j, i);
+            if (is_overlap(a.t - a.d, a.t, b.t - b.d, b.t)) add(i + n, j), add(j + n, i);
+        }
+
+    for (int i = 0; i < n * 2; i ++ )
+        if (!dfn[i])
+            tarjan(i);
+
+    for (int i = 0; i < n; i ++ )
+        if (id[i] == id[i + n])
+        {
+            puts("NO");
+            return 0;
+        }
+
+    puts("YES");
+    for (int i = 0; i < n; i ++ )
+    {
+        auto a = w[i];
+        int s = a.s, t = a.t, d = a.d;
+        if (id[i] < id[i + n])
+            printf("%02d:%02d %02d:%02d\n", s / 60, s % 60, (s + d) / 60, (s + d) % 60);
+        else
+            printf("%02d:%02d %02d:%02d\n", (t - d) / 60, (t - d) % 60, t / 60, t % 60);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/468153/
+   。
+AcWing 1032. 游戏    原题链接    困难
+作者：    whsstory ,  2020-09-04 20:01:11 ,  阅读 61
+
+3
+
+
+NOI2017D2T1 游戏
+有 nn 个变量，其中 dd 个变量有三种可能的取值，其余变量有两种可能的取值。
+
+另有 mm 条限制关系，形如：若 xx 的值是 aa 那么 yy 的值必须是 bb
+
+求一组可能的解，或说明无解。
+
+n≤5×104,m≤105,d≤8n≤5×104,m≤105,d≤8
+
+my sol
+其实将题意化简到上面这样就很显然了。如果没有 d≤8d≤8 的限制，那么原问题是NP的。
+
+但事实上大多数点都只有两种取值。
+
+考虑 2d2d 枚举这 dd 个点的取值，一种是强制不取第三个值，另一种是取且仅取第三个值。之后就变成了 2SAT 问题，tarjan 求解即可。
+
+复杂度 (2d×(n+m))O(2d×(n+m)) 在loj上最长点仅16ms，loj永远滴神！
+
+PS:在2SAT中，若要强制 xx 只能取 xx 而不取 x′x′ ,令 x′x′ 向 xx 连边即可。
+
+#define MAXN 200011
+struct edge{int v,nxt;}e[MAXN<<1|1];
+int cnt=0,last[MAXN];
+void adde(int u,int v){e[++cnt].v=v,e[cnt].nxt=last[u],last[u]=cnt;}
+
+int dfn[MAXN],low[MAXN],top=0,s[MAXN],scc[MAXN], cur=0,scnt=0;
+bool ins[MAXN];
+void tarjan(int u)
+{
+    dfn[u]=low[u]=++cur;
+    s[++top]=u,ins[u]=1;
+    for(int i=last[u];i;i=e[i].nxt)
+    {
+        int v=e[i].v;
+        if(!dfn[v])tarjan(v),umin(low[u],low[v]);
+        else if(ins[v])umin(low[u],dfn[v]);
+    }
+    if(dfn[u]==low[u])
+    {
+        ++scnt;
+        while(s[top]!=u)scc[s[top]]=scnt,ins[s[top]]=0,--top;
+        scc[s[top]]=scnt,ins[s[top]]=0,--top;
+        // printf("SCC[%d]=%d\n",u,scnt);
+    }
+}
+char a[MAXN];
+struct tuple{int u,x,v,y;}ed[MAXN];
+void clear(int n)
+{
+    cnt=cur=scnt=0;
+    for(int i=1;i<=n+n;++i)last[i]=dfn[i]=low[i]=scc[i]=0;
+}
+void make_graph(int n,int m)
+{
+    for(int i=1;i<=m;++i)
+    {
+        int u=ed[i].u,x=ed[i].x,v=ed[i].v,y=ed[i].y;
+        if(x==(a[u]-'a'))continue;
+        if(y==(a[v]-'a')){adde(u+n*(x==(a[u]-'a'+1)%3),u+n*(x==(a[u]-'a'+2)%3));continue;}
+        adde(u+n*(x==(a[u]-'a'+1)%3),v+n*(y==(a[v]-'a'+1)%3));
+        adde(v+n*(y==(a[v]-'a'+2)%3),u+n*(x==(a[u]-'a'+2)%3));
+    }
+}
+int pos[MAXN];
+int main()
+{
+    // freopen("game2.in","r",stdin);
+    int n=read(),d=read();d=0;
+    scanf("%s",a+1);
+    for(int i=1;i<=n;++i)
+        if(a[i]=='x')pos[++d]=i;
+    int m=read();
+    for(int i=1;i<=m;++i)
+    {
+        ed[i].u=read(),ed[i].x=getchar()-'A';
+        ed[i].v=read(),ed[i].y=getchar()-'A';
+    }
+    for(int s=0;s<(1<<d);++s)
+    {
+        clear(n);
+        for(int i=1;i<=d;++i)
+            if(s&(1<<(i-1)))a[pos[i]]='a',adde(n+pos[i],pos[i]);
+            else a[pos[i]]='c';
+        make_graph(n,m);
+        for(int i=1;i<=n+n;++i)
+            if(!dfn[i])tarjan(i);
+        bool fail=0;
+        for(int i=1;i<=n;++i)
+            if(scc[i]==scc[n+i])fail=1;
+        if(fail)continue;
+        for(int i=1;i<=n;++i)
+            if(scc[i]<scc[n+i])putchar((a[i]-'a'+2)%3+'A');
+            else putchar((a[i]-'a'+1)%3+'A');
+        return 0;
+    }
+    puts("-1");
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/20020/
+   。
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, M = 200010;
+
+int n, d, m;
+char s[N];
+int h[N], e[M], ne[M], idx;
+int dfn[N], low[N], ts, stk[N], top;
+int id[N], cnt;
+bool ins[N];
+int pos[10];
+
+struct Op
+{
+    int x, y;
+    char a, b;
+}op[M];
+
+int get(int x, char b, int t)
+{
+    char a = s[x] - 'a';
+    b -= 'A';
+    if (((a + 1) % 3 != b) ^ t) return x + n;
+    return x;
+}
+
+char put(int x, int t)
+{
+    int y = s[x] - 'a';
+    return 'A' + ((y + t) % 3);
+}
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ ts;
+    stk[ ++ top] = u, ins[u] = true;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!dfn[j])
+        {
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        } else if (ins[j]) low[u] = min(low[u], dfn[j]);
+    }
+
+    if (dfn[u] == low[u])
+    {
+        int y;
+        cnt ++ ;
+        do
+        {
+            y = stk[top -- ], ins[y] = false, id[y] = cnt;
+        } while (y != u);
+    }
+}
+
+
+bool work()
+{
+    memset(h, -1, sizeof h);
+    memset(dfn, 0, sizeof dfn);
+    idx = ts = cnt = 0;
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int x = op[i].x - 1, y = op[i].y - 1;
+        char a = op[i].a, b = op[i].b;
+        if (s[x] != a + 32)
+        {
+            if (s[y] != b + 32) add(get(x, a, 0), get(y, b, 0)), add(get(y, b, 1), get(x, a, 1));
+            else add(get(x, a, 0), get(x, a, 1));
+        }
+    }
+
+    for (int i = 0; i < n * 2; i ++ )
+        if (!dfn[i])
+            tarjan(i);
+
+    for (int i = 0; i < n; i ++ )
+        if (id[i] == id[i + n])
+            return false;
+
+    for (int i = 0; i < n; i ++ )
+        if (id[i] < id[i + n]) putchar(put(i, 1));
+        else putchar(put(i, 2));
+
+    return true;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &d);
+    scanf("%s", s);
+    for (int i = 0, j = 0; i < n; i ++ )
+        if (s[i] == 'x')
+            pos[j ++ ] = i;
+
+    scanf("%d", &m);
+    for (int i = 0; i < m; i ++ )
+        scanf("%d %c %d %c", &op[i].x, &op[i].a, &op[i].y, &op[i].b);
+
+    for (int k = 0; k < 1 << d; k ++ )
+    {
+        for (int i = 0; i < d; i ++ )
+            if (k >> i & 1) s[pos[i]] = 'a';
+            else s[pos[i]] = 'b';
+
+        if (work()) return 0;
+    }
+
+    puts("-1");
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/468216/
+   。
+
+
+AcWing 2417. 指挥网络    原题链接    中等
+作者：    皓首不倦 ,  2020-09-30 16:18:58 ,  阅读 9
+
+0
+
+
+
+
+'''
+朱刘算法计算有向图的最小树形子图
+'''
+
+from typing import List, Tuple
+import sys
+import math
+
+class Tarjan:
+    # 求有向图的强连通分量, 单个强连通分量用点列表表示，返回强连通分量的列表
+    # 所有节点编号是1, 2, 3, ..... max_node_num
+    @staticmethod
+    def getStrongConnectedComponent(edges: List[Tuple], max_node_num):
+        link = [[] for _ in range(max_node_num + 1)]
+        dfn = [0x7fffffff] * (max_node_num + 1)
+        low = [0x7fffffff] * (max_node_num + 1)
+
+        global_time = [0]
+        for a, b in edges:
+            link[a].append(b)
+
+        stack = []
+        strong_connect_comp = []
+
+        visit = [0] * (max_node_num + 1)
+
+        def dfs(cur):
+            global_time[0] += 1
+            dfn[cur], low[cur] = global_time[0], global_time[0]
+            stack.append(cur)
+            pos = len(stack) - 1
+
+            for next in link[cur]:
+                if visit[next] == 1:
+                    continue
+
+                if dfn[next] == 0x7fffffff:
+                    dfs(next)
+                    low[cur] = min(low[cur], low[next])
+                else:
+                    low[cur] = min(low[cur], dfn[next])
+
+            if low[cur] == dfn[cur]:
+                # dfn 和 low 相等时候，一直退栈退到cur出栈为止
+                strong_connect_comp.append(stack[pos:])
+                while len(stack) > pos:
+                    visit[stack.pop(-1)] = 1
+
+        for node in range(1, max_node_num + 1):
+            if len(link[node]) == 0:
+                continue
+
+            if dfn[node] == 0x7fffffff:
+                dfs(node)
+
+        # 处理没有边的点
+        for node in range(1, max_node_num + 1):
+            if visit[node] == 0:
+                strong_connect_comp.append([node])
+
+        return strong_connect_comp
+
+
+class Zhuliu:
+    # max_node_num为节点数量，所有节点从1到max_node_num顺序连续编号
+    def __init__(self, edges, max_node_num, root_node):
+        self.edges = edges
+        self.max_node_num = max_node_num
+        self.root_node = root_node
+
+    # 返回最小树形子图的边权和，无解返回None
+    def getMinTreeSubGraph(self):
+
+        n = self.max_node_num
+        link = {node: {} for node in range(1,n+1)}
+        for a, b, w in self.edges:
+            # 自环边和指向根的边没有意义，直接过滤掉
+            if a == b or b == self.root_node:
+                continue
+
+            link[a][b] = w
+
+
+        # 验证从起点到所有点是不是连通的，不连通无解
+        visit = [0] * (n + 1)
+        def dfs(cur):
+            visit[cur] = 1
+
+            for next in link[cur].keys():
+                if visit[next] == 0:
+                    dfs(next)
+
+        dfs(self.root_node)
+        if sum(visit) != n:
+            return None
+
+        # 不断找环缩点，直到没有环为止
+        total_dis = 0
+        cur_node_num = n
+        dis = [0x7fffffff] * (n + 1)        # 每个节点的前驱到这个节点的边权
+        pre = [0] * (n + 1)                 # 每个节点的前驱
+        scc_id = [0] * (n+1)                # 每个节点属于的强连通分量编号
+        cur_root = self.root_node
+
+        while True:
+            for node in range(1, cur_node_num+1):
+                dis[node] = 0x7fffffff
+                pre[node] = None
+                scc_id[node] = None
+
+
+            for node1 in link:
+                for node2, w in link[node1].items():
+                    if w < dis[node2]:
+                        dis[node2] = w
+                        pre[node2] = node1
+
+            e = [(pre[node], node) for node in range(1, cur_node_num+1) if node != cur_root]
+            scc_list = Tarjan.getStrongConnectedComponent(e, cur_node_num)
+            if len(scc_list) == cur_node_num:
+                # 强连通分量个数是节点个数，说明选的入边中没有环，直接累加边权结束运算
+                for node in range(1, cur_node_num+1):
+                    if node == cur_root:
+                        continue
+
+                    total_dis += link[pre[node]][node]
+                break
+
+            else:
+                for i, scc in enumerate(scc_list):
+
+                    for node in scc:
+                        scc_id[node] = i+1
+
+                for node in range(1, cur_node_num+1):
+                    if node == cur_root:
+                        continue
+                    if scc_id[pre[node]] == scc_id[node]:
+                        total_dis += link[pre[node]][node]  # 累加环上的边的权值
+
+                new_node_num = len(scc_list)
+                new_link = {node: {} for node in range(1,new_node_num+1)}
+                for node1 in link:
+                    n1 = scc_id[node1]
+                    for node2 in link[node1]:
+                        n2 = scc_id[node2]
+
+                        if n1 == n2:
+                            continue    # 环上的边删掉
+
+                        if n2 == scc_id[cur_root]:
+                            continue
+
+                        if n2 == scc_id[pre[node2]]:
+                            # 终点在环上的边, 终点和指向终点的点就应该在一个连通分量里面
+                            if n2 in new_link[n1]:
+                                new_link[n1][n2] = min(link[node1][node2] - link[pre[node2]][node2], new_link[n1][n2])
+                            else:
+                                new_link[n1][n2] = link[node1][node2] - link[pre[node2]][node2]
+                        else:
+                            if n2 in new_link[n1]:
+                                new_link[n1][n2] = min(new_link[n1][n2], link[node1][node2])
+                            else:
+                                new_link[n1][n2] = link[node1][node2]
+
+                link, cur_node_num, cur_root = new_link, new_node_num, scc_id[cur_root]
+
+        return total_dis
+
+
+
+while True:
+    try:
+        n, m = map(int, input().split())
+    except:
+        break
+
+    pos = [(0, 0)]
+    for _ in range(n):
+        s = sys.stdin.readline()
+        a, b = map(int, s.split())
+        pos.append((a, b))
+
+
+    def get_dis(a, b):
+        x = pos[a][0] - pos[b][0]
+        y = pos[a][1] - pos[b][1]
+        return math.sqrt(x**2 + y**2)
+
+    edges = []
+    for _ in range(m):
+        s = sys.stdin.readline()
+        a, b = map(int, s.split())
+        edges.append((a, b, get_dis(a, b)))
+
+    ans = Zhuliu(edges, n, 1).getMinTreeSubGraph()
+    print('{:.2f}'.format(ans) if ans is not None else 'poor snoopy')
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21614/
+   。
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+
+#define x first
+#define y second
+
+using namespace std;
+
+typedef pair<double, double> PDD;
+
+const int N = 110;
+const double INF = 1e8;
+
+int n, m;
+PDD q[N];
+bool g[N][N];
+double d[N][N], bd[N][N];
+int pre[N], bpre[N];
+int dfn[N], low[N], ts, stk[N], top;
+int id[N], cnt;
+bool st[N], ins[N];
+
+void dfs(int u)
+{
+    st[u] = true;
+    for (int i = 1; i <= n; i ++ )
+        if (g[u][i] && !st[i])
+            dfs(i);
+}
+
+bool check_con()
+{
+    memset(st, 0, sizeof st);
+    dfs(1);
+    for (int i = 1; i <= n; i ++ )
+        if (!st[i])
+            return false;
+    return true;
+}
+
+double get_dist(int a, int b)
+{
+    double dx = q[a].x - q[b].x;
+    double dy = q[a].y - q[b].y;
+    return sqrt(dx * dx + dy * dy);
+}
+
+void tarjan(int u)
+{
+    dfn[u] = low[u] = ++ ts;
+    stk[ ++ top] = u, ins[u] = true;
+
+    int j = pre[u];
+    if (!dfn[j])
+    {
+        tarjan(j);
+        low[u] = min(low[u], low[j]);
+    } else if (ins[j]) low[u] = min(low[u], dfn[j]);
+
+    if (low[u] == dfn[u])
+    {
+        int y;
+        ++ cnt;
+        do
+        {
+            y = stk[top -- ], ins[y] = false, id[y] = cnt;
+        } while (y != u);
+    }
+}
+
+double work()
+{
+    double res = 0;
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= n; j ++ )
+            if (g[i][j]) d[i][j] = get_dist(i, j);
+            else d[i][j] = INF;
+
+    while (true)
+    {
+        for (int i = 1; i <= n; i ++ )
+        {
+            pre[i] = i;
+            for (int j = 1; j <= n; j ++ )
+                if (d[pre[i]][i] > d[j][i])
+                    pre[i] = j;
+        }
+
+        memset(dfn, 0, sizeof dfn);
+        ts = cnt = 0;
+        for (int i = 1; i <= n; i ++ )
+            if (!dfn[i])
+                tarjan(i);
+
+        if (cnt == n)
+        {
+            for (int i = 2; i <= n; i ++ ) res += d[pre[i]][i];
+            break;
+        }
+
+        for (int i = 2; i <= n; i ++ )
+            if (id[pre[i]] == id[i])
+                res += d[pre[i]][i];
+
+        for (int i = 1; i <= cnt; i ++ )
+            for (int j = 1; j <= cnt; j ++ )
+                bd[i][j] = INF;
+
+        for (int i = 1; i <= n; i ++ )
+            for (int j = 1; j <= n; j ++ )
+                if (d[i][j] < INF && id[i] != id[j])
+                {
+                    int a = id[i], b = id[j];
+                    if (id[pre[j]] == id[j]) bd[a][b] = min(bd[a][b], d[i][j] - d[pre[j]][j]);
+                    else bd[a][b] = min(bd[a][b], d[i][j]);
+                }
+
+        n = cnt;
+        memcpy(d, bd, sizeof d);
+    }
+
+    return res;
+}
+
+int main()
+{
+    while (~scanf("%d%d", &n, &m))
+    {
+        for (int i = 1; i <= n; i ++ ) scanf("%lf%lf", &q[i].x, &q[i].y);
+
+        memset(g, 0, sizeof g);
+        while (m -- )
+        {
+            int a, b;
+            scanf("%d%d", &a, &b);
+            if (a != b && b != 1) g[a][b] = true;
+        }
+
+        if (!check_con()) puts("poor snoopy");
+        else printf("%.2lf\n", work());
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/468952/
+   。
+AcWing 2419. prufer序列    原题链接    中等
+作者：    皓首不倦 ,  2020-10-01 11:26:16 ,  阅读 10
+
+0
+
+
+
+
+# 树编码为prufer序列
+# 所有节点编号从1到max_node_num
+class PruferEncoder:
+    def __init__(self, edges, max_node_num, is_directed = False):
+        self.is_directed = is_directed
+        self.max_node_num = max_node_num
+
+        self.link = [[] for _ in range(max_node_num+1)]
+        self.valid = [1] * (max_node_num + 1)
+        self.__d = [0] * (max_node_num + 1)
+
+        for a, b in edges:
+            if is_directed:
+                self.link[b].append(a)
+                self.__d[a] += 1
+            else:
+                self.link[a].append(b)
+                self.link[b].append(a)
+                self.__d[a] += 1
+                self.__d[b] += 1
+
+    def __remove_node(self, node):
+        for other in self.link[node]:
+            self.__d[other] -= 1
+        self.valid[node] = 0
+
+    def encode(self):
+        ans = []
+        for i in range(1, self.max_node_num+1):
+            if len(ans) == self.max_node_num - 2:
+                break
+
+            if (self.is_directed == True and self.__d[i] == 0) or (self.is_directed == False and self.__d[i] == 1):
+                for node in self.link[i]:
+                    if self.valid[node]:
+                        ans.append(node)
+                        break
+
+                self.__remove_node(i)
+
+                while ((self.is_directed == True and self.__d[ans[-1]] == 0) or (self.is_directed == False and self.__d[ans[-1]] == 1)) and ans[-1] < i and len(ans) < self.max_node_num - 2:
+                    for node in self.link[ans[-1]]:
+                        if self.valid[node]:
+                            ans.append(node)
+                            break
+                    self.__remove_node(ans[-2])
+
+        return ans
+
+
+# prufer序列解码为边列表，不区分是有向图的编码序列还是无向图的编码序列，都能正确解码
+# 所有节点编号从1到max_node_num
+from queue import PriorityQueue
+class PruferDecoder():
+    def __init__(self, encode_list, max_node_num):
+        self.data = encode_list[::]
+        self.max_node_num = max_node_num
+
+    def decode(self):
+        d = [0] * (self.max_node_num+1)
+        for node in self.data:
+            d[node] += 1
+        d[self.max_node_num] = 1
+
+        min_heap = PriorityQueue()
+        for node in range(1, self.max_node_num+1):
+            if d[node] == 0:
+                min_heap.put(node)
+        ans = []
+        for node in self.data:
+            ans.append((node, min_heap.get()))
+            d[node] -= 1
+            if d[node] == 0:
+                min_heap.put(node)
+
+        ans.append((self.max_node_num, min_heap.get()))
+        return ans
+
+n, t = map(int, input().split())
+if t == 1:
+    edges = []
+    arr = list(map(int, input().split()))
+    for i, node in enumerate(arr):
+        edges.append((node, i+1))
+
+    ans = PruferEncoder(edges, n, is_directed=True).encode()
+    for val in ans:
+        print(val, end=' ')
+    print()
+
+else:
+    arr = list(map(int, input().split()))
+    edges = PruferDecoder(arr, n).decode()
+    ans = [0] * (n-1)
+    for a, b in edges:
+        ans[b-1] = a
+    for val in ans:
+        print(val, end=' ')
+    print()
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21667/
+   。
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+int f[N], d[N], p[N];
+
+void tree2prufer()
+{
+    for (int i = 1; i < n; i ++ )
+    {
+        scanf("%d", &f[i]);
+        d[f[i]] ++ ;
+    }
+
+    for (int i = 0, j = 1; i < n - 2; j ++ )
+    {
+        while (d[j]) j ++ ;
+        p[i ++ ] = f[j];
+        while (i < n - 2 && -- d[p[i - 1]] == 0 && p[i - 1] < j) p[i ++ ] = f[p[i - 1]];
+    }
+
+    for (int i = 0; i < n - 2; i ++ ) printf("%d ", p[i]);
+}
+
+void prufer2tree()
+{
+    for (int i = 1; i <= n - 2; i ++ )
+    {
+        scanf("%d", &p[i]);
+        d[p[i]] ++ ;
+    }
+    p[n - 1] = n;
+
+    for (int i = 1, j = 1; i < n; i ++, j ++ )
+    {
+        while (d[j]) j ++ ;
+        f[j] = p[i];
+        while (i < n - 1 && -- d[p[i]] == 0 && p[i] < j) f[p[i]] = p[i + 1], i ++ ;
+    }
+
+    for (int i = 1; i <= n - 1; i ++ ) printf("%d ", f[i]);
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    if (m == 1) tree2prufer();
+    else prufer2tree();
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/468998/
+   。
+AcWing 2418. 光之大陆    原题链接    中等
+作者：    whsstory ,  2020-09-06 19:06:26 ,  阅读 61
+
+3
+
+
+题意：有标号点仙人掌计数（每个点至多在一个环中）
+
+n≤300n≤300 ,任意模数。
+
+解： nn 个点的点仙人掌是由若干个不相交的环（可以是点)构成的。考虑将 nn 个点划分成若干个不相交的环的方案数（先不将这些环连接起来）（点有标号）
+
+这个可以dp：记 f(i,j)f(i,j) 表示 ii 个点划分为 jj 个不相交的环的方案数。枚举点 ii 所在的环的大小 kk 可得：
+f(i,j)=∑kf(i−k,j−1)×Ck−1i−1×g(k)
+f(i,j)=∑kf(i−k,j−1)×Ci−1k−1×g(k)
+
+其中 g(k)g(k) 表示 kk 个点的不同环的数量（朝向不同算不同，因为朝向不同在最后连接时会造成不同的方案）
+
+那么 g(k)=(k−1)!×k/2=k!/2g(k)=(k−1)!×k/2=k!/2 .含义是： kk 个点的圆排列是 (k−1)!(k−1)! 个，朝向有 kk 种，但是顺逆时针的连接是等价的，所以要除以2. 特别的，由于2个点的环无意义，令 g(2)=0g(2)=0
+
+这部分的复杂度是 (n3)O(n3)
+
+现在考虑将 kk 个不相交的环连接的方案数。考虑prufer那套理论，长度为 LL 的prufer序列唯一确定了 L+1L+1 条边，所以恰 kk 个环 (k>1)(k>1) 的点仙人掌数量就是 f(n,k)×nk−2f(n,k)×nk−2 （prufer序列每个位置有 nn 种填法，还需确定 k−1k−1 条边）
+
+对于 k=1k=1 ，此时本质不同的环才算不同，有 (n−1)!/2(n−1)!/2 个。
+
+总复杂度 (n3)O(n3) .建议递推组合数，因为当模数小于 nn 时用阶乘求会出故障。
+
+一道清新的prufer+计数dp的好题。
+
+#define MAXN 311
+ll mod;
+ll f[MAXN][MAXN],C[MAXN][MAXN],g[MAXN];
+int main()
+{
+    int n=read();
+    mod=read();
+    C[0][0]=1;
+    for(int i=1;i<=n;++i)
+    {
+        C[i][0]=1;
+        for(int j=1;j<=i;++j)C[i][j]=(C[i-1][j-1]+C[i-1][j])%mod;
+    }
+    g[1]=1,g[3]=3;
+    for(int i=4;i<=n;++i)g[i]=g[i-1]*i%mod;
+    f[0][0]=1;
+    for(int i=1;i<=n;++i)
+        for(int j=1;j<=i;++j)
+            for(int k=1;k<=i;++k)
+                f[i][j]=(f[i][j]+f[i-k][j-1]*C[i-1][k-1]%mod*g[k])%mod;
+    ll ans=g[n-1],pru=1;
+    for(int i=2;i<=n;++i)
+    {
+        ans=(ans+f[n][i]*pru)%mod;pru=pru*n%mod;
+    }
+    printf("%lld",ans);
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/20187/
+   。
+
+
+2
+
+
+做完这题就感觉计数特别玄学，问题出在网上所有题解都认为旋转算不同方案，需要 ×k×k。但我觉得不需要，因为映射的时候已经选择了对应的编号，想了 3 天，发现这一点网上的题解的理解好像都是错的。。
+
+遂发题解。
+
+或者说，我们做题的都是自己构造了一个自己认为正确的“广义” Prufer 序列，但并没有考虑具体映射关系，编号和缩点后编号的是否映射到位，所以计数不可避免的出现一些重复、缺漏的部分，但是阴差阳错的就对了。。
+
+这题就是求 nn 个点的区分编号、联通点仙人掌图数量。
+
+我们可以考虑把 nn 分成若干简单环，然后考虑把他们连起来的方案数。
+
+考虑把每个简单环缩点，设缩点后有 jj 个点，设 c[x]c[x] 为 xx 缩点后属于的编号。
+
+那么对于 jj 个缩点的图，有多少种生成树个数呢？
+
+考虑 Prufer 编码，稍稍做一点改动，考虑每次选择的点是 nn 个，需要连 j−1j−1 条边，所以是 nj−2nj−2。这样为什么是正确的呢？考虑构造一个类似的映射方式，在标准 Prufer 编码映射上的改动：
+
+在有关度数的所有操作，把 xx 当作 c[x]c[x] 进行相关操作
+在有关生成 Prufer 序列，连接父亲儿子边这些操作，用原始编号。
+这样的话我们发现映射的时候，如果当作一个以 nn 为根的有根树，对于一条边而言，映射出了这条边父亲的缩点前的具体编号与儿子缩点后的具体编号（这个可以考虑 Prufer 映射的过程，连边在这种特殊的映射中 (x,y)(x,y)， yy 实际上是缩点后的编号），所以对于每条边，我们还要计数选择这条边儿子连接的具体是 yy 这个缩的点连接的是这个环中具体的哪个点（选择一个接口），即除了 nn 所在的那个环，其他的都要从中选一个点作为接口 。并且，我们发现 Prufer 编码没有确定最后一条边，即父亲为 nn 缩点后所在的的那条边的父亲的具体编号（原始的 Prufer 编码缩点后的节点是根不需要连父亲边，但考虑到我们特殊的 Prufer，最后只能保证从 nn 号节点连边，没有选择 nn 号节点缩点后的点对应着缩点前的哪个点，所以 nn 对应的环也要从中选一个），设每个缩点的环大小是 szsz，答案应该是 nj−2×∏sznj−2×∏sz
+后面 szsz 的乘积，我们可以在把分成环的时候把贡献送进去。
+
+所以 fi,jfi,j 实际上是把 ii 个点的仙人掌缩点后分成 jj 个点，再从每个环里面选出一个点作为接口连接父亲边，的方案数。
+
+所以这个 ×k×k 实际上并不是网上流传的朝向本质不同，而是广义 Prufer 计数留下的历史遗漏问题，缩点后编号和原始编号映射没有映射全，需要额外增加计数导致的。
+
+答案就是 ∑ni=1fn,i×ni−2∑i=1nfn,i×ni−2。
+
+考虑求解 fi,jfi,j，可以类比 AcWing 307. 连通图 的方式，枚举基准点 ii 的联通块大小 kk。
+
+fi,j=∑k=1ifi−k,j−1×Ck−1i−1×gk×k
+fi,j=∑k=1ifi−k,j−1×Ci−1k−1×gk×k
+这个 gigi 表示大小为 ii 的环的方案数：
+
+gi={0, i=2 (i−1)!2,otherwisegi={0, i=2 (i−1)!2,otherwise
+不存在大小为 22 的环，i=1i=1 默认是一个点，在这个题里环旋转、翻转本质相同。
+
+注意 i=1i=1 的时候特判，贡献即 (n−1)!2(n−1)!2
+这个东西在预处理组合数后可以 O(n3)O(n3) 做，这题就做完了。
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+const int N = 205;
+
+typedef long long LL;
+
+int n, P, f[N][N], fact[N], C[N][N];
+
+int main() {
+    scanf("%d%d", &n, &P);
+    f[0][0] = C[0][0] = 1;
+    fact[1] = 1, fact[3] = 3;
+    for (int i = 4; i <= n; i++) fact[i] = fact[i - 1] * i % P;
+    for (int i = 1; i <= n; i++) {
+        C[i][0] = 1;
+        for (int j = 1; j <= i; j++) 
+            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % P;
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            for (int k = 1; k <= i; k++) {
+                f[i][j] = (f[i][j] + (LL)f[i - k][j - 1] * C[i - 1][k - 1] % P * fact[k]) % P;
+            }
+        }
+    }
+    int ans = fact[n - 1], s = 1;
+    for (int i = 2; i <= n; i++, s = s * n % P) ans = (ans + (LL)f[n][i] * s) % P;
+    printf("%d\n", ans);
+    return 0;
+
+作者：墨染空
+链接：https://www.acwing.com/solution/content/20527/
+   。
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+
+const int N = 210;
+
+int n, m;
+int C[N][N], g[N], f[N][N];
+
+void init()
+{
+    for (int i = 0; i <= n; i ++ )
+        for (int j = 0; j <= i; j ++ )
+            if (!j) C[i][j] = 1;
+            else C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % m;
+
+    g[1] = 1, g[3] = 3;
+    for (int i = 4; i <= n; i ++ ) g[i] = g[i - 1] * i % m;
+}
+
+int main()
+{
+    cin >> n >> m;
+    init();
+
+    f[0][0] = 1;
+    for (int i = 1; i <= n; i ++ )
+        for (int j = 1; j <= i; j ++ )
+            for (int k = 1; k <= i - j + 1; k ++ )
+                f[i][j] = (f[i][j] + f[i - k][j - 1] * (LL)C[i - 1][k - 1] * g[k]) % m;
+
+    LL res = g[n - 1], p = 1;
+    for (int k = 2; k <= n; k ++ )
+    {
+        res += f[n][k] * p;
+        p = p * n % m;
+    }
+
+    cout << res % m << endl;
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/469048/
+   。
+AcWing 2437. Splay    原题链接    中等
+作者：    皓首不倦 ,  2020-10-01 22:16:42 ,  阅读 12
+
+0
+
+
+
+
+#include <string.h>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+#define MAX_NODE_NUM       100005
+
+struct Node {
+    int child[2];       // 左右子节点编号
+    int parent;         // 父节点编号
+    int val;            // 节点数值
+    int size;           // 子树大小
+    int flag;           // 懒标记
+} pool[MAX_NODE_NUM];
+
+
+class SplayTree {
+private:
+    int __root;           // 根节点编号
+    int __pool_pos;       // 对象池最后一个分配位置
+
+public:
+    SplayTree(int node_num) {
+        __root = 0;
+        __pool_pos = 1;
+        memset(pool, 0, sizeof(Node) * (node_num+1));
+    }
+
+    // 翻转懒标记
+    void rev_flag(int idx) {
+        pool[idx].flag ^= 1;
+    }
+
+    int get_left_child(int idx) {
+        return pool[idx].child[0];
+    }
+
+    int get_right_child(int idx) {
+        return pool[idx].child[1];
+    }
+
+    int get_root() {
+        return __root;
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    void move(int x, int k) {
+        __move(x, k);
+    }
+
+    // 插入数值是val的节点
+    void insert(int val) {
+        int u = __root, p = 0;
+        while (u != 0) {
+            p = u;
+            u = pool[u].child[val > pool[u].val];
+        }
+
+        u = __pool_pos++;
+        if (p != 0) {
+            pool[p].child[val > pool[p].val] = u;
+        }
+
+        pool[u].parent = p;
+        pool[u].val = val;
+
+        __move(u, 0);
+    }
+
+    // 获取第k大的节点编号，返回0表示无解
+    int get_kth_idx(int k) {
+        int u = __root;
+        while (u) {
+            __push_down(u);
+
+            if (pool[pool[u].child[0]].size >= k) {
+                u = pool[u].child[0];
+            } else if (pool[pool[u].child[0]].size + 1 == k) {
+                return u;
+            } else {
+                k -= pool[pool[u].child[0]].size + 1;
+                u = pool[u].child[1];
+            }
+        }
+
+        return 0;
+    }
+
+    void get_mid_travel_list(int* ans) {
+        int pos = 0;
+        __get_mid_travel_list(__root, pos, ans);
+    }
+
+private:
+    // 信息上传函数(即根据子节点信息更新序号是idx的节点的信息)
+    void __push_up(int idx) {
+        Node& node = pool[idx];
+        node.size = 1 + pool[node.child[0]].size + pool[node.child[1]].size;
+    }
+
+    /******* 此处 __flag_oper  __push_down_child_flag 两个函数的逻辑需要根据不同的问题场景进行修改 **********/
+
+    // 懒标记对应的操作，默认什么操作也没有，具体使用时候在此处添加操作
+    void __flag_oper(int idx) {
+        swap(pool[idx].child[0], pool[idx].child[1]);
+    }
+
+    // 修改子节点的标记函数，默认就是将标记下传，不同问题可能有不同处理方式，这里把逻辑提出来
+    void __push_down_child_flag(int idx) {
+        pool[pool[idx].child[0]].flag ^= 1;
+        pool[pool[idx].child[1]].flag ^= 1;
+    }
+
+    /******* 此处 __flag_oper  __push_down_child_flag 两个函数的逻辑需要根据不同的问题场景进行修改 **********/
+
+    // 懒标记下移操作
+    void __push_down(int idx) {
+        if (pool[idx].flag) {
+            __flag_oper(idx);
+            __push_down_child_flag(idx);
+            pool[idx].flag = 0;
+        }
+    }
+
+    // 统一的左旋和右旋函数，将编号为x对应的节点网上一层旋转
+    void __rotate(int x) {
+        int y = pool[x].parent, z = pool[y].parent;
+        int k1 = pool[y].child[1] == x, k2 = pool[z].child[1] == y;
+        pool[z].child[k2] = x;
+        pool[x].parent = z;
+        pool[y].child[k1] = pool[x].child[k1^1];
+        pool[pool[x].child[k1^1]].parent = y;
+        pool[x].child[k1^1] = y;
+        pool[y].parent = x;
+
+        __push_up(y);
+        __push_up(x);
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    // k = 0 表示将x节点搬移到根节点位置
+    void __move(int x, int k) {
+        while (pool[x].parent != k) {
+            int y = pool[x].parent, z = pool[y].parent;
+            if (z != k) {
+                if ( (pool[y].child[1] == x) != (pool[z].child[1] == y) ) {
+                    __rotate(x);
+                } else {
+                    __rotate(y);
+                }
+            }
+            __rotate(x);
+        }
+
+        if (k == 0) {
+            __root = x;
+        }
+    }
+
+    void __get_mid_travel_list(int cur, int& pos, int* ans) {
+        if (cur == 0) {
+            return;
+        }
+
+        __push_down(cur);
+
+        __get_mid_travel_list(pool[cur].child[0], pos, ans);
+        ans[pos++] = pool[cur].val;
+        __get_mid_travel_list(pool[cur].child[1], pos, ans);
+    }
+};
+
+int mid_arr[MAX_NODE_NUM];
+
+int main(void) {
+    //freopen("/Users/grh/Programming/CLionProjects/Test/data.txt", "r", stdin);
+
+    int n, m;;
+    int l, r;
+    scanf("%d %d", &n, &m);
+
+    SplayTree tree(n+2);
+    for (int i = 0; i <= n+1; i++) {
+        tree.insert(i);
+    }
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &l, &r);
+        l = tree.get_kth_idx(l);
+        r = tree.get_kth_idx(r+2);
+
+        tree.move(l, 0);
+        tree.move(r, l);
+        tree.rev_flag(tree.get_left_child(r));
+    }
+
+    tree.get_mid_travel_list(mid_arr);
+    for (int i = 1; i <= n; i++) {
+        printf("%d ", mid_arr[i]);
+    }
+    printf("\n");
+}
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21689/
+   。
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+struct Node
+{
+    int s[2], p, v;
+    int size, flag;
+
+    void init(int _v, int _p)
+    {
+        v = _v, p = _p;
+        size = 1;
+    }
+}tr[N];
+int root, idx;
+
+void pushup(int x)
+{
+    tr[x].size = tr[tr[x].s[0]].size + tr[tr[x].s[1]].size + 1;
+}
+
+void pushdown(int x)
+{
+    if (tr[x].flag)
+    {
+        swap(tr[x].s[0], tr[x].s[1]);
+        tr[tr[x].s[0]].flag ^= 1;
+        tr[tr[x].s[1]].flag ^= 1;
+        tr[x].flag = 0;
+    }
+}
+
+void rotate(int x)
+{
+    int y = tr[x].p, z = tr[y].p;
+    int k = tr[y].s[1] == x;  // k=0表示x是y的左儿子；k=1表示x是y的右儿子
+    tr[z].s[tr[z].s[1] == y] = x, tr[x].p = z;
+    tr[y].s[k] = tr[x].s[k ^ 1], tr[tr[x].s[k ^ 1]].p = y;
+    tr[x].s[k ^ 1] = y, tr[y].p = x;
+    pushup(y), pushup(x);
+}
+
+void splay(int x, int k)
+{
+    while (tr[x].p != k)
+    {
+        int y = tr[x].p, z = tr[y].p;
+        if (z != k)
+            if ((tr[y].s[1] == x) ^ (tr[z].s[1] == y)) rotate(x);
+            else rotate(y);
+        rotate(x);
+    }
+    if (!k) root = x;
+}
+
+void insert(int v)
+{
+    int u = root, p = 0;
+    while (u) p = u, u = tr[u].s[v > tr[u].v];
+    u = ++ idx;
+    if (p) tr[p].s[v > tr[p].v] = u;
+    tr[u].init(v, p);
+    splay(u, 0);
+}
+
+int get_k(int k)
+{
+    int u = root;
+    while (true)
+    {
+        pushdown(u);
+        if (tr[tr[u].s[0]].size >= k) u = tr[u].s[0];
+        else if (tr[tr[u].s[0]].size + 1 == k) return u;
+        else k -= tr[tr[u].s[0]].size + 1, u = tr[u].s[1];
+    }
+    return -1;
+}
+
+void output(int u)
+{
+    pushdown(u);
+    if (tr[u].s[0]) output(tr[u].s[0]);
+    if (tr[u].v >= 1 && tr[u].v <= n) printf("%d ", tr[u].v);
+    if (tr[u].s[1]) output(tr[u].s[1]);
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i <= n + 1; i ++ ) insert(i);
+    while (m -- )
+    {
+        int l, r;
+        scanf("%d%d", &l, &r);
+        l = get_k(l), r = get_k(r + 2);
+        splay(l, 0), splay(r, l);
+        tr[tr[r].s[0]].flag ^= 1;
+    }
+    output(root);
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/478319/
+   。
+#include <string.h>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+#define MAX_NODE_NUM       100005
+
+struct Node {
+    int child[2];       // 左右子节点编号
+    int parent;         // 父节点编号
+    int val;            // 节点数值
+    int size;           // 子树大小
+    int flag;           // 懒标记
+} pool[MAX_NODE_NUM];
+
+
+class SplayTree {
+private:
+    int __root;           // 根节点编号
+    int __pool_pos;       // 对象池最后一个分配位置
+
+public:
+    SplayTree(int node_num) {
+        __root = 0;
+        __pool_pos = 1;
+        memset(pool, 0, sizeof(Node) * (node_num+1));
+    }
+
+    // 翻转懒标记
+    void rev_flag(int idx) {
+        pool[idx].flag ^= 1;
+    }
+
+    int get_left_child(int idx) {
+        return pool[idx].child[0];
+    }
+
+    int get_right_child(int idx) {
+        return pool[idx].child[1];
+    }
+
+    int get_root() {
+        return __root;
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    void move(int x, int k) {
+        __move(x, k);
+    }
+
+    // 插入数值是val的节点
+    void insert(int val) {
+        int u = __root, p = 0;
+        while (u != 0) {
+            p = u;
+            u = pool[u].child[val > pool[u].val];
+        }
+
+        u = __pool_pos++;
+        if (p != 0) {
+            pool[p].child[val > pool[p].val] = u;
+        }
+
+        pool[u].parent = p;
+        pool[u].val = val;
+
+        __move(u, 0);
+    }
+
+    // 获取第k大的节点编号，返回0表示无解
+    int get_kth_idx(int k) {
+        int u = __root;
+        while (u) {
+            __push_down(u);
+
+            if (pool[pool[u].child[0]].size >= k) {
+                u = pool[u].child[0];
+            } else if (pool[pool[u].child[0]].size + 1 == k) {
+                return u;
+            } else {
+                k -= pool[pool[u].child[0]].size + 1;
+                u = pool[u].child[1];
+            }
+        }
+
+        return 0;
+    }
+
+    void get_mid_travel_list(int* ans) {
+        int pos = 0;
+        __get_mid_travel_list(__root, pos, ans);
+    }
+
+    // 返回第一个数值大于等于val的节点编号, 返回0无解
+    int lower_bound(int node, int val) {
+        if (node == 0) {
+            return 0;
+        }
+
+        if (val <= pool[node].val) {
+            int idx = lower_bound(pool[node].child[0], val);
+            if (idx != 0) {
+                return idx;
+            }
+            return node;
+        } else {
+            return lower_bound(pool[node].child[1], val);
+        }
+    }
+
+    // 删除子树
+    void del_sub_tree(int node) {
+        Node& parent_node = pool[pool[node].parent];
+        int p = pool[node].parent;
+
+        if (parent_node.child[0] == node) {
+            parent_node.child[0] = 0;
+        } else {
+            parent_node.child[1] = 0;
+        }
+
+        while (p) {
+            __push_up(p);
+            p = pool[p].parent;
+        }
+    }
+
+    // 获取数值
+    int get_val(int idx) {
+        return pool[idx].val;
+    }
+
+    // 获取树大小
+    int get_tree_size() {
+        return pool[__root].size;
+    }
+
+
+
+private:
+    // 信息上传函数(即根据子节点信息更新序号是idx的节点的信息)
+    void __push_up(int idx) {
+        Node& node = pool[idx];
+        node.size = 1 + pool[node.child[0]].size + pool[node.child[1]].size;
+    }
+
+    /******* 此处 __flag_oper  __push_down_child_flag 两个函数的逻辑需要根据不同的问题场景进行修改 **********/
+
+    // 懒标记对应的操作，默认什么操作也没有，具体使用时候在此处添加操作
+    void __flag_oper(int idx) {
+
+    }
+
+    // 修改子节点的标记函数，默认就是将标记下传，不同问题可能有不同处理方式，这里把逻辑提出来
+    void __push_down_child_flag(int idx) {
+
+    }
+
+    // 懒标记下移操作
+    void __push_down(int idx) {
+        if (pool[idx].flag) {
+            __flag_oper(idx);
+            __push_down_child_flag(idx);
+            pool[idx].flag = 0;
+        }
+    }
+
+    // 统一的左旋和右旋函数，将编号为x对应的节点网上一层旋转
+    void __rotate(int x) {
+        int y = pool[x].parent, z = pool[y].parent;
+        int k1 = pool[y].child[1] == x, k2 = pool[z].child[1] == y;
+        pool[z].child[k2] = x;
+        pool[x].parent = z;
+        pool[y].child[k1] = pool[x].child[k1^1];
+        pool[pool[x].child[k1^1]].parent = y;
+        pool[x].child[k1^1] = y;
+        pool[y].parent = x;
+
+        __push_up(y);
+        __push_up(x);
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    // k = 0 表示将x节点搬移到根节点位置
+    void __move(int x, int k) {
+        while (pool[x].parent != k) {
+            int y = pool[x].parent, z = pool[y].parent;
+            if (z != k) {
+                if ( (pool[y].child[1] == x) != (pool[z].child[1] == y) ) {
+                    __rotate(x);
+                } else {
+                    __rotate(y);
+                }
+            }
+            __rotate(x);
+        }
+
+        if (k == 0) {
+            __root = x;
+        }
+    }
+
+    void __get_mid_travel_list(int cur, int& pos, int* ans) {
+        if (cur == 0) {
+            return;
+        }
+
+        __push_down(cur);
+
+        __get_mid_travel_list(pool[cur].child[0], pos, ans);
+        ans[pos++] = pool[cur].val;
+        __get_mid_travel_list(pool[cur].child[1], pos, ans);
+    }
+};
+
+
+
+int main(void) {
+    //freopen("/Users/grh/Programming/CLionProjects/Test/data.txt", "r", stdin);
+
+    int min_bound, cmd_num;
+    char s[2];
+    int val;
+
+    scanf("%d %d", &cmd_num, &min_bound);
+
+    SplayTree tree(MAX_NODE_NUM-3);
+    tree.insert(-0x7fffffff);
+    tree.insert(0x7fffffff);
+    int delta = 0;
+    int cnt = 0;        // 加入过公司的员工数
+
+    for (int i = 0; i < cmd_num; i++) {
+        scanf("%s %d", s, &val);
+
+        if (s[0] == 'I') {
+            if (val >= min_bound) {
+                tree.insert(val - delta);
+                cnt += 1;
+            }
+        } else if (s[0] == 'A' || s[0] == 'S') {
+            delta += s[0] == 'A' ? val : -val;
+            int idx = tree.lower_bound(tree.get_root(), min_bound - delta);
+            if (idx != 0) {
+                // 把工资小于最小值的区段全部删掉
+                tree.move(idx, 0);
+                tree.move(1, idx);
+                tree.del_sub_tree(tree.get_right_child(1));
+            }
+        } else {
+            int idx = tree.get_kth_idx((tree.get_tree_size()-2 - val + 1)+1);
+            if (idx == 0 || tree.get_val(idx) == 0x7fffffff || tree.get_val(idx) == -0x7fffffff) {
+                printf("-1\n");
+            } else {
+                printf("%d\n", tree.get_val(idx)+delta, tree.get_val(idx));
+            }
+        }
+    }
+
+    printf("%d\n", cnt - (tree.get_tree_size()-2));
+    return 0;
+}
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21706/
+   。
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 100010, INF = 1e9;
+
+int n, m, delta;
+struct Node
+{
+    int s[2], p, v;
+    int size;
+
+    void init(int _v, int _p)
+    {
+        v = _v, p = _p;
+        size = 1;
+    }
+}tr[N];
+int root, idx;
+
+void pushup(int x)
+{
+    tr[x].size = tr[tr[x].s[0]].size + tr[tr[x].s[1]].size + 1;
+}
+
+void rotate(int x)
+{
+    int y = tr[x].p, z = tr[y].p;
+    int k = tr[y].s[1] == x;
+    tr[z].s[tr[z].s[1] == y] = x, tr[x].p = z;
+    tr[y].s[k] = tr[x].s[k ^ 1], tr[tr[x].s[k ^ 1]].p = y;
+    tr[x].s[k ^ 1] = y, tr[y].p = x;
+    pushup(y), pushup(x);
+}
+
+void splay(int x, int k)
+{
+    while (tr[x].p != k)
+    {
+        int y = tr[x].p, z = tr[y].p;
+        if (z != k)
+            if ((tr[y].s[1] == x) ^ (tr[z].s[1] == y)) rotate(x);
+            else rotate(y);
+        rotate(x);
+    }
+    if (!k) root = x;
+}
+
+int insert(int v)
+{
+    int u = root, p = 0;
+    while (u) p = u, u = tr[u].s[v > tr[u].v];
+    u = ++ idx;
+    if (p) tr[p].s[v > tr[p].v] = u;
+    tr[u].init(v, p);
+    splay(u, 0);
+    return u;
+}
+
+int get(int v)
+{
+    int u = root, res;
+    while (u)
+    {
+        if (tr[u].v >= v) res = u, u = tr[u].s[0];
+        else u = tr[u].s[1];
+    }
+    return res;
+}
+
+int get_k(int k)
+{
+    int u = root;
+    while (u)
+    {
+        if (tr[tr[u].s[0]].size >= k) u = tr[u].s[0];
+        else if (tr[tr[u].s[0]].size + 1 == k) return tr[u].v;
+        else k -= tr[tr[u].s[0]].size + 1, u = tr[u].s[1];
+    }
+    return -1;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    int L = insert(-INF), R = insert(INF);
+
+    int tot = 0;
+    while (n -- )
+    {
+        char op[2];
+        int k;
+        scanf("%s%d", op, &k);
+        if (*op == 'I')
+        {
+            if (k >= m) k -= delta, insert(k), tot ++ ;
+        }
+        else if (*op == 'A') delta += k;
+        else if (*op == 'S')
+        {
+            delta -= k;
+            R = get(m - delta);
+            splay(R, 0), splay(L, R);
+            tr[L].s[1] = 0;
+            pushup(L), pushup(R);
+        }
+        else
+        {
+            if (tr[root].size - 2 < k) puts("-1");
+            else printf("%d\n", get_k(tr[root].size - k) + delta);
+        }
+    }
+
+    printf("%d\n", tot - (tr[root].size - 2));
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/478395/
+   。
+
+AcWing 1063. 永无乡    原题链接    中等
+作者：    whsstory ,  2019-10-03 21:50:24 ,  阅读 207
+
+3
+
+
+出处
+
+永无乡solution
+(尚未讲解)
+前置技能：并查集及其“代表”思想；权值线段树（会讲解）；权值线段树上二分求k-th（会讲解）；动态开点（会讲解）;线段树合并(会讲解)
+
+PS1：此题是有平衡树的解法的，但其实麻烦了（其实是我不太会）
+PS2：如果你不会并查集，那你有必要先去学一下
+
+先关注“联通”二字，即要维护图上的联通性。而并查集非常适合解决此类问题。
+由此，我们得到一个暴力做法：
+对于合并操作，直接在并查集上合并x,y即可，每次O(1)O(1)；
+对于查询操作，直接找出所有与x同一集合的点，按重要度排序后第k小即为所求，最坏每次O(nlogn)O(nlogn);
+总时间复杂度最坏O(q×nlogn)O(q×nlogn)。
+
+看到查询居然要最坏每次O(nlogn)O(nlogn)的复杂度，有很大的优化空间。
+如何动态求k-th?
+如果您想到了平衡树,那么您就已经可以解决此题了,不用继续往下了.
+而如果您不是很会平衡树:
+权值线段树也能(通过线段树上二分)O(logn)O(logn)动态维护k-th可以参见这里
+也就是说,我们要查询与x联通的点里面第k重要的,就可以这样实现O(logn)O(logn)的查询
+但这样有两个问题:
+1. 空间开销大.对于每个点都开一个大小为O(n)O(n)的线段树,总空间复杂度O(n2)O(n2),无法承受.考虑到每次询问实际用到的点仅O(logn)O(logn)个,总共也就最多访问O(qlogn)O(qlogn)个节点,使用动态开点 (没错,还是同一篇blog),将空间降为O(min(n2,qlogn))O(min(n2,qlogn))
+2. 每次合并x,y时,要将与其联通的所有点都插入它们,每次最坏甚至可能超越O(n)O(n).考虑并查集的”代表”思想:设sgt(i)表示与点i联通的点构成的线段树,由于联通是双向的,有:
+sgt(x)=sgt(y) if(x,y联通)
+sgt(x)=sgt(y) if(x,y联通)
+也就是说,在并查集上合并(x,y)的同时,把sgt(x)也与sgt(y)合并,查询时在find(x)上查询.
+这带来了新的问题:普通的合并,复杂度不会低于O(n)O(n).可以使用启发式合并,这样大概是两个log.但更优的做法是使用线段树合并
+权值线段树的线段树合并代码大概是这样的:
+
+typedef long long ll;
+typedef unsigned un;
+ll uni(ll a,ll b,un l=1,un r=n)//把sgt(a)合并到sgt(b)上,并返回合并后点的编号
+{
+    if(!a)return b;//有一个为空,返回
+    if(!b)return a;
+    if(l==r)//叶子节点,直接合并
+    {
+        t[b].v+=t[a].v;
+        return b;
+    }
+    un mid=(l+r)>>1;
+    t[b].ls=uni(t[a].ls,t[b].ls,l,mid);//递归合并子节点
+    t[b].rs=uni(t[a].rs,t[b].rs,mid+1,r);
+    pushup(b);//更新当前点
+    return b;
+}
+每个点至多被合并一次,总复杂度O((m+q)logn)O((m+q)logn)
+再讲解一下几个细节:初始化并查集;每个点先把自己的重要度插入自己的线段树里;合并的时候都是对find(x),find(y)进行合并;
+最后,总时间复杂度O((n+m+q)logn)O((n+m+q)logn),空间复杂度O(min(n2,qlogn))O(min(n2,qlogn))
+//Wan Hong 3.0
+//notebook
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+#include <cmath>
+typedef int ll;//long long makes MLE.
+typedef unsigned un;
+typedef std::pair<ll,ll> pll;
+typedef std::string str;
+#define INF (1ll<<58)
+ll read()
+{
+    ll f=1,x=0;
+    char c=getchar();
+    while(c<'0'||c>'9')
+    {
+        if(c=='-')f=-1;
+        c=getchar();
+    }
+    while(c>='0'&&c<='9')x=x*10+c-'0',c=getchar();
+    return f*x;
+}
+ll max(ll a,ll b)
+{
+    return a>b?a:b;
+}
+ll min(ll a,ll b)
+{
+    return a<b?a:b;
+}
+bool umax(ll& a,ll b)
+{
+    if(b>a)return a=b,1;
+    return 0;
+}
+bool umin(ll& a,ll b)
+{
+    if(b<a)return a=b,1;
+    return 0;
+}
+
+/**********/
+#define MAXN 300011
+struct ufs//Union_Find_Set
+{
+    ll fa[MAXN];
+    void build(ll n)
+    {
+        for(ll i=1;i<=n;++i)fa[i]=i;
+    }
+    ll find(ll x)
+    {
+        if(fa[x]==x)return x;
+        return fa[x]=find(fa[x]);
+    }
+    void uni(ll u,ll v)
+    {
+        u=find(u),v=find(v);
+        fa[u]=v;
+    }
+}s;
+ll n,m,q;
+
+struct node//线段树的节点(动态开点的)
+{
+    ll v,ls,rs;
+    node()
+    {
+        v=ls=rs=0;
+    }
+    node(ll _v,ll _ls,ll _rs)
+    {
+        v=_v,ls=_ls,rs=_rs;
+    }
+}t[MAXN*18+1];
+ll cnt=0;
+
+void pushup(un num)
+{
+    t[num].v=t[t[num].ls].v+t[t[num].rs].v;
+}
+void modify(ll x,ll k,un num,un l=1,un r=n)在sgt(num)上将x的出现次数加上k
+{
+    if(l==r)
+    {
+        if(l==x)t[num].v+=k;
+        return;
+    }
+    un mid=(l+r)>>1;
+    if(x<=mid)
+    {
+        if(!t[num].ls)t[num].ls=++cnt;//动态开点
+        modify(x,k,t[num].ls,l,mid);
+    }
+    else
+    {
+        if(!t[num].rs)t[num].rs=++cnt;
+        modify(x,k,t[num].rs,mid+1,r);
+    }
+    pushup(num);
+}
+ll uni(ll a,ll b,un l=1,un r=n)//线段树合并
+{
+    if(!a)return b;
+    if(!b)return a;
+    if(l==r)
+    {
+        t[b].v+=t[a].v;
+        return b;
+    }
+    un mid=(l+r)>>1;
+    t[b].ls=uni(t[a].ls,t[b].ls,l,mid);
+    t[b].rs=uni(t[a].rs,t[b].rs,mid+1,r);
+    pushup(b);
+    return b;
+}
+ll Qkth(ll k,un num,un l=1,un r=n)//权值线段树上求k-th
+{
+    if(l==r)return l;
+    un mid=(l+r)>>1;
+    if(k<=t[t[num].ls].v)return Qkth(k,t[num].ls,l,mid);
+    else return Qkth(k-t[t[num].ls].v,t[num].rs,mid+1,r);
+}
+ll v[MAXN],num[MAXN];//重要度排名;重要度排名所对应的点的编号
+//main内有一些debug语句,忽略即可
+int main()
+{
+    //freopen("out.out","w",stdout);
+    n=read(),m=read();
+    s.build(n);
+    cnt=n;//我这里用了一个技巧,把i表示的线段树的编号就设为i
+    for(ll i=1;i<=n;++i)
+    {
+        v[i]=read();
+        num[v[i]]=i;
+        modify(v[i],1,i);//插入自己的重要度
+    }
+    for(ll i=1;i<=m;++i)
+    {
+        ll a=s.find(read()),b=s.find(read());//合并的是并查集上的根节点
+        if(a==b)continue;//同一集合内不用合并
+        s.uni(a,b);//并查集上合并
+        uni(a,b);//线段树上合并
+    }
+    q=read();
+    for(ll i=1;i<=q;++i)
+    {
+        char op=getchar();
+        while(op!='B'&&op!='Q')op=getchar();
+        //printf("task %d:",i);
+        if(op=='B')
+        {
+            ll a=s.find(read()),b=s.find(read());
+            //printf("a=%d,size=%d;b=%d,size=%d\n",a,t[a].v,b,t[b].v);
+            if(a==b)continue;//同一集合内不用合并
+            s.uni(a,b);//并查集上合并
+            uni(a,b);//线段树上合并
+            //printf("unisize=%d\n",t[b].v);
+        }
+        else
+        {
+            ll a=s.find(read()),k=read();//权值线段树上求k-th
+            //printf("Query %d,size=%d\n",a,t[a].v);
+            if(k>t[a].v)printf("-1\n");
+            else printf("%d\n",num[Qkth(k,a)]);
+        }
+        //printf("pass %lld...\n",i);
+    }
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/5020/
+   。
+
+/*
+ *
+ * 用并查集维护节点之间的连通关系，同一个连通块中的节点全部用
+ * 一个Splay实例维护，利用Splay来获取第k小数据
+ * 合并两个Splay的数据时候，注意小的树往大的树上合并
+ *
+ */
+
+#include <string.h>
+#include <iostream>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+class MergeSet {
+private:
+    int __max_node_num;
+    int* __buf;
+
+public:
+    MergeSet(int max_node_num) : __max_node_num(max_node_num) {
+        __buf = new int[__max_node_num+1];
+        memset(__buf, 0, sizeof(int) * (__max_node_num+1));
+        for (int node = 1; node <= max_node_num; node++) {
+            __buf[node] = node;
+        }
+    }
+
+    ~MergeSet() {
+        delete[] __buf;
+        __buf = nullptr;
+    }
+
+    bool check_in_same_set(int a, int b) {
+        return __find(a) != 0 && __find(a) == __find(b);
+    }
+
+    void merge(int a, int b) {
+        __buf[__find(a)] = __find(b);
+    }
+
+    // 返回节点的最高层祖先编号
+    int get_root(int node) {
+        return __find(node);
+    }
+
+private:
+    // 找x的祖先节点编号
+    int __find(int x) {
+        if (__buf[x] == x) {
+            return x;
+        }
+
+        __buf[x] = __find(__buf[x]);
+        return __buf[x];
+    }
+};
+
+#define     MAX_SPLAY_NODE_NUM      2000000
+struct Node {
+    int child[2];       // 左右子节点编号
+    int parent;         // 父节点编号
+    int val;            // 节点数值
+    int size;           // 子树大小
+    int flag;           // 懒标记
+
+    void init(int p, int v) {
+        child[0] = child[1] = 0;
+        parent = p;
+        val = v;
+        size = 1;
+        flag = 0;
+    }
+} __splay_node_pool[MAX_SPLAY_NODE_NUM];
+int __splay_pool_pos = 1;
+
+
+class SplayTree {
+private:
+    int __root;             // 根节点编号
+    Node* __pool;           // 对象池
+    int& __pool_pos;        // 对象池最后一个分配位置
+
+    class __init_guard {
+    public:
+        __init_guard() {
+            __splay_node_pool[0].init(0, 0);
+            __splay_node_pool[0].size = 0;
+        }
+    };
+
+    static __init_guard __guard;
+
+public:
+    SplayTree() : __pool_pos(__splay_pool_pos), __root(0), __pool(__splay_node_pool) {
+
+    }
+
+    // 翻转懒标记
+    void rev_flag(int idx) {
+        __pool[idx].flag ^= 1;
+    }
+
+    int get_left_child(int idx) {
+        return __pool[idx].child[0];
+    }
+
+    int get_right_child(int idx) {
+        return __pool[idx].child[1];
+    }
+
+    int get_root() {
+        return __root;
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    void move(int x, int k) {
+        __move(x, k);
+    }
+
+    // 插入数值是val的节点
+    void insert(int val) {
+        int u = __root, p = 0;
+        while (u != 0) {
+            p = u;
+            u = __pool[u].child[val > __pool[u].val];
+        }
+
+        u = __pool_pos++;
+
+        if (p != 0) {
+            __pool[p].child[val > __pool[p].val] = u;
+        }
+
+        __pool[u].init(p, val);
+
+        while (p) {
+            __push_up(p);
+            p = __pool[p].parent;
+        }
+
+        __move(u, 0);
+    }
+
+    // 获取排名k的节点编号，返回0表示无解
+    int get_kth_idx(int k) {
+        int u = __root;
+        while (u) {
+            __push_down(u);
+
+            if (__pool[__pool[u].child[0]].size >= k) {
+                u = __pool[u].child[0];
+            } else if (__pool[__pool[u].child[0]].size + 1 == k) {
+                return u;
+            } else {
+                k -= __pool[__pool[u].child[0]].size + 1;
+                u = __pool[u].child[1];
+            }
+        }
+
+        return 0;
+    }
+
+    void get_mid_travel_list(int* ans) {
+        int pos = 0;
+        __get_mid_travel_list(__root, pos, ans);
+    }
+
+    // 返回第一个数值大于等于val的节点编号, 返回0无解
+    int lower_bound(int node, int val) {
+        if (node == 0) {
+            return 0;
+        }
+
+        if (val <= __pool[node].val) {
+            int idx = lower_bound(__pool[node].child[0], val);
+            if (idx != 0) {
+                return idx;
+            }
+            return node;
+        } else {
+            return lower_bound(__pool[node].child[1], val);
+        }
+    }
+
+    // 删除子树
+    void del_sub_tree(int node) {
+        Node& parent_node = __pool[__pool[node].parent];
+        int p = __pool[node].parent;
+
+        if (parent_node.child[0] == node) {
+            parent_node.child[0] = 0;
+        } else {
+            parent_node.child[1] = 0;
+        }
+
+        while (p) {
+            __push_up(p);
+            p = __pool[p].parent;
+        }
+    }
+
+    // 获取数值
+    int get_val(int idx) {
+        return __pool[idx].val;
+    }
+
+    // 获取树大小
+    int get_tree_size() {
+        return __pool[__root].size;
+    }
+
+    // 合并另外一个树所有节点，另外的树不变
+    void merge(SplayTree& other) {
+        __merge(other.__pool, other.__root);
+    }
+
+
+private:
+    // 信息上传函数(即根据子节点信息更新序号是idx的节点的信息)
+    void __push_up(int idx) {
+        Node& node = __pool[idx];
+        node.size = 1 + __pool[node.child[0]].size + __pool[node.child[1]].size;
+    }
+
+    /******* 此处 __flag_oper  __push_down_child_flag 两个函数的逻辑需要根据不同的问题场景进行修改 **********/
+
+    // 懒标记对应的操作，默认什么操作也没有，具体使用时候在此处添加操作
+    void __flag_oper(int idx) {
+
+    }
+
+    // 修改子节点的标记函数，默认就是将标记下传，不同问题可能有不同处理方式，这里把逻辑提出来
+    void __push_down_child_flag(int idx) {
+
+    }
+
+    // 懒标记下移操作
+    void __push_down(int idx) {
+        if (__pool[idx].flag) {
+            __flag_oper(idx);
+            __push_down_child_flag(idx);
+            __pool[idx].flag = 0;
+        }
+    }
+
+    // 统一的左旋和右旋函数，将编号为x对应的节点网上一层旋转
+    void __rotate(int x) {
+        int y = __pool[x].parent, z = __pool[y].parent;
+        int k1 = __pool[y].child[1] == x, k2 = __pool[z].child[1] == y;
+        __pool[z].child[k2] = x;
+        __pool[x].parent = z;
+        __pool[y].child[k1] = __pool[x].child[k1^1];
+        __pool[__pool[x].child[k1^1]].parent = y;
+        __pool[x].child[k1^1] = y;
+        __pool[y].parent = x;
+
+        __push_up(y);
+        __push_up(x);
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    // k = 0 表示将x节点搬移到根节点位置
+    void __move(int x, int k) {
+        while (__pool[x].parent != k) {
+            int y = __pool[x].parent, z = __pool[y].parent;
+            if (z != k) {
+                if ( (__pool[y].child[1] == x) != (__pool[z].child[1] == y) ) {
+                    __rotate(x);
+                } else {
+                    __rotate(y);
+                }
+            }
+            __rotate(x);
+        }
+
+        if (k == 0) {
+            __root = x;
+        }
+    }
+
+    void __get_mid_travel_list(int cur, int& pos, int* ans) {
+        if (cur == 0) {
+            return;
+        }
+
+        __push_down(cur);
+
+        __get_mid_travel_list(__pool[cur].child[0], pos, ans);
+        ans[pos++] = __pool[cur].val;
+        __get_mid_travel_list(__pool[cur].child[1], pos, ans);
+    }
+
+    // 合并另外一棵树的子树的所有节点
+    void __merge(Node* pool, int node) {
+        if (node == 0) {
+            return;
+        }
+
+        insert(pool[node].val);
+        __merge(pool, pool[node].child[0]);
+        __merge(pool, pool[node].child[1]);
+    }
+};
+SplayTree::__init_guard SplayTree::__guard;
+
+
+int node2imp[300005];       // 节点到重要度映射
+int imp2node[300005];       // 重要度到节点映射
+SplayTree* tree_ptr_buf[300005];
+
+void build_bridge(MergeSet& merge_set, int a, int b) {
+    int imp_a = node2imp[a], imp_b = node2imp[b];
+
+    if (!merge_set.check_in_same_set(imp_a, imp_b)) {
+        int size_a = tree_ptr_buf[merge_set.get_root(imp_a)]->get_tree_size();
+        int size_b = tree_ptr_buf[merge_set.get_root(imp_b)]->get_tree_size();
+
+        if (size_a < size_b) {
+            tree_ptr_buf[merge_set.get_root(imp_b)]->merge(*tree_ptr_buf[merge_set.get_root(imp_a)]);
+            merge_set.merge(imp_a, imp_b);
+
+        } else {
+            tree_ptr_buf[merge_set.get_root(imp_a)]->merge(*tree_ptr_buf[merge_set.get_root(imp_b)]);
+            merge_set.merge(imp_b, imp_a);
+        }
+    }
+}
+
+int main() {
+    //freopen("/Users/grh/Programming/CLionProjects/Test/data.txt", "r", stdin);
+
+    int n, m, imp;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &imp);
+        imp2node[imp] = i;
+        node2imp[i] = imp;
+
+        tree_ptr_buf[imp] = new SplayTree();
+        tree_ptr_buf[imp]->insert(imp);
+    }
+
+    int a, b;
+    MergeSet merge_set(n);
+
+    for (int i = 0; i < m; i++) {
+        scanf("%d %d", &a, &b);
+        if (! (a >= 1 and b >= 1 and a <= n and b <= n) ) {
+            continue;
+        }
+
+        build_bridge(merge_set, a, b);
+
+    }
+
+    int cmd_num;
+    char cmd[2];
+    scanf("%d", &cmd_num);
+    for (int i = 0; i < cmd_num; i++) {
+        scanf("%s %d %d", cmd, &a, &b);
+        if (cmd[0] == 'B') {
+            if (! (a >= 1 and b >= 1 and a <= n and b <= n) ) {
+                continue;
+            }
+            build_bridge(merge_set, a, b);
+        } else {
+            imp = node2imp[a];
+
+            int idx = tree_ptr_buf[merge_set.get_root(imp)]->get_kth_idx(b);
+
+            if (idx != 0) {
+                imp = tree_ptr_buf[merge_set.get_root(imp)]->get_val(idx);
+
+                printf("%d\n", imp2node[imp]);
+            } else {
+                printf("-1\n");
+            }
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        delete tree_ptr_buf[i];
+        tree_ptr_buf[i] = nullptr;
+    }
+
+    return 0;
+}
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21752/
+   。
+#include <string.h>
+#include <iostream>
+#include <stdio.h>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+
+#define     MAX_SPLAY_NODE_NUM      (500000*10)
+#define     INVALID                 0x7fffffff
+
+struct Node {
+    int child[2];       // 左右子节点编号
+    int parent;         // 父节点编号
+    int val;            // 节点数值
+    int size;           // 子树大小
+    int rev_flag;       // 懒标记用于翻转
+    int val_flag;       // 赋值标记，用于批量赋值
+
+    int lsum;           // 子树对应序列的最大前缀和
+    int rsum;           // 子树对应序列的最大后缀和
+    int sum;            // 子树对应的序列的总和
+    int max_sum;        // 最大子段和
+
+    void init(int p, int v) {
+        child[0] = child[1] = 0;
+        parent = p;
+        val = v;
+        size = 1;
+
+        rev_flag = 0;
+        val_flag = INVALID;
+        sum = v;
+        lsum = rsum = max_sum = v;
+    }
+} __splay_node_pool[MAX_SPLAY_NODE_NUM];
+int __splay_pool_pos = 1;
+
+
+class SplayTree {
+private:
+    int __root;             // 根节点编号
+    Node* __pool;           // 对象池
+    int& __pool_pos;        // 对象池最后一个分配位置
+
+    class __init_guard {
+    public:
+        __init_guard() {
+            __splay_node_pool[0].init(0, 0);
+            __splay_node_pool[0].size = 0;
+            __splay_node_pool[0].sum = 0;
+            __splay_node_pool[0].lsum = __splay_node_pool[0].rsum = __splay_node_pool[0].max_sum = -1e9;
+        }
+    };
+
+    static __init_guard __guard;
+
+public:
+    SplayTree() : __pool_pos(__splay_pool_pos), __root(0), __pool(__splay_node_pool) {
+
+    }
+
+    SplayTree(int* data, int data_len) : __pool_pos(__splay_pool_pos), __root(0), __pool(__splay_node_pool) {
+        __root = __build_tree(data, 0, data_len-1, 0);
+    }
+
+    // 在第k个节点后面插入序列
+    void insert(int k, int* data, int data_len) {
+        if (k > get_tree_size() || k <= 0 || data == nullptr || data_len == 0) {
+            return;
+        }
+
+        int idx1 = get_kth_idx(k), idx2 = get_kth_idx(k + 1);
+        int sub_root = __build_tree(data, 0, data_len-1, 0);
+        __move(idx1, 0);
+        __move(idx2, idx1);
+        __pool[idx2].child[0] = sub_root;
+        __pool[sub_root].parent = idx2;
+        __push_up(idx2);
+        __push_up(idx1);
+    }
+
+    // 从第k1个节点开始到第k2个节点删掉
+    void delete_nodes(int k1, int k2) {
+        if (k1 <= 0 || k1 > get_tree_size() || k2 <= 0 || k2 > get_tree_size()) {
+            return;
+        }
+
+        int idx1 = get_kth_idx(k1-1), idx2 = get_kth_idx(k2+1);
+        __move(idx1, 0);
+        __move(idx2, idx1);
+        __pool[idx2].child[0] = 0;
+        __push_up(idx2);
+        __push_up(idx1);
+    }
+
+    // 从第k1个节点到第k2个节点赋值为val
+    void set_ndoes_val(int k1, int k2, int val) {
+        if (k1 <= 0 || k1 > get_tree_size() || k2 <= 0 || k2 > get_tree_size()) {
+            return;
+        }
+
+        int idx1 = get_kth_idx(k1-1), idx2 = get_kth_idx(k2+1);
+        __move(idx1, 0);
+        __move(idx2, idx1);
+
+        Node& node = __pool[__pool[idx2].child[0]];
+        node.val_flag = val;
+        node.val = val;
+        node.sum = val * node.size;
+
+        if (val >= 0) {
+            node.max_sum = node.lsum = node.rsum = val * node.size;
+        } else {
+            node.max_sum = node.lsum = node.rsum = val;
+        }
+
+        __push_up(idx2);
+        __push_up(idx1);
+    }
+
+    // 从第k1节点到第k2节点翻转
+    void rev_nodes(int k1, int k2) {
+        if (k1 <= 0 || k1 > get_tree_size() || k2 <= 0 || k2 > get_tree_size()) {
+            return;
+        }
+
+        int idx1 = get_kth_idx(k1-1), idx2 = get_kth_idx(k2+1);
+        __move(idx1, 0);
+        __move(idx2, idx1);
+        Node& node = __pool[__pool[idx2].child[0]];
+
+        node.rev_flag ^= 1;
+        swap(node.child[0], node.child[1]);
+        swap(node.lsum, node.rsum);
+
+
+        __push_up(idx2);
+        __push_up(idx1);
+    }
+
+    // 从第k1个节点到第k2个节点求和
+    int get_sum(int k1, int k2){
+        if (k1 <= 0 || k1 > get_tree_size() || k2 <= 0 || k2 > get_tree_size()) {
+            return 0;
+        }
+
+        int idx1 = get_kth_idx(k1-1), idx2 = get_kth_idx(k2+1);
+        __move(idx1, 0);
+        __move(idx2, idx1);
+        return __pool[__pool[idx2].child[0]].sum;
+    }
+
+    // 最大子段和
+    int get_max_sum(int k1, int k2) {
+        if (k1 <= 0 || k1 > get_tree_size() || k2 <= 0 || k2 > get_tree_size()) {
+            return 0;
+        }
+
+        int idx1 = get_kth_idx(k1-1), idx2 = get_kth_idx(k2+1);
+        __move(idx1, 0);
+        __move(idx2, idx1);
+        return __pool[__pool[idx2].child[0]].max_sum;
+    }
+
+    // 获取排名k的节点编号，返回0表示无解
+    int get_kth_idx(int k) {
+        int u = __root;
+        while (u) {
+            __push_down(u);
+
+            if (__pool[__pool[u].child[0]].size >= k) {
+                u = __pool[u].child[0];
+            } else if (__pool[__pool[u].child[0]].size + 1 == k) {
+                return u;
+            } else {
+                k -= __pool[__pool[u].child[0]].size + 1;
+                u = __pool[u].child[1];
+            }
+        }
+
+        return 0;
+    }
+
+    // 获取树大小
+    int get_tree_size() {
+        return __pool[__root].size;
+    }
+
+private:
+    // 信息上传函数, 用子节点最新属性更新idx节点最新属性
+    void __push_up(int idx) {
+        Node& node = __pool[idx];
+        int l = node.child[0], r = node.child[1];
+
+        node.size = 1 + __pool[l].size + __pool[r].size;
+        node.lsum = max(__pool[l].lsum, __pool[l].sum + node.val + __pool[r].lsum);
+        node.lsum = max(node.lsum, __pool[l].sum + node.val);
+        node.rsum = max(__pool[r].rsum, __pool[r].sum + node.val + __pool[l].rsum);
+        node.rsum = max(node.rsum, __pool[r].sum + node.val);
+        node.sum = __pool[l].sum + node.val + __pool[r].sum;
+
+        node.max_sum = node.val;
+        node.max_sum = max(node.max_sum, __pool[l].max_sum);
+        node.max_sum = max(node.max_sum, __pool[r].max_sum);
+        node.max_sum = max(node.max_sum, __pool[l].rsum + node.val);
+        node.max_sum = max(node.max_sum, __pool[r].lsum + node.val);
+        node.max_sum = max(node.max_sum, __pool[l].rsum + node.val + __pool[r].lsum);
+    }
+
+
+    // 清空标记
+    void __clear_flag(int idx) {
+        __pool[idx].rev_flag = 0;
+        __pool[idx].val_flag = INVALID;
+    }
+
+    // 懒标记下移操作
+    void __push_down(int idx) {
+        Node& lnode = __pool[__pool[idx].child[0]];
+        Node& rnode = __pool[__pool[idx].child[1]];
+        Node& node = __pool[idx];
+        int val = __pool[idx].val_flag;
+
+        int lidx = __pool[idx].child[0], ridx = __pool[idx].child[1];
+        if (node.val_flag != INVALID) {
+            node.val_flag = INVALID;
+            node.rev_flag = 0;
+
+            if (lidx) {
+                lnode.val_flag = val; lnode.val = val; lnode.sum = val * lnode.size;
+                if (val >= 0) {
+                    lnode.max_sum = lnode.lsum = lnode.rsum = lnode.sum;
+                } else {
+                    lnode.max_sum = lnode.lsum = lnode.rsum = lnode.val;
+                }
+            }
+
+            if (ridx) {
+                rnode.val_flag = val; rnode.val = val; rnode.sum = val * rnode.size;
+                if (val >= 0) {
+                    rnode.max_sum = rnode.lsum = rnode.rsum = rnode.sum;
+                } else {
+                    rnode.max_sum = rnode.lsum = rnode.rsum = rnode.val;
+                }
+            }
+        } else if (node.rev_flag) {
+            node.rev_flag = 0;
+            if (lidx) {
+                lnode.rev_flag ^= 1;
+                swap(lnode.child[0], lnode.child[1]);
+                swap(lnode.lsum, lnode.rsum);
+            }
+
+            if (ridx) {
+                rnode.rev_flag ^= 1;
+                swap(rnode.child[0], rnode.child[1]);
+                swap(rnode.lsum, rnode.rsum);
+            }
+        }
+    }
+
+    // 统一的左旋和右旋函数，将编号为x对应的节点往上一层旋转
+    void __rotate(int x) {
+        int y = __pool[x].parent, z = __pool[y].parent;
+        int k1 = __pool[y].child[1] == x, k2 = __pool[z].child[1] == y;
+        __pool[z].child[k2] = x;
+        __pool[x].parent = z;
+        __pool[y].child[k1] = __pool[x].child[k1^1];
+        __pool[__pool[x].child[k1^1]].parent = y;
+        __pool[x].child[k1^1] = y;
+        __pool[y].parent = x;
+
+        __push_up(y);
+        __push_up(x);
+    }
+
+    // 搬移函数，将编号为x的节点通过旋转搬移到k号节点的下面
+    // k = 0 表示将x节点搬移到根节点位置
+    void __move(int x, int k) {
+        while (__pool[x].parent != k) {
+            int y = __pool[x].parent, z = __pool[y].parent;
+            if (z != k) {
+                if ( (__pool[y].child[1] == x) != (__pool[z].child[1] == y) ) {
+                    __rotate(x);
+                } else {
+                    __rotate(y);
+                }
+            }
+            __rotate(x);
+        }
+
+        if (k == 0) {
+            __root = x;
+        }
+    }
+
+    // 根据序列构建树, 返回树根的序号
+    int __build_tree(int* data, int start, int end, int parent) {
+        if (data == nullptr || end < start) {
+            return 0;
+        }
+
+        Node* pool = __splay_node_pool;
+        int& pool_pos = __splay_pool_pos;
+
+        if (start == end) {
+            int u = pool_pos++;
+            pool[u].init(parent, data[start]);
+
+            pool[u].sum = data[start];
+            pool[u].lsum = pool[u].rsum = pool[u].max_sum = data[start];
+
+            return u;
+        }
+
+        int u = pool_pos++;
+        int mid = (start + end) >> 1;
+        pool[u].init(parent, data[mid]);
+
+        pool[u].child[0] = __build_tree(data, start, mid - 1, u);
+        pool[u].child[1] = __build_tree(data, mid+1, end, u);
+
+        __push_up(u);
+
+        return u;
+    }
+
+};
+SplayTree::__init_guard SplayTree::__guard;
+
+int buf[500005];
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i < n+1; i++) {
+        scanf("%d", buf + i);
+    }
+
+    // 前后两个哨兵
+    buf[0] = -1e9;
+    buf[n+1] = -1e9;
+
+    SplayTree tree(buf, n+2);
+
+    char cmd[100];
+    for (int i = 0; i < m; i++) {
+        scanf("%s", cmd);
+        if (strcmp(cmd, "INSERT") == 0) {
+            int k, num;
+            scanf("%d %d", &k, &num);
+            for (int j = 0; j < num; j++) {
+                scanf("%d", buf + j);
+            }
+
+            if (k+1 >= 1 and k+1 <= tree.get_tree_size()-1) {
+                tree.insert(k + 1, buf, num);
+            }
+
+        } else if (strcmp(cmd, "DELETE") == 0) {
+            int k, num;
+            scanf("%d %d", &k, &num);
+            int start = k+1;
+            int end = min(start + num - 1, tree.get_tree_size()-1);
+
+            if (start <= end) {
+                tree.delete_nodes(start, end);
+            }
+
+        } else if (strcmp(cmd, "MAKE-SAME") == 0) {
+            int k, num, val;
+            scanf("%d %d %d", &k, &num, &val);
+            int start = k+1;
+            int end = min(start + num - 1, tree.get_tree_size()-1);
+
+            if (start <= end) {
+                tree.set_ndoes_val(start, end, val);
+            }
+
+
+        } else if (strcmp(cmd, "REVERSE") == 0) {
+            int k, num;
+            scanf("%d %d", &k, &num);
+            int start = k+1;
+            int end = min(start + num - 1, tree.get_tree_size()-1);
+
+            if (start <= end) {
+                tree.rev_nodes(start, end);
+            }
+
+        } else if (strcmp(cmd, "GET-SUM") == 0) {
+            int k, num;
+            scanf("%d %d", &k, &num);
+            int start = k+1;
+            int end = min(start + num - 1, tree.get_tree_size()-1);
+
+            printf("%d\n", tree.get_sum(start, end));
+
+        } else if (strcmp(cmd, "MAX-SUM") == 0) {
+            printf("%d\n", tree.get_max_sum(2, tree.get_tree_size()-1));
+        }
+    }
+
+    return 0;
+}
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21847/
+   。
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 500010, INF = 1e9;
+
+int n, m;
+struct Node
+{
+    int s[2], p, v;
+    int rev, same;
+    int size, sum, ms, ls, rs;
+
+    void init(int _v, int _p)
+    {
+        s[0] = s[1] = 0, p = _p, v = _v;
+        rev = same = 0;
+        size = 1, sum = ms = v;
+        ls = rs = max(v, 0);
+    }
+}tr[N];
+int root, nodes[N], tt;
+int w[N];
+
+void pushup(int x)
+{
+    auto &u = tr[x], &l = tr[u.s[0]], &r = tr[u.s[1]];
+    u.size = l.size + r.size + 1;
+    u.sum = l.sum + r.sum + u.v;
+    u.ls = max(l.ls, l.sum + u.v + r.ls);
+    u.rs = max(r.rs, r.sum + u.v + l.rs);
+    u.ms = max(max(l.ms, r.ms), l.rs + u.v + r.ls);
+}
+
+void pushdown(int x)
+{
+    auto &u = tr[x], &l = tr[u.s[0]], &r = tr[u.s[1]];
+    if (u.same)
+    {
+        u.same = u.rev = 0;
+        if (u.s[0]) l.same = 1, l.v = u.v, l.sum = l.v * l.size;
+        if (u.s[1]) r.same = 1, r.v = u.v, r.sum = r.v * r.size;
+        if (u.v > 0)
+        {
+            if (u.s[0]) l.ms = l.ls = l.rs = l.sum;
+            if (u.s[1]) r.ms = r.ls = r.rs = r.sum;
+        }
+        else
+        {
+            if (u.s[0]) l.ms = l.v, l.ls = l.rs = 0;
+            if (u.s[1]) r.ms = r.v, r.ls = r.rs = 0;
+        }
+    }
+    else if (u.rev)
+    {
+        u.rev = 0, l.rev ^= 1, r.rev ^= 1;
+        swap(l.ls, l.rs), swap(r.ls, r.rs);
+        swap(l.s[0], l.s[1]), swap(r.s[0], r.s[1]);
+    }
+}
+
+void rotate(int x)
+{
+    int y = tr[x].p, z = tr[y].p;
+    int k = tr[y].s[1] == x;
+    tr[z].s[tr[z].s[1] == y] = x, tr[x].p = z;
+    tr[y].s[k] = tr[x].s[k ^ 1], tr[tr[x].s[k ^ 1]].p = y;
+    tr[x].s[k ^ 1] = y, tr[y].p = x;
+    pushup(y), pushup(x);
+}
+
+void splay(int x, int k)
+{
+    while (tr[x].p != k)
+    {
+        int y = tr[x].p, z = tr[y].p;
+        if (z != k)
+            if ((tr[y].s[1] == x) ^ (tr[z].s[1] == y)) rotate(x);
+            else rotate(y);
+        rotate(x);
+    }
+    if (!k) root = x;
+}
+
+int get_k(int k)
+{
+    int u = root;
+    while (u)
+    {
+        pushdown(u);
+        if (tr[tr[u].s[0]].size >= k) u = tr[u].s[0];
+        else if (tr[tr[u].s[0]].size + 1 == k) return u;
+        else k -= tr[tr[u].s[0]].size + 1, u = tr[u].s[1];
+    }
+}
+
+int build(int l, int r, int p)
+{
+    int mid = l + r >> 1;
+    int u = nodes[tt -- ];
+    tr[u].init(w[mid], p);
+    if (l < mid) tr[u].s[0] = build(l, mid - 1, u);
+    if (mid < r) tr[u].s[1] = build(mid + 1, r, u);
+    pushup(u);
+    return u;
+}
+
+void dfs(int u)
+{
+    if (tr[u].s[0]) dfs(tr[u].s[0]);
+    if (tr[u].s[1]) dfs(tr[u].s[1]);
+    nodes[ ++ tt] = u;
+}
+
+int main()
+{
+    for (int i = 1; i < N; i ++ ) nodes[ ++ tt] = i;
+    scanf("%d%d", &n, &m);
+    tr[0].ms = w[0] = w[n + 1] = -INF;
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]);
+    root = build(0, n + 1, 0);
+
+    char op[20];
+    while (m -- )
+    {
+        scanf("%s", op);
+        if (!strcmp(op, "INSERT"))
+        {
+            int posi, tot;
+            scanf("%d%d", &posi, &tot);
+            for (int i = 0; i < tot; i ++ ) scanf("%d", &w[i]);
+            int l = get_k(posi + 1), r = get_k(posi + 2);
+            splay(l, 0), splay(r, l);
+            int u = build(0, tot - 1, r);
+            tr[r].s[0] = u;
+            pushup(r), pushup(l);
+        }
+        else if (!strcmp(op, "DELETE"))
+        {
+            int posi, tot;
+            scanf("%d%d", &posi, &tot);
+            int l = get_k(posi), r = get_k(posi + tot + 1);
+            splay(l, 0), splay(r, l);
+            dfs(tr[r].s[0]);
+            tr[r].s[0] = 0;
+            pushup(r), pushup(l);
+        }
+        else if (!strcmp(op, "MAKE-SAME"))
+        {
+            int posi, tot, c;
+            scanf("%d%d%d", &posi, &tot, &c);
+            int l = get_k(posi), r = get_k(posi + tot + 1);
+            splay(l, 0), splay(r, l);
+            auto& son = tr[tr[r].s[0]];
+            son.same = 1, son.v = c, son.sum = c * son.size;
+            if (c > 0) son.ms = son.ls = son.rs = son.sum;
+            else son.ms = c, son.ls = son.rs = 0;
+            pushup(r), pushup(l);
+        }
+        else if (!strcmp(op, "REVERSE"))
+        {
+            int posi, tot;
+            scanf("%d%d", &posi, &tot);
+            int l = get_k(posi), r = get_k(posi + tot + 1);
+            splay(l, 0), splay(r, l);
+            auto& son = tr[tr[r].s[0]];
+            son.rev ^= 1;
+            swap(son.ls, son.rs);
+            swap(son.s[0], son.s[1]);
+            pushup(r), pushup(l);
+        }
+        else if (!strcmp(op, "GET-SUM"))
+        {
+            int posi, tot;
+            scanf("%d%d", &posi, &tot);
+            int l = get_k(posi), r = get_k(posi + tot + 1);
+            splay(l, 0), splay(r, l);
+            printf("%d\n", tr[tr[r].s[0]].sum);
+        }
+        else printf("%d\n", tr[root].ms);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/479402/
+   。
+
+#include <stdio.h>
+#include <algorithm>
+#include <set>
+#include <iostream>
+using namespace std;
+
+
+struct Data {
+    multiset<long long> s;          // 区间总和
+};
+
+struct Node {
+    int start;          // 区间开始位置
+    int end;            // 区间结束位置
+    Data data;          // 区间数据
+}__global_nodes[100005*4] ;
+
+
+class SegmentTree {
+private:
+    Node* __nodes;      // 节点数组
+    int __n;            // 区间为0到n-1
+
+    // 下沉lazy标记
+    void __push_down_lazy(int node_idx) {
+
+    }
+
+    // 更新单个位置的数值
+    void __update_single(int node_idx, int pos, long long val, long long old_val) {
+        Node& node = __nodes[node_idx];
+
+        auto itr = node.data.s.find(old_val);
+        if (itr != node.data.s.end()) {
+            node.data.s.erase(itr);
+        }
+        node.data.s.insert(val);
+
+        if (node.start == node.end) {
+            return;
+        }
+
+        __push_down_lazy(node_idx);
+
+        int mid = (node.start + node.end) >> 1;
+        if (pos <= mid) {
+            __update_single(node_idx*2+1, pos, val, old_val);
+        } else {
+            __update_single(node_idx*2+2, pos, val, old_val);
+        }
+    }
+
+    // 获取区间统计信息
+    long long __get_val(int node_idx, int start, int end, int val) {
+        Node& node = __nodes[node_idx];
+        if (node.start == start && node.end == end) {
+            auto itr = node.data.s.lower_bound(val);
+            if (itr != node.data.s.begin()) {
+                --itr;
+                return *itr;
+            }
+
+            return -0x7fffffff;
+        }
+
+        __push_down_lazy(node_idx);
+
+        int mid = (node.start + node.end) >> 1;
+        if (end <= mid) {
+            return __get_val(node_idx*2+1, start, end, val);
+        } else if (start >= mid+1) {
+            return __get_val(node_idx*2+2, start, end, val);
+        } else {
+            long long val1 = __get_val(node_idx*2+1, start, mid, val);
+            long long val2 = __get_val(node_idx*2+2, mid+1, end, val);
+            return max(val1, val2);
+        }
+    }
+
+public:
+    SegmentTree(int n, Node* pnodes, int* data) {
+        __n = n;
+        __nodes = pnodes;
+        __nodes[0] = {0, n-1, {}};
+        for (int i = 0; i < n; i++) {
+            __nodes[0].data.s.insert(data[i]);
+        }
+
+        for (int i = 0; i < __n << 2; i++) {
+            if (__nodes[i].start == __nodes[i].end and __nodes[i].end == __n-1) {
+                break;
+            }
+
+            int mid = (__nodes[i].start + __nodes[i].end) / 2;
+            __nodes[i*2+1] = {__nodes[i].start, mid, {}};
+            for (int j = __nodes[i*2+1].start; j <= __nodes[i*2+1].end; j++) {
+                __nodes[i*2+1].data.s.insert(data[j]);
+            }
+
+            __nodes[i*2+2] = {mid+1, __nodes[i].end, {}};
+            for (int j = __nodes[i*2+2].start; j <= __nodes[i*2+2].end; j++) {
+                __nodes[i*2+2].data.s.insert(data[j]);
+            }
+
+        }
+    }
+
+    // 更新单个数据接口
+    void update_single(int pos, long long val, long long old_val) {
+        __update_single(0, pos, val, old_val);
+    }
+
+    // 获取区间统计数据接口
+    long long get_val(int start, int end, int val) {
+        return __get_val(0, start, end, val);
+    }
+};
+
+
+int arr[50005];
+
+
+int main(void) {
+
+    //freopen("/Users/grh/Programming/CLionProjects/Test/data.txt", "r", stdin);
+
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", arr + i);
+    }
+    SegmentTree tree(n, __global_nodes, arr);
+
+    int cmd, l, r, pos, x, old_val;
+    while (m--) {
+        scanf("%d", &cmd);
+        if (cmd == 1) {
+            scanf("%d %d", &pos, &x);
+            old_val = arr[pos-1];
+            arr[pos-1] = x;
+            tree.update_single(pos-1, x, old_val);
+        } else {
+            scanf("%d %d %d", &l, &r, &x);
+            printf("%lld\n", tree.get_val(l-1, r-1, x));
+        }
+
+    }
+
+    return 0;
+}
+
+
+
+作者：皓首不倦
+链接：https://www.acwing.com/solution/content/21870/
+   。
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <set>
+
+using namespace std;
+
+const int N = 50010, M = N * 4, INF = 1e9;
+
+int n, m;
+struct Tree
+{
+    int l, r;
+    multiset<int> s;
+}tr[M];
+int w[N];
+
+void build(int u, int l, int r)
+{
+    tr[u] = {l, r};
+    tr[u].s.insert(-INF), tr[u].s.insert(INF);
+    for (int i = l; i <= r; i ++ ) tr[u].s.insert(w[i]);
+    if (l == r) return;
+    int mid = l + r >> 1;
+    build(u << 1, l, mid), build(u << 1 | 1, mid + 1, r);
+}
+
+void change(int u, int p, int x)
+{
+    tr[u].s.erase(tr[u].s.find(w[p]));
+    tr[u].s.insert(x);
+    if (tr[u].l == tr[u].r) return;
+    int mid = tr[u].l + tr[u].r >> 1;
+    if (p <= mid) change(u << 1, p, x);
+    else change(u << 1 | 1, p, x);
+}
+
+int query(int u, int a, int b, int x)
+{
+    if (tr[u].l >= a && tr[u].r <= b)
+    {
+        auto it = tr[u].s.lower_bound(x);
+        --it;
+        return *it;
+    }
+    int mid = tr[u].l + tr[u].r >> 1, res = -INF;
+    if (a <= mid) res = max(res, query(u << 1, a, b, x));
+    if (b > mid) res = max(res, query(u << 1 | 1, a, b, x));
+    return res;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]);
+    build (1, 1, n);
+
+    while (m -- )
+    {
+        int op, a, b, x;
+        scanf("%d", &op);
+        if (op == 1)
+        {
+            scanf("%d%d", &a, &x);
+            change(1, a, x);
+            w[a] = x;
+        }
+        else
+        {
+            scanf("%d%d%d", &a, &b, &x);
+            printf("%d\n", query(1, a, b, x));
+        }
+    }
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/488897/
+   。
+
+AcWing 2476. 树套树
+作者：    yxc ,  2020-09-18 20:08:00 ,  阅读 60
+
+4
+
+
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1500010, INF = 1e9;
+
+int n, m;
+struct Node
+{
+    int s[2], p, v;
+    int size;
+
+    void init(int _v, int _p)
+    {
+        v = _v, p = _p;
+        size = 1;
+    }
+}tr[N];
+int L[N], R[N], T[N], idx;
+int w[N];
+
+void pushup(int x)
+{
+    tr[x].size = tr[tr[x].s[0]].size + tr[tr[x].s[1]].size + 1;
+}
+
+void rotate(int x)
+{
+    int y = tr[x].p, z = tr[y].p;
+    int k = tr[y].s[1] == x;
+    tr[z].s[tr[z].s[1] == y] = x, tr[x].p = z;
+    tr[y].s[k] = tr[x].s[k ^ 1], tr[tr[x].s[k ^ 1]].p = y;
+    tr[x].s[k ^ 1] = y, tr[y].p = x;
+    pushup(y), pushup(x);
+}
+
+void splay(int& root, int x, int k)
+{
+    while (tr[x].p != k)
+    {
+        int y = tr[x].p, z = tr[y].p;
+        if (z != k)
+            if ((tr[y].s[1] == x) ^ (tr[z].s[1] == y)) rotate(x);
+            else rotate(y);
+        rotate(x);
+    }
+    if (!k) root = x;
+}
+
+void insert(int& root, int v)
+{
+    int u = root, p = 0;
+    while (u) p = u, u = tr[u].s[v > tr[u].v];
+    u = ++ idx;
+    if (p) tr[p].s[v > tr[p].v] = u;
+    tr[u].init(v, p);
+    splay(root, u, 0);
+}
+
+int get_k(int root, int v)
+{
+    int u = root, res = 0;
+    while (u)
+    {
+        if (tr[u].v < v) res += tr[tr[u].s[0]].size + 1, u = tr[u].s[1];
+        else u = tr[u].s[0];
+    }
+    return res;
+}
+
+void update(int& root, int x, int y)
+{
+    int u = root;
+    while (u)
+    {
+        if (tr[u].v == x) break;
+        if (tr[u].v < x) u = tr[u].s[1];
+        else u = tr[u].s[0];
+    }
+    splay(root, u, 0);
+    int l = tr[u].s[0], r = tr[u].s[1];
+    while (tr[l].s[1]) l = tr[l].s[1];
+    while (tr[r].s[0]) r = tr[r].s[0];
+    splay(root, l, 0), splay(root, r, l);
+    tr[r].s[0] = 0;
+    pushup(r), pushup(l);
+    insert(root, y);
+}
+
+void build(int u, int l, int r)
+{
+    L[u] = l, R[u] = r;
+    insert(T[u], -INF), insert(T[u], INF);
+    for (int i = l; i <= r; i ++ ) insert(T[u], w[i]);
+    if (l == r) return;
+    int mid = l + r >> 1;
+    build(u << 1, l, mid), build(u << 1 | 1, mid + 1, r);
+}
+
+int query(int u, int a, int b, int x)
+{
+    if (L[u] >= a && R[u] <= b) return get_k(T[u], x) - 1;
+    int mid = L[u] + R[u] >> 1, res = 0;
+    if (a <= mid) res += query(u << 1, a, b, x);
+    if (b > mid) res += query(u << 1 | 1, a, b, x);
+    return res;
+}
+
+void change(int u, int p, int x)
+{
+    update(T[u], w[p], x);
+    if (L[u] == R[u]) return;
+    int mid = L[u] + R[u] >> 1;
+    if (p <= mid) change(u << 1, p, x);
+    else change(u << 1 | 1, p, x);
+}
+
+int get_pre(int root, int v)
+{
+    int u = root, res = -INF;
+    while (u)
+    {
+        if (tr[u].v < v) res = max(res, tr[u].v), u = tr[u].s[1];
+        else u = tr[u].s[0];
+    }
+    return res;
+}
+
+int get_suc(int root, int v)
+{
+    int u = root, res = INF;
+    while (u)
+    {
+        if (tr[u].v > v) res = min(res, tr[u].v), u = tr[u].s[0];
+        else u = tr[u].s[1];
+    }
+    return res;
+}
+
+int query_pre(int u, int a, int b, int x)
+{
+    if (L[u] >= a && R[u] <= b) return get_pre(T[u], x);
+    int mid = L[u] + R[u] >> 1, res = -INF;
+    if (a <= mid) res = max(res, query_pre(u << 1, a, b, x));
+    if (b > mid) res = max(res, query_pre(u << 1 | 1, a, b, x));
+    return res;
+}
+
+int query_suc(int u, int a, int b, int x)
+{
+    if (L[u] >= a && R[u] <= b) return get_suc(T[u], x);
+    int mid = L[u] + R[u] >> 1, res = INF;
+    if (a <= mid) res = min(res, query_suc(u << 1, a, b, x));
+    if (b > mid) res = min(res, query_suc(u << 1 | 1, a, b, x));
+    return res;
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]);
+    build(1, 1, n);
+
+    while (m -- )
+    {
+        int op, a, b, x;
+        scanf("%d", &op);
+        if (op == 1)
+        {
+            scanf("%d%d%d", &a, &b, &x);
+            printf("%d\n", query(1, a, b, x) + 1);
+        }
+        else if (op == 2)
+        {
+            scanf("%d%d%d", &a, &b, &x);
+            int l = 0, r = 1e8;
+            while (l < r)
+            {
+                int mid = l + r + 1 >> 1;
+                if (query(1, a, b, mid) + 1 <= x) l = mid;
+                else r = mid - 1;
+            }
+            printf("%d\n", r);
+        }
+        else if (op == 3)
+        {
+            scanf("%d%d", &a, &x);
+            change(1, a, x);
+            w[a] = x;
+        }
+        else if (op == 4)
+        {
+            scanf("%d%d%d", &a, &b, &x);
+            printf("%d\n", query_pre(1, a, b, x));
+        }
+        else
+        {
+            scanf("%d%d%d", &a, &b, &x);
+            printf("%d\n", query_suc(1, a, b, x));
+        }
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/488964/
+   。
+
+AcWing 2306. K大数查询
+作者：    yxc ,  2020-09-18 20:50:57 ,  阅读 56
+
+1
+
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+const int N = 50010, P = N * 17 * 17, M = N * 4;
+
+int n, m;
+struct Tree
+{
+    int l, r, sum, add;
+}tr[P];
+int L[M], R[M], T[M], idx;
+struct Query
+{
+    int op, a, b, c;
+}q[N];
+vector<int> nums;
+
+int get(int x)
+{
+    return lower_bound(nums.begin(), nums.end(), x) - nums.begin();
+}
+
+void build(int u, int l, int r)
+{
+    L[u] = l, R[u] = r, T[u] = ++ idx;
+    if (l == r) return;
+    int mid = l + r >> 1;
+    build(u << 1, l, mid), build(u << 1 | 1, mid + 1, r);
+}
+
+int intersection(int a, int b, int c, int d)
+{
+    return min(b, d) - max(a, c) + 1;
+}
+
+void update(int u, int l, int r, int pl, int pr)
+{
+    tr[u].sum += intersection(l, r, pl, pr);
+    if (l >= pl && r <= pr)
+    {
+        tr[u].add ++ ;
+        return;
+    }
+    int mid = l + r >> 1;
+    if (pl <= mid)
+    {
+        if (!tr[u].l) tr[u].l = ++ idx;
+        update(tr[u].l, l, mid, pl, pr);
+    }
+    if (pr > mid)
+    {
+        if (!tr[u].r) tr[u].r = ++ idx;
+        update(tr[u].r, mid + 1, r, pl, pr);
+    }
+}
+
+void change(int u, int a, int b, int c)
+{
+    update(T[u], 1, n, a, b);
+    if (L[u] == R[u]) return;
+    int mid = L[u] + R[u] >> 1;
+    if (c <= mid) change(u << 1, a, b, c);
+    else change(u << 1 | 1, a, b, c);
+}
+
+int get_sum(int u, int l, int r, int pl, int pr, int add)
+{
+    if (l >= pl && r <= pr) return tr[u].sum + (r - l + 1) * add;
+    int mid = l + r >> 1, res = 0;
+    add += tr[u].add;
+    if (pl <= mid)
+    {
+        if (tr[u].l) res += get_sum(tr[u].l, l, mid, pl, pr, add);
+        else res += intersection(l, mid, pl, pr) * add;
+    }
+    if (pr > mid)
+    {
+        if (tr[u].r) res += get_sum(tr[u].r, mid + 1, r, pl, pr, add);
+        else res += intersection(mid + 1, r, pl, pr) * add;
+    }
+    return res;
+}
+
+int query(int u, int a, int b, int c)
+{
+    if (L[u] == R[u]) return R[u];
+    int mid = L[u] + R[u] >> 1;
+    int k = get_sum(T[u << 1 | 1], 1, n, a, b, 0);
+    if (k >= c) return query(u << 1 | 1, a, b, c);
+    return query(u << 1, a, b, c - k);
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < m; i ++ )
+    {
+        scanf("%d%d%d%d", &q[i].op, &q[i].a, &q[i].b, &q[i].c);
+        if (q[i].op == 1) nums.push_back(q[i].c);
+    }
+    sort(nums.begin(), nums.end());
+    nums.erase(unique(nums.begin(), nums.end()), nums.end());
+    build(1, 0, nums.size() - 1);
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int op = q[i].op, a = q[i].a, b = q[i].b, c = q[i].c;
+        if (op == 1) change(1, a, b, get(c));
+        else printf("%d\n", nums[query(1, a, b, c)]);
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/489058/
+   。
+
+AcWing 243. 一个简单的整数问题2    原题链接    困难
+作者：    秦淮岸灯火阑珊 ,  2019-02-13 20:39:27 ,  阅读 1445
+
+5
+
+
+2
+题目描述
+给定一个长度为N的数列A，以及M条指令，每条指令可能是以下两种之一：
+
+1、“C l r d”，表示把 A[l],A[l+1],…,A[r] 都加上 d。
+
+2、“Q l r”，表示询问 数列中第 l~r 个数的和。
+
+对于每个询问，输出一个整数表示答案。
+
+输入格式
+第一行两个整数N,M。
+
+第二行N个整数A[i]。
+
+接下来M行表示M条指令，每条指令的格式如题目描述所示。
+
+输出格式
+对于每个询问，输出一个整数表示答案。
+
+每个答案占一行。
+
+数据范围
+1≤N,M≤1051≤N,M≤105,
+|d|≤10000|d|≤10000,
+|A[i]|≤1000000000|A[i]|≤1000000000
+样例
+输入样例：
+10 5
+1 2 3 4 5 6 7 8 9 10
+Q 4 4
+Q 1 10
+Q 2 4
+C 3 6 3
+Q 2 4
+输出样例：
+4
+55
+9
+15
+树状数组(区间修改+区间查询)
+首先我们可以开一个数组B,然后对于每条C操作,我们直接利用前缀和的思想.
+把b[l]+=d;
+把b[r+1]-=d;
+然后我们就成功达成成就,把维护序列的具体值,转化为维护指令的累计影响,每次操作的影响,在l处开始,然后在r+1处消除.然后就让单点修改可以维护区间修改.
+现在b数组的前缀和就是∑xi=1b[i]∑i=1xb[i] 就是经过指令后a[x]增加的值,那么序列a的前缀和a[1~x]增加的值就是:
+∑i=1x∑j=1ib[j]
+∑i=1x∑j=1ib[j]
+然后上式就可以转换为
+∑i=1x∑j=1ib[j]=∑i=1x(x−i+1)×b[i]=(x+1)∑i=1xb[i]−∑i=1xi×b[i]
+∑i=1x∑j=1ib[j]=∑i=1x(x−i+1)×b[i]=(x+1)∑i=1xb[i]−∑i=1xi×b[i]
+然后通过上面这个式子,我们就把原来的数组,经过差分操作去维护两个树状数组，一个维护didi，一个维护di×idi×i这样的话,我们在区间修改的过程中,就可以在两个树状数组中去查询得到前缀和，然后同理,区间修改操作就是差分数组的修改,每次只需要修改两个点,完美的将区间再次转换为单调修改。
+C++ 代码
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define lowbit(x) x&(-x)
+const int N=2e5;
+ll c1[N],c2[N],n,m,a[N];
+ll add(ll x,ll y)
+{
+    for(ll i=x;i<=n;i+=lowbit(i))
+    {
+        c1[i]+=y;
+        c2[i]+=x*y;
+    }
+}
+ll ask(ll x)
+{
+    ll ans=0;
+    for(ll i=x;i;i-=lowbit(i))
+        ans+=(x+1)*c1[i]-c2[i];
+    return ans;
+}
+int main()
+{
+    scanf("%lld%lld\n",&n,&m);
+    for(ll i=1;i<=n;i++)
+    {
+        scanf("%lld",&a[i]);
+        add(i,a[i]-a[i-1]);
+    }
+    getchar();
+    while(m--)
+    {
+        char ch=getchar();
+        if (ch=='Q')
+        {
+            ll x,y;
+            scanf("%lld%lld\n",&x,&y);
+            cout<<ask(y)-ask(x-1)<<endl;
+        }
+        if (ch=='C')
+        {
+            ll x,y,d;
+            scanf("%lld%lld%lld\n",&x,&y,&d);
+            add(x,d);
+            add(y+1,-d);
+        }
+    }
+    return 0;
+}
+感谢lcf大佬的博客
+感谢lyd大佬的蓝书
+
+作者：秦淮岸灯火阑珊
+链接：https://www.acwing.com/solution/content/1011/
+   。
+AcWing 947. 文本编辑器    原题链接    中等
+作者：    whsstory ,  2020-09-22 16:02:51 ,  阅读 52
+
+7
+
+
+题意就是要写一个支持一个能插入一堆数，删除一堆数，且可以随机访问的数据结构。
+
+块状链表是很好的工具，大体思路是维护L‾‾√L个块，块内用数组，块之间用链表连接。
+
+具体做法：
+
+维护两个变量pos1,pos2pos1,pos2表示当前光标在第pos1pos1个块的第pos2pos2个元素后面
+
+对于Insert操作，暴力在pos2pos2后面加入这个字符，但如果现在的块长超过了L‾‾√L(我取了2000)，就拆出一个新的块，在链表上修改前驱后继，然后在这个块里面继续插入字符（注意不能改pos1,pos2pos1,pos2)
+
+对于delete操作，从pos2pos2后面开始删除，删完了就通过链表找到下一个块，继续。
+
+对于get操作，从pos2pos2后面开始输出，输完了就通过链表找到下一个块，继续。
+
+对于Move操作，从第一个块开始，顺着链表往后走就好了。
+
+Prev,Nxt就就从现在的位置往前/往后走就好了，注意如果走到了空的块要跳过
+
+分析一下复杂度：
+
+先分析块的规模：首先每个块长度不超过2000.Insert的字符数量不超过2097152,且次数不超过4000，因此块的数量不超过6000.
+
+Insert操作：总字符不超过2097152，次数不超过4000，没有问题。
+
+delete操作：次数不超过4000，至多删掉所有字符，没有问题；又因为我们对delete的处理不增加新的块，所以块的规模不增大。
+
+get操作：至多输出3M个字符，没有问题。
+
+Move操作：代价不超过块的数量，即6000.
+
+Prev，Nxt代价不超过块的数量，即6000。
+
+因此复杂度没有问题。（因此本题甚至不需要将小的块合并也是可以的）
+
+代码细节较多，要耐心写。
+
+#define MAXN 4000011
+#define MAXC 400011
+int lim=2000, T,n,len;
+int pre[MAXC],nxt[MAXC],pos1,pos2;
+std::vector<char>ch[MAXC],tp;
+char s[MAXC],a[MAXN];
+int newnode(int x)
+{
+    ++n;
+    pre[n]=x,nxt[n]=nxt[x];
+    pre[nxt[x]]=n,nxt[x]=n;
+    return n;
+}
+
+void Move(int x)
+{
+    ++x;
+    for(int i=1;i;i=nxt[i])
+        if(ch[i].size()>=x){pos1=i, pos2=x;return;}
+        else x-=ch[i].size();
+    puts("???");
+}
+void Insert()
+{
+    tp.clear();
+    for(int i=pos2;i<ch[pos1].size();++i)tp.push_back(ch[pos1][i]);
+    ch[pos1].resize(pos2);
+    int p=pos1;
+    for(int i=1;i<=len;++i)
+    {
+        if(ch[p].size()>=lim)p=newnode(p);
+        ch[p].push_back(a[i]);
+    }
+    for(char x:tp)
+    {
+        if(ch[p].size()>=lim)p=newnode(p);
+        ch[p].push_back(x);
+    }
+}
+void Remove()
+{
+    int p=pos1,it=pos2;
+    while(len)
+    {
+        int rest=int(ch[p].size())-it;
+        if(rest<=len)ch[p].resize(it),len-=rest;
+        else
+        {
+            for(int i=it+1;i<=it+rest-len;++i)ch[p][i-1]=ch[p][i+len-1];
+            ch[p].resize(it+rest-len);
+            len=0;
+        }
+        it=0,p=nxt[p];
+    }
+}
+void Get(int x)
+{
+    int p=pos1,it=pos2;
+    while(x)
+    {
+        int rest=int(ch[p].size())-it;
+        if(rest<=x)
+        {
+            for(int i=it;i<ch[p].size();++i)putchar(ch[p][i]);
+            x-=rest;
+        }
+        else
+        {
+            for(int i=it;i<it+x;++i)putchar(ch[p][i]);
+            x=0;
+        }
+        it=0,p=nxt[p];
+    }
+    puts("");
+}
+void Prev()
+{
+    --pos2;
+    while(pos2==0)pos1=pre[pos1],pos2=ch[pos1].size();
+}
+void Nextv()
+{
+    ++pos2;
+    while(pos2>ch[pos1].size())pos1=nxt[pos1],pos2=1;
+}
+int main()
+{
+    T=read();
+    pos1=n=1;
+    ch[pos1].push_back(32),pos2=1;
+    while(T--)
+    {
+        scanf("%s",s+1);
+        if(s[1]=='M')Move(read());
+        else if(s[1]=='I')
+        {
+            len=read();
+            for(int i=1;i<=len;++i)
+            {
+                char c=getchar();
+                while(c=='\n'||c=='\r')c=getchar();
+                a[i]=c;
+            }
+            Insert();
+        }
+        else if(s[1]=='D'){len=read();Remove();}
+        else if(s[1]=='G')Get(read());
+        else if(s[1]=='P')Prev();
+        else Nextv();
+    }
+    return 0;
+}
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/21163/
+   。
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 2000, M = 2010;
+
+int n, x, y;
+struct Node
+{
+    char s[N + 1];
+    int c, l, r;
+}p[M];
+char str[2000010];
+int q[M], tt;  // 内存回收
+
+void move(int k)  // 移到第k个字符后面
+{
+    x = p[0].r;
+    while (k > p[x].c) k -= p[x].c, x = p[x].r;
+    y = k - 1;
+}
+
+void add(int x, int u)  // 将节点u插到节点x的右边
+{
+    p[u].r = p[x].r, p[p[u].r].l = u;
+    p[x].r = u, p[u].l = x;
+}
+
+void del(int u)  // 删除节点u
+{
+    p[p[u].l].r = p[u].r;
+    p[p[u].r].l = p[u].l;
+    p[u].l = p[u].r = p[u].c = 0;  // 清空节点u
+    q[ ++ tt] = u;  // 回收节点u
+}
+
+void insert(int k)  // 在光标后插入k个字符
+{
+    if (y < p[x].c - 1)  // 从光标处分裂
+    {
+        int u = q[tt -- ];  // 新建一个节点
+        for (int i = y + 1; i < p[x].c; i ++ )
+            p[u].s[p[u].c ++ ] = p[x].s[i];
+        p[x].c = y + 1;
+        add(x, u);
+    }
+    int cur = x;
+    for (int i = 0; i < k;)
+    {
+        int u = q[tt -- ];  // 创建一个新的块
+        while (p[u].c < N && i < k)
+            p[u].s[p[u].c ++ ] = str[i ++ ];
+        add(cur, u);
+        cur = u;
+    }
+}
+
+void remove(int k)  // 删除光标后的k个字符
+{
+    if (p[x].c - 1 - y >= k)  // 节点内删
+    {
+        for (int i = y + k + 1, j = y + 1; i < p[x].c; i ++, j ++ ) p[x].s[j] = p[x].s[i];
+        p[x].c -= k;
+    }
+    else
+    {
+        k -= p[x].c - y - 1;  // 删除当前节点的剩余部分
+        p[x].c = y + 1;
+        while (p[x].r && k >= p[p[x].r].c)
+        {
+            int u = p[x].r;
+            k -= p[u].c;
+            del(u);
+        }
+        int u = p[x].r;  // 删除结尾节点的前半部分
+        for (int i = 0, j = k; j < p[u].c; i ++, j ++ ) p[u].s[i] = p[u].s[j];
+        p[u].c -= k;
+    }
+}
+
+void get(int k)  // 返回从光标开始的k个字符
+{
+    if (p[x].c - 1 - y >= k)  // 节点内返回
+    {
+        for (int i = 0, j = y + 1; i < k; i ++, j ++ ) putchar(p[x].s[j]);
+    }
+    else
+    {
+        k -= p[x].c - y - 1;
+        for (int i = y + 1; i < p[x].c; i ++ ) putchar(p[x].s[i]);  // 输出当前节点的剩余部分
+        int cur = x;
+        while (p[cur].r && k >= p[p[cur].r].c)
+        {
+            int u = p[cur].r;
+            for (int i = 0; i < p[u].c; i ++ ) putchar(p[u].s[i]);
+            k -= p[u].c;
+            cur = u;
+        }
+        int u = p[cur].r;
+        for (int i = 0; i < k; i ++ ) putchar(p[u].s[i]);
+    }
+    puts("");
+}
+
+void prev()  // 光标向前移动一位
+{
+    if (!y)
+    {
+        x = p[x].l;
+        y = p[x].c - 1;
+    }
+    else y -- ;
+}
+
+void next()  // 光标向后移动一位
+{
+    if (y < p[x].c - 1) y ++ ;
+    else
+    {
+        x = p[x].r;
+        y = 0;
+    }
+}
+
+void merge()  // 将长度较短的相邻节点合并，保证块状链表时间复杂度的核心
+{
+    for (int i = p[0].r; i; i = p[i].r)
+    {
+        while (p[i].r && p[i].c + p[p[i].r].c < N)
+        {
+            int r = p[i].r;
+            for (int j = p[i].c, k = 0; k < p[r].c; j ++, k ++ )
+                p[i].s[j] = p[r].s[k];
+            if (x == r) x = i, y += p[i].c;  // 更新光标的位置
+            p[i].c += p[r].c;
+            del(r);
+        }
+    }
+}
+
+int main()
+{
+    for (int i = 1; i < M; i ++ ) q[ ++ tt] = i;
+    scanf("%d", &n);
+    char op[10];
+
+    str[0] = '>';
+    insert(1);  // 插入哨兵
+    move(1);  // 将光标移动到哨兵后面
+
+    while (n -- )
+    {
+        int a;
+        scanf("%s", op);
+        if (!strcmp(op, "Move"))
+        {
+            scanf("%d", &a);
+            move(a + 1);
+        }
+        else if (!strcmp(op, "Insert"))
+        {
+            scanf("%d", &a);
+            int i = 0, k = a;
+            while (a)
+            {
+                str[i] = getchar();
+                if (str[i] >= 32 && str[i] <= 126) i ++, a -- ;
+            }
+            insert(k);
+            merge();
+        }
+        else if (!strcmp(op, "Delete"))
+        {
+            scanf("%d", &a);
+            remove(a);
+            merge();
+        }
+        else if (!strcmp(op, "Get"))
+        {
+            scanf("%d", &a);
+            get(a);
+        }
+        else if (!strcmp(op, "Prev")) prev();
+        else next();
+    }
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/489888/
+   。
+
+AcWing 2492. HH的项链
+作者：    yxc ,  2020-09-25 19:43:25 ,  阅读 46
+
+2
+
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+const int N = 50010, M = 200010, S = 1000010;
+
+int n, m, len;
+int w[N], ans[M];
+struct Query
+{
+    int id, l, r;
+}q[M];
+int cnt[S];
+
+int get(int x)
+{
+    return x / len;
+}
+
+bool cmp(const Query& a, const Query& b)
+{
+    int i = get(a.l), j = get(b.l);
+    if (i != j) return i < j;
+    return a.r < b.r;
+}
+
+void add(int x, int& res)
+{
+    if (!cnt[x]) res ++ ;
+    cnt[x] ++ ;
+}
+
+void del(int x, int& res)
+{
+    cnt[x] -- ;
+    if (!cnt[x]) res -- ;
+}
+
+int main()
+{
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]);
+    scanf("%d", &m);
+    len = sqrt((double)n * n / m);
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int l, r;
+        scanf("%d%d", &l, &r);
+        q[i] = {i, l, r};
+    }
+    sort(q, q + m, cmp);
+
+    for (int k = 0, i = 0, j = 1, res = 0; k < m; k ++ )
+    {
+        int id = q[k].id, l = q[k].l, r = q[k].r;
+        while (i < r) add(w[ ++ i], res);
+        while (i > r) del(w[i -- ], res);
+        while (j < l) del(w[j ++ ], res);
+        while (j > l) add(w[ -- j], res);
+        ans[id] = res;
+    }
+
+    for (int i = 0; i < m; i ++ ) printf("%d\n", ans[i]);
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/499980/
+   。
+AcWing 2521. 数颜色（不用莫队，可区间修改）    原题链接    困难
+作者：    whsstory ,  2020-09-26 14:58:54 ,  阅读 30
+
+5
+
+
+数颜色（不用莫队，可区间修改）
+注意到修改操作很少，那么以修改操作为划分点，我们得到若干个只有询问的区间。对于这些区间，直接做静态区间元素种类计数（就是按右端点排序然后树状数组的那个解法），做完一个区间后暴力执行修改。
+
+记询问次数是QQ,修改操作是MM,则复杂度上界为(NM+Q(logn+logQ))O(NM+Q(log⁡n+log⁡Q)).
+
+拓展：
+
+区间修改：反正我们的修改都是暴力修改，区间修改不会增大复杂度
+
+此外，还可以通过根号重构做到大约O((M+Q)(M+Q‾‾‾‾‾‾‾√)O((M+Q)(M+Q),但似乎不好写。
+
+#define MAXN 20011
+int fx[MAXN], diff;
+int place(int val){return std::lower_bound(fx+1,fx+diff+1,val)-fx;}
+struct BIT
+{
+    int t[MAXN];
+    #define lowb (i&-i)
+    void modify(int i,int k)
+    {
+        while(i<=diff)t[i]+=k,i+=lowb;
+    }
+    int Qsum(int i)
+    {
+        int res=0;
+        while(i)res+=t[i],i-=lowb;
+        return res;
+    }
+}t;
+struct one
+{
+    int type,x,y,dex;
+    bool operator <(const one& you)const{return y<you.y;}
+}q[MAXN];
+int a[MAXN],last[MAXN],ans[MAXN];
+int Get(){char c=getchar();while(c<'A'||c>'Z')c=getchar();return c=='Q'?1:0;}
+int main()
+{
+    int n=read(),m=read();
+    for(int i=1;i<=n;++i)fx[++diff]=a[i]=read();
+    for(int i=1;i<=m;++i)
+    {
+        q[i].type=Get(),q[i].x=read(),q[i].y=read(),q[i].dex=i;
+        if(!q[i].type)fx[++diff]=q[i].y;
+    }
+    std::sort(fx+1,fx+diff+1),diff=std::unique(fx+1,fx+diff+1)-fx-1;
+    for(int i=1;i<=n;++i)a[i]=place(a[i]);
+    for(int i=1,j;i<=m;i=j)
+    {
+        j=i;
+        while(j<=m&&q[j].type)++j;
+        std::sort(q+i,q+j);
+        int all=0;
+        for(int x=1;x<=n;++x)
+        {
+            if(last[a[x]])t.modify(last[a[x]],-1),--all;
+            t.modify(last[a[x]]=x,1),++all;
+            while(i<j&&q[i].y==x){ans[q[i].dex]=all-t.Qsum(q[i].x-1);++i;}
+        }
+        for(int x=1;x<=diff;++x)
+            if(last[x])t.modify(last[x],-1),last[x]=0;
+        while(j<=m&&!q[j].type)a[q[j].x]=place(q[j].y),++j;
+    }
+    for(int i=1;i<=m;++i)
+        if(q[i].type)printf("%d\n",ans[i]);
+    return 0;
+
+作者：whsstory
+链接：https://www.acwing.com/solution/content/21419/
+   。
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+typedef long long LL;
+const int N = 100010;
+
+int n, m, len;
+int w[N], cnt[N];
+LL ans[N];
+struct Query
+{
+    int id, l, r;
+}q[N];
+vector<int> nums;
+
+int get(int x)
+{
+    return x / len;
+}
+
+bool cmp(const Query& a, const Query& b)
+{
+    int i = get(a.l), j = get(b.l);
+    if (i != j) return i < j;
+    return a.r < b.r;
+}
+
+void add(int x, LL& res)
+{
+    cnt[x] ++ ;
+    res = max(res, (LL)cnt[x] * nums[x]);
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    len = sqrt(n);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]), nums.push_back(w[i]);
+    sort(nums.begin(), nums.end());
+    nums.erase(unique(nums.begin(), nums.end()), nums.end());
+    for (int i = 1; i <= n; i ++ )
+        w[i] = lower_bound(nums.begin(), nums.end(), w[i]) - nums.begin();
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int l, r;
+        scanf("%d%d", &l, &r);
+        q[i] = {i, l, r};
+    }
+    sort(q, q + m, cmp);
+
+    for (int x = 0; x < m;)
+    {
+        int y = x;
+        while (y < m && get(q[y].l) == get(q[x].l)) y ++ ;
+        int right = get(q[x].l) * len + len - 1;
+
+        // 暴力求块内的询问
+        while (x < y && q[x].r <= right)
+        {
+            LL res = 0;
+            int id = q[x].id, l = q[x].l, r = q[x].r;
+            for (int k = l; k <= r; k ++ ) add(w[k], res);
+            ans[id] = res;
+            for (int k = l; k <= r; k ++ ) cnt[w[k]] -- ;
+            x ++ ;
+        }
+
+        // 求块外的询问
+        LL res = 0;
+        int i = right, j = right + 1;
+        while (x < y)
+        {
+            int id = q[x].id, l = q[x].l, r = q[x].r;
+            while (i < r) add(w[ ++ i], res);
+            LL backup = res;
+            while (j > l) add(w[ -- j], res);
+            ans[id] = res;
+            while (j < right + 1) cnt[w[j ++ ]] -- ;
+            res = backup;
+            x ++ ;
+        }
+        memset(cnt, 0, sizeof cnt);
+    }
+
+    for (int i = 0; i < m; i ++ ) printf("%lld\n", ans[i]);
+    return 0;
+}
+
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/500112/
+   。
+AcWing 2534. 树上计数2
+作者：    yxc ,  2020-09-28 19:46:10 ,  阅读 31
+
+6
+
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m, len;
+int w[N];
+int h[N], e[N], ne[N], idx;
+int depth[N], f[N][16];
+int seq[N], top, first[N], last[N];
+int cnt[N], st[N], ans[N];
+int que[N];
+struct Query
+{
+    int id, l, r, p;
+}q[N];
+vector<int> nums;
+
+void add_edge(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void dfs(int u, int father)
+{
+    seq[ ++ top] = u;
+    first[u] = top;
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (j != father) dfs(j, u);
+    }
+    seq[ ++ top] = u;
+    last[u] = top;
+}
+
+void bfs()
+{
+    memset(depth, 0x3f, sizeof depth);
+    depth[0] = 0, depth[1] = 1;
+    int hh = 0, tt = 0;
+    que[0] = 1;
+    while (hh <= tt)
+    {
+        int t = que[hh ++ ];
+        for (int i = h[t]; ~i; i = ne[i])
+        {
+            int j = e[i];
+            if (depth[j] > depth[t] + 1)
+            {
+                depth[j] = depth[t] + 1;
+                f[j][0] = t;
+                for (int k = 1; k <= 15; k ++ )
+                    f[j][k] = f[f[j][k - 1]][k - 1];
+                que[ ++ tt] = j;
+            }
+        }
+    }
+}
+
+int lca(int a, int b)
+{
+    if (depth[a] < depth[b]) swap(a, b);
+    for (int k = 15; k >= 0; k -- )
+        if (depth[f[a][k]] >= depth[b])
+            a = f[a][k];
+    if (a == b) return a;
+    for (int k = 15; k >= 0; k -- )
+        if (f[a][k] != f[b][k])
+        {
+            a = f[a][k];
+            b = f[b][k];
+        }
+    return f[a][0];
+}
+
+int get(int x)
+{
+    return x / len;
+}
+
+bool cmp(const Query& a, const Query& b)
+{
+    int i = get(a.l), j = get(b.l);
+    if (i != j) return i < j;
+    return a.r < b.r;
+}
+
+void add(int x, int& res)
+{
+    st[x] ^= 1;
+    if (st[x] == 0)
+    {
+        cnt[w[x]] -- ;
+        if (!cnt[w[x]]) res -- ;
+    }
+    else
+    {
+        if (!cnt[w[x]]) res ++ ;
+        cnt[w[x]] ++ ;
+    }
+}
+
+int main()
+{
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]), nums.push_back(w[i]);
+    sort(nums.begin(), nums.end());
+    nums.erase(unique(nums.begin(), nums.end()), nums.end());
+    for (int i = 1; i <= n; i ++ )
+        w[i] = lower_bound(nums.begin(), nums.end(), w[i]) - nums.begin();
+
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < n - 1; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add_edge(a, b), add_edge(b, a);
+    }
+
+    dfs(1, -1);
+    bfs();
+
+    for (int i = 0; i < m; i ++ )
+    {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        if (first[a] > first[b]) swap(a, b);
+        int p = lca(a, b);
+        if (a == p) q[i] = {i, first[a], first[b]};
+        else q[i] = {i, last[a], first[b], p};
+    }
+
+    len = sqrt(top);
+    sort(q, q + m, cmp);
+
+    for (int i = 0, L = 1, R = 0, res = 0; i < m; i ++ )
+    {
+        int id = q[i].id, l = q[i].l, r = q[i].r, p = q[i].p;
+        while (R < r) add(seq[ ++ R], res);
+        while (R > r) add(seq[R -- ], res);
+        while (L < l) add(seq[L ++ ], res);
+        while (L > l) add(seq[ -- L], res);
+        if (p) add(p, res);
+        ans[id] = res;
+        if (p) add(p, res);
+    }
+
+    for (int i = 0; i < m; i ++ ) printf("%d\n", ans[i]);
+
+    return 0;
+}
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/504559/
+   。
+AcWing 2535. 二次离线莫队
+作者：    yxc ,  2020-09-28 20:38:35 ,  阅读 43
+
+3
+
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+typedef long long LL;
+const int N = 100010;
+
+int n, m, k, len;
+int w[N];
+LL ans[N];
+struct Query
+{
+    int id, l, r;
+    LL res;
+}q[N];
+struct Range
+{
+    int id, l, r, t;
+};
+vector<Range> range[N];
+int f[N], g[N];
+
+inline int get_count(int x)
+{
+    int res = 0;
+    while (x) res += x & 1, x >>= 1;
+    return res;
+}
+
+inline int get(int x)
+{
+    return x / len;
+}
+
+bool cmp(const Query& a, const Query& b)
+{
+    int i = get(a.l), j = get(b.l);
+    if (i != j) return i < j;
+    return a.r < b.r;
+}
+
+int main()
+{
+    scanf("%d%d%d", &n, &m, &k);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &w[i]);
+    vector<int> nums;
+    for (int i = 0; i < 1 << 14; i ++ )
+        if (get_count(i) == k)
+            nums.push_back(i);
+    for (int i = 1; i <= n; i ++ )
+    {
+        for (auto y: nums) ++ g[w[i] ^ y];
+        f[i] = g[w[i + 1]];
+    }
+    for (int i = 0; i < m; i ++ )
+    {
+        int l, r;
+        scanf("%d%d", &l, &r);
+        q[i] = {i, l, r};
+    }
+    len = sqrt(n);
+    sort(q, q + m, cmp);
+
+    for (int i = 0, L = 1, R = 0; i < m; i ++ )
+    {
+        int l = q[i].l, r = q[i].r;
+        if (R < r) range[L - 1].push_back({i, R + 1, r, -1});
+        while (R < r) q[i].res += f[R ++ ];
+        if (R > r) range[L - 1].push_back({i, r + 1, R, 1});
+        while (R > r) q[i].res -= f[ -- R];
+        if (L < l) range[R].push_back({i, L, l - 1, -1});
+        while (L < l) q[i].res += f[L - 1] + !k, L ++ ;
+        if (L > l) range[R].push_back({i, l, L - 1, 1});
+        while (L > l) q[i].res -= f[L - 2] + !k, L -- ;
+    }
+
+    memset(g, 0, sizeof g);
+    for (int i = 1; i <= n; i ++ )
+    {
+        for (auto y: nums) ++ g[w[i] ^ y];
+        for (auto& rg: range[i])
+        {
+            int id = rg.id, l = rg.l, r = rg.r, t = rg.t;
+            for (int x = l; x <= r; x ++ )
+                q[id].res += g[w[x]] * t;
+        }
+    }
+
+    for (int i = 1; i < m; i ++ ) q[i].res += q[i - 1].res;
+    for (int i = 0; i < m; i ++ ) ans[q[i].id] = q[i].res;
+    for (int i = 0; i < m; i ++ ) printf("%lld\n", ans[i]);
+
+    return 0;
+}
+
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/504670/
    。
