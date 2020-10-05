@@ -12218,3 +12218,7 @@ https://blog.csdn.net/rosenor1/article/details/52388064
 拷贝带有random指针的链表
 https://blog.csdn.net/u013709270/article/details/53667321
 https://leetcode-cn.com/problems/copy-list-with-random-pointer/solution/
+
+二叉树中的最远距离
+https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/er-cha-shu-de-jie-dian-jian-zui-da-ju-chi-wen-ti-b/
+https://blog.csdn.net/liuyi1207164339/article/details/50898902
