@@ -12752,8 +12752,327 @@ int main()
 
 作者：yxc
 链接：https://www.acwing.com/activity/content/code/content/125605/
-。
+
+
+https://www.bilibili.com/video/BV1aE411o7qd?p=16
+
+我们知道线段树是维护区间问题的神器
+在图论中如果我们碰到区间建边问题：
+①将某点与[L,R]区间点连权值w的有向边
+常规做法是 for(int i=l;i<=r;i++)add(x,i,w); 情况时间复杂度为O(n)
+但是如果我们用到线段树 可以将复杂度优化为o(logn);
+我们建立一颗out树来维护[L,R]区间的点
+线段树上每个节点表示一个虚拟点 连接他所维护的[L,R] 距离为0有向边
+要注意的是idx的值初始化应该>n 因为线段树上的叶子节点是编号为1-n
+在我们建图时head[N] dis[N] vis[N]中N的大小应该和虚拟点的大小一致 线段树最坏情况为4*N
+所以N应该初始化为题目条件的4倍 边的情况取最坏 MlogN
+建树操作
+
+struct Node{
+    int l,r,id;
+}out[N<<2],in[N<<2];
+void build(int u,int l,int r){
+    out[u]={l,r,++idx};
+    if(l==r){out[u].id=l;return;}
+    int mid=(l+r)>>1;
+    build(u<<1,l,mid);
+    build(u<<1|1,mid+1,r);
+    add(out[u].id,out[u<<1].id,0);
+    add(out[u].id,out[u<<1|1].id,0);
+}
+修改操作就是建边操作 从v点向包括[L,R]的虚拟点连接一个w的边
+
+void change_out(int u,int l,int r,int v,int w){
+    if(l<=out[u].l&&out[u].r<=r){
+        add(v,out[u].id,w);return;
+    }
+    int mid=(out[u].l+out[u].r)>>1;
+    if(l<=mid)change_out(u<<1,l,r,v,w);
+    if(r>mid)change_out(u<<1|1,l,r,v,w);
+}
+②将[L,R]区间点与某点连权值w的有向边
+同理我们建立一颗in树来维护[L,R]区间的点
+线段树上每个父亲节点表示一个虚拟点 从[L,R]向它连一条距离为0的有向边
+
+void build(int u,int l,int r){
+    in[u]={l,r,++idx};
+    if(l==r){in[u].id=l;return;}
+    int mid=(l+r)>>1;
+    build(u<<1,l,mid);
+    build(u<<1|1,mid+1,r);
+    add(in[u<<1].id,in[u].id,0);
+    add(in[u<<1|1].id,in[u].id,0);
+}
+修改操作就是建边操作 从包括[L,R]的虚拟点向v点连接一个w的边
+
+void change_in(int u,int l,int r,int v,int w){
+    if(l<=in[u].l&&in[u].r<=r){
+        add(in[u].id,v,w);return;
+    }
+    int mid=(in[u].l+in[u].r)>>1;
+    if(l<=mid)change_in(u<<1,l,r,v,w);
+    if(r>mid)change_in(u<<1|1,l,r,v,w);
+}
+③如果碰到[L1,R1]与[L2,R2]区间点连权值w的有向边
+我们只需要再建立一个虚拟点v 然后先用[L1,R1]向v建立权值w的边 再由v向[L2,R2]建立权值0的边（代码省略）
+
+模板题题目传送门：
+http://codeforces.com/problemset/problem/786/B
+
+在网络流题目中处理区间建边问题 我们仍然可以使用线段树来连边这里我丢个题目 然后丢下我的代码 细节不再赘述
+https://ac.nowcoder.com/acm/problem/20951
+https://paste.ubuntu.com/p/47Z5g3BkSQ/
+
+LeetCode 1560. Most Visited Sector in a Circular Track
+锤子科技未来产品经理的头像锤子科技未来产品经理
+6小时前
+明显是一道差分的题，但是出题人可能精神不太正常，需要特殊判断一些无聊的边界
+第一条路径起点和终点都算作一次经过，后面的路径起点不算，需要特别判断
+起点小于终点正常差分， 起点大于终点时转换成对剩下部分进行减一操作
+class Solution {
+public:
+    vector<int> mostVisited(int n, vector<int>& rounds) {
+        vector<int> ans;
+        int f[n + 2];
+        memset(f, 0, sizeof f);
+
+        for(int i = 1; i < rounds.size(); i++)
+        {
+            int first = rounds[i - 1];
+            int second = rounds[i];
+            if(i == 1)
+            {
+                if(second > first)
+                {
+                    f[first]++;
+                    f[second + 1]--;
+                }
+                else 
+                {
+                    f[second + 1] --;
+                    f[first] ++;
+                }                
+            }
+            else
+            {
+                if(second > first)
+                {
+                    f[first + 1]++;
+                    f[second + 1]--;
+                }
+                else 
+                {
+                    f[second + 1] --;
+                    f[first + 1] ++;
+                }                
+            }
+
+        }
+
+        for(int i = 1; i <= n; i++)
+        {
+            f[i] = f[i - 1] + f[i];
+        }
+
+        int res = f[1];
+        ans.push_back(1);
+        for(int i = 2; i <= n; i++)
+        {
+
+            if(res < f[i])
+            {
+                ans.clear();
+                res = f[i];
+            }
+            if(res == f[i])
+                ans.push_back(i);
+        }
+
+        return ans;
+
+    }
+};
+
+LeetCode 1567. Maximum Length of Subarray With Positive Product
+锤子科技未来产品经理的头像锤子科技未来产品经理
+8小时前
+没有啥算法就是模拟，遍历过程中要记录一些数据， 当前负数出现的个数，当前0所在位置，
+第一个正数位置，第一个负数位置
+每次都要更新最大结果，如果当前出现负数的个数是奇数个，那么当前区间的左端点是第一个负数的位置
+否则左端点是0所在位置
+class Solution {
+public:
+    int getMaxLen(vector<int>& nums) {
+        int positive = INT_MAX, negative = INT_MAX;
+        int cnt = 0;
+        int ans = 0;
+        int zero = -1;
+
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i] == 0)
+            {
+                positive = INT_MAX;
+                negative = INT_MAX;
+                zero = i;
+                cnt = 0;
+                continue;
+            }
+            if(nums[i] > 0)
+            {
+                positive = min(positive, i);
+            }
+            if(nums[i] < 0)
+            {
+                negative = min(negative, i);
+                cnt++;
+            }
+
+            if(cnt % 2 == 0)
+                ans = max(ans, i - zero);
+            else 
+                ans = max(ans, i - negative);  
+        }
+        return ans;
+    }
+};
+
+个人参考资料
+真-蒻-王善珑的头像真-蒻-王善珑
+9小时前
+欧拉函数的定义:
+φ(n),表示从1到n−1中所有与n互质的数的个数
+例如:
+φ(10)=3(3,7,9)
+欧拉函数的求法:
+如果n=pα11×pα22×…×pαkk
+那么φ(n)=(1−1p1)(1−1p2)…(1−1pk)
+例如
+φ(25)
+∵25=52
+
+∴φ(25)=25×(1−15)=25×45=20
+
+验证一下
+φ(25)=20(1,2,3,4,6,7,8,9,11,12,13,14,16,17,18,19,21,22,23,24)
+刚好20个
+
+欧拉函数证明:
+容斥原理
+1. 去掉所有p1,p2,…,pk的质因子的倍数
+2. 加上所有p1×p2,p1×p3,…,pk−1×pk的倍数
+3. 去掉所有p1×p2×p3,p1×p2×p4,…,pk−2×pk−1×pk的倍数
+…
+n. 加上(去掉)所有p1×p2×p3×…×pk
+N−Np1−Np2−…
+    +Np1×p2+Np1×p3+…
+…
+=(1−1p1)(1−1p2)…(1−1pk)
+欧拉函数的作用:
+欧拉定理
+若a与n互质,则aφ(n)≡1(mod  n)
+
+
+c风格的字符串替换函数和插入函数
+well188的头像well188
+10小时前
+c风格的字符串替换函数
+解说：orig是原始字符串，用with串替换rep串。因为出现len_with-len_rep所以要用表指针距离的ptrdiff_t类型，该类型原型是long signed类型。
+
+还有就是各种判断不能少，否则会出各种错误，无限循环等等错误。const char *来定义rep,with是因为它们无需改动且需要接受字符串字面量的赋值，所以需要常量指针，因为c++规定字符串字面量只能由常量指针接受。
+
+tmp=strncpy(tmp,orig,len_front)+len_front;
+tmp=strcpy(tmp,with)+len_with;
+上面这种写法，可以避免重复查找合适的复制起点位置，直接计算出正确的起点。
+
+#include <cstdio>
+#include <cstring>
+using namespace std;
+// You must free the result if result is non-NULL.
+// useage:
+// char *done = replace("abcdefghijkl", "bc", "yz"); 
+// if(done){
+//    do_stuff();
+//    delete[] done;
+// }
+char *str_replace(char *orig, const char *rep, const char *with) {
+    char *result; // the return string
+    char *ins;    // the next insert point
+    char *tmp;    // varies
+    ptrdiff_t len_rep;  // length of rep (the string to remove)
+    ptrdiff_t len_with; // length of with (the string to replace rep with)
+    ptrdiff_t len_front; // distance between rep and end of last rep
+    size_t count;    // number of replacements
+
+    // sanity checks and initialization
+    if (!orig || !rep)
+        return NULL;
+    len_rep = strlen(rep);
+    if (len_rep == 0)
+        return NULL; // empty rep causes infinite loop during count(32 line for)
+    if (!with)
+        with = "";
+    len_with = strlen(with);
+
+    // count the number of replacements needed
+    ins = orig;
+    for (count = 0; (tmp = strstr(ins, rep))!=NULL; ++count) {
+        ins = tmp + len_rep;
+    }
+
+//    tmp = result = (char *)malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+      tmp = result = new char [strlen(orig)+(len_with - len_rep)*count +1];
+
+    if (!result)
+        return NULL;
+
+    // first time through the loop, all the variable are set correctly
+    // from here on,
+    //    tmp points to the end of the result string
+    //    ins points to the next occurrence of rep in orig
+    //    orig points to the remainder of orig after "end of rep"
+    while (count--) {
+        ins = strstr(orig, rep);
+        len_front = ins - orig;
+        tmp = strncpy(tmp, orig, len_front) + len_front;
+        tmp = strcpy(tmp, with) + len_with;
+        orig += len_front + len_rep; // move to next "end of rep"
+    }
+    strcpy(tmp, orig);
+    return result;
+}
+int main(){
+    char a[]="helll,wahelll,wallll";
+    char *ans=str_replace(a,"ll","x");
+    if(ans){
+        puts(a);
+        puts(ans);
+        delete[] ans;
+    }
+    return 0;
+}
+字符串插入函数
+#include <cstdio>
+#include <cstring>
+using namespace std;
+char * str_insert(char *s,char *pos,const char *ins){
+    size_t len_s=strlen(s);
+    size_t len_ins=strlen(ins);
+    ptrdiff_t len_front=pos-s;
+    char *tmp,*result;
+    tmp=result=new char[len_s+len_ins+1];
+    tmp=strcpy(tmp,s)+len_front;
+    tmp=strcpy(tmp,ins)+len_ins;
+    tmp=strcpy(tmp,pos);
+    return result;
+}
+int main(){
+    char a[]="hello,worldllo";
+    char *ans=str_insert(a,a+4,"123");
+    puts(ans);
+    delete[] ans;
+    return 0;
+}
 
 ```
 
-https://www.bilibili.com/video/BV1aE411o7qd?p=16
