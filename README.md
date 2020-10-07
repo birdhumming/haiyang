@@ -13088,3 +13088,85 @@ tensorflow
 Acwing《算法基础课》第7章 时空复杂度分析
 
 https://www.acwing.com/file_system/file/content/whole/index/content/1354658/
+
+CSP2020联考 Day4
+https://oierwanhong.cc/2020/10/07/CSP2020%E8%81%94%E8%80%83%20Day4/
+
+编写高质量 Python 代码的 59 个有效方法
+https://www.acwing.com/file_system/file/content/whole/index/content/1356395/
+
+AcWing 895. 最长上升子序列 python    原题链接    简单
+作者：    申侠 ,  2020-10-07 20:06:30 ,  阅读 7
+
+0
+
+```
+n = int(input())
+l = [int(i) for i in input().split(' ')]
+v = [1 for i in l]
+for i in range(n):
+    for j in range(i):
+        if l[j] < l[i]:
+            v[i] = max(v[j] + 1 , v[i])
+print(max(v))
+```
+一些关于KMP的自己的思考
+1.为什么i从1开始，j从0开始？
+i的含义：当前比较到s[i]
+j的含义：模式串的1~j部分 = 主串的i-j+1~i部分（更新后， 更新前是i-1的）也就是最长公共前缀的长度。
+
+kmp利用了前序计算的信息，那么前序计算的信息保存在哪里呢？在j里面，刚刚进入一轮循环时，j记录着比较到s[i-1]的信息。
+因为初始化时没有前序状态，所以置零。
+
+2.j = ne[j]意味着什么？
+
+意味着对最长公共前缀长度的削减，由于目前的最长公共前缀长度使得s[i] != p[j+1]所以就要减小其长度使得其有可能成立。
+这也可以解释为什么j可以作为while循环的一个条件，当j = 0时，前缀长度已经被消减没了，前序状态保留下来的信息清空，相当于暴力做法中的重新比较两个串的起始点。
+
+3.next数组存的是什么？
+
+存的是以p[i]结尾的最长公共前后缀长度，next的作用是尽量少的削减最长公共前缀的长度，因为主串以s[i]结尾是肯定无法改变的，所以新的前缀长度就一定要匹配以s[i-1]为结尾的某一个后缀，又要尽可能少消减（不然可能会跨过正确解），所以使用最长公共前后缀就很顺理成章了。
+
+4.next数组如何计算？
+其实从模板中可以看出，next数组的计算与模式匹配部分的代码很相似。其实next数组的计算可以看成是以p[i]为后缀的某个子字符串为主串的匹配过程。
+只不过next数组的计算与正式计算的目的不同，next是为了找到满足要求的最大值，正式计算是要让最后的公共前缀一定为n，这一点也体现到了代码中。
+
+代码
+```
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 100010, M = 1000010;
+
+char p[N], s[M];
+int ne[N];
+int n, m;
+
+int main() {
+    cin >> n >> p+1 >> m >> s+1; // 字符串从下标1开始存储，这样每次公共前缀长度为0时，j = 0，处理边界情况更方便
+
+
+    // 计算next数组
+    for(int i = 2, j = 0; i <= n; i++) {        // ne[i] 一定为0
+        while(j && p[i] != p[j+1]) j = ne[j];   // 当j = 0时，代表着上次循环保留下来的（如果有的话）公共前缀已经被消减完了，这个时候就不需要再消减了。
+        if(p[i] == p[j+1]) j++;
+        ne[i] = j;
+    }
+
+    for(int i = 1, j = 0; i <= m; i++) {
+        while(j && s[i] != p[j+1]) j = ne[j];
+        if(s[i] == p[j+1]) j++;
+        if(j == n) {
+            cout << i - n << " ";               // 由于题目中返回的字符串是以下标0起始的，所以这里输出i-n,s中的起始点应该是s[i-n+1]
+            j = ne[j];                          // 由于结果可能不止一个，所以这里相当于跳到下一个可能结果的起始点。不然下次循环访问p[j+1]会越界。
+        }
+    }
+
+    return 0;
+}
+```
+
+
+Acwing个人笔记汇总 者：    摸鱼小王子 ,  2020-10-07 13:54:23 ,  阅读 46
+https://www.acwing.com/file_system/file/content/whole/index/content/1355392/
