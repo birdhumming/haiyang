@@ -13170,3 +13170,8 @@ int main() {
 
 Acwing个人笔记汇总 者：    摸鱼小王子 ,  2020-10-07 13:54:23 ,  阅读 46
 https://www.acwing.com/file_system/file/content/whole/index/content/1355392/
+
+
+https://github.com/roboticcam/machine-learning-notes
+https://github.com/hschen0712/machine-learning-notes
+https://github.com/tsyw/MachineLearningNotes
