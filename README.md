@@ -13224,3 +13224,9 @@ https://github.com/tsyw/MachineLearningNotes
 
 lin xuantien tw PLA - perceptron learning algorithm
 https://www.csie.ntu.edu.tw/~htlin/course/ml13fall/doc/02_handout.pdf
+
+https://github.com/LLNL?q=slapi&type=&language=
+
+https://www.kaggle.com/
+https://flux-framework.org
+https://flux-framework.org/papers/Flux-FGCS-2020.pdf
