@@ -13172,10 +13172,55 @@ Acwing个人笔记汇总 者：    摸鱼小王子 ,  2020-10-07 13:54:23 ,  
 https://www.acwing.com/file_system/file/content/whole/index/content/1355392/
 
 
+A/Prof Richard Xu 徐亦达教授 lab site-
 https://github.com/roboticcam/machine-learning-notes
+
+徐亦达机器学习笔记/cs229 ipynb mostly1.公开课/读书笔记
+
+徐亦达机器学习笔记
+
+采样算法系列1——基本采样算法
+采样算法系列2——MCMC
+EM算法
+变分推断
+高斯分布的变分推断
+指数分布族
+指数分布族的变分推断
+CS229课程笔记
+
+广义线性模型
+EM算法
+增强学习系列1
+增强学习系列2
+台大机器学习基石笔记
+
+第一讲-学习问题
+PRML读书笔记
+
+第一章 简介
+1.1 多项式曲线拟合
+1.2 概率论回顾
+总结-曲线拟合的三种参数估计方法
+第二章 概率分布
+2.1 二元变量
+2.2 多元变量
+第三章 线性回归模型
+3.1 线性基函数模型
+总结-贝叶斯线性回归
+2.机器学习笔记
+
+xgboost笔记
+1. xgboost的安装
+softmax分类器
+用theano实现softmax分类器
+用SVD实现岭回归
+SVD系列1
 https://github.com/hschen0712/machine-learning-notes
+
+【机器学习】【白板推导系列】【合集 1～23】notes-
 https://github.com/tsyw/MachineLearningNotes
 
 
-PLA - perceptron learning algorithm
+
+lin xuantien tw PLA - perceptron learning algorithm
 https://www.csie.ntu.edu.tw/~htlin/course/ml13fall/doc/02_handout.pdf
