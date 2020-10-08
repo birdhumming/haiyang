@@ -13175,3 +13175,7 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1355392/
 https://github.com/roboticcam/machine-learning-notes
 https://github.com/hschen0712/machine-learning-notes
 https://github.com/tsyw/MachineLearningNotes
+
+
+PLA - perceptron learning algorithm
+https://www.csie.ntu.edu.tw/~htlin/course/ml13fall/doc/02_handout.pdf
