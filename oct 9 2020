@@ -1,0 +1,280 @@
+oct 9 2020
+
+AcWing 243. 一个简单的整数问题2 - py3 终于accept了
+roon2300的头像roon2300
+5小时前
+大概跑4.5s左右，有一定概率会更长然后被判TLE
+
+参考 Efficient and easy segment trees, By Al.Cash
+
+注意网页上懒标记range increment and sum queries的 calc 和 apply 是有问题的，参考P___的回复
+
+
+def get_h(n):
+    if n == 0: return 1
+    i = 0
+    while i <= 128:
+        if n < (1 << i): return i 
+        i += 1
+
+class Node:
+    sum_v = 0
+    add = 0
+    def __repr__(self):
+        return str(self.sum_v) + ":" + str(self.add)
+
+
+def calc(u, k):
+    # if t[u].add == 0: t[u].sum_v = t[u << 1].sum_v + t[u << 1 | 1].sum_v 
+    # else: t[u].sum_v = t[u].add * k 
+    t[u].sum_v = t[u << 1].sum_v + t[u << 1 | 1].sum_v  + t[u].add * k
+
+def add_value(u, val, k):
+    # print("add_value:", u, val, k)
+    # t[u].sum_v = val * k 
+    t[u].sum_v += val * k 
+    if u < n: t[u].add += val
+
+def build(l, r): 
+    k = 2 
+    l += n; r += n - 1
+    while l > 1:
+        l >>= 1; r >>= 1
+        for i in range(r, l - 1, -1):
+            calc(i, k)
+        k <<= 1
+
+def pushdown(l, r):
+    s = h 
+    k = 1 << (h - 1)
+    # print("pushdown:", l, r, h, k)
+    l += n; r += n - 1
+    while s > 0:
+        # print("s:", s, l >> s, r >> s, k)
+        for i in range(l >> s, (r >> s) + 1):
+            if t[i].add:
+                add_value(i << 1, t[i].add, k)
+                add_value(i << 1 | 1, t[i].add, k)
+                t[i].add = 0
+        s -= 1
+        k >>= 1
+
+def modify_range(l, r, val):
+    if val == 0: return 
+    pushdown(l, l + 1)
+    pushdown(r - 1, r) 
+
+    l0, r0 = l, r
+
+    k = 1
+    l += n; r += n 
+    while l < r:
+        # print("l-r-k:", l, r, k)
+        if l & 1:
+            add_value(l, val, k) 
+            l += 1
+        if r & 1:
+            r -= 1
+            add_value(r, val, k)
+        l >>= 1; r >>= 1; k <<= 1
+    build(l0, l0 + 1); build(r0 - 1, r0)
+    # print("modify:", l0, r0, t)
+
+
+def query(l, r):
+    ll, rr = l, r
+    pushdown(l, l + 1)
+    # print("pushdown-1:", t)
+    pushdown(r - 1, r)
+    # print("pushdown-2:", t)
+
+    res = 0
+    l += n; r += n
+    while l < r:
+        if l & 1:
+            res += t[l].sum_v
+            l += 1
+        if r & 1:
+            r -= 1
+            res += t[r].sum_v
+        l >>= 1; r >>= 1
+
+    # print("query:", ll, rr)
+    return res
+
+
+n, m = map(int, input().split())
+w = list(map(int, input().split()))
+h = get_h(n)
+# print("h:", h, n)
+
+t = [Node() for _ in range((n + 1) << 1)]
+
+for i in range(n):
+    t[n + i].sum_v = w[i]
+# print("org t:", t)
+build(0, n - 1)
+# print("build:", t)
+
+res = []
+while m:
+    op, opt = input().split(maxsplit=1)
+    if op == 'Q':
+        l, r = map(int, opt.split())
+        res.append(str(query(l - 1, r)))
+        # print(query(l - 1, r))
+    else:
+        l, r, val = map(int, opt.split())
+        modify_range(l - 1, r, val)
+    m -= 1
+
+print("\n".join(res))
+
+
+
+软件开发过程中会产生大量的代码制品，包括代码、测试数据、配置方案等等，对这些制品进行分析是各种软件工程工具的基本手段之一。典型软件开发工具比如编译器、代码编辑器、测试与调试工具等等都离不开对软件制品进行分析。在工业界，各大公司的基础平台部门对掌握软件分析技术的人才有大量需求；在学术界，软件分析技术是软件工程领域开展研究的必备基础知识之一。本课程将系统地介绍软件分析技术。本课程同时面向高年级本科生和研究生开设。
+
+软件分析技术主要用于回答关于程序本身性质的问题。程序分析技术是开发和代码直接相关的工具，比如编译器、调试器、代码编辑器的基本手段。根据哥德尔不完备定理，大量问题都无法静态的回答，所以程序分析技术关注如何做出正确的近似逼近，或者采用统计等概率手段来弥补。但是，软件分析技术相关文献存在内容广，流派多，数学基础要求高等方面的特点，使得学习软件分析技术一直是一件很困难的事。本课程希望通过对这一类技术进行通俗易懂的讲解，帮助同学们构建较完整的软件分析技术知识体系，了解该领域的前沿知识，学术上为进一步开展软件工程领域的学术研究打下基础，在实践上培养开发大型软件工程工具的开发能力。
+
+https://xiongyingfei.github.io/SA/2019/main.htm
+
+
+
+南京大学《软件分析》课程01（Introduction）
+
+bilibili.com/video/BV1b7411K7P4?from=search&seid=9418298347833888699
+
+南京大学-软件分析
+北京大学-软件分析
+这应该是目前国内唯二开的静态分析课程吧，质量都很高，打算从事Programming-Language领域的同学可以参考一下。南大的课程比较深入——非常推荐，适合做编译器后端和安全的同学学习，但是最好有编译原原理基础。北大的课程涵盖面比较广泛，更适合从大体上理解PL。
+
+
+还记得第一次写编译器的时候为一个局部优化算法到处找资料。
+两周时间，16节课，酣畅淋漓。
+感谢南大Yue Li，Tian Tan老师的
+《静态程序分析》课程
+[https://pascalgroup.bitbucket.io/teaching.html]
+让我见识了学术上顶级PL专家的水平。第一次感觉自己的PL之路如此无助……坚定了读博的信念。
+未来可期！
+
+
+https://pascal-group.bitbucket.io/code.html
+
+
+
+最近在搞NOIP初赛，看了不少博客和资料
+这里给大家推荐一些比较好的资料
+(如果你们也有好资料,也可以在评论区提出来,大家互相分享嘛)
+
+http://www.doc88.com/p-9982181637642.html
+https://www.cnblogs.com/fusiwei/p/11559403.html
+
+
+题解AcWing 920. 最优乘车
+Cheng千禧有事请@的头像Cheng千禧有事请@
+9小时前
+代码还是 spfa ，进行如下微小修改才是 bfs
+具体 spfa 和 bfs 的微小差别：
+https://leetcode-cn.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/solution/spfa-bfsde-yi-chong-kuo-zhan-by-fried-chicken/
+
+注意！！！！
+只有边权全部为 1 时才能用 bfs，否则还是老老实实用 spfa 算法吧~~~
+if (g[t][i] && dist[i] == 0x3f3f3f3f) // 进行了修改，确保每个点只进队出队一次
+
+
+感觉leetcode 前面几百题是那种感觉搞搞能做出来，但是递进的精彩的做法挺多的，很有余味。
+现在leetcode周赛季赛啥的，都是些犄角旮旯里的DP 各种复杂建图啥的，没见过就是不会做，见过了就啪嗒啪嗒背出来，没一点趣味性。
+
+
+
+stl:
+    vector
+    queue   priority_queue  deque
+    stack
+    set     map     multiset    multimap
+    unordered_set   unordered_map   unordered_multimap  unordered_multimap
+    bitset
+
+
+
+LeetCode 90000. 豆瓣py
+CYa_RedBull的头像CYa_RedBull
+15小时前
+题目描述
+Python专属 笔记
+
+1. enumerate: `for i, a in enumerate(A)`
+
+2. zip: `for a, b in zip(A, B)`
+
+3. list comprehension `[x for x in a]`
+
+4. generator `(x for x in a)`
+
+5. try/except/else/finally: 
+
+6. not use `None` as the return, try `Exception`
+
+7. `nonlocal`, `global`: The nonlocal statement makes it clear when data is being assigned out of closure into another scope. It’s complementary to the global statement, which indicates that a variable’s assignment should go directly into the module scope. Anyway, try to use warp the function to a `Class`
+
+8. Consider Generators Instead of Returning Lists: reduce memory cost and fit for big data `yield`. Can be simply warped to list by `list(generator)`
+
+9. build up `__iter__()` as a generator in class
+
+10. `*args`: optional arguments; fit for a small number of args
+
+11. `assert` 
+
+12. Keyword arguments: default value, position. Default argument values are evaluated only once per module load, which usually happens when a program starts up.
+
+13. Docstrings: describe the function, then the `args` and  `return`
+
+14. Using `None` for default argument values is especially important when the arguments have a dynamic value.
+
+15. **The * symbol in the argument list indicates the end of positional arguments and the beginning of keyword-only arguments.** [之前没考虑过]
+
+16. `@classmethod` & `@staticmethod`
+
+17. `NotImplementedError`
+
+18. Python only supports a single constructor per class, the `__init__` method.
+
+19. Always use the `super` built-in function to initialize parent classes.
+
+20. Use `@property` to define special behavior when attributes are accessed on your
+
+    objects, if necessary.
+
+21. decorator: for allowing one function to modify another function
+
+    at runtime.
+
+22. `logging` package.
+
+23. `pickle.dump() pickle.load()`
+
+24. represent time: `datetime`  duration: `time.time()`
+
+25. `__init__.py` for path initialization: Once `__init__.py` is present, any other Python files in that directory will be available for import using a path relative to the directory.
+
+26. `pdb`
+
+
+
+1.vi /etc/my.cnf，在[mysqld]条目中添加 skip-grant-tables
+[mysqld]
+skip-grant-tables
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+2.重启mysql
+service restart mysqld 或者 systemctl restart mysqld
+3.使用空密码登录mysql
+mysql -u root -p(直接回车，不需要输入密码)
+4.选择mysql 数据库
+use mysql
+5.修改用户（以root为例）密码
+update user set authentication_string=password('123456') where user='root';
+6.刷新权限
+flush privileges
+7.删除第1步添加的配置
+8.重启mysql
