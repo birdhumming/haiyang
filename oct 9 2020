@@ -6,6 +6,7 @@ roon2300的头像roon2300
 大概跑4.5s左右，有一定概率会更长然后被判TLE
 
 参考 Efficient and easy segment trees, By Al.Cash
+https://codeforces.com/blog/entry/18051
 
 注意网页上懒标记range increment and sum queries的 calc 和 apply 是有问题的，参考P___的回复
 
