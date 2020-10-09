@@ -278,3 +278,13 @@ update user set authentication_string=password('123456') where user='root';
 flush privileges
 7.删除第1步添加的配置
 8.重启mysql
+
+
+
+https://xiongyingfei.github.io/SA/2019/main.htm
+
+
+静态程序分析课程笔记（Datalog）
+https://anemone.top/pl-%E9%9D%99%E6%80%81%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88Datalog%EF%BC%89/#more
+
+https://anemone.top/pl-%E9%9D%99%E6%80%81%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AE%80%E4%BB%8B%EF%BC%89/
