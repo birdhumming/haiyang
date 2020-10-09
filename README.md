@@ -13232,3 +13232,5 @@ https://flux-framework.org
 https://flux-framework.org/papers/Flux-FGCS-2020.pdf
 
 https://www.acwing.com/file_system/file/content/whole/index/content/1359011/
+
+argmax in python https://www.geeksforgeeks.org/numpy-argmax-python/
