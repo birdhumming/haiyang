@@ -13234,3 +13234,8 @@ https://flux-framework.org/papers/Flux-FGCS-2020.pdf
 https://www.acwing.com/file_system/file/content/whole/index/content/1359011/
 
 argmax in python https://www.geeksforgeeks.org/numpy-argmax-python/
+
+segment tree with lazy tag 
+https://skywt.cn/posts/segment-tree
+https://blog.csdn.net/qq_37451344/article/details/80261955
+https://blog.csdn.net/Ratina/article/details/90112512
