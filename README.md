@@ -13268,3 +13268,8 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1362450/
 李宏毅老师2020最新深度学习视频（人类语言处理）持续更新中：av94522844
 
 math=computer=philosophy=machine=human
+
+bayes rule p(a and b) = p(a)p(b|a) = p(b)p(a|b)
+
+ML learning map 李宏毅
+http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
