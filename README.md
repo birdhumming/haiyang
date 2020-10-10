@@ -13279,7 +13279,7 @@ jacobian = partial derivative
 ML learning map 李宏毅
 http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
 
-binary search easy way - only look for x in A 
+binary search easy way - is x in sorted array A? only look for x in A 
 
 function binarySearch(A, x)
   let start = 0
