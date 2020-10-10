@@ -13266,3 +13266,5 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1362450/
 
 课后作业范例和作业说明：https://github.com/Iallen520/lhy_DL_Hw
 李宏毅老师2020最新深度学习视频（人类语言处理）持续更新中：av94522844
+
+math=computer=philosophy=machine=human
