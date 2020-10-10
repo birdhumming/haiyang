@@ -13278,3 +13278,18 @@ jacobian = partial derivative
 
 ML learning map 李宏毅
 http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
+
+binary search easy way - only look for x in A 
+
+function binarySearch(A, x)
+  let start = 0
+  let end = length of array A
+  while start < end
+    let mid = (start + end) / 2 # Integer division
+    if A[mid] == X
+      return true
+    else if X > A[mid]
+      start = mid + 1
+    else if X < A[mid]
+      end = mid - 1
+  return false
