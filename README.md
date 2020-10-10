@@ -13293,3 +13293,12 @@ function binarySearch(A, x)
     else if X < A[mid]
       end = mid - 1
   return false
+
+
+
+  module load deeplearning/2.3.0
+
+  for amp must import in apex directory
+  
+  nvidia driver for GPU needed
+  srun -p dl --gpus v100:1 --pty bash
