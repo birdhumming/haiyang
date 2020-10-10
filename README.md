@@ -13241,5 +13241,5 @@ https://blog.csdn.net/qq_37451344/article/details/80261955
 https://blog.csdn.net/Ratina/article/details/90112512
 
 
-OLD AI notes - 
+OLD AI notes - percy liang, stanford lecture notes
 https://github.com/haichuanyang/ai-aima/tree/master/ML/Cheatshetts-cs229-ML/zh
