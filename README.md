@@ -13272,5 +13272,9 @@ probability/statistics=math=computer=philosophy=machine=human
 bayes rule p(a and b) = p(a)p(b|a) = p(b)p(a|b)
 https://github.com/haichuanyang/ai-aima/blob/master/ML/Cheatshetts-cs229-ML/en/refresher-algebra-calculus.pdf
 
+gradient = nabla one 
+hessian = nabla two level
+jacobian = partial derivative
+
 ML learning map 李宏毅
 http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
