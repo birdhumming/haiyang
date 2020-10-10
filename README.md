@@ -13245,3 +13245,21 @@ OLD AI notes - percy liang, stanford lecture notes
 https://github.com/haichuanyang/ai-aima/tree/master/ML/Cheatshetts-cs229-ML/zh
 
 roadside apple seldom tastes good.
+
+
+第十届蓝桥杯大赛个人赛省赛（软件类）A组真题
+https://www.acming.net/archives/929
+
+
+ML_李宏毅2020深度学习最新内容（人类语言处理）
+https://www.bilibili.com/video/av94522844/
+
+李宏毅2020机器学习深度学习(完整版)国语
+https://www.bilibili.com/video/BV1JE411g7XF?p=4
+
+
+算法总结之特殊的数据结构
+https://www.acwing.com/file_system/file/content/whole/index/content/1362467/
+
+knowledge point
+https://www.acwing.com/file_system/file/content/whole/index/content/1362450/
