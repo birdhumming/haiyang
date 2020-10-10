@@ -13267,7 +13267,7 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1362450/
 课后作业范例和作业说明：https://github.com/Iallen520/lhy_DL_Hw
 李宏毅老师2020最新深度学习视频（人类语言处理）持续更新中：av94522844
 
-math=computer=philosophy=machine=human
+probability/statistics=math=computer=philosophy=machine=human
 
 bayes rule p(a and b) = p(a)p(b|a) = p(b)p(a|b)
 https://github.com/haichuanyang/ai-aima/blob/master/ML/Cheatshetts-cs229-ML/en/refresher-algebra-calculus.pdf
