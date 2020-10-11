@@ -13302,3 +13302,262 @@ function binarySearch(A, x)
   
   nvidia driver for GPU needed
   srun -p dl --gpus v100:1 --pty bash
+
+conformal mapping
+注：conformal是harmonic的子集
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1366014/
+
+
+背包问题
+    1. 01背包 物品只能用0 1次
+    2. 完全背包 物品可以无限用
+    3. 多重背包 物品只能用s[i]次
+    4. 分组背包 每组只能选一个
+   本质就是N个物品，包的体积是V，每个物品的体积是v[i]，价值是w[i]，求不超过V的最大价值
+
+DP问题思路
+   1. 状态表示
+        集合
+           包含所有选法的集合
+    01 的选法就是从i之前包含i选择总体积小于V的
+        属性
+           max min  数量
+   2. 状态计算
+        划分集合
+    不包含i和包含i
+                f[i][j] = max(f[i - 1][j], f[i-1][j - v[i]] + w)
+
+
+DP优化就是二维转一维，优化状态转移方程
+
+AcWing 95. 单纯解释一下很多高赞题解没有说清楚的东西
+DAWNTHUG的头像DAWNTHUG
+4小时前
+首先，这题根本就没有什么所谓的状压dp，而且只有一个地方用到了状态压缩，即第一行按开关的方式
+
+本题主要的考察内容其实就是位运算，暴力以及一些递推思想
+
+1.高票题解代码中的 if (k >> j & 1) 究竟什么意思？
+
+其中，k保存的根本就不是第一行的灯所有可能的状态，不然它第j位都为1了还按它干嘛？ k单纯只是保存了第一行按开关的32种方式，与输入数据无关。
+
+且大多数题解代码中都规定了k在二进制下某位为1就代表我们选择按下这一位所在编号的开关，你也可以自己规定k在二进制下某位为0才代表我们选择按下这一位所在编号的开关，这都无所谓。
+
+比如k在二进制下表示为10001，就代表我们选择按第一行编号为0和编号为4的开关，然后对输入数据中第一行这两位执行turn操作。
+
+2.递推思想
+
+当前行若某一位(i,j)为0，那就用其所在列的下一行(i+1,j)去执行turn操作，以使(i,j)变为1，即变亮。
+
+如果对(i,j)执行turn操作，使(i,j)变为1，就会破坏上一行的灯的状态。
+
+所以只能从下一行去改变上一行的灯的状态
+
+题解AcWing 237. 程序自动分析
+Aatrowen的头像Aatrowen
+5小时前
+思路
+将相等和不相等的条件分开存储，先将相等的条件纳入一个集合，然后遍历不相等的数组，判断两个不相等的条件是否已经在一个集合内即可
+WA了几次后，发现数据范围很大，需要离散化
+
+联系：Dijkstra算法是更新到起始点的距离，Prim是更新到集合S的距离!!!
+
+
+LeetCode 388. 文件的最长绝对路径
+wzc1995的头像wzc1995
+9小时前
+题目描述
+假设我们有一个用下图表示的文件系统：
+mdir.jpg
+
+我们用字符串来表示一个文件系统，其中 \n\t 是主目录的一个子目录，\n\t\t 是主目录的子目录下的一个子目录，依次类推。每个文件夹都被表示为一个由字母 和（或） 数字组成的字符串。每个文件都是以 s1.s2 的形式表示，且 s1 和 s2 都是由字母 和（或） 数字组成的字符串。
+
+例如，上图的文件系统可被表示为 "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"。
+
+给定一个字符串表示按上述规则形成的文件系统，返回文件系统中绝对路径最长的 文件。如果没有任何文件，返回 0。
+
+样例
+dir1.jpg
+
+输入：input = "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"
+输出：20
+解释：我们仅有一个文件且它的路径为 "dir/subdir2/file.ext"，长度是 20。
+路径 "dir/subdir1" 不包含任何文件。
+dir2.jpg
+
+输入：input = "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
+输出：32
+解释：我们有两个文件：
+"dir/subdir1/file1.ext" 长度为 21，
+"dir/subdir2/subsubdir2/file2.ext" 长度为 32。
+我们返回 32 因为它有最长的路径。
+输入：input = "a"
+输出：0
+解释：文件系统中没有任何文件。
+限制
+1 <= input.length <= 10^4
+输入可能包含小写英文字母，大写英文字母，换行符 '\n'，缩进符 '\t'，点 '.'，空格 ' '，和数字。
+算法
+(字符串处理，栈) O(n)
+设计两个栈，一个存储每个名字的长度，一个存储当前名字对应的 level。根目录的 level 为 0。维护一个记录当前路径长度的变量 length。
+每次获取下一个目录（文件）的 level 和名字。如果栈顶的 level 大于等于当前目录（文件）的 level，则栈顶不断出栈，且 length 减去当前 level 名字的长度。
+然后将当前目录（文件）进栈，更新 length。如果当前名字是个文件，则用 length + level 更新答案。
+时间复杂度
+每个名字仅被遍历常数次，且最多进栈一次，出栈一次，故总时间复杂度为 O(n)。
+空间复杂度
+需要 O(n) 的额外空间存储名字长度和对应 level 的栈。
+C++ 代码
+class Solution {
+private:
+    bool isFile(const string &name) {
+        const int len = name.size();
+        for (int i = len - 1; i >= 0; i--)
+            if (name[i] == '.' && i != len - 1)
+                return true;
+
+        return false;
+    }
+
+    int getNextLevel(int &i, const string &input) {
+        int res = 0;
+        while (i < input.size() && (input[i] == '\t' || input[i] == '\n')) {
+            if (input[i] == '\t')
+                res++;
+            i++;
+        }
+        return res;
+    }
+
+    string getNextName(int &i, const string &input) {
+        string name;
+        while (i < input.size() && input[i] != '\n') {
+            name.push_back(input[i]);
+            i++;
+        }
+        return name;
+    }
+
+public:
+    int lengthLongestPath(string input) {
+        stack<int> lengthStack, levelStack;
+        int length = 0, maxLength = 0;
+        int i = 0;
+        while (i < input.size()) {
+            int level = getNextLevel(i, input);
+            string name = getNextName(i, input);
+            while (!levelStack.empty() && levelStack.top() >= level) {
+                length -= lengthStack.top();
+                levelStack.pop();
+                lengthStack.pop();
+            }
+
+            length += name.size();
+            levelStack.push(level);
+            lengthStack.push(name.size());
+
+            if (isFile(name) && maxLength < length + level)
+                maxLength = length + level;
+        }
+
+        return maxLength;
+    }
+};
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1364601/
+
+
+Airbnb社招面经
+https://www.acwing.com/file_system/file/content/whole/index/content/1364375/
+
+AcWing 3. 公式推导 - 完全背包问题    原题链接    简单
+https://www.acwing.com/file_system/file/content/whole/index/content/1364307/
+
+
+求助一道初赛题
+May_wind的头像May_wind
+10小时前
+大佬们求助
+
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main(){
+    string s;
+    char s1[100];
+    memset(s1,0,sizeof(s1));
+    int len,j = 0;
+    cin >> s;
+    len = s.size();
+    for(int i = 0 ; i < len ; i ++){
+        if(i%2==0)
+            if((s[i]>='A'&&s[i]<='Z'||(s[i]>='a'&&s[i]<='z'){
+                s1[j] = s[i]+1;
+                ++j;
+            }
+    }
+    cout << s1 << endl;
+    return 0
+}
+判断：输出的字符串只能是由字母组成（）
+若输入的字符串长度为0，则输出的字符串长度最长可能为（）
+A.4 B.5 C.6 D.10
+
+判断题的答案是对，但是当某个s[i]等于z或Z时，输出里面不就会出现非字母的符号了？
+选择题的题干意思是什么？
+
+求解答。
+
+
+LeetCode 162. Find Peak Element    原题链接    中等
+作者：    yxc ,  2018-06-01 23:59:18 ,  阅读 1566
+
+9
+
+
+5
+题目描述
+峰值定义为比左右相邻元素大的元素。
+
+给定一个数组 nums，保证 nums[i] ≠ nums[i+1]，请找出该数组的峰值，并返回峰值的下标。
+
+数组中可能包含多个峰值，只需返回任意一个即可。
+
+假定 nums[-1] = nums[n] = -∞。
+
+样例1
+输入：nums = [1,2,3,1]
+输出：2
+解释：3是一个峰值，3的下标是2。
+样例2
+输入：nums = [1,2,1,3,5,6,4]
+输出：1 或 5 
+解释：数组中有两个峰值：1或者5，返回任意一个即可。
+算法
+(二分) O(logn)O(logn)
+仔细分析我们会发现：
+
+如果 nums[i-1] < nums[i]，则如果 nums[i-1], nums[i], ... nums[n-1] 是单调的，则 nums[n-1]就是峰值；如果nums[i-1], nums[i], ... nums[n-1]不是单调的，则从 ii 开始，第一个满足 nums[i] > nums[i+1]的 ii 就是峰值；所以 [i,n−1][i,n−1] 中一定包含一个峰值；
+如果 nums[i-1] > nums[i]，同理可得 [0,i−1][0,i−1] 中一定包含一个峰值；
+所以我们可以每次二分中点，通过判断 nums[i-1] 和 nums[i] 的大小关系，可以判断左右两边哪边一定有峰值，从而可以将检索区间缩小一半。
+
+时间复杂度分析：二分检索，每次删掉一半元素，所以时间复杂度是 O(logn)O(logn)。
+
+C++ 代码
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        int l = 0, r = nums.size() - 1;
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (nums[mid] > nums[mid + 1]) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/file_system/file/content/whole/index/content/197/#comment_47722
