@@ -13561,3 +13561,160 @@ public:
 
 作者：yxc
 链接：https://www.acwing.com/file_system/file/content/whole/index/content/197/#comment_47722
+
+
+
+2021届秋招面经
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368932/
+
+美团后台开发（一面）
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368929/
+
+LeetCode 90000. 题单分类   
+https://www.acwing.com/file_system/file/content/whole/index/content/1368666/LeetCode 90000. 题单分类   
+
+字节跳动社招后端一二三面已过丶以及学习感言
+https://www.acwing.com/file_system/file/content/whole/index/content/1368378/
+
+字节跳动算法岗面经
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368355/
+
+同花顺后台开发C++面经
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368304/
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368288/
+
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368251/
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1368153/
+
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1367990/
+
+基于CrawlSpider爬虫的京东全站数据采集项目分享
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1367852/
+
+
+OI知识清单
+溪染的头像溪染
+8小时前
+1.第一类：基础算法
+（1）基础算法：枚举、贪心、递归、分治、递推、构造、模拟
+（2）动态规划：背包问题、树形dp、状态dp、单调性优化、插头dp
+（3）搜索：dfs、bfs、记忆化搜索、优化与剪枝、双广、A*、IDA*、跳舞链
+
+2.第二类：数据结构
+（1）简单数据结构：链表、栈和队列、串、树和二叉树、图、排序与检索
+（2）树形结构：线段树、树状数组、字典树、伸展树、左偏树、动态树、Ica&rmq、划分树、SBT、splay、VAL树、FHQ Treap、01 Trie树、替罪羊树
+（3）字符串：kmp、AC自动机、后缀数组、最小表示法、哈希
+（4）其他：并查集、散列表、块状链表、双向链表
+
+3.第三类：图论
+（1）最短路：dijkstra,bellman-ford(spfa优化),floyd,heap+dijkstra,差分约束，第K短路
+（2）生成树：prim,kruskal,度限制最小生成树，最优化生成树，最优比率生成树，次小生成树，最小树形图，生成树的计数，数的划分，树的枚举
+（3）匹配问题：二分图的最大匹配（匈牙利算法），KM，2-SAT，同构
+（4）网络流：最大流，最小费用最大流，最小割模型，网络流规约
+（5）其他：拓扑排序，双连通分量，强连通分支及其缩点，图的割边与割点，无向图，有向图的最小环，欧拉路径，哈密顿路径，平面图，分成图思想，偶图
+
+4.第四类：数学
+（1）数论：素数与整除问题，进位制，同余模算数，整数因子分解，GCD，扩展欧几里得，求解模线性方程，中国余数定理，元素的幂，RSA公钥加密
+（2）组合数学：加法与乘法原理，排列组合，递推关系与母函数，容斥原理，抽屉原理，置换群与Polya定理，MoBius反演，偏序关系理论
+（3）计算方法：二分法求解单调函数相关知识，三分法求解单峰（单谷）的极值，矩阵法，迭代逼近，高斯消元法，随机化算法，0/1分数规划
+（4）高精度问题扩展：求倒数，求乘幂，求开方，求对数，二分快速方法，对指函数，三角函数，数值计算的优化
+（5）其他：博弈论，线性规划，整数规划，概率问题，多项式与快速傅里叶，数学思想与方法的综合运用（构造，猜想，归纳法，反证法）
+
+4.第五类：其他算法
+（1）玄学算法：模拟退火，蚁群算法
+
+
+提高
+初级
+1. 二进制原理与位运算
+2. 枚举技巧-状压/折半/尺取法
+3. 贪心算法-区间覆盖/字典序
+4. STL-map/set/bitset/堆
+5. 二分/三分/01分数规划
+6. dp基础
+7. 状压dp/子集枚举
+8. 倍增
+9. 单调队列/单调栈/dp优化
+10. 树结构基础训练
+11. 图论基础训练-最小生成树、最短路等
+
+中级
+12. 树上dp/贪心/直径
+13. tarjan系列算法
+14. 线段树
+15. 数论基础
+16. 概率与期望
+17. 数位DP
+18. 二分图匹配
+19. 轮廓线dp
+20. 字符串哈希
+21. 组合数学基础
+
+省选
+入门
+1. 计算几何
+2. 计算几何2
+3. 树链剖分
+4. 最大流最小割
+5. 最小费用最大流
+6. 斜率优化
+7. 2-sat
+8. 标记永久化/线段树合并
+9. 可持久化数据结构入门
+10. 点分治
+11. 矩阵乘法/高斯消元
+
+具体数学
+初级
+
+数论基本概念
+素数筛法
+欧几里得、扩欧
+欧拉函数
+欧拉定理
+乘法逆元
+中国剩余定理
+整除分块
+组合数
+二项式定理
+组合公式常见变形
+隔板法
+错排
+圆排列与多重集合的排列组合
+康托展开
+卡特兰数
+放球问题
+lucas定理
+容斥定理
+概率与期望
+中级
+21. 数论函数与积性函数简介
+22. 预处理积性函数
+23. 莫比乌斯函数介绍
+24. 莫比乌斯反演
+25. 狄利克雷卷积
+26. 整除分块从入门到精通
+27. 莫比乌斯例题讲解
+28. 导数微分极限
+29. 定积分与不定积分
+30. 积性函数前缀和主要思想
+31. 积性函数前缀和复杂度分析
+32. 积性函数前缀和复杂度优化
+33. 积性函数前缀和例题讲解
+34. 二项式反演
+35. 类欧几里得第一部分
+36. 类欧几里得第二部分
+37. 类欧几里得第三部分
+
+
+二分法专题（一）
+https://www.acwing.com/file_system/file/content/whole/index/content/1367304/
