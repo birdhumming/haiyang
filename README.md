@@ -13750,3 +13750,6 @@ print(' '.join(map(str,arr)))
 
 KMP explained in video - 
 https://www.youtube.com/watch?v=5i7oKodCRJo
+
+秋招结束，分享一下自己已经拿到意向书公司的面经
+https://www.acwing.com/user/myspace/index/6915/
