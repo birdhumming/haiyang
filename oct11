@@ -1,0 +1,278 @@
+Acwing《语法基础课》笔记
+https://www.acwing.com/blog/content/4017/
+
+输入函数返回值的妙用：
+
+if(cin >> x && x > 0) {...}         // 写法1
+if(cin >> x, x > 0) {...}           // 写法2。与写法1不同的是，这里的if语句不考虑"cin >> x"的返回值。"cin >> x"仅做执行，然后抛弃其返回值，最后对判断x > 0。即等价于"cin >> x; if(x > 0) {...}"，可以节省1行。
+
+if(scanf("%d", &x) && x > 0) {...}  // 写法1
+if(scanf("%d", &x), x > 0) {...}    // 写法2
+
+if(~scanf("%d", &x)) {...}          // 判断是否非法输入（EOF），用于文件读取
+逗号运算符：
+
+C++的,运算符对逗号前后的表达式进行运算，然后舍弃前一个表达式的返回值，仅仅返回最后一个表达式的返回值，例
+
+if (表达式1, 表达式2, 表达式3) {...}
+等价于
+
+表达式1;
+表达式2;
+if (表达式3) {...}
+节省了2行代码
+
+重复执行n次的简单模板：
+
+while (n--) {
+    ...
+}
+
+作者：摸鱼小王子
+链接：https://www.acwing.com/blog/content/4017/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 656. 钞票和硬币(非放大法)    原题链接    中等
+作者：    Accepting ,  2020-04-22 13:51:39 ,  阅读 305
+
+2
+
+
+1
+鄙人不才，此中鄙陋甚多，望海涵！
+题目描述
+读取一个带有两个小数位的浮点数，这代表货币价值。
+
+在此之后，将该值分解为多种钞票与硬币的和，每种面值的钞票和硬币使用数量不限，要求使用的钞票和硬币的数量尽可能少。
+
+钞票的面值是100,50,20,10,5,2。
+
+硬币的面值是1,0.50,0.25,0.10,0.05和0.01。
+
+输入格式
+输入一个浮点数N。
+
+输出格式
+参照输出样例，输出每种面值的钞票和硬币的需求数量。
+
+数据范围
+0≤N≤1000000.00
+
+样例
+输入样例：
+576.73
+输出样例：
+NOTAS:
+5 nota(s) de R$ 100.00
+1 nota(s) de R$ 50.00
+1 nota(s) de R$ 20.00
+0 nota(s) de R$ 10.00
+1 nota(s) de R$ 5.00
+0 nota(s) de R$ 2.00
+MOEDAS:
+1 moeda(s) de R$ 1.00
+1 moeda(s) de R$ 0.50
+0 moeda(s) de R$ 0.25
+2 moeda(s) de R$ 0.10
+0 moeda(s) de R$ 0.05
+3 moeda(s) de R$ 0.01
+C++ 代码
+#include<iostream>
+
+using namespace std;
+
+const int N=10;
+
+int b[N],c[N];
+
+int main()
+{
+    double s[7]={0,100,50,20,10,5,2};
+    double p[7]={0,1.00,0.50,0.25,0.10,0.05,0.010};
+    double a;
+    cin>>a;
+    for(int i=1;i<=6;i++)
+    {
+        b[i]=a/s[i];
+        a-=(s[i]*b[i]);
+    }
+    for(int i=1;i<=6;i++)
+    {
+        double x=a/p[i];
+        c[i]=(int)(x+0.00001);//防止了精度问题
+        a=a-(c[i]*p[i]);
+    }
+    puts("NOTAS:");
+    for(int i=1;i<=6;i++)
+    {
+        printf("%d nota(s) de R$ %.2lf\n",b[i],s[i]);
+    }
+    puts("MOEDAS:");
+    for(int i=1;i<=6;i++)
+    {
+        printf("%d moeda(s) de R$ %.2lf\n",c[i],p[i]);
+    }
+    return 0; 
+}
+
+作者：Accepting
+链接：https://www.acwing.com/solution/content/11928/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    double N;
+    cin >> N;
+    int n = (int)N;
+    int N_sub = 100*N - 100*n;
+
+    cout << "NOTAS:" <<endl;
+    cout << n/100 << " nota(s) de R$ 100.00" <<endl;
+    n %= 100;
+    cout << n/50 << " nota(s) de R$ 50.00" <<endl;
+    n %= 50;
+    cout << n/20 << " nota(s) de R$ 20.00" <<endl;
+    n %= 20;
+    cout << n/10 << " nota(s) de R$ 10.00" <<endl;
+    n %= 10;
+    cout << n/5 << " nota(s) de R$ 5.00" <<endl;
+    n %= 5;
+    cout << n/2 << " nota(s) de R$ 2.00" <<endl;
+    n %= 2;
+    cout << "MOEDAS:" <<endl;
+    cout << n << " moeda(s) de R$ 1.00" <<endl;
+
+    cout << N_sub/50 << " moeda(s) de R$ 0.50" <<endl;
+    N_sub %= 50;
+    cout << N_sub/25 << " moeda(s) de R$ 0.25" <<endl;
+    N_sub %= 25;
+    cout << N_sub/10 << " moeda(s) de R$ 0.10" <<endl;
+    N_sub %= 10;
+    cout << N_sub/5 << " moeda(s) de R$ 0.05" <<endl;
+    N_sub %= 5;
+    cout << N_sub << " moeda(s) de R$ 0.01" <<endl;
+
+    return 0;
+}
+
+作者：Asiim0v
+链接：https://www.acwing.com/solution/content/9008/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+AcWing 656. 钞票和硬币    原题链接    中等
+作者：    optimjie ,  2020-02-26 18:04:51 ,  阅读 712
+
+16
+
+
+3
+刚才打saber被double精度坑了，所以直接 *100 变成int就能过了
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main()
+{
+    double n;
+    cin >> n;
+
+    int m = (int)(n * 100);
+
+    double a[12] = {10000, 5000, 2000, 1000, 500, 200, 100, 50, 25, 10, 5, 1};
+    int ans[12] = {0};
+
+    for (int i = 0; i < 12; i++)
+    {
+        int cnt = 0;
+        while (m >= a[i])
+        {
+            m -= a[i];
+            cnt++;
+        }
+        ans[i] = cnt;
+    }
+
+    puts("NOTAS:");
+    for (int i = 0; i < 6; i++)
+        printf("%d nota(s) de R$ %.2lf\n", ans[i], (double)a[i] / 100);
+    puts("MOEDAS:");
+    for (int i = 6; i < 12; i++)
+        printf("%d moeda(s) de R$ %.2lf\n", ans[i], (double)a[i] / 100);
+
+    return 0;
+}
+
+
+作者：optimjie
+链接：https://www.acwing.com/solution/content/9139/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int main(){
+    double m;   cin >> m;
+    int a = int(m);
+    int b = int(m * 100 - a * 100);
+    cout << "NOTAS:" << endl;
+    double notes[6] = {100, 50, 20, 10, 5, 2};
+    for(int i = 0; i < 6; i ++ ){
+        printf("%d nota(s) de R$ %.2lf\n", a / int(notes[i]), notes[i]);
+        a %= int(notes[i]);
+    }
+    b += a * 100;
+    cout << "MOEDAS:" << endl;
+    double moedas[6] = {1, 0.5, 0.25, 0.10, 0.05, 0.01};
+    for(int i = 0; i < 6; i ++ ){
+        printf("%d moeda(s) de R$ %.2lf\n", b / int(moedas[i] * 100), moedas[i]);
+        b %= int(moedas[i] * 100);
+    }
+    return 0;
+}
+
+作者：魔鬼
+链接：https://www.acwing.com/solution/content/20392/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+#include <cstdio>
+int main(){
+    double n;
+    scanf("%lf",&n);
+    int money=n*100;
+    printf("NOTAS:\n");
+    printf("%d nota(s) de R$ 100.00\n",money/10000); money%=10000;
+    printf("%d nota(s) de R$ 50.00\n",money/5000); money%=5000;
+    printf("%d nota(s) de R$ 20.00\n",money/2000); money%=2000;
+    printf("%d nota(s) de R$ 10.00\n",money/1000); money%=1000;
+    printf("%d nota(s) de R$ 5.00\n",money/500); money%=500;
+    printf("%d nota(s) de R$ 2.00\n",money/200); money%=200;
+
+    printf("MOEDAS:\n");
+    printf("%d moeda(s) de R$ 1.00\n",money/100); money%=100;
+    printf("%d moeda(s) de R$ 0.50\n",money/50); money%=50;
+    printf("%d moeda(s) de R$ 0.25\n",money/25); money%=25;
+    printf("%d moeda(s) de R$ 0.10\n",money/10); money%=10;
+    printf("%d moeda(s) de R$ 0.05\n",money/5); money%=5;
+    printf("%d moeda(s) de R$ 0.01\n",money/1); money%=1;
+    return 0;
+}
+
+作者：vaiduryaEmotional
+链接：https://www.acwing.com/solution/content/16351/
+来源：AcWing
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
