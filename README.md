@@ -13718,3 +13718,32 @@ lucas定理
 
 二分法专题（一）
 https://www.acwing.com/file_system/file/content/whole/index/content/1367304/
+
+
+AcWing 785. 快速排序 python
+申侠的头像申侠
+12小时前
+import math
+n = int(input())
+arr = list(map(int, input().split()))
+
+def quicksort(arr, l, r):
+    if l >= r: return
+    else:
+        pivot = arr[int((l+r)/2)]  # 或者 pivot = arr[l]
+        i = l - 1
+        j = r + 1
+        while i < j:
+            i += 1
+            j -= 1
+            while arr[i] < pivot:
+                i += 1
+            while arr[j] > pivot:
+                j -= 1
+            if i < j:
+                arr[i], arr[j] = arr[j], arr[i]
+        quicksort(arr, l, j)
+        quicksort(arr, j+1, r)
+
+quicksort(arr, 0, n-1)
+print(' '.join(map(str,arr)))
