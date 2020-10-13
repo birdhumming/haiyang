@@ -13759,3 +13759,79 @@ intro to proba, harvard and stanford 2019 Hwang
 https://drive.google.com/file/d/1VmkAAGOYCTORq1wxSQqy255qLJjTNvBI/view
 
 better than MIT old book
+
+>> syms x real
+>> f = 1/x
+ 
+f =
+ 
+1/x
+ 
+>> int(f,1,2)
+ 
+ans =
+ 
+log(2)
+ 
+>> diff(f)
+ 
+ans =
+ 
+-1/x^2
+ 
+>> syms x a b real positive
+>> f = 1/x
+ 
+f =
+ 
+1/x
+ 
+>> int(f)
+ 
+ans =
+ 
+log(x)
+ 
+>> int(f,a,b)
+ 
+ans =
+ 
+log(b) - log(a)
+ 
+>> fn=matlabFunction(f)
+
+fn =
+
+  function_handle with value:
+
+    @(x)1.0./x
+
+>> quadgk(fn,1,2)
+
+ans =
+
+    0.6931
+
+>> log(2)
+
+ans =
+
+    0.6931
+
+>> (fn(2+1e-6)-fn(2))/1e-6
+
+ans =
+
+   -0.2500
+
+>> subs(diff(f),2)
+ 
+ans =
+ 
+-1/4
+ 
+>> 
+
+matlab integral and derivative:
+
+https://www.mathworks.com/matlabcentral/answers/30313-how-to-calculate-a-derivative
