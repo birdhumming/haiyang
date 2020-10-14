@@ -13843,3 +13843,29 @@ i.i.d = independent and identically distributed
 r.v.s = random variables
 
 pmf = probability mass function
+
+C++STL基础
+https://www.acwing.com/file_system/file/content/whole/index/content/1374181/
+
+【模板】线段树相关——基本操作、Lazy标记
+https://www.acwing.com/file_system/file/content/whole/index/content/1373903/
+
+HashMap的键的自定义类型
+https://www.acwing.com/file_system/file/content/whole/index/content/1373605/
+
+AcWing 01. 空闲总结
+https://www.acwing.com/file_system/file/content/whole/index/content/1373373/
+
+前缀和算法
+https://www.acwing.com/file_system/file/content/whole/index/content/1373179/
+
+
+算法总结之C++基础与STL
+https://www.acwing.com/file_system/file/content/whole/index/content/1373017/
+
+
+宏---无比强大。
+https://www.acwing.com/file_system/file/content/whole/index/content/1372873/
+
+2021 秋招 shopee新加坡 后端一面面经（Java）
+https://www.acwing.com/file_system/file/content/whole/index/content/1372067/
