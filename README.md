@@ -13835,3 +13835,11 @@ ans =
 matlab integral and derivative:
 
 https://www.mathworks.com/matlabcentral/answers/30313-how-to-calculate-a-derivative
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1369704/
+
+i.i.d = independent and identically distributed
+
+r.v.s = random variables
+
+pmf = probability mass function
