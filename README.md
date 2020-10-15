@@ -13869,3 +13869,13 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1372873/
 
 2021 秋招 shopee新加坡 后端一面面经（Java）
 https://www.acwing.com/file_system/file/content/whole/index/content/1372067/
+
+
+AcWing 6. 多重背包问题 III（清楚的理解，彻底解决)
+https://www.acwing.com/file_system/file/content/whole/index/content/1377102/
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1376972/
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1376181/
+
+感觉CSES(CSEShttps://cses.fi/)上的题目对比赛很有针对性　y总能开个栏目讲上面的题或者放到杂题选讲里面吗
