@@ -14019,3 +14019,37 @@ for idx, i in enumerate(lt):
 res.append([maxL, maxR])        
 print(len(res))
 
+
+
+MySQL redo 日志
+wangzitiansky的头像wangzitiansky
+5小时前
+MySQL 的 redo 日志
+原文地址 GitHub
+
+分享文章汇总
+为什么要有 redo 日志
+其实 redo 日志主要是为 MySQL 提供了异常情况下恢复数据的功能。MySQL 为了性能考虑，所以在更新一条数据时，只会将内存中的数据更新，并不会更新磁盘中的数据。但是如果此时 MySQL 出现了崩溃，那内存中的数据就丢了，这是不可接受的。但是每次都把更新刷新到磁盘又实在是太慢了，所以就出现了 redo 日志。redo 日志记录的是对数据库的修改，如果遇到系统崩溃，那直接按照 redo 日志，重新更新一下数据库就好了。
+
+redo 日志的好处
+redo 日志占据空间较小
+一条 redo 日志占用空间不是很大
+
+redo 日志是顺序写入磁盘的
+顺序 IO 的性能是好于随机 IO 的（如果直接更新磁盘中的数据页，则是随机 IO）
+
+保证数据库发生异常重启之后，之前的更新不会丢失
+这就是 crash-safe 能力
+
+一条更新语句写入数据库的过程
+当一条更新数据库的语句执行之后，首先会写入 redo 日志，更新内存，之后在适当的时间才会将此次更新刷新到磁盘
+
+参考
+https://time.geekbang.org/column/article/68633
+
+https://juejin.im/book/6844733769996304392/section/6844733770063626253
+
+
+
+two split
+https://www.acwing.com/file_system/file/content/whole/index/content/1380983/
