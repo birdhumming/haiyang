@@ -1,3 +1,4 @@
+
 https://www.csie.ntu.edu.tw/~htlin/course/ml20fall/
 Hsuan-Tien Lin
 
@@ -7,6 +8,17 @@ has Hoeffding inequality
 DSA:
 Textbook: Data Structures and Algorithms in C++, 2nd Edition by Goodrich, Tamassia and Mount
 
+
+
+Russell and Norvig. Artificial Intelligence: A Modern Approach. A comprehensive reference for all the AI topics that we will cover.
+Koller and Friedman. Probabilistic Graphical Models. Covers factor graphs and Bayesian networks (this is the textbook for CS228).
+Sutton and Barto. Reinforcement Learning: An Introduction. Covers Markov decision processes and reinforcement learning. Available free online.
+Hastie, Tibshirani, and Friedman. The elements of statistical learning. Covers machine learning. Available free online.
+Tsang. Foundations of constraint satisfaction. Covers constraint satisfaction problems. Available free online.
+https://stanford-cs221.github.io/autumn2020/
+
+Statistical Learning Theory
+https://github.com/percyliang/cs229t/blob/master/lectures/notes.pdf
 
 利用STL::allocator分配特定类型的数组
 小小蒟蒻的头像小小蒟蒻
