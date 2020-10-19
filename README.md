@@ -1,3 +1,46 @@
+利用STL::allocator分配特定类型的数组
+小小蒟蒻的头像小小蒟蒻
+16小时前
+#include <memory>
+#include <iostream>
+#include <string>
+using namespace std;
+const int MAX_LEN = 10;
+
+int main()
+{
+    // 利用stl的allocator构造int数组
+    allocator<int> type_int;
+    int* a = type_int.allocate(MAX_LEN);
+    for (int i = 0; i < MAX_LEN; i++)
+    {
+        type_int.construct(a + i, i);
+        cout << a[i] << " ";
+    }
+    cout << endl;
+
+    for (int i = 0; i < MAX_LEN; i++)
+    {
+        type_int.destroy(a + i);
+    }
+    type_int.deallocate(a, MAX_LEN);
+
+    return 0;
+}
+
+
+
+
+美团机试题 求助
+来日可期_7的头像来日可期_7
+12小时前
+我们称一个长度为n的序列为正则序列，当且仅当该序列是一个由1~n组成的排列，即该序列由n个正整数组成，取值在[1,n]范围，且不存在重复的数，同时正则序列不要求排序。
+有一天小团得到了一个长度为n的任意序列，他需要在有限次操作内，将这个序列变成一个正则序列，每次操作他可以任选序列中的一个数字，并将该数字加一或者减一。请问他最少用多少次操作可以把这个序列变成正则序列。
+
+输入描述：
+输入第一行仅包含一个正整数n,表示任意序列的长度。(1<=n<= 20000)
+输入第二行包含n个整数，空格隔开，表示给出的序列，每个数的绝对值都小于10000。
+
 
 
 trinity 2015 taiwan
