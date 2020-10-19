@@ -8,7 +8,7 @@ has Hoeffding inequality
 DSA:
 Textbook: Data Structures and Algorithms in C++, 2nd Edition by Goodrich, Tamassia and Mount
 
-
+pattern=function=model?
 
 Russell and Norvig. Artificial Intelligence: A Modern Approach. A comprehensive reference for all the AI topics that we will cover.
 Koller and Friedman. Probabilistic Graphical Models. Covers factor graphs and Bayesian networks (this is the textbook for CS228).
