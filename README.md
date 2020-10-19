@@ -1,3 +1,43 @@
+trinity 2015 taiwan
+AI, data mining, stats
+theory : hoeffding, multi-bin hoeffding, vc
+linear models: PLA/pocket, linear regression, logistic regression
+tools: feature transform,regularization, validation
+future: transform, regularization,less label
+KDDCup2011
+https://www.youtube.com/watch?v=jIpwy-mPvIA&list=PLXVfgk9fNX2IQOYPmqjqWsNUFl2kpk1U2&index=65
+matrix factorization, restricted boltzmann machine, k NN, prob latent semantic analsys
+linear regression, NNet, GBDT
+2012 linear blending of models without overfitting
+random forest, GBDT variants, designing features
+construct features w/ domain knowledge
+ICDM 2006 -decision tree, k-means,SVM, apriori - for frequent iemset mining
+EM - alternating optimation
+pagerank - link-analysis, matrix factorization
+adaboost
+knn
+naive bayes
+c&rt - data mining
+missing linreg, logreg,random forst, nnet, gbdt
+machine learning jungle
+1126 is a lunck number?
+
+https://www.bilibili.com/video/BV1aE411o7qd?p=130
+机器学习-白板推导系列-合集
+共23个系列, 130个视频
+pla- perceptron linear algorithm
+
+caltech cs156 yaser on ML: 2012
+baysian - just watch the last video - reverse the order!
+google earth, brain
+entropy = VC dimension, hypothesis testing
+stem=reductionism=god
+multimeter + co detector
+
+airplane wheels
+trinity - data snooping/honesty, razor, sampling bias, ; newton 3; 
+pattern, data
+
 https://clist.by/
 
 An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
