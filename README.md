@@ -1,6 +1,11 @@
 https://www.csie.ntu.edu.tw/~htlin/course/ml20fall/
 Hsuan-Tien Lin
 
+Textbook: Learning from Data, by Yaser Abu-Mostafa, Malik Magdon-Ismail and Hsuan-Tien Lin
+has Hoeffding inequality
+
+DSA:
+Textbook: Data Structures and Algorithms in C++, 2nd Edition by Goodrich, Tamassia and Mount
 
 
 利用STL::allocator分配特定类型的数组
