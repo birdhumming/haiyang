@@ -36,6 +36,12 @@ https://github.com/percyliang/cs229t/blob/master/lectures/notes.pdf
 ML for Edgar:
 https://github.com/yiaktan/NLP-Stock-Prediction/blob/master/Data%20Collection%20%26%20PreProcessing.ipynb
 
+python3 -m venv myenv
+source myenv/bin/activate
+#jupyter notebook test.ipynb will start safari 
+jupyter notebook Data\ Collection\ \&\ PreProcessing.ipynb
+
+
 
 利用STL::allocator分配特定类型的数组
 小小蒟蒻的头像小小蒟蒻
