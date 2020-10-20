@@ -1,3 +1,8 @@
+https://www.youtube.com/watch?v=0ttRHJUHZog&list=PLXVfgk9fNX2L9tQhO-Tqk58TzC6mTJ7OV&index=7
+https://github.com/yiaktan/NLP-Stock-Prediction/blob/master/Data%20Collection%20%26%20PreProcessing.ipynb
+
+https://github.com/decentralion/RoboBuffett not working
+machine learning stock analysis edgar github
 
 https://www.csie.ntu.edu.tw/~htlin/course/ml20fall/
 Hsuan-Tien Lin
