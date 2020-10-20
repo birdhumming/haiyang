@@ -2,8 +2,13 @@
 https://www.csie.ntu.edu.tw/~htlin/course/ml20fall/
 Hsuan-Tien Lin
 
-probability to the rescue - hoeffding inequality
+probability to the rescue - hoeffding inequality!!!
 https://www.youtube.com/watch?v=MgAihqFPkZc&list=PLXVfgk9fNX2L9tQhO-Tqk58TzC6mTJ7OV&index=6
+
+P[|m-n|>e] <= 2 exp (-2*e^2*N)
+N is sample size; m is real unknown out-of-sample mean; n is the in-sample nu;
+does not depend on mu, no need to know mu!
+probably approximately correct (PAC)
 
 https://www.youtube.com/watch?v=0ttRHJUHZog&list=PLXVfgk9fNX2L9tQhO-Tqk58TzC6mTJ7OV&index=7
 
