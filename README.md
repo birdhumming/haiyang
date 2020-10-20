@@ -12,6 +12,8 @@ probably approximately correct (PAC)
 
 https://www.youtube.com/watch?v=0ttRHJUHZog&list=PLXVfgk9fNX2L9tQhO-Tqk58TzC6mTJ7OV&index=7
 
+iid=independent and identically distributed
+
 Textbook: Learning from Data, by Yaser Abu-Mostafa, Malik Magdon-Ismail and Hsuan-Tien Lin
 has Hoeffding inequality
 
@@ -33,6 +35,7 @@ https://github.com/percyliang/cs229t/blob/master/lectures/notes.pdf
 
 ML for Edgar:
 https://github.com/yiaktan/NLP-Stock-Prediction/blob/master/Data%20Collection%20%26%20PreProcessing.ipynb
+
 
 利用STL::allocator分配特定类型的数组
 小小蒟蒻的头像小小蒟蒻
