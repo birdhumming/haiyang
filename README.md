@@ -1,3 +1,71 @@
+# -*- coding: UTF-8 -*-
+
+import pickle
+然后选几样您喜欢的小菜，统统装进【葫芦】里。
+
+food = ["白萝卜", "白菜", "黄瓜", "卷心菜", "海带"]
+接下来，只要把食物放进去，封口(dump)，找个地方放着就成了。讲究点的，也会专门在冰箱或者储物柜里留个包场，就像这样：
+
+pickle.dump(food, open("./data/food", "w"))
+赶明儿和客人谈得热闹，就可以摆上两三小菜，再来两盅老酒，一杯清茶：
+
+import pickle
+
+food = pickle.load(open("./data/food", "r"))
+不过啊，这样做出来的小菜，放哪儿都一样，太平淡了，比洋人的可乐炸鸡还标准：
+
+【./data/food】（in python2）
+
+
+这样做菜快是快了，却少了点咱传统里，高山流水酬知音那味儿，总觉不够尽心。
+
+因此小店总是按客人的口味，多配几种【盐(salt)】。这便是小店的【绝密拍黄瓜(EncryptedPickle)】。
+
+客人爱吃榴莲口儿的，就记上, salt = “榴莲”
+
+#!/bin/env python2
+
+#encoding=utf-8
+
+from encryptedpickle import encryptedpickle
+
+salt = '\0' * 26 + '榴莲'
+
+passphrases = {
+
+0: salt
+
+}
+
+food = ["白萝卜", "白菜", "黄瓜", "卷心菜", "海带"]
+
+encoder = encryptedpickle.EncryptedPickle(
+
+signature_passphrases=passphrases,
+
+encryption_passphrases=passphrases
+
+)
+
+special_pickle = encoder.seal(food)
+
+with open('./data/food_with_salt', 'w') as f:
+
+f.write(special_pickle)
+别的客人要想打开看看坛子里装的什么内容，可就没那么容易了。
+
+【./data/food_with_salt】（in python2）
+
+EPAQAAAAABAAAAPPkdEWPeLgAdqqGIV3CbNy-wJqTvVX_vw-fvcdTJt0lnHUtAG8K3yKyNwoGK9QDFN1cLj4Ba7eXJqRKEiamAB2uQdUsgvKHgICQYxdT_7cJXLb3M9wj76b6E0-gPBlD-GDu7iOaZH2nWMGJJn_we3QC9Lnmlfek-GbrAJYvcDSDLxtdo9CXtPkAc9Ah0dHehFapOk2YMXYCPxaU5kGX1S53ekqMoNAcRuQ7_i42ccyONoyeyvr_s8MwhrZugUU3a2Z0gArhHEyH3hQBUAMtSwg
+这salt的内容，可是咱们之间的秘密。
+
+来，尝尝这为您私人订制的小菜：
+
+encoder.unseal(special_pickle)
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1386881/
+
+
 https://www.youtube.com/watch?v=0ttRHJUHZog&list=PLXVfgk9fNX2L9tQhO-Tqk58TzC6mTJ7OV&index=7
 https://github.com/yiaktan/NLP-Stock-Prediction/blob/master/Data%20Collection%20%26%20PreProcessing.ipynb
 
