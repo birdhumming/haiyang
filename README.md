@@ -14290,5 +14290,8 @@ dist[X]>dist[Y],dist[A]+a=dist[X],dist[B]+a=dist[Y]
 时间复杂度O(V + E)
 
 
+https://www.youtube.com/watch?v=Ud9o3HJBb7Y&feature=youtu.be&list=PLk5MIQ__5Xo02mG9liAPl5vpjup7LapFr&t=1909
+Machine Learning Foundations/Techniques: Training versus Testing
+
 shatter=dichotomy, growth function, convex/concave, hypothesis set
 break point
