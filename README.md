@@ -14289,3 +14289,6 @@ dist[X]>dist[Y],dist[A]+a=dist[X],dist[B]+a=dist[Y]
 
 时间复杂度O(V + E)
 
+
+shatter=dichotomy, growth function, convex/concave, hypothesis set
+break point
