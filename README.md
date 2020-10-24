@@ -1,3 +1,7 @@
+台湾大学林轩田机器学习笔记
+
+https://github.com/apachecn/ntu-hsuantienlin-ml
+
 (上海交通大学张志华)机器学习导论
 
 https://www.bilibili.com/video/BV1jt411b76n/?spm_id_from=333.788.videocard.0
