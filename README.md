@@ -3,6 +3,8 @@
 https://www.bilibili.com/video/BV1jt411b76n/?spm_id_from=333.788.videocard.0
 same as not much content http://ocw.sjtu.edu.cn/G2S/OCW/cn/CourseDetails.htm?Id=397
 
+taiwan
+https://www.youtube.com/watch?v=9kra9i6jS1g&list=PLk5MIQ__5Xo02mG9liAPl5vpjup7LapFr&index=1
 
 # -*- coding: UTF-8 -*-
 
