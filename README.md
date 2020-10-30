@@ -1,5 +1,11 @@
-台湾大学林轩田机器学习笔记
+trie, union find,heap 第二章 数据结构（二）
 
+trie - efficient store and find string set
+in dictionary order;
+https://www.geeksforgeeks.org/trie-insert-and-search/
+
+
+台湾大学林轩田机器学习笔记
 https://github.com/apachecn/ntu-hsuantienlin-ml
 
 (上海交通大学张志华)机器学习导论
