@@ -1,0 +1,1721 @@
+ml
+
+李宏毅2020机器学习深度学习(完整版)国语
+https://www.bilibili.com/video/BV1JE411g7XF?p=56
+
+
+http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
+
+pytorch intro
+https://colab.research.google.com/drive/1Xed5YSpLsLfkn66OhhyNzr05VE89enng#scrollTo=ABhZ5mKpMThM
+
+
+The Learning Problem :: Course Introduction @ Machine Learning Foundations (機器學習基石)
+https://www.youtube.com/watch?v=nQvpFSMPhr0&list=PLXVfgk9fNX2I7tB6oIINGBmW50rrmFTqf
+
+
+佬的迷弟的粉丝发消息
+致力于划水摸鱼的佛系研究生
+ 关注 2.0万
+展开
+弹幕列表
+该视频弹幕为空
+视频选集
+118/118
+P1
+Machine Learning (2020)_ Course Introduction
+36:10
+P2
+Rule of ML 2020
+22:04
+P3
+Regression - Case Study
+1:18:35
+P4
+Basic Concept
+43:14
+P5
+Gradient Descent_1
+1:01:52
+P6
+Gradient Descent_2
+02:36
+P7
+Gradient Descent_3
+01:41
+P8
+Optimization for Deep Learning (1_2) (选学)
+54:36
+P9
+Optimization for Deep Learning (2_2) (选学)
+54:32
+P10
+Classification_1
+1:09:41
+P11
+Logistic Regression
+1:07:13
+P12
+Brief Introduction of Deep Learning
+46:30
+P13
+Backpropagation
+31:26
+P14
+Tips for Training DNN
+1:26:02
+P15
+Why Deep-
+57:45
+P16
+PyTorch Tutorial
+52:39
+P17
+Convolutional Neural Network
+1:19:29
+P18
+Graph Neural Network (1_2) (选学)
+39:02
+P19
+Graph Neural Network (2_2) (选学)
+1:11:37
+P20
+Recurrent Neural Network (Part I)
+49:00
+P21
+Recurrent Neural Network (Part II)
+1:30:50
+P22
+Unsupervised Learning - Word Embedding
+40:39
+P23
+Transformer
+49:32
+P24
+Semi-supervised
+59:59
+P25
+ELMO, BERT, GPT
+1:04:52
+P26
+Explainable ML (1_8)
+13:51
+P27
+Explainable ML (2_8)
+14:08
+P28
+Explainable ML (3_8)
+06:08
+P29
+Explainable ML (4_8)
+07:16
+P30
+Explainable ML (5_8)
+08:13
+P31
+Explainable ML (6_8)
+07:27
+P32
+Explainable ML (7_8)
+08:03
+P33
+Explainable ML (8_8)
+07:17
+P34
+More about Explainable AI (选学)
+1:44:29
+P35
+Attack ML Models (1_8)
+06:06
+P36
+Attack ML Models (2_8)
+11:43
+P37
+Attack ML Models (3_8)
+07:03
+P38
+Attack ML Models (4_8)
+08:12
+P39
+Attack ML Models (5_8)
+06:39
+P40
+Attack ML Models (6_8)
+09:27
+P41
+Attack ML Models (7_8)
+08:04
+P42
+Attack ML Models (8_8)
+10:11
+P43
+More about Adversarial Attack (1_2) (选学)
+29:58
+P44
+More about Adversarial Attack (2_2) (选学)
+29:45
+P45
+Network Compression (1_6)
+08:24
+P46
+Network Compression (2_6)
+12:44
+P47
+Network Compression (3_6)
+08:33
+P48
+Network Compression (4_6)
+06:37
+P49
+Network Compression (5_6)
+11:53
+P50
+Network Compression (6_6)
+13:09
+P51
+Network Compression (1_2) - Knowledge Distillation (选学)
+1:07:53
+P52
+Network Compression (2_2) - Network Pruning (选学)
+39:33
+P53
+Conditional Generation by RNN & Attention
+1:41:14
+P54
+Pointer Network
+13:34
+P55
+Recursive
+24:58
+P56
+Transformer and its variant (选学)
+1:49:23
+P57
+Unsupervised Learning - Linear Methods
+1:40:20
+P58
+Unsupervised Learning - Neighbor Embedding
+30:58
+P59
+Unsupervised Learning - Auto-encoder
+42:04
+P60
+Unsupervised Learning - Deep Generative Model (Part I)
+29:34
+P61
+Unsupervised Learning - Deep Generative Model (Part II)
+1:03:31
+P62
+More about Auto-encoder (1_4)
+13:39
+P63
+More about Auto-encoder (2_4)
+06:12
+P64
+More about Auto-encoder (3_4)
+12:29
+P65
+More about Auto-encoder (4_4)
+14:52
+P66
+Self-supervised Learning (选学)
+40:37
+P67
+Anomaly Detection (1_7)
+13:23
+P68
+Anomaly Detection (2_7)
+14:10
+P69
+Anomaly Detection (3_7)
+14:05
+P70
+Anomaly Detection (4_7)
+04:08
+P71
+Anomaly Detection (6_7)
+12:20
+P72
+Anomaly Detection (7_7)
+06:02
+P73
+More about Anomaly Detection (选学)
+46:52
+P74
+Generative Adversarial Network(1_10)
+1:33:15
+P75
+Generative Adversarial Network(2_10)
+26:19
+P76
+Generative Adversarial Network(3_10)
+38:59
+P77
+Generative Adversarial Network(4_10)
+1:20:19
+P78
+Generative Adversarial Network(5_10)
+25:04
+P79
+Generative Adversarial Network(6_10)
+50:07
+P80
+Generative Adversarial Network(7_10)
+46:03
+P81
+Generative Adversarial Network(8_10)
+22:46
+P82
+Generative Adversarial Network(9_10)
+1:27:23
+P83
+Generative Adversarial Network(10_10)
+30:09
+P84
+SAGAN, BigGAN, SinGAN, GauGAN, GANILLA, NICE-GAN（选学）
+1:06:17
+P85
+Transfer Learning
+1:14:28
+P86
+More about Domain Adaptation (1_2) (选学)
+52:01
+P87
+More about Domain Adaptation (2_2) (选学)
+34:11
+P88
+Meta Learning – MAML (1_9)
+07:42
+P89
+Meta Learning – MAML (2_9)
+07:53
+P90
+Meta Learning – MAML (3_9)
+10:21
+P91
+Meta Learning – MAML (4_9)
+05:15
+P92
+Meta Learning – MAML (5_9)
+13:22
+P93
+Meta Learning – MAML (6_9)
+06:33
+P94
+Meta Learning – MAML (7_9)
+08:54
+P95
+Meta Learning – MAML (8_9)
+05:12
+P96
+Meta Learning – MAML (9_9)
+06:53
+P97
+More about Meta Learning (选学)
+44:10
+P98
+More about Meta Learning (选学)
+53:11
+P99
+Life Long Learning (1_7)
+13:51
+P100
+Life Long Learning (2_7)
+07:25
+P101
+Life Long Learning (3_7)
+12:04
+P102
+Life Long Learning (4_7)
+04:40
+P103
+Life Long Learning (5_7)
+03:20
+P104
+Life Long Learning (6_7)
+14:15
+P105
+Life Long Learning (7_7)
+11:35
+P106
+More about Lifelong Learning (选学)
+57:48
+P107
+Deep Reinforcemen Learning(3_1)
+1:06:22
+P108
+Deep Reinforcemen Learning(3_2)
+13:20
+P109
+Deep Reinforcemen Learning(3_3)
+1:05:34
+P110
+RL Advanced Version_1_Policy Gradient
+45:49
+P111
+RL Advanced Version_2_ Proximal Policy Optimization
+41:34
+P112
+RL Advanced Version_3_Q-Learning
+49:44
+P113
+RL Advanced Version_4_Q-Learning Advanced Tips
+38:31
+P114
+RL Advanced Version_5_Q-Learning Continuous Action
+14:58
+P115
+RL Advanced Version_6_Actor-Critic
+34:16
+P116
+RL Advanced Version_7_Sparse Reward
+30:16
+P117
+RL Advanced Version_8_Imitation Learning
+34:02
+P118
+RL - Model-based, Large-scale, Meta, Multi-agent, Hide-and-seek, Alpha（选学）
+1:42:05
+
+https://www.bilibili.com/video/BV1JE411g7XF?p=118
+
+
+
+
+shuhuai008发消息
+微信请加hugo_zhou进群
+ 关注 6.8万
+展开
+弹幕列表
+该视频弹幕为空
+视频选集
+130/130
+P1
+(系列一) 绪论-资料介绍
+19:15
+P2
+(系列一) 绪论-频率派vs贝叶斯派
+15:44
+P3
+(系列二) 数学基础-概率-高斯分布1-极大似然估计
+26:04
+P4
+(系列二) 数学基础-概率-高斯分布2-极大似然估计-无偏VS有偏
+20:28
+P5
+(系列二) 数学基础-概率-高斯分布3-从概率密度角度观察
+25:08
+P6
+(系列二) 数学基础-概率-高斯分布4-局限性
+13:58
+P7
+(系列二) 数学基础-概率-高斯分布5-求边缘概率以及条件概率
+29:44
+P8
+(系列二) 数学基础-概率-高斯分布6-求联合概率分布
+21:33
+P9
+(系列三) 线性回归1-最小二乘法及其几何意义
+25:13
+P10
+(系列三) 线性回归2-最小二乘法-概率视角-高斯噪声-MLE
+12:24
+P11
+(系列三) 线性回归3-正则化-岭回归-频率角度
+16:50
+P12
+(系列三) 线性回归4-正则化-岭回归-贝叶斯角度
+16:03
+P13
+(系列四) 线性分类1-背景
+18:29
+P14
+(系列四) 线性分类2-感知机（Perceptron）
+18:37
+P15
+(系列四) 线性分类3-线性判别分析（Fisher）-模型定义
+33:00
+P16
+(系列四) 线性分类4-线性判别分析（Fisher）-模型求解
+14:33
+P17
+(系列四) 线性分类5-逻辑回归（Logistic Regression）
+17:41
+P18
+(系列四) 线性分类6-高斯判别分析（Gaussian Discriminant Analysis）-模型定义
+18:25
+P19
+(系列四) 线性分类7-高斯判别分析（Gaussian Discriminant Analysis）-模型求解（求期望）
+17:08
+P20
+(系列四) 线性分类8-高斯判别分析（Gaussian Discriminant Analysis）-模型求解（求协方差）
+22:51
+P21
+(系列四) 线性分类9-朴素贝叶斯分类器（Naive Bayes Classifer）
+19:08
+P22
+(系列五) 降维1-背景
+18:15
+P23
+(系列五) 降维2-样本均值&样本方差矩阵
+17:40
+P24
+(系列五) 降维3-PCA-最大投影方差
+21:35
+P25
+(系列五) 降维4-PCA-最小重构代价
+22:40
+P26
+(系列五) 降维5-SVD角度开看PCA和PCoA
+21:08
+P27
+(系列五) 降维6-主成分分析（PCA）-概率角度（Probabilistic PCA）
+34:25
+P28
+(系列六) 支持向量机1-硬间隔SVM-模型定义
+25:16
+P29
+(系列六) 支持向量机2-硬间隔SVM-模型求解-引出对偶问题
+34:23
+P30
+(系列六) 支持向量机3-硬间隔SVM-模型求解-引出KKT条件
+14:55
+P31
+(系列六) 支持向量机4-软间隔SVM-模型定义
+15:32
+P32
+(系列六) 支持向量机5-约束优化问题-弱队偶性证明
+23:24
+P33
+(系列六) 支持向量机6-约束优化问题-对偶关系之几何解释
+36:46
+P34
+(系列六) 支持向量机7-约束优化问题-对偶关系之Slater Condition
+13:11
+P35
+(系列六) 支持向量机8-约束优化问题-对偶关系之KKT条件
+14:51
+P36
+(系列七) 核方法1-背景介绍
+24:06
+P37
+(系列七) 核方法2-正定核-两个定义
+28:24
+P38
+(系列七) 核方法3-正定核-必要性证明
+20:05
+P39
+(系列八) 指数族分布1-背景
+18:55
+P40
+(系列八) 指数族分布2-背景续
+10:30
+P41
+(系列八) 指数族分布3-高斯分布的指数族形式
+12:24
+P42
+(系列八) 指数族分布4-对数配分函数与充分统计量
+12:55
+P43
+(系列八) 指数族分布5-极大似然估计与充分统计量
+11:15
+P44
+(系列八) 指数族分布6-最大熵角度(1)
+13:37
+P45
+(系列八) 指数族分布7-最大熵角度(2)
+21:43
+P46
+(系列九) 概率图模型1-背景介绍
+25:13
+P47
+(系列九) 概率图模型2-贝叶斯网络-条件独立性
+26:45
+P48
+(系列九) 概率图模型3-贝叶斯网络-D-Seperation
+22:14
+P49
+(系列九) 概率图模型4-贝叶斯网络-例子-具体模型
+18:20
+P50
+(系列九) 概率图模型5-马尔可夫随机场-Representation-条件独立性
+19:24
+P51
+(系列九) 概率图模型6-马尔可夫随机场-Representation-因子分解
+12:11
+P52
+(系列九) 概率图模型7-推断Inference-总体介绍
+19:25
+P53
+(系列九) 概率图模型8-推断Inference-Variable Elimination
+24:20
+P54
+(系列九) 概率图模型9-推断Inference-Variable Elimation To Belief Propagation
+32:45
+P55
+(系列九) 概率图模型10-推断Inference-Belief Propagation
+17:06
+P56
+(系列九) 概率图模型11-推断Inference-Max Product(1)
+23:24
+P57
+(系列九) 概率图模型12-推断Inference-Max-Product(2)
+08:46
+P58
+(系列九) 概率图模型13-概念补充-因子图-Factor Graph
+17:01
+P59
+(系列九) 概率图模型14-概念补充-道德图Moral Graph
+18:47
+P60
+(系列十) EM算法1-算法收敛性证明
+19:10
+P61
+(系列十) EM算法2-公式导出之ELBO+KL Divergence
+16:55
+P62
+(系列十) EM算法3-公式导出之ELBO+Jensen Inequlity
+18:57
+P63
+(系列十) EM算法4-再回首
+10:06
+P64
+(系列十) EM算法5-广义EM
+24:48
+P65
+(系列十) EM算法6-EM的变种
+10:13
+P66
+(系列十一) 高斯混合模型1-模型介绍
+26:06
+P67
+(系列十一) 高斯混合模型2-极大似然
+19:38
+P68
+(系列十一) 高斯混合模型3-EM求解-E-Step
+25:10
+P69
+(系列十一) 高斯混合模型4-EM求解-M-Step
+23:48
+P70
+(系列十二) 变分推断1-背景介绍
+15:59
+P71
+(系列十二) 变分推断2-公式推导
+28:06
+P72
+(系列十二) 变分推断3-再回首
+33:05
+P73
+(系列十二) 变分推断4-SGVI-1
+26:40
+P74
+(系列十二) 变分推断5-SGVI-2
+21:37
+P75
+(系列十三) MCMC1-采样方法介绍
+30:10
+P76
+(系列十三) MCMC2-马尔可夫链Markov Chain
+27:02
+P77
+(系列十三) MCMC3-MH算法-Metropolis-Hastings
+23:42
+P78
+(系列十三) MCMC4-吉布斯算法-Gibbs
+15:01
+P79
+(系列十三) MCMC5-回顾
+25:16
+P80
+(系列十三) MCMC6-平稳分布
+45:07
+P81
+(系列十三) MCMC7-采样思路以及面临的困难
+36:45
+P82
+(系列十四) 隐马尔可夫模型1-背景
+24:24
+P83
+(系列十四) 隐马尔可夫模型2-背景续
+07:44
+P84
+(系列十四) 隐马尔可夫模型3-前向算法
+29:20
+P85
+(系列十四) 隐马尔可夫模型4-后向算法
+18:28
+P86
+(系列十四) 隐马尔可夫模型5-Baum-Welch算法(EM)
+25:51
+P87
+(系列十四) 隐马尔可夫模型6-Decoding问题-V维特比算法-Viterbi
+19:47
+P88
+(系列十四) 隐马尔可夫模型7-小结-Filtering问题&Smoothing问题&Prediction问题1
+21:46
+P89
+(系列十四) 隐马尔可夫模型8-小结-Filtering问题&Smoothing问题&Prediction问题2
+25:42
+P90
+(系列十五) 线性动态系统1-背景介绍
+16:28
+P91
+(系列十五) 线性动态系统2-Filtering问题
+27:27
+P92
+(系列十五) 线性动态系统3-Filtering问题求解
+15:12
+P93
+(系列十六) 粒子滤波1-背景介绍
+23:33
+P94
+(系列十六) 粒子滤波2-Importance Sampling & SIS
+33:26
+P95
+(系列十六) 粒子滤波3-重采样
+26:36
+P96
+(系列十六) 粒子滤波4-SIR Filter
+14:05
+P97
+(系列十七) 条件随机场1-背景介绍
+34:44
+P98
+(系列十七) 条件随机场2-HMM VS MEMM
+21:40
+P99
+(系列十七) 条件随机场3-MEMM VS CRF
+31:10
+P100
+(系列十七) 条件随机场4-概率密度函数的参数形式
+28:18
+P101
+(系列十七) 条件随机场5-概率密度函数的向量形式
+22:01
+P102
+(系列十七) 条件随机场6-模型要解决的问题
+14:14
+P103
+(系列十七) 条件随机场7-边缘概率计算
+40:07
+P104
+(系列十七) 条件随机场8-Learning-参数估计
+34:11
+P105
+(系列十八) 高斯网络1-总体介绍
+17:48
+P106
+(系列十八) 高斯网络2-高斯贝叶斯网络介绍
+27:28
+P107
+(系列十八) 高斯网络3-高斯马尔科夫随机场
+34:15
+P108
+(系列十九) 贝叶斯线性回归1
+15:52
+P109
+(系列十九) 贝叶斯线性回归2
+18:18
+P110
+(系列十九) 贝叶斯线性回归3
+28:32
+P111
+(系列十九) 贝叶斯线性回归4
+10:34
+P112
+(系列十九) 贝叶斯线性回归5
+08:35
+P113
+(系列二十) 高斯过程回归1-简单介绍
+24:25
+P114
+(系列二十) 高斯过程回归2-权重空间角度
+38:52
+P115
+(系列二十) 高斯过程回归3-权重空间到函数空间
+31:12
+P116
+(系列二十) 高斯过程回归4-函数空间角度
+24:18
+P117
+(系列二十一) 受限玻尔兹曼机1-背景介绍-引出玻尔兹曼分布
+14:07
+P118
+(系列二十一) 受限玻尔兹曼机2-背景介绍-玻尔兹曼分布的形象解释
+09:06
+P119
+(系列二十一) 受限玻尔兹曼机3-模型表示
+21:09
+P120
+(系列二十一) 受限玻尔兹曼机4-模型表示-回顾
+42:38
+P121
+(系列二十一) 受限玻尔兹曼机5-推断-后验概率
+43:20
+P122
+(系列二十一) 受限玻尔兹曼机6-模型推断-边缘概率
+23:26
+P123
+(系列二十二) 谱聚类1-背景介绍
+09:56
+P124
+(系列二十二) 谱聚类2-模型介绍
+26:21
+P125
+(系列二十二) 谱聚类3-模型的矩阵形式-Indicator Vector
+06:52
+P126
+(系列二十二) 谱聚类4-模型的矩阵形式-对角矩阵
+25:51
+P127
+(系列二十二) 谱聚类5-Lapalacian Matrix
+15:28
+P128
+(系列二十三) 前馈神经网络1-从机器学习到深度学习
+15:48
+P129
+(系列二十三) 前馈神经网络2-从感知机到深度学习
+18:35
+P130
+(系列二十三) 前馈神经网络3-非线性问题的三种解决方法
+25:51
+
+https://www.bilibili.com/video/BV1aE411o7qd?p=130
+
+
+
+
+WATCHED
+10:59
+NOW PLAYING
+The Learning Problem :: Course Introduction @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+2
+
+WATCHED
+18:29
+NOW PLAYING
+The Learning Problem :: What Is Machine Learning @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+3
+
+WATCHED
+18:57
+NOW PLAYING
+The Learning Problem :: Applications of Machine Learning @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+4
+
+WATCHED
+11:46
+NOW PLAYING
+The Learning Problem :: Components of Learning @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+5
+
+WATCHED
+10:22
+NOW PLAYING
+The Learning Problem :: Machine Learning and Other Fields @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+6
+
+WATCHED
+15:43
+NOW PLAYING
+Learning to Answer Yes/No :: Perceptron Hypothesis Set @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+7
+
+19:47
+NOW PLAYING
+Learning to Answer Yes/No :: Perceptron Learning Algorithm @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+8
+
+WATCHED
+12:38
+NOW PLAYING
+Learning to Answer Yes/No :: Guarantee of PLA @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+9
+
+WATCHED
+12:56
+NOW PLAYING
+Learning to Answer Yes/No :: Non-Separable Data @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+10
+
+WATCHED
+17:27
+NOW PLAYING
+Types of Learning :: Learning with Different Output Space @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+11
+
+WATCHED
+18:13
+NOW PLAYING
+Types of Learning :: Learning with Different Data Label @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+12
+
+WATCHED
+11:10
+NOW PLAYING
+Types of Learning :: Learning with Different Protocol @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+13
+
+WATCHED
+14:14
+NOW PLAYING
+Types of Learning :: Learning with Different Input Space @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+14
+
+WATCHED
+13:33
+NOW PLAYING
+Feasibility of Learning :: Learning is Impossible? @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+15
+
+WATCHED
+11:33
+NOW PLAYING
+Feasibility of Learning :: Probability to the Rescue @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+16
+
+WATCHED
+16:47
+NOW PLAYING
+Feasibility of Learning :: Connection to Learning @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+17
+
+WATCHED
+18:06
+NOW PLAYING
+Feasibility of Learning :: Connection to Real Learning @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+18
+
+WATCHED
+13:45
+NOW PLAYING
+Training versus Testing :: Recap and Preview @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+19
+
+WATCHED
+15:27
+NOW PLAYING
+Training versus Testing :: Effective Number of Lines @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+20
+
+WATCHED
+16:18
+NOW PLAYING
+Training versus Testing :: Effective Number of Hypotheses @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+21
+
+WATCHED
+7:45
+NOW PLAYING
+Training versus Testing :: Break Point @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+22
+
+WATCHED
+14:19
+NOW PLAYING
+Theory of Generalization :: Restriction of Break Point @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+23
+
+6:57
+NOW PLAYING
+Theory of Generalization :: Bounding Function: Basic Cases @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+24
+
+14:47
+NOW PLAYING
+Theory of Generalization :: Bounding Function: Inductive @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+25
+
+16:02
+NOW PLAYING
+Theory of Generalization :: A Pictorial Proof @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+26
+
+13:11
+NOW PLAYING
+The VC Dimension :: Definition of VC Dimension @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+27
+
+WATCHED
+13:28
+NOW PLAYING
+The VC Dimension :: VC Dimension of Perceptrons @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+28
+
+6:11
+NOW PLAYING
+The VC Dimension :: Physical Intuition of VC Dimension @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+29
+
+WATCHED
+17:14
+NOW PLAYING
+The VC Dimension :: Interpreting VC Dimension @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+30
+
+17:02
+NOW PLAYING
+Noise and Error :: Noise and Probabilistic Target @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+31
+
+15:11
+NOW PLAYING
+Noise and Error :: Error Measure @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+32
+
+13:48
+NOW PLAYING
+Noise and Error :: Algorithmic Error Measure @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+33
+
+16:55
+NOW PLAYING
+Noise and Error :: Weighted Classification @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+34
+
+10:09
+NOW PLAYING
+Linear Regression :: Linear Regression Problem @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+35
+
+20:03
+NOW PLAYING
+Linear Regression :: Linear Regression Algorithm @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+36
+
+20:35
+NOW PLAYING
+Linear Regression :: Generalization Issue @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+37
+
+11:24
+NOW PLAYING
+Linear Regression :: for Binary Classification @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+38
+
+14:33
+NOW PLAYING
+Logistic Regression :: Logistic Regression Problem @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+39
+
+15:59
+NOW PLAYING
+Logistic Regression :: Logistic Regression Error @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+40
+
+15:38
+NOW PLAYING
+Logistic Regression :: Gradient of Logistic Regression Error @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+41
+
+19:19
+NOW PLAYING
+Logistic Regression :: Gradient Descent @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+42
+
+21:36
+NOW PLAYING
+Linear Models for Classification :: Binary Classification @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+43
+
+11:40
+NOW PLAYING
+Linear Models for Classification :: Stochastic Grad. Descent @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+44
+
+14:19
+NOW PLAYING
+Linear Models for Classification :: Multiclass via Logistic @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+45
+
+11:36
+NOW PLAYING
+Linear Models for Classification :: Multiclass via Binary @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+46
+
+23:47
+NOW PLAYING
+Nonlinear Transformation :: Quadratic Hypotheses @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+47
+
+9:53
+NOW PLAYING
+Nonlinear Transformation :: Nonlinear Transform @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+48
+
+15:38
+NOW PLAYING
+Nonlinear Transformation :: Price of Nonlinear Transform @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+49
+
+9:37
+NOW PLAYING
+Nonlinear Transformation :: Structured Hypothesis Sets @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+50
+
+10:46
+NOW PLAYING
+Hazard of Overfitting :: What is Overfitting? @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+51
+
+13:36
+NOW PLAYING
+Hazard of Overfitting :: The Role of Noise and Data Size @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+52
+
+14:08
+NOW PLAYING
+Hazard of Overfitting :: Deterministic Noise @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+53
+
+10:50
+NOW PLAYING
+Hazard of Overfitting :: Dealing with Overfitting @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+54
+
+19:17
+NOW PLAYING
+Regularization :: Regularized Hypothesis Set @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+55
+
+24:09
+NOW PLAYING
+Regularization :: Weight Decay Regularization @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+56
+
+8:16
+NOW PLAYING
+Regularization :: Regularization and VC Theory @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+57
+
+13:29
+NOW PLAYING
+Regularization :: General Regularizers @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+58
+
+16:01
+NOW PLAYING
+Validation :: Model Selection Problem @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+59
+
+13:25
+NOW PLAYING
+Validation :: Validation @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+60
+
+16:07
+NOW PLAYING
+Validation :: Leave-One-Out Cross Validation @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+61
+
+10:42
+NOW PLAYING
+Validation :: V-Fold Cross Validation @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+62
+
+10:09
+NOW PLAYING
+Three Learning Principles :: Occam's Razor @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+63
+
+11:51
+NOW PLAYING
+Three Learning Principles :: Sampling Bias @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+64
+
+12:29
+NOW PLAYING
+Three Learning Principles :: Data Snooping @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+65
+
+WATCHED
+8:50
+NOW PLAYING
+Three Learning Principles :: Power of Three @ Machine Learning Foundations (機器學習基石)
+Hsuan-Tien Lin
+
+
+
+4:08
+NOW PLAYING
+Linear Support Vector Machine (SVM) :: Course Introduction @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+2
+
+14:18
+NOW PLAYING
+Linear SVM :: Large-Margin Separating Hyperplane @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+3
+
+19:17
+NOW PLAYING
+Linear SVM :: Standard Large-Margin Problem @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+4
+
+15:34
+NOW PLAYING
+Linear SVM :: Support Vector Machine @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+5
+
+13:32
+NOW PLAYING
+Linear SVM :: Reasons behind Large-Margin Hyperplane @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+6
+
+15:55
+NOW PLAYING
+Dual Support Vector Machine :: Motivation of Dual SVM @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+7
+
+18:51
+NOW PLAYING
+Dual Support Vector Machine :: Largange Dual SVM @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+8
+
+14:20
+NOW PLAYING
+Dual Support Vector Machine :: Solving Dual SVM @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+9
+
+11:19
+NOW PLAYING
+Dual Support Vector Machine :: Messages behind Dual SVM @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+10
+
+20:24
+NOW PLAYING
+Kernel Support Vector Machine :: Kernel Trick @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+11
+
+12:17
+NOW PLAYING
+Kernel Support Vector Machine :: Polynomial Kernel @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+12
+
+14:44
+NOW PLAYING
+Kernel Support Vector Machine :: Gaussian Kernel @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+13
+
+13:36
+NOW PLAYING
+Kernel Support Vector Machine :: Comparison of Kernels @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+14
+
+14:28
+NOW PLAYING
+Soft-Margin Support Vector Machine :: Motivation and Primal @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+15
+
+7:39
+NOW PLAYING
+Soft-Margin Support Vector Machine :: Dual Problem @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+16
+
+13:45
+NOW PLAYING
+Soft-Margin Support Vector Machine :: Messages @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+17
+
+9:58
+NOW PLAYING
+Soft-Margin Support Vector Machine :: Model Selection @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+18
+
+13:41
+NOW PLAYING
+Kernel Logistic Regression :: Soft-Margin SVM as Regularized @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+19
+
+10:19
+NOW PLAYING
+Kernel Logistic Regression :: SVM versus Logistic Regression @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+20
+
+9:37
+NOW PLAYING
+Kernel Logistic Regression :: SVM for Soft Binary @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+21
+
+16:23
+NOW PLAYING
+Kernel Logistic Regression :: Kernel Logistic Regression @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+22
+
+17:18
+NOW PLAYING
+Support Vector Regression :: Kernel Ridge Regression @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+23
+
+18:45
+NOW PLAYING
+Support Vector Regression :: Support Vector Regression Primal @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+24
+
+13:06
+NOW PLAYING
+Support Vector Regression :: Support Vector Regression Dual @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+25
+
+9:07
+NOW PLAYING
+Support Vector Regression :: Summary of Kernel Models @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+26
+
+18:55
+NOW PLAYING
+Blending and Bagging :: Motivation of Aggregation @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+27
+
+20:31
+NOW PLAYING
+Blending and Bagging :: Uniform Blending @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+28
+
+16:49
+NOW PLAYING
+Blending and Bagging :: Linear and Any Blending @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+29
+
+11:49
+NOW PLAYING
+Blending and Bagging :: Bagging (Bootstrap Aggregation) @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+30
+
+12:48
+NOW PLAYING
+Adaptive Boosting :: Motivation of Boosting @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+31
+
+14:29
+NOW PLAYING
+Adaptive Boosting :: Diversity by Re-weighting @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+32
+
+13:35
+NOW PLAYING
+Adaptive Boosting :: Adaptive Boosting Algorithm @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+33
+
+11:05
+NOW PLAYING
+Adaptive Boosting :: Adaptive Boosting in Action @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+34
+
+17:29
+NOW PLAYING
+Decision Tree :: Decision Tree Hypothesis @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+35
+
+15:21
+NOW PLAYING
+Decision Tree :: Decision Tree Algorithm @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+36
+
+13:22
+NOW PLAYING
+Decision Tree :: Decision Tree Heuristics in C&RT @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+37
+
+8:45
+NOW PLAYING
+Decision Tree :: Decision Tree in Action @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+38
+
+13:07
+NOW PLAYING
+Random Forest :: Random Forest Algorithm @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+39
+
+12:33
+NOW PLAYING
+Random Forest :: Out-of-bag Estimate @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+40
+
+19:28
+NOW PLAYING
+Random Forest :: Feature Selection @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+41
+
+13:29
+NOW PLAYING
+Random Forest :: Random Forest in Action @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+42
+
+15:06
+NOW PLAYING
+Gradient Boosted Decision Tree :: AdaBoost Decision Tree @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+43
+
+27:26
+NOW PLAYING
+Gradient Boosted Decision Tree :: Optimization of AdaBoost @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+44
+
+18:21
+NOW PLAYING
+Gradient Boosted Decision Tree :: Gradient Boosting @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+45
+
+11:20
+NOW PLAYING
+Gradient Boosted Decision Tree :: Summary of Aggregation @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+46
+
+20:37
+NOW PLAYING
+Neural Network :: Motivation @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+47
+
+18:02
+NOW PLAYING
+Neural Network :: Neural Network Hypothesis @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+48
+
+22:27
+NOW PLAYING
+Neural Network :: Neural Network Learning @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+49
+
+17:30
+NOW PLAYING
+Neural Network :: Optimization and Regularization @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+50
+
+21:31
+NOW PLAYING
+Deep Learning :: Deep Neural Network @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+51
+
+15:18
+NOW PLAYING
+Deep Learning ::Autoencoder @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+52
+
+8:31
+NOW PLAYING
+Deep Learning ::Denoising Autoencoder @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+53
+
+31:21
+NOW PLAYING
+Deep Learning :: Principal Component Analysis @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+54
+
+12:56
+NOW PLAYING
+Radial Basis Function Network :: RBF Network Hypothesis @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+55
+
+20:09
+NOW PLAYING
+Radial Basis Function Network :: RBF Network Learning @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+56
+
+16:20
+NOW PLAYING
+Radial Basis Function Network :: k-Means Algorithm @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+57
+
+9:47
+NOW PLAYING
+Radial Basis Function Network :: k-Means and RBFNet in Action @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+58
+
+20:17
+NOW PLAYING
+Matrix Factorization :: Linear Network Hypothesis @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+59
+
+16:33
+NOW PLAYING
+Matrix Factorization :: Basic Matrix Factorization @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+60
+
+12:23
+NOW PLAYING
+Matrix Factorization :: Stochastic Gradient Descent @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+61
+
+9:13
+NOW PLAYING
+Matrix Factorization :: Summary of Extraction Models @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+62
+
+16:12
+NOW PLAYING
+Finale :: Feature Exploitation Techniques @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+63
+
+8:41
+NOW PLAYING
+Finale :: Error Optimization Techniques @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+64
+
+6:45
+NOW PLAYING
+Finale :: Overfitting Elimination Techniques @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
+65
+
+WATCHED
+13:00
+NOW PLAYING
+Finale :: Machine Learning in Practice @ Machine Learning Techniques (機器學習技法)
+Hsuan-Tien Lin
+
