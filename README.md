@@ -13,6 +13,8 @@ https://github.com/apachecn/ntu-hsuantienlin-ml
 https://www.bilibili.com/video/BV1jt411b76n/?spm_id_from=333.788.videocard.0
 same as not much content http://ocw.sjtu.edu.cn/G2S/OCW/cn/CourseDetails.htm?Id=397
 
+foundations of machine learning book https://cs.nyu.edu/~mohri/mlbook/
+
 taiwan
 https://www.youtube.com/watch?v=9kra9i6jS1g&list=PLk5MIQ__5Xo02mG9liAPl5vpjup7LapFr&index=1
 
