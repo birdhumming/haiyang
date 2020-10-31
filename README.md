@@ -2,6 +2,8 @@
 
 https://www.bilibili.com/video/BV17J411C7zZ/?spm_id_from=333.788.videocard.0
 
+git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch file'
+
 trie, union find,heap 第二章 数据结构（二）
 
 trie - efficient store and find string set
