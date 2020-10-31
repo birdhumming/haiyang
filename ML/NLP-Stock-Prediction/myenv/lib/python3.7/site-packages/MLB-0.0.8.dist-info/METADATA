@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: MLB
+Version: 0.0.8
+Summary: hogehoge
+Home-page: https://github.com/micin-jp/MLB
+Author: mucunwuxian
+Author-email: taketo_kimura@micin.jp
+License: UNKNOWN
+Keywords: hogehoge
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.6
+Requires-Dist: numpy (>=1.13.3)
+Requires-Dist: pandas (>=0.21.0)
+Requires-Dist: scikit-learn (>=0.19.1)
+
+UNKNOWN
+
+
