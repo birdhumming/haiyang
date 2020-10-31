@@ -1,6 +1,10 @@
 3blue1brown
 https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4
 
+https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf 2012
+http://www.cs.toronto.edu/~bonner/courses/2018s/csc338/matrix_cookbook.pdf 2006
+https://www.ics.uci.edu/~welling/teaching/KernelsICS273B/MatrixCookBook.pdf 2005
+
 洛谷 P1551. 并查集板子（亲戚）题解 
 https://www.acwing.com/file_system/file/content/whole/index/content/1415047/
 
@@ -18,6 +22,7 @@ https://www.asimovinstitute.org/neural-network-zoo/
 https://towardsdatascience.com/the-mostly-complete-chart-of-neural-networks-explained-3fb6f2367464
 https://www.deeplearningbook.org/
 
+google embedding projector
 
 深度之眼官方账号【0基础小白学习公开课/书籍进阶之路】
 1、机器学习入门：
