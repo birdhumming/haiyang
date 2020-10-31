@@ -1,0 +1,11 @@
+numpy
+pandas
+pytz
+toolz
+
+[test]
+flake8
+nose
+nose-ignore-docstring
+nose-timer
+parameterized
