@@ -1,5 +1,8 @@
-【一起啃书】机器学习西瓜书白话解读
 
+洛谷 P1551. 并查集板子（亲戚）题解 
+https://www.acwing.com/file_system/file/content/whole/index/content/1415047/
+
+【一起啃书】机器学习西瓜书白话解读
 https://www.bilibili.com/video/BV17J411C7zZ/?spm_id_from=333.788.videocard.0
 
 git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch file'
