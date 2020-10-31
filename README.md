@@ -5,12 +5,8 @@ https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf 2012
 http://www.cs.toronto.edu/~bonner/courses/2018s/csc338/matrix_cookbook.pdf 2006
 https://www.ics.uci.edu/~welling/teaching/KernelsICS273B/MatrixCookBook.pdf 2005
 
-洛谷 P1551. 并查集板子（亲戚）题解 
-https://www.acwing.com/file_system/file/content/whole/index/content/1415047/
-
-【一起啃书】机器学习西瓜书白话解读
-https://www.bilibili.com/video/BV17J411C7zZ/?spm_id_from=333.788.videocard.0
-https://www.bilibili.com/video/BV1wx411o7CK?p=3
+读Ian Goodfellow 深度学习教科书：图解版
+https://www.bilibili.com/video/BV1uW411g7im/?spm_id_from=333.788.videocard.6
 
 《深度学习》花书啃书指导！大佬级up主：同济子豪兄出任导师哦~【完结】
 https://www.bilibili.com/video/BV1kE4119726?p=6
@@ -48,6 +44,13 @@ TensorFlow2.0框架班:http://suo.im/5UAGv5
 （ 备注:获取以上电子书, 加我微信:  deepshare1010  ）
 
 git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch file'
+
+洛谷 P1551. 并查集板子（亲戚）题解 
+https://www.acwing.com/file_system/file/content/whole/index/content/1415047/
+
+【一起啃书】机器学习西瓜书白话解读
+https://www.bilibili.com/video/BV17J411C7zZ/?spm_id_from=333.788.videocard.0
+https://www.bilibili.com/video/BV1wx411o7CK?p=3
 
 trie, union find,heap 第二章 数据结构（二）
 
