@@ -4,6 +4,41 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1415047/
 
 【一起啃书】机器学习西瓜书白话解读
 https://www.bilibili.com/video/BV17J411C7zZ/?spm_id_from=333.788.videocard.0
+https://www.bilibili.com/video/BV1wx411o7CK?p=3
+
+《深度学习》花书啃书指导！大佬级up主：同济子豪兄出任导师哦~【完结】
+https://www.bilibili.com/video/BV1kE4119726?p=6
+https://github.com/exacity/deeplearningbook-chinese
+https://github.com/MingchaoZhu/DeepLearning
+https://zhuanlan.zhihu.com/p/38431213 深度学习花书读书笔记目录
+
+https://www.asimovinstitute.org/neural-network-zoo/
+https://towardsdatascience.com/the-mostly-complete-chart-of-neural-networks-explained-3fb6f2367464
+https://www.deeplearningbook.org/
+
+
+深度之眼官方账号【0基础小白学习公开课/书籍进阶之路】
+1、机器学习入门：
+吴恩达《机器学习》公开课，作业讲解： BV124411A75S
+2、机器学习进阶：
+周志华《机器学习》西瓜书，啃书指导： BV1wx411o7CK
+李航《统计学习方法》，啃书指导：BV1i4411G7Xv
+《机器学习实战》，啃书指导：BV1y4411g7ia
+3、深度学习入门：
+神经网络基础 :http://suo.im/69ytXN
+4、深度学习框架学习：
+PyTorch框架实战 http://suo.im/5UAGgp
+TensorFlow2.0框架班:http://suo.im/5UAGv5
+5、深度学习进阶：
+《深度学习》花书，啃书指导： BV1kE4119726
+6、深度学习应用：
+斯坦福李飞飞《计算机视觉》CS231N公开课作业讲解 BV1t4411U78z
+斯坦福CS224N《自然语言处理》公开课作业讲解 BV1X4411977R
+7、求职面试：
+《百面机器学习》葫芦书 啃书指导: BV1gt41157eq
+求职分享区 BV1Vt411F7NW
+经验分享区 BV1J4411B72T
+（ 备注:获取以上电子书, 加我微信:  deepshare1010  ）
 
 git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch file'
 
