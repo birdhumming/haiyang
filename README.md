@@ -1,3 +1,7 @@
+【一起啃书】机器学习西瓜书白话解读
+
+https://www.bilibili.com/video/BV17J411C7zZ/?spm_id_from=333.788.videocard.0
+
 trie, union find,heap 第二章 数据结构（二）
 
 trie - efficient store and find string set
