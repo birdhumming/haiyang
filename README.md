@@ -19,6 +19,8 @@ https://towardsdatascience.com/the-mostly-complete-chart-of-neural-networks-expl
 https://www.deeplearningbook.org/
 
 google embedding projector
+https://www.naftaliharris.com/blog/visualizing-k-means-clustering/
+https://stanford.edu/class/engr108/visualizations/kmeans/kmeans.htmld
 
 深度之眼官方账号【0基础小白学习公开课/书籍进阶之路】
 1、机器学习入门：
