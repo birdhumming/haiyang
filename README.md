@@ -1,3 +1,5 @@
+3blue1brown
+https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4
 
 洛谷 P1551. 并查集板子（亲戚）题解 
 https://www.acwing.com/file_system/file/content/whole/index/content/1415047/
