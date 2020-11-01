@@ -5,7 +5,7 @@ bagging=bootstrap aggregating
 ROC=receiver operating characteristic curve
 AUC = area under curve
 
-3blue1brown
+3blue1brown, aops, brilliant.org/3b1b
 https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4
 
 https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf 2012
