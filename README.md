@@ -7,6 +7,8 @@ AUC = area under curve
 
 3blue1brown, aops, brilliant.org/3b1b
 https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4
+natural pattern - pattern recognition
+addition, multiplication, composition = 3 ways to get a new function; sum rule, product rule, chain rule
 
 https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf 2012
 http://www.cs.toronto.edu/~bonner/courses/2018s/csc338/matrix_cookbook.pdf 2006
