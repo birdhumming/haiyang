@@ -1,3 +1,6 @@
+bagging=bootstrap aggregating
+ROC=receiver operating characteristic curve
+
 3blue1brown
 https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4
 
