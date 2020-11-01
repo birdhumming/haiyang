@@ -14518,3 +14518,9 @@ Machine Learning Foundations/Techniques: Training versus Testing
 
 shatter=dichotomy, growth function, convex/concave, hypothesis set
 break point
+
+
+
+NLP-stock - run on RED???
+hpss sftp api code - tim starrin?
+deep learning ai book
