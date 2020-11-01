@@ -9,6 +9,68 @@ AUC = area under curve
 https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4
 natural pattern - pattern recognition
 addition, multiplication, composition = 3 ways to get a new function; sum rule, product rule, chain rule
+taylor series = radius of convergence; ln(x) diverges; e^x converges
+visual=graph=geometry; number=algebra=literal=language
+fourier transform=everything is rotations https://www.youtube.com/watch?v=r6sGWTCMz2k
+
+https://brilliant.org/principles/
+The mind is not a vessel to be filled, but a fire to be kindled.”
+— Plutarch
+passion - Effective math and science learning…
+Excites.
+The greatest challenges to education are disinterest and apathy.
+
+Cultivates curiosity.
+Questions and storytelling that cultivate natural curiosity are better than the threat of a test.
+
+Is active.
+Effective learning is active, not passive. Watching a video is not enough.
+
+Is applicable.
+Use it or lose it: it is essential to apply what you're learning as you learn it.
+
+Is community driven.
+A community that challenges and inspires you is invaluable.
+
+Doesn't discriminate.
+Your age, country, and gender don't determine what you are capable of learning.
+
+Allows for failure.
+The best learners allow themselves to make many mistakes along their journey.
+
+Sparks questions.
+The culmination of a great education isn't knowing all the answers — it's knowing what to ask.
+
+Brought to you by you: http://3b1b.co/alt-calc-thanks
+And by Brilliant: https://brilliant.org/3b1b
+Home page: https://www.3blue1brown.com
+Essence of calculus series:
+http://3b1b.co/calculus
+Really nice applet made based on this video by Reddit user Larconneur:
+https://www.geogebra.org/m/rftwacsy
+Various social media stuffs:
+Website: https://www.3blue1brown.com
+Twitter: https://twitter.com/3blue1brown
+Patreon: https://patreon.com/3blue1brown
+Facebook: https://www.facebook.com/3blue1brown
+Reddit: https://www.reddit.com/r/3blue1brown
+An animated introduction to the Fourier Transform.
+Home page: https://www.3blue1brown.com/
+Brought to you by you: http://3b1b.co/fourier-thanks
+
+Follow-on video about the uncertainty principle: https://youtu.be/MBnnXbOM5S4
+
+Interactive made by a viewer inspired by this video:
+https://prajwalsouza.github.io/Experiments/Fourier-Transform-Visualization.html
+https://prajwalsouza.github.io/Experi...
+
+Also, take a look at this Jupyter notebook implementing this idea in a way you can play with:
+https://github.com/thatSaneKid/fourie...
+https://github.com/thatSaneKid/fourier/blob/master/Fourier%20Transform%20-%20A%20Visual%20Introduction.ipynb
+
+------------------
+Animations largely made using manim, a scrappy open-source python library.  https://github.com/3b1b/manim
+
 
 https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf 2012
 http://www.cs.toronto.edu/~bonner/courses/2018s/csc338/matrix_cookbook.pdf 2006
