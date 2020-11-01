@@ -14529,3 +14529,6 @@ hpss sftp api code - tim starrin?
 deep learning ai book
 
 算法，算力，数据
+
+why so many things still not known - what did the 3blue1brown have that you missed before?
+no coding no math - 
