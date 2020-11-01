@@ -14527,3 +14527,5 @@ break point
 NLP-stock - run on RED??? - not sure what it is doing? what's taking so much time and so much space of data?
 hpss sftp api code - tim starrin?
 deep learning ai book
+
+算法，算力，数据
