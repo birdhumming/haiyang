@@ -1,3 +1,6 @@
+AI roadmap https://github.com/apachecn/ai-roadmap/tree/master/v1.0
+deep learning book online
+
 chap 6 deep feedforward networks = feedforward neural networks = multi-layer perceptrons (MLP)
 math/linear algebra/probability/statistics are so complicated now only computer can understand them.
 no programming no math; math should be done by computer, not human!
@@ -14521,6 +14524,6 @@ break point
 
 
 
-NLP-stock - run on RED???
+NLP-stock - run on RED??? - not sure what it is doing? what's taking so much time and so much space of data?
 hpss sftp api code - tim starrin?
 deep learning ai book
