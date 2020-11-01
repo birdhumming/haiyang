@@ -1,3 +1,6 @@
+chap 6 deep feedforward networks = feedforward neural networks = multi-layer perceptrons (MLP)
+math/linear algebra/probability/statistics are so complicated now only computer can understand them.
+no programming no math; math should be done by computer, not human!
 bagging=bootstrap aggregating
 ROC=receiver operating characteristic curve
 AUC = area under curve
@@ -48,6 +51,79 @@ TensorFlow2.0框架班:http://suo.im/5UAGv5
 求职分享区 BV1Vt411F7NW
 经验分享区 BV1J4411B72T
 （ 备注:获取以上电子书, 加我微信:  deepshare1010  ）
+P1
+深度学习花书-开场白
+01:44
+P2
+花书全书内容概览
+04:21
+P3
+花书参考资料盘点
+03:43
+P4
+第一章-深度学习导论
+35:59
+P5
+第二章-线性代数
+22:31
+P6
+第三章-概率论和信息论
+21:24
+P7
+第四章-数值计算
+22:51
+P8
+第五章-机器学习基础
+33:48
+P9
+第六章 深度前馈神经网络
+31:46
+P10
+第七章 深度学习的正则化
+31:01
+P11
+第八章 深度学习的训练优化
+36:45
+P12
+第九章 卷积神经网络
+23:02
+P13
+第十章 序列模型-循环神经网络和递归神经网络
+22:11
+P14
+第十一章-训练调优实战方法
+34:50
+P15
+第十二章-深度学习应用
+28:17
+P16
+第十三章-线性因子模型
+11:47
+P17
+第十四章-自动编码器
+19:44
+P18
+第十五章-表示学习
+28:39
+P19
+第十六章-结构化概率模型
+16:05
+P20
+第十七章-蒙特卡洛方法
+21:41
+P21
+第十八章-配分函数
+15:33
+P22
+第十九章-近似推断
+17:54
+P23
+第二十章-深度生成模型-生成模型综述
+26:00
+P24
+第二十章-深度生成模型-生成对抗网络GAN
+18:42
+
 
 git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch file'
 
