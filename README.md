@@ -25,7 +25,8 @@ https://cloud.tencent.com/developer/article/1472683
 https://www.bilibili.com/video/BV1t4411U78z?p=1
 code https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment1/softmax.ipynb
 https://www.bilibili.com/video/BV1t4411U78z?p=4
-https://nndl.github.io/ 复旦
+https://nndl.github.io/ 复旦 good book
+https://github.com/nndl/exercise/blob/master/chap2_linear_regression/linear_regression-tf2.0.ipynb
 
 https://towardsdatascience.com/building-neural-network-from-scratch-9c88535bf8e9
 https://github.com/jldbc/numpy_neural_net/blob/master/four_layer_network.py
