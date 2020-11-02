@@ -1,6 +1,13 @@
 AI roadmap https://github.com/apachecn/ai-roadmap/tree/master/v1.0
 deep learning book online
 
+https://towardsdatascience.com/building-neural-network-from-scratch-9c88535bf8e9
+https://github.com/jldbc/numpy_neural_net/blob/master/four_layer_network.py
+
+not sure https://github.com/JGuymont/numpy-multilayer-perceptron/blob/master/neural_network/mlp.py
+https://github.com/MingchaoZhu/DeepLearning/blob/master/code/chapter6.py#L52
+http://deeplearning.net/tutorial/code/mlp.py
+
 chap 6 deep feedforward networks = feedforward neural networks = multi-layer perceptrons (MLP)
 math/linear algebra/probability/statistics are so complicated now only computer can understand them.
 no programming no math; math should be done by computer, not human!
