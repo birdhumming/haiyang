@@ -4,6 +4,24 @@ deep learning book online
 
 斯坦福CS231N计算机视觉作业讲解
 https://www.bilibili.com/video/BV1t4411U78z?p=6 batch normalization (reached)
+https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment2/cs231n/layers.py has batchnorm_backward
+and batchnorm_forward; batch norm vs layer norm; batchnorm_backward_alt is 1.4 times faster than batchnorm_backward;
+layernorm_forward() and layernorm_backward() implemented
+
+https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment2/cs231n/classifiers/fc_net.py
+is about dropout for fc_net.py
+Fully-connected nets with Dropout
+CNN
+
+弱鸡才用tensorflow，强者一个numpy就够：从零开始神经网络第一期
+https://www.bilibili.com/video/BV1m4411x7KU/?spm_id_from=333.788.videocard.7
+https://peigizhu.gitee.io/2020/07/23/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
+https://www.bilibili.com/video/BV1z4411e7WE
+https://gitee.com/peigizhu/NeuralNetworks/blob/master/DeeplearningPro.py
+
+知识体系、算法题、教程、面经，这是一份超赞的AI资源列
+https://cloud.tencent.com/developer/article/1472683
+
 https://www.bilibili.com/video/BV1t4411U78z?p=1
 code https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment1/softmax.ipynb
 https://www.bilibili.com/video/BV1t4411U78z?p=4
