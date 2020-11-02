@@ -3,6 +3,7 @@ deep learning book online
 
 
 斯坦福CS231N计算机视觉作业讲解
+https://www.bilibili.com/video/BV1t4411U78z?p=6 batch normalization (reached)
 https://www.bilibili.com/video/BV1t4411U78z?p=1
 code https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment1/softmax.ipynb
 https://www.bilibili.com/video/BV1t4411U78z?p=4
