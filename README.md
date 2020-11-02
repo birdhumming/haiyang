@@ -1,6 +1,9 @@
 AI roadmap https://github.com/apachecn/ai-roadmap/tree/master/v1.0
 deep learning book online
 
+
+https://nndl.github.io/ 复旦
+
 https://towardsdatascience.com/building-neural-network-from-scratch-9c88535bf8e9
 https://github.com/jldbc/numpy_neural_net/blob/master/four_layer_network.py
 
