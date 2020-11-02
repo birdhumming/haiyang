@@ -95,6 +95,7 @@ http://www.cs.toronto.edu/~bonner/courses/2018s/csc338/matrix_cookbook.pdf 2006
 https://www.ics.uci.edu/~welling/teaching/KernelsICS273B/MatrixCookBook.pdf 2005
 
 读Ian Goodfellow 深度学习教科书：图解版
+https://www.bilibili.com/video/BV1uW411g7im?p=10
 https://www.bilibili.com/video/BV1uW411g7im/?spm_id_from=333.788.videocard.6
 
 《深度学习》花书啃书指导！大佬级up主：同济子豪兄出任导师哦~【完结】
