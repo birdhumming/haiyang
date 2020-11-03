@@ -1,6 +1,8 @@
 AI roadmap https://github.com/apachecn/ai-roadmap/tree/master/v1.0
 deep learning book online
 
+CNN - vision; 3 layers: convolution, pooling, full connection
+RNN - sequence analysis/NLP, keras
 
 斯坦福CS231N计算机视觉作业讲解
 https://www.bilibili.com/video/BV1t4411U78z?p=6 batch normalization (reached)
