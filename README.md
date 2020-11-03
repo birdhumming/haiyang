@@ -5,6 +5,8 @@ CNN - vision; 3 layers: convolution, pooling, full connection
 RNN - sequence analysis/NLP, keras
 
 斯坦福CS231N计算机视觉作业讲解
+2 layer net has both forward and backward gradient calc
+https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment1/two_layer_net.ipynb
 https://www.bilibili.com/video/BV1t4411U78z?p=6 batch normalization (reached)
 https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment2/cs231n/layers.py has batchnorm_backward
 and batchnorm_forward; batch norm vs layer norm; batchnorm_backward_alt is 1.4 times faster than batchnorm_backward;
