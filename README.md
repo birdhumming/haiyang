@@ -15,6 +15,16 @@ is about dropout for fc_net.py
 Fully-connected nets with Dropout
 CNN
 
+andrew ng machine learning assignment solutions python; exercise 4 has NN for both forward and backpropagation
+video - https://www.bilibili.com/video/BV124411A75S?p=6
+code -
+only feedforward - https://github.com/Akpandita/Andrew-NG-ML-Python-Solutions/blob/master/Exercise3/exercise3.ipynb
+feedforward and backpropagation https://github.com/suraggupta/coursera-machine-learning-solutions-python/blob/master/Exercise4/exercise4.ipynb
+
+https://github.com/shamiul94/Machine-Learning-Coursera-Assignments-Solution/blob/master/Assignment-4/Given-Materials-Python/exercise4.ipynb
+
+https://github.com/DantesHub/my-coursera-machine-learning-solutions-python/blob/master/Exercise4/exercise4.ipynb
+
 弱鸡才用tensorflow，强者一个numpy就够：从零开始神经网络第一期
 https://www.bilibili.com/video/BV1m4411x7KU/?spm_id_from=333.788.videocard.7
 https://peigizhu.gitee.io/2020/07/23/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
