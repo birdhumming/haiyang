@@ -1,10 +1,10 @@
 AI roadmap https://github.com/apachecn/ai-roadmap/tree/master/v1.0
-deep learning book online
+deep learning book online - need code implementation
 
 CNN - vision; 3 layers: convolution, pooling, full connection
 RNN - sequence analysis/NLP, keras
 
-斯坦福CS231N计算机视觉作业讲解
+1. 斯坦福CS231N计算机视觉作业讲解
 2 layer net has both forward and backward gradient calc
 https://github.com/L1aoXingyu/cs231n-assignment-solution/blob/master/assignment1/two_layer_net.ipynb
 https://www.bilibili.com/video/BV1t4411U78z?p=6 batch normalization (reached)
@@ -17,7 +17,7 @@ is about dropout for fc_net.py
 Fully-connected nets with Dropout
 CNN
 
-andrew ng machine learning assignment solutions python; exercise 4 has NN for both forward and backpropagation
+2. andrew ng machine learning assignment solutions python; exercise 4 has NN for both forward and backpropagation
 video - https://www.bilibili.com/video/BV124411A75S?p=6
 code -
 only feedforward - https://github.com/Akpandita/Andrew-NG-ML-Python-Solutions/blob/master/Exercise3/exercise3.ipynb
@@ -26,6 +26,21 @@ feedforward and backpropagation https://github.com/suraggupta/coursera-machine-l
 https://github.com/shamiul94/Machine-Learning-Coursera-Assignments-Solution/blob/master/Assignment-4/Given-Materials-Python/exercise4.ipynb
 
 https://github.com/DantesHub/my-coursera-machine-learning-solutions-python/blob/master/Exercise4/exercise4.ipynb
+
+3. tensorflow DFN model:
+https://github.com/apachecn/misc-docs-zh/blob/master/docs/python-programming-net/python-programming-net-ml/4.md
+stock price forecasting:
+https://github.com/apachecn/misc-docs-zh/blob/master/docs/python-programming-net/python-programming-net-ml/1.md
+
+source is at pythonprogramming.net, the NN started at:
+
+https://pythonprogramming.net/tensorflow-deep-neural-network-machine-learning-tutorial/
+
+and ended at:
+
+https://pythonprogramming.net/data-size-example-tensorflow-deep-learning-tutorial/?completed=/train-test-tensorflow-deep-learning-tutorial/
+
+https://github.com/apachecn/misc-docs-zh/blob/master/docs/first_contact_with_tensorFlow/4.md
 
 弱鸡才用tensorflow，强者一个numpy就够：从零开始神经网络第一期
 https://www.bilibili.com/video/BV1m4411x7KU/?spm_id_from=333.788.videocard.7
