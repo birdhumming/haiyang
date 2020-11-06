@@ -1,5 +1,7 @@
 AI roadmap https://github.com/apachecn/ai-roadmap/tree/master/v1.0
 deep learning book online - need code implementation
+https://github.com/MichalDanielDobrzanski/DeepLearningPython35/blob/master/network.py
+https://github.com/antonvladyka/neuralnetworksanddeeplearning.com.pdf
 
 CNN - vision; 3 layers: convolution, pooling, full connection
 RNN - sequence analysis/NLP, keras
