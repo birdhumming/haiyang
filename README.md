@@ -14601,3 +14601,19 @@ deep learning ai book
 
 why so many things still not known - what did the 3blue1brown have that you missed before?
 no coding no math - 
+
+
+NLP stock prediction -
+
+login to RED, go to /N/slate/haiyang/git/dl/NLP-stock-prediction
+
+must export otherwise will get " no module named config" error:
+export PYTHONPATH=$PYTHONPATH:/N/u/haiyang/Carbonate/lib/python
+
+don't use myenv; numpy conflicts with panda
+
+no machine.py code - only first two *py
+
+download_financial_data.py works
+doc_text_extract.py works - but had to answer questions from commnad line; changed code to no input
+nohup
