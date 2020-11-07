@@ -14617,3 +14617,5 @@ no machine.py code - only first two *py
 download_financial_data.py works
 doc_text_extract.py works - but had to answer questions from commnad line; changed code to no input
 nohup
+
+RNN for changing old chinese history pdfs into text? text recognition
