@@ -3,8 +3,8 @@ deep learning book online - need code implementation
 
 https://github.com/MichalDanielDobrzanski/DeepLearningPython35/blob/master/network.py
 https://github.com/antonvladyka/neuralnetworksanddeeplearning.com.pdf
-
 zip=pair-up element-wise
+on page 100
 
 CNN - vision; 3 layers: convolution, pooling, full connection
 RNN - sequence analysis/NLP, keras
