@@ -14637,3 +14637,5 @@ https://youtu.be/ZB7BZMhfPgk?t=4241
 
 Natural Language Processing in Python
 https://www.youtube.com/watch?v=xvqsFTUsOmc&t=3943s
+https://github.com/adashofdata/nlp-in-python-tutorial
+https://github.com/adashofdata
