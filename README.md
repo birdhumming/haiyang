@@ -14631,3 +14631,9 @@ https://github.com/nndl/solutions/blob/master/README.md
 https://github.com/nndl/exercise
 
 http://thomas-cokelaer.info/tutorials/python/data_structures.html
+
+Introduction to Numerical Computing with NumPy | SciPy 2019 Tutorial | Alex Chabot-Leclerc
+https://youtu.be/ZB7BZMhfPgk?t=4241
+
+Natural Language Processing in Python
+https://www.youtube.com/watch?v=xvqsFTUsOmc&t=3943s
