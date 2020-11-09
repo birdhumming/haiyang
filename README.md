@@ -14629,3 +14629,5 @@ https://www.google.com/search?client=safari&rls=en&q=%E3%80%8A%E7%A5%9E%E7%BB%8F
 
 https://github.com/nndl/solutions/blob/master/README.md
 https://github.com/nndl/exercise
+
+http://thomas-cokelaer.info/tutorials/python/data_structures.html
