@@ -14619,3 +14619,6 @@ doc_text_extract.py works - but had to answer questions from commnad line; chang
 nohup
 
 RNN for changing old chinese history pdfs into text? text recognition
+
+the GAN zoo-
+https://github.com/hindupuravinash/the-gan-zoo
