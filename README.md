@@ -14622,3 +14622,10 @@ RNN for changing old chinese history pdfs into text? text recognition
 
 the GAN zoo-
 https://github.com/hindupuravinash/the-gan-zoo
+
+https://www.google.com/search?client=safari&rls=en&q=%E3%80%8A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%8B+%E9%82%B1%E9%94%A1%E9%B9%8F+%E7%AD%94%E6%A1%88&ie=UTF-8&oe=UTF-8
+
+https://www.google.com/search?client=safari&rls=en&q=%E3%80%8A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%8B+%E9%82%B1%E9%94%A1%E9%B9%8F+%E7%AD%94%E6%A1%88&ie=UTF-8&oe=UTF-8
+
+https://github.com/nndl/solutions/blob/master/README.md
+https://github.com/nndl/exercise
