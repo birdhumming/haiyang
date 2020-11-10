@@ -14676,3 +14676,7 @@ https://github.com/hugobowne/deep-learning-from-scratch-pytorch.git
 https://scikit-learn.org/stable/modules/cross_validation.html
 
 https://github.com/chendaniely/scipy-2020-pandas
+
+
+weight times x:
+https://sebastianraschka.com/Articles/2015_singlelayer_neurons.html
