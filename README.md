@@ -14639,3 +14639,12 @@ Natural Language Processing in Python
 https://www.youtube.com/watch?v=xvqsFTUsOmc&t=3943s
 https://github.com/adashofdata/nlp-in-python-tutorial
 https://github.com/adashofdata
+
+https://github.com/MichalDanielDobrzanski/DeepLearningPython35/blob/master/network.py
+https://github.com/antonvladyka/neuralnetworksanddeeplearning.com.pdf
+https://github.com/TimotheeChauvin/NNDL-solutions
+https://github.com/mnielsen/neural-networks-and-deep-learning/tree/master/src
+michael nielsen deep learning exercises
+
+Introduction to Data Processing in Python with Pandas | SciPy 2019 Tutorial | Daniel Chen
+https://www.youtube.com/watch?v=5rNu16O3YNE
