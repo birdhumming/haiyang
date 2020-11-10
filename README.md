@@ -14674,3 +14674,5 @@ https://www.youtube.com/watch?v=CW8hTe21LPg
 https://github.com/hugobowne/deep-learning-from-scratch-pytorch.git
 
 https://scikit-learn.org/stable/modules/cross_validation.html
+
+https://github.com/chendaniely/scipy-2020-pandas
