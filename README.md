@@ -14668,3 +14668,9 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1439635/
 SciPy 2020
 https://www.scipy2020.scipy.org/tutorial-information
 https://www.youtube.com/channel/UCkhm72fuzkS9fYGlGpEmj7A
+
+Deep Learning from Scratch with PyTorch Tutorial | SciPy 2020 | Dhavide Aruliah, Hugo Bowne-Anderson
+https://www.youtube.com/watch?v=CW8hTe21LPg
+https://github.com/hugobowne/deep-learning-from-scratch-pytorch.git
+
+https://scikit-learn.org/stable/modules/cross_validation.html
