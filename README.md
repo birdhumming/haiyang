@@ -14663,3 +14663,8 @@ https://github.com/chendaniely/pybay_2019-pandas_tutorial
 https://www.acwing.com/file_system/file/content/whole/index/content/1441066/
 https://www.acwing.com/file_system/file/content/whole/index/content/1441064/
 https://www.acwing.com/file_system/file/content/whole/index/content/1439635/
+
+
+SciPy 2020
+https://www.scipy2020.scipy.org/tutorial-information
+https://www.youtube.com/channel/UCkhm72fuzkS9fYGlGpEmj7A
