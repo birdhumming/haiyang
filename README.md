@@ -14646,6 +14646,7 @@ https://github.com/TimotheeChauvin/NNDL-solutions
 https://github.com/mnielsen/neural-networks-and-deep-learning/tree/master/src
 michael nielsen deep learning exercises
 
+2020 is the latest which is better
 Introduction to Data Processing in Python with Pandas | SciPy 2019 Tutorial | Daniel Chen
 https://www.youtube.com/watch?v=5rNu16O3YNE
 https://github.com/chendaniely/scipy-2019-pandas/blob/master/notebooks/01-intro.ipynb
