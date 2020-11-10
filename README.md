@@ -14648,3 +14648,10 @@ michael nielsen deep learning exercises
 
 Introduction to Data Processing in Python with Pandas | SciPy 2019 Tutorial | Daniel Chen
 https://www.youtube.com/watch?v=5rNu16O3YNE
+https://github.com/chendaniely/scipy-2019-pandas/blob/master/notebooks/01-intro.ipynb
+
+scipy 
+https://www.youtube.com/playlist?list=PLYx7XA2nY5GcDQblpQ_M1V3PQPoLWiDAC
+
+https://github.com/chendaniely/scipy-2020-pandas
+https://github.com/chendaniely/pybay_2019-pandas_tutorial
