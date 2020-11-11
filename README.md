@@ -14680,3 +14680,8 @@ https://github.com/chendaniely/scipy-2020-pandas
 
 weight times x:
 https://sebastianraschka.com/Articles/2015_singlelayer_neurons.html
+
+https://sebastianraschka.com/faq/docs/backprop-arbitrary.html
+https://sebastianraschka.com/
+
+https://youtu.be/CW8hTe21LPg?t=9581
