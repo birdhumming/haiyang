@@ -14687,6 +14687,9 @@ https://sebastianraschka.com/
 
 Deep Learning from Scratch with PyTorch Tutorial | SciPy 2020 | Dhavide Aruliah, Hugo Bowne-Anderson
 https://youtu.be/CW8hTe21LPg?t=10602
+https://github.com/hugobowne/deep-learning-from-scratch-pytorch/blob/master/notebooks/2-Instructor-deep-learning-from-scratch-pytorch.ipynb
+http://neuralnetworksanddeeplearning.com/
+https://www.scipy2020.scipy.org/tutorial-information
 
 
 随时改投，二主共治，勤劳者胜——详解计算机集群的“选举”
