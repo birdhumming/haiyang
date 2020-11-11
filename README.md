@@ -14694,3 +14694,51 @@ https://www.scipy2020.scipy.org/tutorial-information
 
 随时改投，二主共治，勤劳者胜——详解计算机集群的“选举”
 https://www.acwing.com/file_system/file/content/whole/index/content/1445361/
+
+
+DP3 - tree shaped DP;  dance party no parents
+
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+const int N=6010;
+int n;
+int happy[N];
+int h[N],e[N],ne[N],idx;
+int f[N][2];
+bool has_dad[N];
+
+// adjacency list for storing tree as graph
+void add(int a, int b){
+    e[idx]=b,ne[idx]=h[a],h[a]=idx++;
+}
+void dfs(int u){
+    f[u][1]=happy[u];
+    for(int i=h[u];i!=-1;i++){
+        int j=e[i];
+        dfs(j);
+        f[u][0]+=max(f[j][0],f[j][1]);
+        f[u][1]+=f[j][0];
+    }
+}
+int main(){
+
+    scanf("%d",&n);
+    for (int i=1;i<=n; i++) scanf("%d",&happy[i]);
+    memset(h,-1,sizeof h);
+    for(int i=0;i<n-1;i++){
+        int a,b;
+        scanf("%d%d", &a,&b);
+        has_dad[a]=true;
+        add(b,a);
+    }
+    int root=1;
+    while(has_dad[root]) root++;
+
+    dfs(root);
+    printf("%d\n", max(f[root][0], f[root][1]));
+
+
+}
