@@ -14630,6 +14630,7 @@ https://www.google.com/search?client=safari&rls=en&q=%E3%80%8A%E7%A5%9E%E7%BB%8F
 https://github.com/nndl/solutions/blob/master/README.md
 https://github.com/nndl/exercise
 
+python list tuple dictionary brackets-
 http://thomas-cokelaer.info/tutorials/python/data_structures.html
 
 Introduction to Numerical Computing with NumPy | SciPy 2019 Tutorial | Alex Chabot-Leclerc
@@ -14684,4 +14685,5 @@ https://sebastianraschka.com/Articles/2015_singlelayer_neurons.html
 https://sebastianraschka.com/faq/docs/backprop-arbitrary.html
 https://sebastianraschka.com/
 
+Deep Learning from Scratch with PyTorch Tutorial | SciPy 2020 | Dhavide Aruliah, Hugo Bowne-Anderson
 https://youtu.be/CW8hTe21LPg?t=9581
