@@ -14745,3 +14745,9 @@ int main(){
 
 
 https://baike.baidu.com/item/%E4%B8%BB%E5%AE%9A%E7%90%86/3463232
+
+union find 
+graph floyd, dijkstra, kruskal
+heap
+dfs/bfs
+state compression, path compression
