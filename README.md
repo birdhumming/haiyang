@@ -4910,7 +4910,7 @@ if (hh <= tt)
 		// 返回x的祖宗节点
 		int find(int x)
 		{
-			if (p[x] != x) p[x] = find(p[x]);
+			if (p[x] != x) p[x] = find(p[x]); //path compression; pointing directly to parent root
 			return p[x];
 		}
 
@@ -4929,7 +4929,7 @@ if (hh <= tt)
 		// 返回x的祖宗节点
 		int find(int x)
 		{
-			if (p[x] != x) p[x] = find(p[x]);
+			if (p[x] != x) p[x] = find(p[x]); //path compression; pointing directly to parent root
 			return p[x];
 		}
 
@@ -4941,8 +4941,10 @@ if (hh <= tt)
 		}
 
 		// 合并a和b所在的两个集合：
-		p[find(a)] = find(b);
-		size[b] += size[a];
+		if (find(a) == find(b)) continue; // no action if a and b already belong to same set
+        size[find(a)] += size[find(b);]
+        p[find(a)] = find(b); //set parent root of a to be parent root of b
+		//size[b] += size[a];
 
 
 	(3)维护到祖宗节点距离的并查集：
