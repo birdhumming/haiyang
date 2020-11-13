@@ -4979,7 +4979,7 @@ if (hh <= tt)
 
 
 3. 堆 self made heap and NOT STL heap!
-supports actions a) insert a number; b) find minimum of set; c) delete minimum; d) delete any element; e) modify any element
+supports actions a) insert a number; b) find minimum of set; c) delete minimum; d) delete k-th inserted element; e) modify k-th inserted element
 d and e can't be done by STL heap.
 heap is a complete/full binary tree except the last level; last level is from left right;
 min heap = root is less than both left and right son node; so root of tree is minimum
@@ -5029,8 +5029,8 @@ heap actions:- dijkstra use
 a) insert a number x: heap[++size]=x; up(size);
 b) find minimum: heap[1];
 c) delete minimum: heap[1]=heap[size];size--;down(1);
-d) delete an element: heap[k]=heap[size]; size--;down(k);up(k);
-e) modify an element:heap[k]=x;down(k);up(k);
+d) delete k-th inserted element: heap[k]=heap[size]; size--;down(k);up(k);
+e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 
 1. 哈希
 	一般哈希
