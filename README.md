@@ -4976,7 +4976,11 @@ if (hh <= tt)
 		d[find(a)] = distance; // 根据具体问题，初始化find(a)的偏移量
 
 
-3. 堆
+3. 堆 self made heap and NOT STL heap!
+supports actions a) insert a number; b) find minimum of set; c) delete minimum; d) delete any element; e) modify any element
+d and e can't be done by STL heap.
+heap is a complete/full binary tree except the last level; last level is from left right;
+min heap = root is less than both left and right son node; so root of tree is minimum
 	// h[N]存储堆中的值, h[1]是堆顶，x的左儿子是2x, 右儿子是2x + 1
 	// ph[k]存储第k个插入的点在堆中的位置
 	// hp[k]存储堆中下标是k的点是第几个插入的
@@ -5013,6 +5017,10 @@ if (hh <= tt)
 	
 	// O(n)建堆
 	for (int i = n / 2; i; i -- ) down(i);
+
+
+
+
 
 1. 哈希
 	一般哈希
