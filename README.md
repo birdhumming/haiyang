@@ -4941,8 +4941,10 @@ if (hh <= tt)
 		}
 
 		// 合并a和b所在的两个集合：b becomes parent of a
-		if (find(a) == find(b)) continue; // no action if a and b already belong to same set
-        size[find(b)] += size[find(a)]; // add set a size to set b size
+		//if (find(a) == find(b)) continue; // no action if a and b already belong to same set
+        
+        if (find(a) != find(b)) size[find(b)] += size[find(a)]; // add set a size to set b size
+        
         p[find(a)] = find(b); //set parent root of a to be parent root of b
 		//size[b] += size[a];
 
@@ -4981,7 +4983,10 @@ supports actions a) insert a number; b) find minimum of set; c) delete minimum; 
 d and e can't be done by STL heap.
 heap is a complete/full binary tree except the last level; last level is from left right;
 min heap = root is less than both left and right son node; so root of tree is minimum
-	// h[N]存储堆中的值, h[1]是堆顶，x的左儿子是2x, 右儿子是2x + 1
+	
+    STL heap is just priority queue; here heap is implemented using 1D array
+
+    // h[N]存储堆中的值, h[1]是堆顶，h[x]的左儿子是h[2x], 右儿子是h[2x+1]
 	// ph[k]存储第k个插入的点在堆中的位置
 	// hp[k]存储堆中下标是k的点是第几个插入的
 	int h[N], ph[N], hp[N], size;
