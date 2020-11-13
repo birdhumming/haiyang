@@ -5024,8 +5024,11 @@ min heap = root is less than both left and right son node; so root of tree is mi
 	for (int i = n / 2; i; i -- ) down(i);
 
 
-
-
+a) insert a number x: heap[++size]=x; up(size);
+b) find minimum: heap[1];
+c) delete minimum: heap[1]=heap[size];size--;down(1);
+d) delete an element: heap[k]=heap[size]; size--;down(k);up(k);
+e) modify an element:heap[k]=x;down(k);up(k);
 
 1. 哈希
 	一般哈希
