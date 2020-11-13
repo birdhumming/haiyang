@@ -4732,7 +4732,9 @@ void query(int x) {
 	}
 
 
-1. 单链表 1D array as pointer; 1D array simulation; more efficient than struct + ptr
+1. 单链表 as adjacency list in graph and tree
+
+1D array as pointer; 1D array simulation; more efficient than struct + ptr
 new() very slow!
 
 // head存储链表头，e[]存储节点的值，ne[]存储节点的next指针，idx表示当前用到了哪个节点
