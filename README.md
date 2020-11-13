@@ -4966,7 +4966,7 @@ if (hh <= tt)
 		for (int i = 1; i <= n; i ++ )
 		{
 			p[i] = i;
-			d[I] = 0;
+			d[i] = 0;
 		}
 
 		// 合并a和b所在的两个集合：
@@ -14746,7 +14746,11 @@ int main(){
 
 https://baike.baidu.com/item/%E4%B8%BB%E5%AE%9A%E7%90%86/3463232
 
-union find 
+union find - 
+1) when need to read on char, still use char op[2] and scanf("%s) will ignore space/tabs etc
+2) or using char, and scanf(" %c", &op) - with a space in front of %c to filter all spaces/tabs;
+3) or just use cin which doesn't have space problems.
+
 graph floyd, dijkstra, kruskal
 heap
 dfs/bfs
