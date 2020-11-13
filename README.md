@@ -4732,7 +4732,7 @@ void query(int x) {
 	}
 
 
-1. 单链表 as adjacency list in graph and tree
+1. 单链表 as adjacency list in graph and tree; static list
 
 1D array as pointer; 1D array simulation; more efficient than struct + ptr
 new() very slow!
@@ -4753,12 +4753,21 @@ void insert(int a)
     e[idx] = a, ne[idx] = head, head = idx ++ ;
 }
 
+//insert x after position k
+void insertk(int k, int x){
+    e[idx]=x, ne[idx]=ne[k],ne[k]=idx++;
+
+}
 // 将头结点删除，需要保证头结点存在
 void remove()
 {
     head = ne[head];
 }
 
+//remove node after k-th position
+void rmk(int k){
+    ne[k]=ne[ne[k]];
+}
 
 2. 双链表
 // e[]表示节点的值，l[]表示节点的左指针，r[]表示节点的右指针，idx表示当前用到了哪个节点
