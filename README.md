@@ -4732,7 +4732,9 @@ void query(int x) {
 	}
 
 
-1. 单链表
+1. 单链表 1D array as pointer; 1D array simulation; more efficient than struct + ptr
+new() very slow!
+
 // head存储链表头，e[]存储节点的值，ne[]存储节点的next指针，idx表示当前用到了哪个节点
 int head, e[N], ne[N], idx;
 
@@ -4901,7 +4903,7 @@ if (hh <= tt)
 	}
 
 
-2. 并查集 - kruskal use this
+2. 并查集 - kruskal use union find
 
 	(1)朴素并查集：
 
