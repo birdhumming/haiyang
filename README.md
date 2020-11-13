@@ -4940,9 +4940,9 @@ if (hh <= tt)
 			size[i] = 1;
 		}
 
-		// 合并a和b所在的两个集合：
+		// 合并a和b所在的两个集合：b becomes parent of a
 		if (find(a) == find(b)) continue; // no action if a and b already belong to same set
-        size[find(a)] += size[find(b);]
+        size[find(b)] += size[find(a)]; // add set a size to set b size
         p[find(a)] = find(b); //set parent root of a to be parent root of b
 		//size[b] += size[a];
 
