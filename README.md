@@ -4901,7 +4901,7 @@ if (hh <= tt)
 	}
 
 
-2. 并查集
+2. 并查集 - kruskal use this
 
 	(1)朴素并查集：
 
@@ -5024,7 +5024,7 @@ min heap = root is less than both left and right son node; so root of tree is mi
 	// O(n)建堆
 	for (int i = n / 2; i; i -- ) down(i);
 
-heap actions:
+heap actions:- dijkstra use
 
 a) insert a number x: heap[++size]=x; up(size);
 b) find minimum: heap[1];
