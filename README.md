@@ -5024,6 +5024,7 @@ min heap = root is less than both left and right son node; so root of tree is mi
 	// O(n)建堆
 	for (int i = n / 2; i; i -- ) down(i);
 
+heap actions:
 
 a) insert a number x: heap[++size]=x; up(size);
 b) find minimum: heap[1];
