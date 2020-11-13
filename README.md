@@ -14756,3 +14756,7 @@ state compression, path compression
 https://www.acwing.com/file_system/file/content/whole/index/content/1448030/
 https://www.acwing.com/file_system/file/content/whole/index/content/1448026/
 MYBatis学习
+
+
+raschia single layer perceptron
+https://sebastianraschka.com/Articles/2015_singlelayer_neurons.html
