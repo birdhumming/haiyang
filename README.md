@@ -4986,6 +4986,7 @@ min heap = root is less than both left and right son node; so root of tree is mi
 	
     STL heap is just priority queue; here heap is implemented using 1D array
 
+    // index starts at 1 not 0!
     // h[N]存储堆中的值, h[1]是堆顶，h[x]的左儿子是h[2x], 右儿子是h[2x+1]
 	// ph[k]存储第k个插入的点在堆中的位置
 	// hp[k]存储堆中下标是k的点是第几个插入的
