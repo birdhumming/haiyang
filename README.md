@@ -5178,8 +5178,8 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				(1) 输入是一个数x，删除所有x   O(k + logn)
 				(2) 输入一个迭代器，删除这个迭代器
 			lower_bound()/upper_bound()
-				lower_bound(x)  返回大于等于x的最小的数的迭代器 //后继 包括x; page 25 of blue book
-				upper_bound(x)  返回大于x的最小的数的迭代器 //后继 不包括x; page 25 of blue book
+				lower_bound(begin, end,x)  返回大于等于x的最小的数的迭代器 //后继 包括x; page 25 of blue book
+				upper_bound(begin, end,x)  返回大于x的最小的数的迭代器 //后继 不包括x; page 25 of blue book
 		map/multimap
 			insert()  插入的数是一个pair
 			erase()  输入的参数是pair或者迭代器
