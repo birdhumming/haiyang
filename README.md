@@ -3291,7 +3291,10 @@ data structure 3 first hour is about hash; second hour 1:13:00 later is STL
 discretization is a very special case of hash, could have just used hash; no need for discretization; no need to have special item in basic knowledge
 
 william lin tracking - codes save his past contests
-lower_bound, upper_bound() must be on sorted vector
+lower_bound, upper_bound() must be on sorted vector; both of them
+are getting successor not predecessor!
+lower_bound is getting itself or successor;
+upper_bound is getting successor not including the element itself
 https://www.geeksforgeeks.org/upper_bound-and-lower_bound-for-non-increasing-vector-in-c/
 https://www.geeksforgeeks.org/upper_bound-and-lower_bound-for-vector-in-cpp-stl/
 reverse()
@@ -6432,8 +6435,8 @@ array
 它运用了键值对（value-key），与java类似的map,例如hashmap，有点在于他提供了利用key快速访问功能，它的底层结构应该是一种树来实现的，所以他才有如此快的查找速度，最简单的set，他的键值对类型是一致的，而且唯一，元素默认按升序排列。map他的键值对类型不同，键是唯一的,元素默认按键的升序排列。！而muilti_sset/map 键可以不唯一。
 迭代器在关联容器中对操作：
 
-m.lower_bound(k)//返回一个迭代器，指向键不小于 k 的第一个元素
-m.upper_bound(k)//返回一个迭代器，指向键大于 k 的第一个元素
+m.lower_bound(k)//返回一个迭代器，指向键不小于 >= k 的第一个元素
+m.upper_bound(k)//返回一个迭代器，指向键大于 > k 的第一个元素
 m.equal_range(k)//返回一个迭代器的 pair 对象。它的 first 成员等价于 m.lower_bound(k)。而 second 成员则等价于 m.upper_bound(k)
 map
 map 是键－值对的集合。map 类型通常可理解为关联数组：可使用键作为下标来获取一个值，正如内置数组类型一样。而关联的本质在于元素的值与某个特定的键相关联，而并非通过元素在数组中的位置来获取。
@@ -6558,8 +6561,8 @@ Set
 set由于不会检验定位器的合法性,所以要注意哨兵元素的使用.
 * 可以利用set的有序性来查找大于等于给定值的最小值和小于等于给定值的最大值. 136. 邻值查找
 
-s.lower_bound(key_value) //返回第一个大于等于key_value的定位器
-s.upper_bound(key_value) //返回第一个一个大于key_value的定位器
+s.lower_bound(key_value) //返回第一个大于等于 >= key_value的定位器
+s.upper_bound(key_value) //返回第一个大于 > key_value的定位器
 set<int>::iterator it
 迭代器不想定义可以用auto it=s.lower_bound(key_value);
 元素只出现一次,可以用来检验是否存在过重复关系(即如果题目要求输入重复的话就不进行操作,那么可以用set存储)
@@ -6582,8 +6585,8 @@ Multiset
 * 可以利用set的有序性来查找大于等于给定值的最小值和小于等于给定值的最大值区别是可以存在重复的元素.
 127. 任务
 
-s.lower_bound(key_value) //返回第一个大于等于key_value的定位器
-s.upper_bound(key_value) //返回第一个一个大于key_value的定位器
+s.lower_bound(key_value) //返回第一个大于等于 >= key_value的定位器
+s.upper_bound(key_value) //返回第一个大于 > key_value的定位器
 multiset<int>::iterator it
 迭代器不想定义可以用auto it=s.lower_bound(key_value);
 
@@ -12566,9 +12569,9 @@ s.empty();
 //查找元素x是否在集合中出现，如果不出现则返回s.end()，否则返回对应的迭代器
 s.find(x);
 //敲重点，核心操作
-//返回大于等于x的第一个元素的迭代器
+//返回大于等于 >= x的第一个元素的迭代器
 lower_bound(x);
-//返回大于x的第一个元素的迭代器
+//返回大于 > x的第一个元素的迭代器
 upper_bound(x);
 map/multimap
 map/multimap 在插入元素时，内部按照key进行从小到大进行排序。
