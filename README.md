@@ -15020,7 +15020,7 @@ number of p multiples under n is floor(n/p)
 game theory - nim game, sg function; directed graph game; math 4 time 1:03:00
 
 
-return a=b;
+return a=b; first assign b to a, then return a!
 
 https://stackoverflow.com/questions/39983769/what-does-assignment-operator-means-in-return-statements-like-return-t
 
