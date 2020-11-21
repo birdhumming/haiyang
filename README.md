@@ -5849,10 +5849,12 @@ NIM游戏
 	并且从每个局面向沿着合法行动能够到达的下一个局面连有向边。
 
 
-Mex运算 = minimum excluded
+Mex运算 = minimum excludant
 	设S表示一个非负整数集合。定义mex(S)为求出不属于集合S的最小非负整数的运算，即：
 		mex(S) = min{x}, x属于自然数，且x不属于S
 
+https://codeforces.com/blog/entry/66040
+The Intuition Behind NIM and Grundy Numbers in Combinatorial Game Theory
 
 SG函数
 	在有向图游戏中，对于每个节点x，设从x出发共有k条有向边，分别到达节点y1, y2, ..., yk，
