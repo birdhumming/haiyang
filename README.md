@@ -15010,3 +15010,6 @@ int main()
 
 PIE - principle of inclusion and exclusion
 venn diagram  a1+a2+a3 - a1^a2 - a2^a3 - a1^a3 + a1^a2^a3
+
+combinatorial identity
+https://baike.baidu.com/item/%E7%BB%84%E5%90%88%E6%81%92%E7%AD%89%E5%BC%8F/4175086
