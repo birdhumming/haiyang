@@ -15018,3 +15018,11 @@ https://baike.baidu.com/item/%E7%BB%84%E5%90%88%E6%81%92%E7%AD%89%E5%BC%8F/41750
 number of p multiples under n is floor(n/p)
 
 game theory - nim game, sg function; directed graph game; math 4 time 1:03:00
+
+
+return a=b;
+
+https://stackoverflow.com/questions/39983769/what-does-assignment-operator-means-in-return-statements-like-return-t
+
+https://www.acwing.com/solution/content/13191/
+https://www.acwing.com/solution/content/3929/
