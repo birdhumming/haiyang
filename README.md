@@ -15005,5 +15005,8 @@ int main()
     return 0;
 }
 
-作者：yxc
+
 链接：https://www.acwing.com/activity/content/code/content/62496/
+
+PIE - principle of inclusion and exclusion
+venn diagram  a1+a2+a3 - a1^a2 - a2^a3 - a1^a3 + a1^a2^a3
