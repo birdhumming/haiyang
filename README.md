@@ -1,6 +1,8 @@
 missing DP
 https://www.acwing.com/blog/content/4026/
 
+https://www.acwing.com/blog/content/4072/ OI知识清单 作者：    溪染 
+
 ```
 
 // 快速排序算法模板; with double pointer starting on each end
