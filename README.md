@@ -15042,3 +15042,13 @@ bluebook - 0x70 on STL easy
 set has only one data type; map has two, it's key-value pair.
 
 0x14 hash - collision
+
+STL库总结 https://www.acwing.com/file_system/file/content/whole/index/content/1475038/
+
+逆元 https://www.cnblogs.com/judge/p/9383034.html
+https://blog.csdn.net/ACdreamers/article/details/8220787
+https://zhuanlan.zhihu.com/p/100587745
+https://www.cnblogs.com/linyujun/p/5194184.html
+
+data type sizes-
+https://www.acwing.com/file_system/file/content/whole/index/content/1475865/
