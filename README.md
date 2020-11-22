@@ -5819,6 +5819,8 @@ int exgcd(int a, int b, int &x, int &y)
     return d;
 }
 
+gauss elimination
+
 NIM游戏
 	给定N堆物品，第i堆物品有Ai个。两名玩家轮流行动，每次可以任选一堆，取走任意多个物品，可把一堆取光，
 	但不能不取。取走最后一件物品者获胜。两人都采取最优策略，问先手是否必胜。
@@ -15009,7 +15011,7 @@ int main()
 
 
 链接：https://www.acwing.com/activity/content/code/content/62496/
-
+math 4 - 
 PIE - principle of inclusion and exclusion
 venn diagram  a1+a2+a3 - a1^a2 - a2^a3 - a1^a3 + a1^a2^a3
 combinatorial identity
@@ -15026,3 +15028,8 @@ https://stackoverflow.com/questions/39983769/what-does-assignment-operator-means
 
 https://www.acwing.com/solution/content/13191/
 https://www.acwing.com/solution/content/3929/
+
+math 3 - gauss elimination 
+combination numbers same as DP idea: C(a, b) = C(a-1,b-1) + C(a-1, b)
+
+mod=1e9+7; 
