@@ -1,18 +1,18 @@
 math 2 backwards - 1hour?
 
-https://www.acwing.com/blog/content/4026/. Acwing个人笔记汇总 摸鱼小王子 
+https://www.acwing.com/blog/content/4026/. Acwing个人笔记汇总 摸鱼小王子
 
-https://www.acwing.com/blog/content/1992/ 五大背包问题优化过程详解（最终都为一维）作者：    Accepting 
+https://www.acwing.com/blog/content/1992/ 五大背包问题优化过程详解（最终都为一维）作者：    Accepting
 
 【提高版】DP知识笔记. 有猷 姜堰四中
 https://www.acwing.com/user/myspace/blog/14067/
 
-https://www.acwing.com/solution/content/490/ 
+https://www.acwing.com/solution/content/490/
 
 
 https://www.acwing.com/blog/content/3997/ 动态规划整理（二）——题型# lh359149153的头像lh359149153
 
-https://www.acwing.com/blog/content/4072/ OI知识清单 作者：    溪染 
+https://www.acwing.com/blog/content/4072/ OI知识清单 作者：    溪染
 
 ```
 
@@ -41,21 +41,21 @@ void quicksort(int q[], int l, int r)
 void mergesort(int q[], int l, int r)
 {
     if (l >= r) return;
-    
+
     int mid = l + r >> 1;
     mergesort(q, l, mid);
     mergesort(q, mid + 1, r);
 
     // below is merge two sorted parts into one - 二路归并
-    
+
 	int k = 0, i = l, j = mid + 1;
     while (i <= mid && j <= r)
         if (q[i] < q[j]) tmp[k ++ ] = q[i ++ ];
         else tmp[k ++ ] = q[j ++ ];
-    
+
     while (i <= mid) tmp[k ++ ] = q[i ++ ];
     while (j <= r) tmp[k ++ ] = q[j ++ ];
-    
+
     for (i = l, j = 0; i <= r; i ++, j ++ ) q[i] = tmp[j];
 }
 
@@ -150,7 +150,7 @@ double bsearch_3(double l, double r)
 vector<int> add(vector<int> &A, vector<int> &B)
 {
     if (A.size() < B.size()) return add(B, A);
-    
+
     vector<int> C;
     int t = 0;
     for (int i = 0; i < A.size(); i ++ )
@@ -160,7 +160,7 @@ vector<int> add(vector<int> &A, vector<int> &B)
         C.push_back(t % 10);
         t /= 10;
     }
-    
+
     if (t) C.push_back(t);
     return C;
 }
@@ -195,7 +195,7 @@ vector<int> mul(vector<int> &A, int b)
         C.push_back(t % 10);
         t /= 10;
     }
-    
+
     return C;
 }
 
@@ -206,7 +206,7 @@ vector<int> div(vector<int> &A, int b, int &r)
     vector<int> C;
     r = 0;
     for (int i = A.size() - 1; i >= 0; i -- )
-    
+
 	{
         r = r * 10 + A[i];
         C.push_back(r / b);
@@ -222,7 +222,7 @@ vector<int> div(vector<int> &A, int b, int &r)
 // a[l] + ... + a[r] = S[r] - S[l - 1]
 // 二维前缀和
 // S[i, j] = 第i行j列格子左上部分所有元素的和
-// 以(x1, y1)为左上角，(x2, y2)为右下角的子矩阵的和为 
+// 以(x1, y1)为左上角，(x2, y2)为右下角的子矩阵的和为
 // S[x2, y2] - S[x1 - 1, y2] - S[x2, y1 - 1] + S[x1 - 1, y1 - 1]
 
 // 一维差分
@@ -237,14 +237,14 @@ vector<int> div(vector<int> &A, int b, int &r)
 	求n的第k位数字: n >> k & 1
 	返回n的最后一位1：lowbit(n) = n & -n
 
-2. 双指针算法 
-//allows optimization from n^2 in brutal force to O(n) only linear time; 
+2. 双指针算法
+//allows optimization from n^2 in brutal force to O(n) only linear time;
 // 2 pointers only move a total of 2*n times for example
 
 	for (int i = 0, j = 0; i < n; i ++ )
 	{
 		while (j < i && check(i, j)) j ++ ;
-		
+
 		// 具体问题的逻辑
 	}
 	常见问题分类：
@@ -255,7 +255,7 @@ vector<int> div(vector<int> &A, int b, int &r)
 	vector<int> alls; // 存储所有待离散化的值
 	sort(alls.begin(), alls.end()); // 将所有值排序
 	alls.erase(unique(alls.begin(), alls.end()), alls.end());	// 去掉重复元素
-	
+
 	// 二分求出x对应的离散化的值; can use lower_bound()=binary search
 	int find(int x)
 	{
@@ -284,7 +284,7 @@ void query(int x) {
 }
 
 4. 区间合并
-	
+
 	// 将所有存在交集的区间合并
 	void merge(vector<PII> &segs)
 	{
@@ -388,7 +388,7 @@ stk[tt];
 // 判断栈是否为空
 if (tt > 0)
 {
-    
+
 }
 
 
@@ -408,7 +408,7 @@ q[hh];
 // 判断队列是否为空
 if (hh <= tt)
 {
-    
+
 }
 
 
@@ -530,9 +530,9 @@ if (hh <= tt)
 
 		// 合并a和b所在的两个集合：b becomes parent of a
 		//if (find(a) == find(b)) continue; // no action if a and b already belong to same set
-        
+
         if (find(a) != find(b)) size[find(b)] += size[find(a)]; // add set a size to set b size
-        
+
         p[find(a)] = find(b); //set parent root of a to be parent root of b
 		//size[b] += size[a];
 
@@ -571,7 +571,7 @@ supports actions a) insert a number; b) find minimum of set; c) delete minimum; 
 d and e can't be done by STL heap.
 heap is a complete/full binary tree except the last level; last level is from left right;
 min heap = root is less than both left and right son node; so root of tree is minimum
-	
+
     STL heap is just priority queue; here heap is implemented using 1D array
 
     // index starts at 1 not 0!
@@ -608,7 +608,7 @@ min heap = root is less than both left and right son node; so root of tree is mi
 			u >>= 1;
 		}
 	}
-	
+
 	// O(n)建堆
 	for (int i = n / 2; i; i -- ) down(i);
 
@@ -644,7 +644,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 
 				return false;
 			}
-		
+
 		(2) 开放寻址法
 			int h[N];
 
@@ -659,14 +659,14 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				}
 				return t;
 			}
-	
+
 	字符串哈希
 		核心思想：将字符串看成P进制数，P的经验值是131或13331，取这两个值的冲突概率低
 		小技巧：取模的数用2^64，这样直接用unsigned long long存储，溢出的结果就是取模的结果
-	
+
 		typedef unsigned long long ULL;
 		ULL h[N], p[N]; // h[k]存储字符串前k个字母的哈希值, p[k]存储 P^k mod 2^64
-		
+
 		// 初始化
 		p[0] = 1;
 		for (int i = 1; i <= n; i ++ )
@@ -674,7 +674,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 			h[i] = h[i - 1] * P + str[i];
 			p[i] = p[i - 1] * P;
 		}
-		
+
 		// 计算子串 str[l ~ r] 的哈希值
 		ULL get(int l, int r)
 		{
@@ -742,7 +742,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		clear()
 		begin()/end()
 		++, -- 返回前驱和后继，时间复杂度 O(logn)
-		
+
 		set/multiset
 			insert()  插入一个数
 			find()  查找一个数
@@ -770,12 +770,12 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		>>, <<
 		==, !=
 		[]
-		
+
 		count()  返回有多少个1
-		
+
 		any()  判断是否至少有一个1
 		none()  判断是否全为0
-		
+
 		set()  把所有位置成1
 		set(k, v)  将第k位变成v
 		reset()  把所有位变成0
@@ -786,14 +786,14 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	树是一种特殊的图，与图的存储方式相同。
 	对于无向图中的边ab，存储两条有向边a->b, b->a。
 	因此我们可以只考虑有向图的存储。
-	
+
 	(1) 邻接矩阵：g[a][b] 存储边a->b
-	
+
 	(2) 邻接表：
-		
+
 		// 对于每个点k，开一个单链表，存储k所有可以走到的点。h[k]存储这个单链表的头结点
 		int h[N], e[N], ne[N], idx;
-		
+
 		// 添加一条边a->b
 		void add(int a, int b)
 		{
@@ -812,9 +812,9 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				if (!st[j]) dfs(j);
 			}
 		}
-	
+
 	(2) 宽度优先遍历 bfs
-	
+
 		queue<int> q;
 		st[1] = true; // 表示1号点已经被遍历过
 		q.push(1);
@@ -834,7 +834,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				}
 			}
 		}
-	
+
 3. 拓扑排序
 	bool topsort()
 	{
@@ -872,21 +872,21 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	{
 		memset(dist, 0x3f, sizeof dist);
 		dist[1] = 0;
-		
+
 		for (int i = 0; i < n - 1; i ++ )
 		{
 			int t = -1;		// 在还未确定最短路的点中，寻找距离最小的点
 			for (int j = 1; j <= n; j ++ )
 				if (!st[j] && (t == -1 || dist[t] > dist[j]))
 					t = j;
-			
+
 			// 用t更新其他点的距离
 			for (int j = 1; j <= n; j ++ )
 				dist[j] = min(dist[j], dist[t] + g[t][j]);
-			
+
 			st[t] = true;
 		}
-		
+
 		if (dist[n] == 0x3f3f3f3f) return -1;
 		return dist[n];
 	}
@@ -907,17 +907,17 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		dist[1] = 0;
 		priority_queue<PII, vector<PII>, greater<PII>> heap;
 		heap.push({0, 1});		// first存储距离，second存储节点编号
-		
+
 		while (heap.size())
 		{
 			auto t = heap.top();
 			heap.pop();
-			
+
 			int ver = t.second, distance = t.first;
-			
+
 			if (st[ver]) continue;
 			st[ver] = true;
-			
+
 			for (int i = h[ver]; i != -1; i = ne[i])
 			{
 				int j = e[i];
@@ -928,7 +928,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				}
 			}
 		}
-		
+
 		if (dist[n] == 0x3f3f3f3f) return -1;
 		return dist[n];
 	}
@@ -948,7 +948,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	{
 		memset(dist, 0x3f, sizeof dist);
 		dist[1] = 0;
-		
+
 		// 如果第n次迭代仍然会松弛三角不等式，就说明存在一条长度是n+1的最短路径，由抽屉原理，
 		// 路径中至少存在两个相同的点，说明图中存在负权回路。
 		for (int i = 0; i < n; i ++ )
@@ -960,7 +960,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 					dist[b] = dist[a] + w;
 			}
 		}
-		
+
 		if (dist[n] == 0x3f3f3f3f) return -1;
 		return dist[n];
 	}
@@ -977,18 +977,18 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	{
 		memset(dist, 0x3f, sizeof dist);
 		dist[1] = 0;
-		
+
 		queue<int> q;
 		q.push(1);
 		st[1] = true;
-		
+
 		while (q.size())
 		{
 			auto t = q.front();
 			q.pop();
-			
+
 			st[t] = false;
-			
+
 			for (int i = h[t]; i != -1; i = ne[i])
 			{
 				int j = e[i];
@@ -1003,7 +1003,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				}
 			}
 		}
-		
+
 		if (dist[n] == 0x3f3f3f3f) return -1;
 		return dist[n];
 	}
@@ -1021,21 +1021,21 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		// 不需要初始化dist数组
 		// 原理：如果某条最短路径上有n个点（除了自己），那么加上自己之后一共有n+1个点，
 		// 由抽屉原理一定有两个点相同，所以存在环。
-	
+
 		queue<int> q;
 		for (int i = 1; i <= n; i ++ )
 		{
 			q.push(i);
 			st[i] = true;
 		}
-		
+
 		while (q.size())
 		{
 			auto t = q.front();
 			q.pop();
-			
+
 			st[t] = false;
-			
+
 			for (int i = h[t]; i != -1; i = ne[i])
 			{
 				int j = e[i];
@@ -1053,7 +1053,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -1086,7 +1086,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	int prim()
 	{
 		memset(dist, 0x3f, sizeof dist);
-		
+
 		int res = 0;
 		for (int i = 0; i < n; i ++ )
 		{
@@ -1094,15 +1094,15 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 			for (int j = 1; j <= n; j ++ )
 				if (!st[j] && (t == -1 || dist[t] > dist[j]))
 					t = j;
-			
+
 			if (i && dist[t] == INF) return INF;
-			
+
 			if (i) res += dist[t];
 			st[t] = true;
-			
+
 			for (int j = 1; j <= n; j ++ ) dist[j] = min(dist[j], g[t][j]);
 		}
-		
+
 		return res;
 	}
 
@@ -1114,7 +1114,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	struct Edge		// 存储边
 	{
 		int a, b, w;
-		
+
 		bool operator< (const Edge &W)const
 		{
 			return w < W.w;
@@ -1130,14 +1130,14 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	int kruskal()
 	{
 		sort(edges, edges + m);
-		
+
 		for (int i = 1; i <= n; i ++ ) p[i] = i;    // 初始化并查集
-		
+
 		int res = 0, cnt = 0;
 		for (int i = 0; i < m; i ++ )
 		{
 			int a = edges[i].a, b = edges[i].b, w = edges[i].w;
-			
+
 			a = find(a), b = find(b);
 			if (a != b)		// 如果两个连通块不连通，则将这两个连通块合并
 			{
@@ -1146,7 +1146,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				cnt ++ ;
 			}
 		}
-		
+
 		if (cnt < n - 1) return INF;
 		return res;
 	}
@@ -1170,7 +1170,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 			}
 			else if (color[j] == c) return false;
 		}
-		
+
 		return true;
 	}
 
@@ -1194,7 +1194,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	int h[N], e[M], ne[M], idx;		// 邻接表存储所有边
 	int match[N];		// 存储每个点当前匹配的点
 	bool st[N];		// 表示每个点是否已经被遍历过
-	
+
 	bool find(int x)
 	{
 		for (int i = h[x]; i != -1; i = ne[i])
@@ -1210,10 +1210,10 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	// 求最大匹配数
 	int res = 0;
     for (int i = 1; i <= n; i ++ )
@@ -1321,7 +1321,7 @@ int phi(int x)
             while (x % i == 0) x /= i;
         }
     if (x > 1) res = res / x * (x - 1);
-    
+
     return res;
 }
 
@@ -1393,13 +1393,13 @@ gauss elimination
 NIM游戏
 	给定N堆物品，第i堆物品有Ai个。两名玩家轮流行动，每次可以任选一堆，取走任意多个物品，可把一堆取光，
 	但不能不取。取走最后一件物品者获胜。两人都采取最优策略，问先手是否必胜。
-	
+
 	我们把这种游戏称为NIM博弈。把游戏过程中面临的状态称为局面。整局游戏第一个行动的称为先手，第二个行动的称为后手。
 	若在某一局面下无论采取何种行动，都会输掉游戏，则称该局面必败。
 	所谓采取最优策略是指，若在某一局面下存在某种行动，使得行动后对面面临必败局面，则优先采取该行动。同时，
 	这样的局面被称为必胜。我们讨论的博弈问题一般都只考虑理想情况，即两人均无失误，都采取最优策略行动时游戏的结果。
 	NIM博弈不存在平局，只有先手必胜和先手必败两种情况。
-	
+
 	定理： NIM博弈先手必胜，当且仅当 A1 ^ A2 ^ ... ^ An != 0
 
 
@@ -1459,18 +1459,18 @@ https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
 
 DP - penultimate step is the key!
 algo advanced class - 1 is number triangle; linear DP type of problems
-boundary conditions are always tricky to consider - 
+boundary conditions are always tricky to consider -
 yxc videos should be viewed with 1.25x! too slow for 1x
 
 
 原码true code (sign and magnitude) 补码two's complemental code 反码ones-complement code
-Excess 3 code 余3BCD码; True form 原码; Negative number (one’s complement) 反码; Complement number (two’s complement)补码; 
+Excess 3 code 余3BCD码; True form 原码; Negative number (one’s complement) 反码; Complement number (two’s complement)补码;
 https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/computercode.html
 https://www.geeksforgeeks.org/1s-2s-complement-binary-number/
 https://en.cppreference.com/w/cpp/language/operator_alternative
 https://www.programiz.com/c-programming/bitwise-operators#complement
 
-原码true code 补码complemental code 反码ones-complement code 
+原码true code 补码complemental code 反码ones-complement code
 移码 offset binary/frame shift  excess/biased notion
 https://github.com/daa233/learning-notes/issues/22
 阶 符exponent character 阶码exponent-marker 尾数mantissa
@@ -1655,7 +1655,7 @@ int main() {
     for (int i = 4; i <= n; i++) fact[i] = fact[i - 1] * i % P;
     for (int i = 1; i <= n; i++) {
         C[i][0] = 1;
-        for (int j = 1; j <= i; j++) 
+        for (int j = 1; j <= i; j++)
             C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % P;
     }
     for (int i = 1; i <= n; i++) {
@@ -1680,17 +1680,17 @@ visible lattice points POJ3090 page 147 of blue book
 #include <cstring>
 #include <ctime>
 using namespace std;
- 
+
 const int Max=1010;
 int t,n,m,ans;
 int sum[Max][Max];
- 
+
 inline int gcd(int a,int b)
 {
 	if(!b) return a;
 	return gcd(b,a%b);
 }
- 
+
 inline void pre()
 {
 	for(int i=1;i<=1000;i++)
@@ -1699,14 +1699,14 @@ inline void pre()
 	for(int i=1;i<=1000;i++)
 	  for(int j=1;j<i;j++) sum[i][j]+=sum[i][j-1];
 }
- 
+
 inline void solve(int n)
 {
 	ans=0;
 	for(int i=1;i<=n;i++) ans+=sum[i][i-1];
 	ans=ans*2+3;
 }
- 
+
 int main()
 {
 	pre();
@@ -1719,7 +1719,7 @@ int main()
 	}
 	return 0;
 }
- 
+
 ```
  TLE code:
 https://leetcode.com/submissions/detail/388061438/
@@ -1752,11 +1752,11 @@ class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         if(nums.size()==0)return 0;
-        
+
         int tt=1;
         vector<int> q(nums.size()+1,0);
         q[1]=nums[0];
-        
+
         //for(auto x:nums){
         for (int i=1;i<nums.size();i++){
             int l=1;
@@ -1765,11 +1765,11 @@ public:
                 int mid=l+r>>1;
                 if(q[mid]<nums[i]) l=mid+1;
                 else r=mid-1;
-                
+
             }
                 q[l]=nums[i];
             if(l>tt)tt=l;
-        
+
         }
      return tt;   
     }
@@ -1781,7 +1781,7 @@ AC code 2:
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        
+
 
 const int N = 100010;
 
@@ -1806,42 +1806,11 @@ int q[N];
     //printf("%d\n", len);
     return len;
 
-    
+
     }
 };
 ```
 
-https://blog.csdn.net/dingyahui123/article/details/78446329
-
-浅谈人工智能：现状、任务、构架与统一
-
-原创 2017-11-02 朱松纯
-
-目录
-
-引言
-
-第一节 现状：正视现实 
-第二节 未来：一只乌鸦给我们的启示 
-第三节 历史：从“春秋五霸”到“战国六雄” 
-第四节 统一：“小数据、大任务”范式与认知构架 
-第五节 学科一：计算视觉 — 从“深”到“暗” 
-第六节 学科二：认知推理 — 走进内心世界 
-第七节 学科三：语言通讯 — 沟通的认知基础 
-第八节 学科四：博弈伦理 — 获取、共享人类的价值观 
-第九节 学科五：机器人学 — 构建大任务平台 
-第十节 学科六：机器学习 — 学习的终极极限与“停机问题” 
-第十一节 总结： 智能科学 — 牛顿与达尔文的统一
-
-http://www.stat.ucla.edu/~sczhu/index.html
-
-google interview - 2455 19 
-275 2457
-
-AI
-cs50 https://cs50.harvard.edu/ai/2020/
-AI Book-
-https://drive.google.com/file/d/1Ipqb9gjCP0D9j5aqRhg80uIQg5knFbvi/view?usp=sharing
 
 KMP better explanation:
 https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
@@ -2117,7 +2086,7 @@ a.reserve(n)//等价于a.rehash(ceil(n/a.max_load_factor( )))，
 
 作者：wuog
 链接：https://www.acwing.com/blog/content/488/
-  
+
  。
 
 STL的数据结构(持续更新)
@@ -2165,7 +2134,7 @@ multiset<int>::iterator it
 
 作者：Xie_
 链接：https://www.acwing.com/blog/content/3801/
-  
+
  。
 
 
@@ -2231,15 +2200,15 @@ int main(){
 }
 
 结果输出如下：
-12 45 3 98 21 7 
+12 45 3 98 21 7
 从小到大排序
-1) 3 7 12 21 45 98 
+1) 3 7 12 21 45 98
 从大到小排序
-2) 98 45 21 12 7 3 
+2) 98 45 21 12 7 3
 从大到小排序
-3) 98 45 21 12 7 3 
+3) 98 45 21 12 7 3
 按个位从小到大排序
-4) 21 12 3 45 7 98 
+4) 21 12 3 45 7 98
 案例2
 #include <iostream>
 #include <cstring>
@@ -2317,17 +2286,17 @@ int main(){
 
 输出如下：
 学生信息如下：
-Jack 112 3.4 Mary 102 3.8 Mary 117 3.9 Ala 333 3.5 Zero 101 4 
+Jack 112 3.4 Mary 102 3.8 Mary 117 3.9 Ala 333 3.5 Zero 101 4
 按姓名从小到大排序：
-(Ala,333 3.5) (Jack,112 3.4) (Mary,102 3.8) (Mary,117 3.9) (Zero,101 4) 
+(Ala,333 3.5) (Jack,112 3.4) (Mary,102 3.8) (Mary,117 3.9) (Zero,101 4)
 按id从小到大排序：
-(Zero,101 4) (Mary,102 3.8) (Jack,112 3.4) (Mary,117 3.9) (Ala,333 3.5) 
+(Zero,101 4) (Mary,102 3.8) (Jack,112 3.4) (Mary,117 3.9) (Ala,333 3.5)
 按gpa从高到低排序：
-(Zero,101 4) (Mary,117 3.9) (Mary,102 3.8) (Ala,333 3.5) (Jack,112 3.4) 
+(Zero,101 4) (Mary,117 3.9) (Mary,102 3.8) (Ala,333 3.5) (Jack,112 3.4)
 
 作者：以梦为马
 链接：https://www.acwing.com/blog/content/3153/
-  
+
  。
 
 STL notes -
@@ -2488,7 +2457,7 @@ int main() {
 	while (t--) NUMBER_BASE_CONVERSION();
 	return 0;
 }
-``` 
+```
 
 lyd code above
 https://hihocoder.com/problemset
@@ -2572,7 +2541,7 @@ int main() {
 
 AcWing 127. 任务
 https://www.acwing.com/solution/content/868/
-https://github.com/littlewyy/OI 
+https://github.com/littlewyy/OI
 https://www.acwing.com/solution/content/5481/ yxc code; multiset not set for dup values
 https://www.acwing.com/solution/content/19733/
 
@@ -2608,14 +2577,14 @@ https://www.acwing.com/solution/content/1062/ yxc
 感觉还挺好用的 ​​​​
 https://www.acwing.com/file_system/file/content/whole/index/content/1296843/
 
-AcWing 2. 01背包问题 
+AcWing 2. 01背包问题
 https://www.acwing.com/file_system/file/content/whole/index/content/1296749/
 
 Entity Framework一种现代的，为.NET框架设计的“对象-数据库”转换映射器。
 浙商银行总行科技部秋招面经
 https://www.acwing.com/file_system/file/content/whole/index/content/1296458/
 
-AcWing 115. 给树染色 
+AcWing 115. 给树染色
 https://www.acwing.com/solution/content/1065/ yxc
 https://www.acwing.com/solution/content/857/ qinhuaian
 自己的一点拙见：这个贪心题，不要被树节点的顺序套进去。对于一个给定的树，染色方法是唯一的，先每次找到均值最大的节点，然后和其父节点合并，不需要理会根节点，直接合并 n - 1 次，最后肯定会合并为一个点，而且这个点必定为根节点。
@@ -2630,13 +2599,13 @@ https://www.acwing.com/solution/content/16465/
 
 
 offer bili has best videos https://space.bilibili.com/7836741/channel/detail?cid=92901
-AcWing 13. 找出数组中重复的数字 
+AcWing 13. 找出数组中重复的数字
 https://www.acwing.com/solution/content/13215/ set
 https://www.acwing.com/solution/content/1675/ python
 https://www.acwing.com/solution/content/4013/ python
 
 bash script - error_check has exit in it, so always exit after error!
-bug is always at a place you wouldn't expect! 
+bug is always at a place you wouldn't expect!
 error is always at another place.
 never would thought of that
 
@@ -2694,7 +2663,7 @@ public:
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/693/
-  
+
  。
 
 
@@ -2718,7 +2687,7 @@ public:
 
 作者：yxc
 链接：https://www.acwing.com/solution/content/693/
-  
+
  。
 
 
@@ -2788,7 +2757,7 @@ https://www.acwing.com/solution/content/732/
 AcWing 27. 数值的整数次方
 https://www.acwing.com/solution/content/733/
 
-AcWing 28. 在O(1)时间删除链表结点 
+AcWing 28. 在O(1)时间删除链表结点
 https://www.acwing.com/solution/content/734/
 
 AcWing 29. 删除链表中重复的节点
@@ -2871,7 +2840,7 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1300681/
 Hulu 2021秋招在线笔试（9.16场）
 https://www.acwing.com/file_system/file/content/whole/index/content/1301834/
 
-AcWing 204. 表达整数的奇怪方式 
+AcWing 204. 表达整数的奇怪方式
 https://www.acwing.com/file_system/file/content/whole/index/content/1301830/
 
 AcWing 77. 良心题解，看这篇就好
@@ -2951,7 +2920,7 @@ acwing 838代码
 
 作者：床前明月光
 链接：https://www.acwing.com/file_system/file/content/whole/index/content/1302373/
-  
+
  。
 https://www.acwing.com/file_system/file/content/whole/index/content/1302373/
 
@@ -2987,9 +2956,9 @@ black = (0, 0, 0)  # undiscovered node fill
 blue = (50,50,160) # completed node fill and completed edge
 
 # Graph element parts:
-#  [0] : xy 
+#  [0] : xy
 #  [1] : adjacent node indexes
-#  [2] : node edge color 
+#  [2] : node edge color
 #  [3] : node fill color
 
 def run():
@@ -3076,7 +3045,7 @@ public:
         unordered_map<int,int> a;
         vector<int> res;
         for (int i=0; i<nums.size();i++){
-            
+
             int ano=target-nums[i];
             if(a.count(ano)){
                 res.push_back(a[ano]);res.push_back(i);
@@ -3084,7 +3053,7 @@ public:
                 break;
             }
             a[nums[i]]=i;
-            
+
             }
         return res;
     }
@@ -3118,7 +3087,7 @@ public:
         }
         if(carry)cur->next=new ListNode(1);
         return res->next;
-        
+
     }
 };
 ```
@@ -3135,7 +3104,7 @@ public:
     int lengthOfLongestSubstring(string s) {
         int maxLen = 0;
         set<char> uniqSet;
-        if(!s.length()) 
+        if(!s.length())
             return maxLen;
         int n = s.length();
         int i = 0, j = 0;
@@ -3170,7 +3139,7 @@ public:
                     i++;
                     if(hash[s[j]] == 1){
                         break;
-                    } 
+                    }
                 }
             }
         ans = max(ans, j-i+1);
@@ -3238,7 +3207,7 @@ https://www.acwing.com/solution/content/490/
 时间复杂度分析： O(n3)O(n3)
 C++ 代码
 ```
-// brute force 
+// brute force
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -3282,7 +3251,7 @@ public:
     int lengthOfLongestSubstring(string s) {
         int maxLen = 0;
         set<char> uniqSet;
-        if(!s.length()) 
+        if(!s.length())
             return maxLen;
         int n = s.length();
         int i = 0, j = 0;
@@ -3317,7 +3286,7 @@ public:
                     i++;
                     if(hash[s[j]] == 1){
                         break;
-                    } 
+                    }
                 }
             }
         ans = max(ans, j-i+1);
@@ -3735,7 +3704,7 @@ public:
             for (int j = i, k = i + 1; j >= 0 && k < s.size(); j -- , k ++ )
                 if (s[j] == s[k])
                 {
-                    if (k - j + 1 > res) 
+                    if (k - j + 1 > res)
                     {
                         res = k - j + 1;
                         str = s.substr(j, k - j + 1);
@@ -3941,7 +3910,7 @@ public:
      因此无法执行有效的转换。
 输入: "-91283472332"
 输出: -2147483648
-解释: 数字 "-91283472332" 超过 32 位有符号整数范围。 
+解释: 数字 "-91283472332" 超过 32 位有符号整数范围。
      因此返回 INT_MIN (−231) 。
 算法1
 用long记录
@@ -3961,7 +3930,7 @@ class Solution {
         if(k == n) return 0;
 
         int op = 1;//假设是正号
-        if(str.charAt(k) == '-') 
+        if(str.charAt(k) == '-')
         {
             op = -1;
             k ++;
@@ -4006,7 +3975,7 @@ class Solution {
         if(k == n) return 0;//没找到
 
         int op = 1;//假设是正号
-        if(str.charAt(k) == '-') 
+        if(str.charAt(k) == '-')
         {
             op = -1;
             k ++;
@@ -4017,11 +3986,11 @@ class Solution {
         while(k < n && str.charAt(k) >= '0' && str.charAt(k) <= '9')
         {
             int x = str.charAt(k) - '0';
-            if(op > 0 && res * op > (Integer.MAX_VALUE - x ) / 10) 
+            if(op > 0 && res * op > (Integer.MAX_VALUE - x ) / 10)
             {
                 res = Integer.MAX_VALUE; break;
             }
-            if(op < 0 && res * op < (Integer.MIN_VALUE - x * (-1)) / 10) 
+            if(op < 0 && res * op < (Integer.MIN_VALUE - x * (-1)) / 10)
             {
                 res = Integer.MIN_VALUE; break;
             }
@@ -4151,7 +4120,7 @@ public:
 
 作者：wzc1995
 链接：https://www.acwing.com/solution/content/557/
-  
+
  。
 
 算法
@@ -4290,7 +4259,7 @@ public:
         int res = 0;
         for (int i = 0, j = height.size() - 1; i < j; )
         {
-            res = max(res, 
+            res = max(res,
                 min(height[i], height[j]) * (j - i));
             if (height[i] > height[j]) j -- ;
             else i ++ ;
@@ -4445,7 +4414,7 @@ public:
         int n = s.length(), ans = 0;
         unordered_map<char, int> words;
         words['I'] = 1; words['V'] = 5;
-        words['X'] = 10; words['L'] = 50; 
+        words['X'] = 10; words['L'] = 50;
         words['C'] = 100; words['D'] = 500;
         words['M'] = 1000;
         for (int i = 0; i < n; i++) {
@@ -5102,7 +5071,7 @@ public:
         for (int i=1; i<=n+1;i++) b=b->next;
         while(b){
             a=a->next;
-            
+
             b=b->next;
         }
         //if(a->next && a->next->next){
@@ -5114,7 +5083,7 @@ public:
         //else
         //{h=nullptr;}
         return h->next;
-        
+
     }
 };
 ```
@@ -5140,7 +5109,7 @@ public:
 ```
 
 struct is always a continuous segment of memory;
-对齐原理 -  struct{int a4; char a; } 8 bytes total; 
+对齐原理 -  struct{int a4; char a; } 8 bytes total;
 https://stackoverflow.com/questions/1841863/size-of-struct-in-c
 4 byte alignment with padding
 https://stackoverflow.com/questions/20737176/how-are-struct-members-allocated-in-memory
@@ -5429,7 +5398,7 @@ int main()
 链接：https://www.acwing.com/solution/content/18881/
 
 
-python 
+python
 ```
 n, k = map(int, input().split())
 if n >= k: print(n - k); exit(0)
@@ -6111,7 +6080,7 @@ AcWing 803. 区间合并
 
 basic algorithm class  above - list of problems
 
-advanced algorith class below - 
+advanced algorith class below -
 
 包括位运算、递推与递归、前缀和与差分、二分、排序、RMQ等内容
 位运算
@@ -6501,7 +6470,7 @@ Prufer编码
 AcWing 2419. prufer序列14人打卡
 AcWing 2418. 光之大陆
 
-interview class - 
+interview class -
 第二十讲完成情况：0/7
 例题
 AcWing 703. 数独检查25人打卡
@@ -6703,29 +6672,29 @@ https://github.com/ShusenTang/LeetCode
 LeetCode Problem Summary
 https://yzygitzh.github.io/algorithm/2018/11/09/leetcode-summary.html
 
-just a few subjects - 
+just a few subjects -
 https://github.com/tongzhang1994/LeetCode-Summary
 
 leetcode solutions https://github.com/luliyucoordinate/Leetcode
 
 
 
-wrong - 
+wrong -
 ```
 class Solution {
 public:
     ListNode* deleteDuplication(ListNode* head) {
         ListNode *h = new ListNode(-1); h->next=head;
-        
+
         ListNode *a=h->next;
         while(a){
             auto b = a;
             while(b && a->val==b->next->val){b=b->next;}
             a->next=b;
         }
-        
+
         return h->next;
-        
+
     }
 };
 ```
@@ -6745,7 +6714,7 @@ C++ 代码
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
- 
+
 class Solution {
 public:
     ListNode* deleteDuplication(ListNode* head) {
@@ -6897,9 +6866,9 @@ class Solution {
 public:
     ListNode* deleteDuplication(ListNode* head) {
         auto h=new ListNode(-1); h->next=head;
-        
+
         auto p=h; //don't move yet  
-        
+
         while(p->next){
             auto q=p->next;
             while(q->next && q->next->val==p->next->val)q=q->next; //check if repeating values exist
@@ -6938,7 +6907,7 @@ class Solution {
 public:
     ListNode *findFirstCommonNode(ListNode *headA, ListNode *headB) {
         auto a=headA,b=headB;
-        
+
         while(a!=b){
             if(a)a=a->next;
             else a=headB;
@@ -7045,12 +7014,12 @@ public:
         if(s[i] == '-' || s[i] == '+'){
             if(s[i] == '-') isPos = true;
             ++i;
-        } 
+        }
         while(s[i] >= '0' && s[i] <= '9'){
             ret = ret * 10 + s[i] - '0';
             ++i;
             if(!isPos && ret >= INT32_MAX) return INT32_MAX;
-            if(isPos && ret - 1 >= INT32_MAX) return INT32_MIN; 
+            if(isPos && ret - 1 >= INT32_MAX) return INT32_MIN;
         }
         return isPos ? -ret : ret;
     }
@@ -7079,16 +7048,16 @@ class Solution(object):
         while i < len(str):
             if str[i].isdigit():
                 res *= 10
-                res += int(str[i]) 
+                res += int(str[i])
                 i += 1
             else:
                 break
         res *= flag
         if res > 2 ** 31 - 1:
-             return  2 ** 31 - 1 
+             return  2 ** 31 - 1
         if res < - 2 ** 31:
-             return  - 2 ** 31 
-        return res 
+             return  - 2 ** 31
+        return res
 
 or
 
@@ -7114,7 +7083,7 @@ class Solution(object):
 class Solution {
 public:
     ListNode* merge(ListNode* l1, ListNode* l2) {
-       
+
         ListNode *dummy = new ListNode(0);
         ListNode *cur = dummy;
         while (l1 != NULL && l2 != NULL)
@@ -7142,12 +7111,12 @@ public:
 
     }  
 };
-wrong? need current list variable - 
+wrong? need current list variable -
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         auto h= new ListNode(-1);
-        
+
         while(l1 && l2){
             if(l1->val<=l2->val){
                 h->next=l1;
@@ -7158,7 +7127,7 @@ public:
             }
         }
         return h->next;
-        
+
     }
 };
 ```
@@ -7356,7 +7325,7 @@ int main()
                         return 0;
                     }
                 }
-                else j--; 
+                else j--;
             }
         }
     }
@@ -7623,7 +7592,7 @@ MySQL 和 Redis 的一致性问题
 缓存一致性问题
 分享汇总  : 文章汇总
 
-本文应该是关于缓存一致性的系列文章，每篇会讨论一个策略，持续更新中 
+本文应该是关于缓存一致性的系列文章，每篇会讨论一个策略，持续更新中
 
 前情提要
 最近我提前去公司入职实习了，发现公司项目中大量用到了 MySQL + Redis 这一堆存储组合。因为实际上 MySQL 作为主要的存储， Redis 作为缓存，如果有一个请求过来，请求会首先在 Redis 中搜索结果，如果 Redis 中找到了，那实际上就不会去 MySQL 中再查询了，这样就帮 MySQL 抵挡住了一定的请求。但是这样就会带来缓存不一致的问题，缓存不一致指的是 Redis 中存储的数据和 MySQL 中存储的数据不一致（CPU 也有 Cache 缓存，可以参考那个缓存不一致的概念）
@@ -8028,13 +7997,13 @@ deep learning http://cs229.stanford.edu/notes2020fall/notes2020fall/Fall_2020_No
 deep learning
 https://cs230.stanford.edu/fall2020/lecture1.pdf
 
-li feifei 
+li feifei
 http://cs231n.stanford.edu/
 
 台大 机器学习 林轩田
 https://www.youtube.com/watch?v=0ttRHJUHZog&t=4s
 
-list of ML books - 
+list of ML books -
 https://github.com/Mikoto10032/DeepLearning/tree/master/books
 https://zhuanlan.zhihu.com/p/33982890
 MIT ML course https://github.com/peteflorence/MachineLearning6.867
@@ -8077,7 +8046,7 @@ https://zhuanlan.zhihu.com/p/139041734
 首先，各大算法孰优孰劣并无定论。如果是刚入门，优先考虑SGD+Nesterov Momentum或者 Adam.（Standford 231n : The two recommended updates to use are either SGD+Nesterov Momentum or Adam）
 
 
-机器学习中用来防止过拟合的方法有哪些？overfitting - 
+机器学习中用来防止过拟合的方法有哪些？overfitting -
 regularization and cross validation by slicing data, in the stat learning book
 
 https://www.zhihu.com/question/59201590
@@ -8140,7 +8109,7 @@ In the C programming language, static is used with global variables and function
 
 statically allocated memory is typically reserved in data segment of the program at compile time, while the automatically allocated memory is normally implemented as a transient call stack.
 
-In C++, however, static is also used to define class attributes (shared between all objects of the same class) and methods. 
+In C++, however, static is also used to define class attributes (shared between all objects of the same class) and methods.
 
 堆空间和栈空间的区别
 https://www.cnblogs.com/kevinGaoblog/archive/2012/03/23/2413102.html
@@ -8609,7 +8578,7 @@ public:
  */
 class Solution {
 public:
-    int res=0; 
+    int res=0;
     int dfs(TreeNode* rt){
             if(rt==NULL) return 0;
             int L, R;
@@ -8618,11 +8587,11 @@ public:
             res=max(res,L+R);
             return max(L,R)+1;
         }
-    
+
     int diameterOfBinaryTree(TreeNode* root) {
         dfs(root);
         return res;
-        
+
     }
 };
 
@@ -8782,7 +8751,7 @@ public:
                     f[first]++;
                     f[second + 1]--;
                 }
-                else 
+                else
                 {
                     f[second + 1] --;
                     f[first] ++;
@@ -8795,7 +8764,7 @@ public:
                     f[first + 1]++;
                     f[second + 1]--;
                 }
-                else 
+                else
                 {
                     f[second + 1] --;
                     f[first + 1] ++;
@@ -8865,7 +8834,7 @@ public:
 
             if(cnt % 2 == 0)
                 ans = max(ans, i - zero);
-            else 
+            else
                 ans = max(ans, i - negative);  
         }
         return ans;
@@ -8925,7 +8894,7 @@ tmp=strcpy(tmp,with)+len_with;
 using namespace std;
 // You must free the result if result is non-NULL.
 // useage:
-// char *done = replace("abcdefghijkl", "bc", "yz"); 
+// char *done = replace("abcdefghijkl", "bc", "yz");
 // if(done){
 //    do_stuff();
 //    delete[] done;
@@ -9170,7 +9139,7 @@ https://www.acwing.com/file_system/file/content/whole/index/content/1359011/
 
 argmax in python https://www.geeksforgeeks.org/numpy-argmax-python/
 
-segment tree with lazy tag 
+segment tree with lazy tag
 https://skywt.cn/posts/segment-tree
 https://blog.csdn.net/qq_37451344/article/details/80261955
 https://blog.csdn.net/Ratina/article/details/90112512
@@ -9207,14 +9176,14 @@ probability/statistics=math=computer=philosophy=machine=human
 bayes rule p(a and b) = p(a)p(b|a) = p(b)p(a|b)
 https://github.com/haichuanyang/ai-aima/blob/master/ML/Cheatshetts-cs229-ML/en/refresher-algebra-calculus.pdf
 
-gradient = nabla one 
+gradient = nabla one
 hessian = nabla two level
 jacobian = partial derivative
 
 ML learning map 李宏毅
 http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
 
-binary search easy way - is x in sorted array A? only look for x in A 
+binary search easy way - is x in sorted array A? only look for x in A
 
 function binarySearch(A, x)
   let start = 0
@@ -9234,7 +9203,7 @@ function binarySearch(A, x)
   module load deeplearning/2.3.0
 
   for amp must import in apex directory
-  
+
   nvidia driver for GPU needed
   srun -p dl --gpus v100:1 --pty bash
 
@@ -9468,7 +9437,7 @@ LeetCode 162. Find Peak Element    原题链接    中等
 解释：3是一个峰值，3的下标是2。
 样例2
 输入：nums = [1,2,1,3,5,6,4]
-输出：1 或 5 
+输出：1 或 5
 解释：数组中有两个峰值：1或者5，返回任意一个即可。
 算法
 (二分) O(logn)O(logn)
@@ -9683,7 +9652,7 @@ def quicksort(arr, l, r):
 quicksort(arr, 0, n-1)
 print(' '.join(map(str,arr)))
 
-KMP explained in video - 
+KMP explained in video -
 https://www.youtube.com/watch?v=5i7oKodCRJo
 
 秋招结束，分享一下自己已经拿到意向书公司的面经
@@ -9697,42 +9666,42 @@ better than MIT old book
 
 >> syms x real
 >> f = 1/x
- 
+
 f =
- 
+
 1/x
- 
+
 >> int(f,1,2)
- 
+
 ans =
- 
+
 log(2)
- 
+
 >> diff(f)
- 
+
 ans =
- 
+
 -1/x^2
- 
+
 >> syms x a b real positive
 >> f = 1/x
- 
+
 f =
- 
+
 1/x
- 
+
 >> int(f)
- 
+
 ans =
- 
+
 log(x)
- 
+
 >> int(f,a,b)
- 
+
 ans =
- 
+
 log(b) - log(a)
- 
+
 >> fn=matlabFunction(f)
 
 fn =
@@ -9760,12 +9729,12 @@ ans =
    -0.2500
 
 >> subs(diff(f),2)
- 
+
 ans =
- 
+
 -1/4
- 
->> 
+
+>>
 
 matlab integral and derivative:
 
@@ -10037,7 +10006,7 @@ deep learning ai book
 算法，算力，数据
 
 why so many things still not known - what did the 3blue1brown have that you missed before?
-no coding no math - 
+no coding no math -
 
 
 NLP stock prediction -
@@ -10089,7 +10058,7 @@ Introduction to Data Processing in Python with Pandas | SciPy 2019 Tutorial | Da
 https://www.youtube.com/watch?v=5rNu16O3YNE
 https://github.com/chendaniely/scipy-2019-pandas/blob/master/notebooks/01-intro.ipynb
 
-scipy 
+scipy
 https://www.youtube.com/playlist?list=PLYx7XA2nY5GcDQblpQ_M1V3PQPoLWiDAC
 
 https://github.com/chendaniely/scipy-2020-pandas
@@ -10183,7 +10152,7 @@ int main(){
 
 https://baike.baidu.com/item/%E4%B8%BB%E5%AE%9A%E7%90%86/3463232
 
-union find - 
+union find -
 1) when need to read on char, still use char op[2] and scanf("%s) will ignore space/tabs etc
 2) or using char, and scanf(" %c", &op) - with a space in front of %c to filter all spaces/tabs;
 3) or just use cin which doesn't have space problems.
@@ -10294,10 +10263,10 @@ int main()
 {
     int st=-2e9,ed=-2e9 ;                           //ed代表区间结尾，st代表区间开头
     int n ;
-    scanf("%d",&n) ; 
+    scanf("%d",&n) ;
     while(n--)
     {
-        int l,r ; 
+        int l,r ;
         scanf("%d%d",&l,&r) ;
         nums.push_back({l,r}) ;
     }
@@ -10421,7 +10390,7 @@ https://stackoverflow.com/questions/39983769/what-does-assignment-operator-means
 https://www.acwing.com/solution/content/13191/
 https://www.acwing.com/solution/content/3929/
 
-math 3 - gauss elimination 
+math 3 - gauss elimination
 combination numbers same as DP idea: C(a, b) = C(a-1,b-1) + C(a-1, b)
 
 mod=1e9+7 first 10 digit number which fits in unsigned long long, also a prime
