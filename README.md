@@ -15059,3 +15059,5 @@ cartalan numbers
 c++ format string specifier, just use c++ reference, too much details not relevant
 sprintf() , fprintf() scanf/sscanf/fscanf
 http://www.cplusplus.com/reference/cstdio/printf/
+
+https://alexandra-yang.gitbook.io/notes/
