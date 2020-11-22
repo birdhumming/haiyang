@@ -15052,3 +15052,9 @@ https://www.cnblogs.com/linyujun/p/5194184.html
 
 data type sizes-
 https://www.acwing.com/file_system/file/content/whole/index/content/1475865/
+
+lucas theorem
+
+c++ format string specifier, just use c++ reference, too much details not relevant
+sprintf() , fprintf() scanf/sscanf/fscanf
+http://www.cplusplus.com/reference/cstdio/printf/
