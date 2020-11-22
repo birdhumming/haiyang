@@ -1,5 +1,16 @@
-missing DP
-https://www.acwing.com/blog/content/4026/
+math 2 backwards - 1hour?
+
+https://www.acwing.com/blog/content/4026/. Acwing个人笔记汇总 摸鱼小王子 
+
+https://www.acwing.com/blog/content/1992/ 五大背包问题优化过程详解（最终都为一维）作者：    Accepting 
+
+【提高版】DP知识笔记. 有猷 姜堰四中
+https://www.acwing.com/user/myspace/blog/14067/
+
+https://www.acwing.com/solution/content/490/ 
+
+
+https://www.acwing.com/blog/content/3997/ 动态规划整理（二）——题型# lh359149153的头像lh359149153
 
 https://www.acwing.com/blog/content/4072/ OI知识清单 作者：    溪染 
 
