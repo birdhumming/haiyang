@@ -15034,3 +15034,11 @@ combination numbers same as DP idea: C(a, b) = C(a-1,b-1) + C(a-1, b)
 mod=1e9+7 first 10 digit number which fits in unsigned long long, also a prime
 https://www.geeksforgeeks.org/modulo-1097-1000000007/#:~:text=10%5E9%2B7%20fulfills%20both,order%20to%20prevent%20possible%20overflows.
 math 3 1:05:00
+
+watch the last half of each video
+watch videos in reversed order from back to front
+
+bluebook - 0x70 on STL easy
+set has only one data type; map has two, it's key-value pair.
+
+0x14 hash - collision
