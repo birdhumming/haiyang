@@ -10432,3 +10432,6 @@ https://sites.google.com/site/mathcounts2020
 https://sites.google.com/view/procoding
 https://sites.google.com/view/theknowledge-lewis
 https://sites.google.com/iu.edu/programming
+
+nlp stock
+https://github.com/yiaktan/NLP-Stock-Prediction.git
