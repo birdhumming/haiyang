@@ -15011,7 +15011,7 @@ int main()
 
 
 链接：https://www.acwing.com/activity/content/code/content/62496/
-math 4 - 
+math 4 - discrete math
 PIE - principle of inclusion and exclusion
 venn diagram  a1+a2+a3 - a1^a2 - a2^a3 - a1^a3 + a1^a2^a3
 combinatorial identity
@@ -15019,8 +15019,7 @@ https://baike.baidu.com/item/%E7%BB%84%E5%90%88%E6%81%92%E7%AD%89%E5%BC%8F/41750
 
 number of p multiples under n is floor(n/p)
 
-game theory - nim game, sg function; directed graph game; math 4 time 1:03:00
-
+game theory - nim game, sg function; directed graph game;
 
 return a=b; first assign b to a, then return a!
 
@@ -15032,4 +15031,6 @@ https://www.acwing.com/solution/content/3929/
 math 3 - gauss elimination 
 combination numbers same as DP idea: C(a, b) = C(a-1,b-1) + C(a-1, b)
 
-mod=1e9+7; 
+mod=1e9+7 first 10 digit number which fits in unsigned long long, also a prime
+https://www.geeksforgeeks.org/modulo-1097-1000000007/#:~:text=10%5E9%2B7%20fulfills%20both,order%20to%20prevent%20possible%20overflows.
+math 3 1:05:00
