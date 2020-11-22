@@ -215,14 +215,6 @@ https://space.bilibili.com/171431343/album
 https://github.com/GolemHerry/manim-on-macOS
 http://bhowell4.com/manic-install-tutorial-for-mac/
 
-python manim.py p/old/PeriodicTable/PeriodicTable.py
-/Users/rsdata/manim
-
-My websites:
-https://sites.google.com/site/mathcounts2020
-https://sites.google.com/view/procoding
-https://sites.google.com/view/theknowledge-lewis
-https://sites.google.com/iu.edu/programming
 
 Douyu yxc AcWing videos - 
 https://v.douyu.com/author/PDAPVoKO3wxN
@@ -11873,4 +11865,11 @@ http://www.cplusplus.com/reference/cstdio/printf/
 
 https://alexandra-yang.gitbook.io/notes/
 
-reorg material
+python manim.py p/old/PeriodicTable/PeriodicTable.py
+/Users/rsdata/manim
+
+My websites:
+https://sites.google.com/site/mathcounts2020
+https://sites.google.com/view/procoding
+https://sites.google.com/view/theknowledge-lewis
+https://sites.google.com/iu.edu/programming
