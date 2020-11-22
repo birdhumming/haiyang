@@ -1,4 +1,4 @@
-
+```
 开放寻址法
 #include <cstring>
 #include <iostream>
