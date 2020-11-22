@@ -1,0 +1,383 @@
+interviews
+
+
+
+An awesome list for competitive programming! https://codeforces.com/blog/entry/23054
+LIST OF AWESOME LEARNING RESOURCES https://www.topcoder.com/thrive/articles/List%20of%20awesome%20learning%20resources
+
+https://hihocoder.com/
+https://github.com/zbh24/hihocoder
+
+http://web.stanford.edu/class/cs97si/ 
+https://github.com/prakhar1989/awesome-courses#algorithms
+https://github.com/tgnco1218/10-Algo book
+https://www.quora.com/What-is-coordinate-compression-and-what-is-it-used-for
+https://discuss.codechef.com/t/data-structures-and-algorithms/6599
+contest calendar - https://clist.by/
+
+https://www.quora.com/How-do-I-start-competitive-programming-5
+https://www.quora.com/How-can-I-become-good-at-competitive-programming-Are-there-any-courses-that-will-take-me-one-step-forward-before-I-start-doing-SPOJ-or-TopCoder-problems
+https://www.quora.com/How-is-competitive-programming-different-from-real-life-programming
+https://www.quora.com/What-have-you-gained-from-competitive-programming
+
+Algorithhms 4th Edition by Robert Sedgewick, Kevin Wayne
+https://drive.google.com/file/d/1UgJDvc4pPDJgqA0bcH_M2NQ75S6_P27F/view?usp=sharing
+
+
+后台开发技术博客汇总 list of tech notes http://www.linya.pub/
+华为消费者BG推荐算法面经
+https://www.acwing.com/file_system/file/content/whole/index/content/1293884/
+深信服“算法大牛计划”面经 已拿意向书
+https://www.acwing.com/file_system/file/content/whole/index/content/1293850/
+知乎后端开发工程师 交叉面（第一次面试遇到架构师）
+https://www.acwing.com/file_system/file/content/whole/index/content/1295875/
+
+CH/POJ? in comments https://www.acwing.com/solution/content/826/
+
+刷LeetCode的方式：先从Top100 liked 的tag开始刷（这个tag的题我刷了好几遍）。刷完之后按topic的tag刷过一段时间，后来改成了选择难度之后按顺序刷。一开始就按照ac率从高到低乱刷，后面就只刷点赞比点踩多不少的题。有一段时间每周的周赛基本都参加，不过最后也就是2000分的水准，比较弱。我一道题如果较长时间想不出来（比如半小时到一小时），就会去看discussion，主要是太懒了不想动脑子。自己A了的题也会去看discussion，去学别人比较好的解法（后来是学写法），然后自己照着敲一遍。不会或者不是最优解法的题，过一段时间如果记得的话就再做一遍，不过一般都是不记得了：(
+
+作者：胡津铭
+链接：https://www.zhihu.com/question/32019460/answer/887877092
+来源：知乎
+ 。
+
+leetcode 136 137 260 - single number in an array
+
+https://github.com/ZJULearning
+http://dengcai.zjulearning.org.cn/
+https://www.zhihu.com/question/32019460/answer/887877092
+https://youtu.be/U6r3R87AKHI 第1175期 沈向洋：有效的科研法则
+
+interviews-
+https://www.acwing.com/file_system/file/content/whole/index/content/1293307/
+https://www.acwing.com/file_system/file/content/whole/index/content/1293224/
+https://www.acwing.com/file_system/file/content/whole/index/content/1293200/
+https://www.acwing.com/file_system/file/content/whole/index/content/1293036/
+https://www.acwing.com/blog/content/19/ hulu by yxc
+https://www.acwing.com/blog/content/3042/
+
+
+derivative/calculus https://www.quora.com/How-would-you-find-the-original-function-given-the-derivative-of-that-function-For-example-find-f-x-if-f-x-x-2-1
+
+DNS why use UDP?
+https://www.geeksforgeeks.org/why-does-dns-use-udp-and-not-tcp/
+https://www.quora.com/Why-does-DNS-use-UDP#:~:text=DNS%20uses%20the%20User%20Datagram,UDP%20reply%20from%20the%20server.
+
+good solutions - 
+
+https://www.acwing.com/solution/content/19076/
+https://www.acwing.com/solution/content/804/
+
+time is a much more limited resource than space!!!
+
+tree - recursion defined; 2 split if having monotonicity;
+
+way to think - silu = ideas  
+
+BFS can get shortest path; DFS can't; this is b/c BFS has distance info, DFS doesn't. DFS is easier to implement, it uses recursion.
+bfs uses priority queue - Handbook chap 12 has best explanation
+
+A queue is a data structure that contains some elements, and the only way the contents of the structure change are by popping elements off of the front of the queue, or by pushing elements onto the back. Elements are popped off in the order that they’re pushed, so for example the first element that’s pushed will be the first element that’s popped, and the last will be the last.
+
+In a priority queue, each element has some type of value that can be ordered with respect to other values of the same type (like a number, or a string [strings can be ordered lexicographically]). As elements are pushed onto the back or popped off of the front, the priority queue re-orders itself to make the front of the queue contain the element with the smallest value (or the largest, if the priority is defined to be in descending order).
+
+So, if you pop all of the elements off of a priority queue, their values will always come out in either ascending or descending order. But if you do that with a queue — elements come out in FIFO (first in first out) order
+
+https://www.acwing.com/file_system/file/content/whole/index/content/1291720/
+
+matrix rank - https://www.mathsisfun.com/algebra/matrix-rank.html
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define fir(i,a,b) for(ll i=a;i<=b;i++)
+
+const int N = 1e5+10;
+
+ll n,m,t,a[N],b[N],s[N],x,y;
+ll calc(ll a[], ll n){
+fir(i,1,n){
+    a[i]-=(a[0]/n);
+    s[i]=s[i-1]+a[i];
+}
+sort(s+1,s+n+1);
+ll mid=(n+1)>>1,ans=0;
+fir(i,1,n) ans+=abs(s[mid]-s[i]);
+return ans;
+}
+
+int main(){
+    cin>>n>>m>>t;
+    fir(i,1,t){scanf("%d%d",&x,&y); a[x]++;b[y]++;}
+    fir(i,1,n) a[0]+=a[i];
+    fir(i,1,m) b[0]+=b[i];
+
+    ll as=a[0]%n,bs=b[0]%m;
+    if(!as && !bs) cout<<"both "<<calc(a,n)+calc(b,m);
+    else if(!as) cout<<"row "<<calc(a,n);
+    else if(!bs)cout<<"column "<<calc(b,m);
+    else cout<<"impossible";
+
+    return 0;
+}
+'''
+行列变换互不影响，转换成环形纸牌分配问题，排序找中位数
+'''
+
+m, n, p = map(int, input().split())
+
+row_cnt = [0] * m   # 每一行的点数量
+col_cnt = [0] * n   # 每一列的点数量
+for _ in range(p):
+    a, b = map(int, input().split())
+    a, b = a-1, b-1
+    row_cnt[a] += 1
+    col_cnt[b] += 1
+
+if p % m != 0 and p % n != 0:
+    print('impossible')
+
+else:
+    cnt1, cnt2 = None, None
+    if p % m == 0:
+        mean = p // m
+        arr = [0]
+        S1, S2 = 0, 0
+        for i in range(m-1):
+            S1 += row_cnt[i]
+            S2 += mean
+            arr.append(S1-S2)
+
+        arr.sort()
+        mid_val = arr[m//2]         # 中位数
+        cnt1 = 0
+        for val in arr:
+            cnt1 += abs(val - mid_val)
+
+    if p % n == 0:
+        mean = p // n
+        arr = [0]
+        S1, S2 = 0, 0
+        for i in range(n - 1):
+            S1 += col_cnt[i]
+            S2 += mean
+            arr.append(S1 - S2)
+
+        arr.sort()
+        mid_val = arr[n // 2]       # 中位数
+        cnt2 = 0
+        for val in arr:
+            cnt2 += abs(val - mid_val)
+
+    if cnt2 is None:
+        print(f'row {cnt1}')
+    elif cnt1 is None:
+        print(f'column {cnt2}')
+    else:
+        print(f'both {cnt1 + cnt2}')
+        
+#include<iostream>
+#include<math.h>
+using namespace std;
+typedef long long ll;
+
+//get x^y in log(y) time by converting power to multiplication
+ll qexp(ll x, ll y){
+        ll ans=1;
+        while(y){
+                if(y&1) ans=ans*x;
+                x*=x;
+                y>>=1;
+        }
+        return ans;
+}
+
+//base and exponent
+
+//multiplicand and multiplier
+
+//get x*y in log(y) time by converting multiplication to addition
+ll qmulti(ll x, ll y){
+        ll ans=0;
+        while(y){
+                if(y&1) ans=ans+x;
+                x+=x;
+                y>>=1;
+        }
+        return ans;
+}
+
+int main()
+{
+    long long x,y;
+    cin>>x>>y;
+    long long res=1;
+
+    res=qexp(x,y);
+    cout<<res<<endl;
+    res=qmulti(x,y);
+    cout<<res<<endl;
+
+    res=1;
+        //get x^y in log N time by converting power to multiplication
+    while(y)
+    {
+        if(y&1) res=res*x;
+        x=x*x;
+        y>>=1;
+    }
+    cout<<res<<endl;
+    return 0;
+}
+```
+
+```
+#include<iostream>
+#include<math.h>
+using namespace std;
+int main()
+{
+    long long a,b,q;
+    cin>>a>>b>>q;
+    long long res=1%q;
+    while(b)
+    {
+        if(b&1) res=res*a%q;
+        a=a*a%q;
+        b>>=1;
+    }
+    cout<<res;
+    return 0;
+}
+```
+
+786. 第k个数，
+三数排序 - 75？
+
+鸿蒙 OS 开源项目：https://www.openatom.org/openharmony
+鸿蒙 OS 代码仓库：https://openharmony.gitee.com/
+
+LeetCode 326. 3的幂
+作者：    yxc ,  2020-09-10 21:08:09 ,  阅读 2
+
+0
+
+
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        return n > 0 && 1162261467 % n == 0;
+    }
+};
+
+
+LeetCode 324. 摆动排序 II
+作者：    yxc ,  2020-09-10 21:04:23 ,  阅读 5
+
+0
+
+
+class Solution {
+public:
+    void wiggleSort(vector<int>& nums) {
+        int n = nums.size();
+        auto midptr = nums.begin() + n / 2;
+        nth_element(nums.begin(), midptr, nums.end());
+        int mid = *midptr;
+
+        #define A(i) nums[(i * 2 + 1) % (n | 1)]
+
+        for (int i = 0, j = 0, k = n - 1; i <= k;) {
+            if (A(i) > mid) swap(A(i ++ ), A(j ++ ));
+            else if (A(i) < mid) swap(A(i), A(k -- ));
+            else i ++ ;
+        }
+    }
+};
+
+作者：yxc
+链接：https://www.acwing.com/activity/content/code/content/477154/
+
+https://tengine.taobao.org/
+https://github.com/alibaba/tengine
+
+
+
+topcoder is an app - C problem do 100 of them
+
+快速幂 - convert power to multiplication, express power number in binary and use it
+龟速乘 - convert multiplication to addition, express the multiplicant in binary to add
+
+拓扑排序Topological sort 本质就是图的遍历~ Traversal of graph
+遍历完所有的边而不能有重复，即所谓“一笔画问题”或“欧拉路径”；【完全解决】
+遍历完所有的顶点而没有重复，即所谓“哈密尔顿问题”。【部分可解】
+遍历完所有的边而可以有重复，即所谓“中国邮递员问题”；【完全解决】
+遍历完所有的顶点而可以重复，即所谓“旅行推销员问题”。【部分可解】
+暴搜、暴搜
+
+
+
+HackerRank: https://www.hackerrank.com/
+Learn typing: https://www.keybr.com/
+Scratch: https://scratch.mit.edu/
+Learn C++: https://www.youtube.com/watch?v=mUQZ1qmKlLY
+Competitive Programmer's Handbook: https://cses.fi/book/book.pdf
+GeeksForGeeks: https://www.geeksforgeeks.org/fundamentals-of-algorithms/
+A2OJ Ladders: https://www.a2oj.com/Ladders.html
+Mostafa Saad's Junior Training Sheet: https://goo.gl/unDETI
+Discord server for discussions and more: https://discord.gg/AneA5wg
+https://www.instagram.com/tmwilliamli...
+
+/* 
+https://oj.uz/submission/292972
+https://oj.uz/submissions?handle=tmwilliamlin168&problem=
+
+https://www.youtube.com/watch?v=kCqf6dvadlQ
+https://www.hackerrank.com/contests
+
+https://atcoder.jp/contests/
+
+*/
+
+算法竞赛进阶指南_含目录.pdf
+https://drive.google.com/file/d/1rH6Jodk-XSzm6Kdq8Lyzzpx-yOhecbU4/view?usp=sharing
+信息学奥赛一本通（C++）第五版.pdf
+https://drive.google.com/file/d/14KsgMAQMax9ZHcfIeK9o5Rbwas-mhkhs/view?usp=sharing
+剑指OFFER 名企面试官精讲典型编程题 第2版.pdf
+https://drive.google.com/file/d/1bLZjeTzLe31xpZxNSXU93bVLTlXI0KNk/view?usp=sharing
+C++与数据结构
+https://drive.google.com/file/d/1DVbjLIktdJcXvj3-Qn7F0yJQrHvL7zE3/view?usp=sharing
+
+
+```
+'''
+简单快速幂运算
+所有可能的排列数减去不发生冲突的排列数就是
+答案
+
+'''
+
+MOD = 100003
+def pow_mod(a, k, p):
+    t = []
+    pow_val = 1             # 2的次幂数, 初始是2^0 = 1
+    a_pow = a % p           # a^(2 ^ i)的数值, 初始是a^(2^0) = a
+    while pow_val <= k:
+        t.append(a_pow)
+        a_pow = (a_pow*a_pow) % p
+        pow_val <<= 1
+
+    ans = 1
+    for i in range(len(t)):
+        if k & 1:
+            ans = (ans * t[i]) % p
+        k >>= 1
+    return ans
+
+
+m, n = map(int, input().split())
+print( ((m % MOD) * (pow_mod(m, n-1, MOD) - pow_mod(m-1, n-1, MOD))) % MOD )
+
+
+```
