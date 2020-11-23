@@ -10435,3 +10435,7 @@ https://sites.google.com/iu.edu/programming
 
 nlp stock
 https://github.com/yiaktan/NLP-Stock-Prediction.git
+
+jupyter can save as python .py
+stopped at which takes quite some CPU
+python Text\ PreProcessing.py
