@@ -10440,4 +10440,6 @@ jupyter can save as python .py
 stopped at which takes quite some CPU
 python Text\ PreProcessing.py
 
+https://haiyang1.gitbook.io/hy/program
 https://haiyang123.gitbook.io/hy/
+https://app.gitbook.com/@haiyang1/s/hy/program
