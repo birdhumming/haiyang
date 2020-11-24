@@ -565,11 +565,11 @@ d) delete k-th inserted element: heap[k]=heap[size]; size--;down(k);up(k);
 e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 
 1. Hash
-	一般哈希
-		(1) 拉链法
+	General hash
+		(1) Open hashing 拉链法
 			int h[N], e[N], ne[N], idx;
 
-			// 向哈希表中插入一个数
+			// insert x into hash table
 			void insert(int x)
 			{
 				int k = (x % N + N) % N;
@@ -578,7 +578,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				h[k] = idx ++ ;
 			}
 
-			// 在哈希表中查询某个数是否存在
+			// find if x exist in hash 
 			bool find(int x)
 			{
 				int k = (x % N + N) % N;
@@ -589,10 +589,11 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				return false;
 			}
 
-		(2) 开放寻址法
+		(2) Open addressing/closed hashing 开放寻址法
 			int h[N];
 
-			// 如果x在哈希表中，返回x的下标；如果x不在哈希表中，返回x应该插入的位置
+			// if x is in hash, return its subscript;
+            // if x is not in the hash, return where x should be inserted
 			int find(int x)
 			{
 				int t = (x % N + N) % N;
@@ -604,14 +605,19 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 				return t;
 			}
 
-	字符串哈希
-		核心思想：将字符串看成P进制数，P的经验值是131或13331，取这两个值的冲突概率低
-		小技巧：取模的数用2^64，这样直接用unsigned long long存储，溢出的结果就是取模的结果
+	string hash
 
+        key idea: treat the string as a P-base number; P usually 131 or 13331
+        both are prime numbers which gives low collision rates.
+        small trick: use 2^64 modulo and unsigned long long to store values,
+        this way the overflow result is automatically the modulo op result.
+    
 		typedef unsigned long long ULL;
-		ULL h[N], p[N]; // h[k]存储字符串前k个字母的哈希值, p[k]存储 P^k mod 2^64
+		ULL h[N], p[N]; 
+        //h[k] stores hash value of first k characters of the string
+        //p[k] store P^k mode 2^64
 
-		// 初始化
+		// init
 		p[0] = 1;
 		for (int i = 1; i <= n; i ++ )
 		{
@@ -619,13 +625,13 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 			p[i] = p[i - 1] * P;
 		}
 
-		// 计算子串 str[l ~ r] 的哈希值
+		// calculate substring[1 ~ r] hash
 		ULL get(int l, int r)
 		{
 			return h[r] - h[l - 1] * p[r - l + 1];
 		}
 
-2. C++ STL简介
+2. C++ STL introduction
 	vector, 变长数组，倍增的思想
 		size()  返回元素个数
 		empty()  返回是否为空
@@ -726,25 +732,26 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		flip()  等价于~
 		flip(k) 把第k位取反
 
-1. 树与图的存储
-	树是一种特殊的图，与图的存储方式相同。
-	对于无向图中的边ab，存储两条有向边a->b, b->a。
-	因此我们可以只考虑有向图的存储。
+1. Tree and Graph storage 
+	Tree is a special type of graph, same way in terms of storage.
+    for undirected graph, edge ab means 2 directed edge a->b and b->a
+    so only directed graph needs to be considered.
 
-	(1) 邻接矩阵：g[a][b] 存储边a->b
+	(1) adjacency matrix：g[a][b] representing edge a->b
 
-	(2) 邻接表：
+	(2) adjacency list：
 
-		// 对于每个点k，开一个单链表，存储k所有可以走到的点。h[k]存储这个单链表的头结点
-		int h[N], e[N], ne[N], idx;
+		// for any node k, open a singly linked list to store all nodes reachable from k
+        //h[k] is the head of this list
+        int h[N], e[N], ne[N], idx;
 
-		// 添加一条边a->b
+		// add an edge a->b 
 		void add(int a, int b)
 		{
 			e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
 		}
 
-2. 树与图的遍历
+2. tree and graph traversal 树与图的遍历
 	(1) 深度优先遍历 dfs
 		int dfs(int u)
 		{
@@ -779,12 +786,12 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 			}
 		}
 
-3. 拓扑排序
+3. topological sort 拓扑排序
 	bool topsort()
 	{
 		int hh = 0, tt = -1;
 
-		// d[i] 存储点i的入度
+		// in degree - d[i] 存储点i的入度
 		for (int i = 1; i <= n; i ++ )
 			if (!d[i])
 				q[ ++ tt] = i;
@@ -802,12 +809,14 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		}
 
 		// 如果所有点都入队了，说明存在拓扑序列；否则不存在拓扑序列。
+        // if all nodes are enqueued, there exists a topological sequence
+        // otherwise no
 		return tt == n - 1;
 	}
 
-1. 朴素dijkstra算法
+1. Naive dijkstra 朴素dijkstra算法
 
-	int g[N][N];  // 存储每条边
+	int g[N][N];  // edges 存储每条边
 	int dist[N];  // 存储1号点到每个点的最短距离
 	bool st[N];   // 存储每个点的最短路是否已经确定
 
@@ -1004,7 +1013,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 
 6. floyd算法
 
-	初始化：
+	init 初始化：
 		for (int i = 1; i <= n; i ++ )
 			for (int j = 1; j <= n; j ++ )
 				if (i == j) d[i][j] = 0;
@@ -1096,7 +1105,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	}
 
 
-3. 染色法判别二分图
+3. coloring method for bipartite graph 染色法判别二分图
 	int n;		// n表示点数
 	int h[N], e[M], ne[M], idx;		// 邻接表存储图
 	int color[N];		// 表示每个点的颜色，-1表示为染色，0表示白色，1表示黑色
@@ -1133,7 +1142,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 	}
 
 
-4. 匈牙利算法
+4. Hungarian algorithm 匈牙利算法
 	int n;		// n表示点数
 	int h[N], e[M], ne[M], idx;		// 邻接表存储所有边
 	int match[N];		// 存储每个点当前匹配的点
@@ -1166,7 +1175,7 @@ e) modify k-th inserted element:heap[k]=x;down(k);up(k);
 		if (find(i)) res ++ ;
 	}
 
-1. 试除法判定质数
+1. trying division for prime 试除法判定质数
 bool is_prime(int x)
 {
     if (x < 2) return false;
@@ -1177,7 +1186,7 @@ bool is_prime(int x)
 }
 
 
-2. 试除法分解质因数
+2. division trial for factoring 试除法分解质因数
 void divide(int x)
 {
     for (int i = 2; i <= x / i; i ++ )
@@ -1192,7 +1201,7 @@ void divide(int x)
 }
 
 
-3. 朴素筛法求素数
+3. naive sieve for prime 朴素筛法求素数
 int primes[N], cnt;		// primes[]存储所有素数
 bool st[N];			// st[x]存储x是否被筛掉
 
@@ -1208,7 +1217,7 @@ void get_primes(int n)
 }
 
 
-4. 线性筛法求素数
+4. linear sieve for prime 线性筛法求素数
 int primes[N], cnt;		// primes[]存储所有素数
 bool st[N];			// st[x]存储x是否被筛掉
 
@@ -1226,7 +1235,7 @@ void get_primes(int n)
 }
 
 
-5. 试除法求所有约数
+5. division trial for all factors 试除法求所有约数
 vector<int> get_divisors(int x)
 {
     vector<int> res;
@@ -1247,14 +1256,14 @@ vector<int> get_divisors(int x)
 	约数之和： (p1^0 + p1^1 + ... + p1^c1) * ... * (pk^0 + pk^1 + ... + pk^ck)
 
 
-7. 欧几里得算法
+7. Euclidean 欧几里得算法
 int gcd(int a, int b)
 {
     return b ? gcd(b, a % b) : a;
 }
 
 
-8. 求欧拉函数
+8. Euler function 求欧拉函数
 int phi(int x)
 {
     int res = x;
@@ -1301,7 +1310,7 @@ void get_eulers(int n)
 }
 
 
-10. 快速幂
+10. Quick exponentiation 快速幂
 求 m^k mod p，时间复杂度 O(logk)。
 
 int qmi(int m, int k, int p)
@@ -1334,7 +1343,7 @@ int exgcd(int a, int b, int &x, int &y)
 
 gauss elimination
 
-NIM游戏
+NIM game
 	给定N堆物品，第i堆物品有Ai个。两名玩家轮流行动，每次可以任选一堆，取走任意多个物品，可把一堆取光，
 	但不能不取。取走最后一件物品者获胜。两人都采取最优策略，问先手是否必胜。
 
@@ -1389,7 +1398,7 @@ SG函数
 	有向图游戏的某个局面必胜，当且仅当该局面对应节点的SG函数值大于0。
 	有向图游戏的某个局面必败，当且仅当该局面对应节点的SG函数值等于0。
 	
-	// 高精度加法
+// arbitrary precision addition 高精度加法
 // C = A + B, A >= 0, B >= 0
 vector<int> add(vector<int> &A, vector<int> &B)
 {
